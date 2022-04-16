@@ -1,2 +1,2 @@
-# Metis
+# eScout
 Scouting App for FRC
