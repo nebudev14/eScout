@@ -58,7 +58,7 @@ def scout(gamephase):
         return redirect('/login')
     session['gamephase'] = gamephase
     if gamephase in ['selection','comments']:
-        return render_template('scout-'+gamephase+'.html')
+        return render_template('scout-'+gamephase+'.html', username=session['username'])
     infodict = {}
     for point in scoutingdata[gamephase]:
         infodict[point] = session[point] if point in session else ''
