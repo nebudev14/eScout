@@ -21,7 +21,15 @@
                 {% endif %}
             </div>
         </nav>
-        <div class="d-grid gap-2 col-6 mx-auto align-items-center">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                <div class="alert alert-{{ category }}" role="alert">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <div class="alert alert-light" role="alert"></div>
+        <div class="d-grid gap-2 col-6 mx-auto">
             <a class="btn btn-primary py-5" href="/login">Start Scouting!</a>
         </div>
     </body>
