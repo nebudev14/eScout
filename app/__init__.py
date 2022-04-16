@@ -10,12 +10,13 @@ client = MongoClient()
 db = client.scouting_data
 
 scoutingdata = {
-    'selection': ['type', 'match', 'team'],
-    'auton': ['Mobility', 'High Shot', 'High Scored', 'Low Shot', 'Low Scored'],
+    'selection': [],
+    'auton': ['Mobility', 'High Shot A', 'High Scored A', 'Low Shot A', 'Low Scored A'],
     'teleop': ['High Shot', 'High Scored', 'Low Shot', 'Low Scored', 'Defense on', 'Defense by'],
     'endgame': ['Climb Start Time', 'Climb Level', 'Climb End Time'],
     'comments': ['comments']
 }
+
 gamephases = ['auton', 'teleop', 'endgame']
 
 @app.route('/')
@@ -60,9 +61,8 @@ def scout(gamephase):
         return redirect('/login')
     session['gamephase'] = gamephase
     info = {}
-    for point in scoutingdata[gamephase]:
+    for point in scoutingdata[gamephase] + ['type', 'match', 'team']:
         info[point] = session[point] if point in session.keys() else ''
-    print(info)
     return render_template('scout-'+gamephase+'.html', info=info)
 
 @app.route('/select', methods=['POST'])
@@ -70,9 +70,6 @@ def select():
     if 'user' not in session:
         flash('Invalid Session','danger')
         return redirect('/')
-    user = session['user']
-    session.clear()
-    session['user'] = user
     session['team'] = request.form['team']
     session['type'] = request.form['type']
     session['match'] = request.form['match']
@@ -80,6 +77,8 @@ def select():
 
 @app.route('/submit', methods=['POST'])
 def submit():
+    if session['gamephase'] == 'auton':
+        session['Mobility'] = ''
     for key in request.form:
         session[key] = request.form[key]
     if session['gamephase'] == 'submit':
