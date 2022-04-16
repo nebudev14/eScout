@@ -28,20 +28,31 @@ def main():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    if request.method == 'GET':
-        if 'user' in session:
-            if 'gamephase' in session:
-                return render_template('continue.html', gamephase=session['gamephase'], username=session['username'])
-            else:
-                return redirect('/scout/selection')
+    if 'user' in session:
+        if 'gamephase' in session:
+            return render_template('continue.html', gamephase=session['gamephase'], username=session['username'])
         else:
-            return render_template('login.html')
-        
+            return redirect('/scout/selection')
+    if request.method == 'GET':
+        return render_template('login.html')
+    if request.form['username'] == '':
+        flash('Please type your name!','danger')
+        return redirect('/login')
+    session.clear()
+    session['user'] = request.form['username']
+    return redirect('/')
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    flash('Successfully logged out!','success')
+    return redirect('/')
+
 
 @app.route('/scout/<gamephase>')
 def scout(gamephase):
     if 'user' not in session:
-        flash('Invalid Session')
+        flash('Invalid Session','danger')
         return redirect('/')
     if gamephase not in gamephases + ['selection', 'comments']:
         return redirect('/login')
@@ -56,7 +67,7 @@ def scout(gamephase):
 @app.route('/select', methods=['POST'])
 def select():
     if 'user' not in session:
-        flash('Invalid Session')
+        flash('Invalid Session','danger')
         return redirect('/')
     session['team'] = request.form['team']
     session['type'] = request.form['type']
@@ -66,7 +77,7 @@ def select():
 @app.route('/submit', methods=['POST'])
 def submit():
     if session['gamephase'] == 'comments':
-        flash('Your data has been recorded!')
+        flash('Your data has been recorded!','success')
         return redirect('/')
 
 @app.route('/view')
