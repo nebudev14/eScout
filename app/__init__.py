@@ -10,9 +10,11 @@ client = MongoClient()
 db = client.scouting_data
 
 scoutingdata = {
-    'auton':['Mobility', 'High Shot', 'High Scored', 'Low Shot', 'Low Scored'],
+    'selection': ['type', 'match', 'team'],
+    'auton': ['Mobility', 'High Shot', 'High Scored', 'Low Shot', 'Low Scored'],
     'teleop': ['High Shot', 'High Scored', 'Low Shot', 'Low Scored', 'Defense on', 'Defense by'],
-    'endgame': ['Climb Start Time', 'Climb Level', 'Climb End Time']
+    'endgame': ['Climb Start Time', 'Climb Level', 'Climb End Time'],
+    'comments': ['comments']
 }
 gamephases = ['auton', 'teleop', 'endgame']
 
@@ -30,7 +32,7 @@ def main():
 def login():
     if 'user' in session:
         if 'gamephase' in session:
-            return render_template('continue.html', gamephase=session['gamephase'], username=session['username'])
+            return render_template('continue.html', gamephase=session['gamephase'], username=session['user'])
         else:
             return redirect('/scout/selection')
     if request.method == 'GET':
@@ -57,18 +59,20 @@ def scout(gamephase):
     if gamephase not in gamephases + ['selection', 'comments']:
         return redirect('/login')
     session['gamephase'] = gamephase
-    if gamephase in ['selection','comments']:
-        return render_template('scout-'+gamephase+'.html', username=session['username'])
-    infodict = {}
+    info = {}
     for point in scoutingdata[gamephase]:
-        infodict[point] = session[point] if point in session else ''
-    return render_template('scout-'+gamephase+'.html', info = infodict)
+        info[point] = session[point] if point in session.keys() else ''
+    print(info)
+    return render_template('scout-'+gamephase+'.html', info=info)
 
 @app.route('/select', methods=['POST'])
 def select():
     if 'user' not in session:
         flash('Invalid Session','danger')
         return redirect('/')
+    user = session['user']
+    session.clear()
+    session['user'] = user
     session['team'] = request.form['team']
     session['type'] = request.form['type']
     session['match'] = request.form['match']
@@ -76,9 +80,15 @@ def select():
 
 @app.route('/submit', methods=['POST'])
 def submit():
-    if session['gamephase'] == 'comments':
+    for key in request.form:
+        session[key] = request.form[key]
+    if session['gamephase'] == 'submit':
+        user = session['user']
+        session.clear()
+        session['user'] = user
         flash('Your data has been recorded!','success')
         return redirect('/')
+    return redirect('/scout/'+request.form['next'])
 
 @app.route('/view')
 def view():

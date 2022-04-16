@@ -30,16 +30,16 @@
             <form action="/select" method="post">
                 <div class="input-group mb-3">
                     <select class="form-select" id="inputGroupSelect01" name="type" required>
-                        <option value="Q" selected>Qualification</option>
-                        <option value="QF">Quarterfinal</option>
-                        <option value="SF">Semifinal</option>
-                        <option value="F">Final</option>
+                        <option value="Q" {% if info['type'] == 'Q' %}selected{% endif %}>Qualification</option>
+                        <option value="QF" {% if info['type'] == 'QF' %}selected{% endif %}>Quarterfinal</option>
+                        <option value="SF" {% if info['type'] == 'SF' %}selected{% endif %}>Semifinal</option>
+                        <option value="F" {% if info['type'] == 'F' %}selected{% endif %}>Final</option>
                     </select>
-                    <input type="text" class="form-control" name="match" required>
+                    <input type="text" class="form-control" name="match" value="{{ info['match'] }}" required>
                 </div>
                 <div class="input-group mb-3">
                     <label class="input-group-text" for="inputGroupSelect02">Team Number</label>
-                    <input type="text" class="form-control" name="team" id="inputGroupSelect02" required>
+                    <input type="text" class="form-control" name="team" id="inputGroupSelect02" value="{{ info['team'] }}" required>
                 </div>
                 <div class="dgrid gap-2">
                     <button type="submit" class="btn btn-primary">Start Scouting!</button>
