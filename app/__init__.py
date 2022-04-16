@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, session, flash
-from pymongo import MongoClienta
+from pymongo import MongoClient
 import json
 
 app = Flask(__name__)
@@ -73,6 +73,6 @@ def submit():
 def view():
     return render_template('viewdata.html')
 
-if __name__ = '__main__':
+if __name__ == '__main__':
     app.debug = True
     app.run(host='0.0.0.0')
