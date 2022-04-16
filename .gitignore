@@ -127,3 +127,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Secret Key that I don't want leaked
+secretkey.txt
