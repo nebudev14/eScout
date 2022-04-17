@@ -13,7 +13,7 @@ scoutingdata = {
     'selection': [],
     'auton': ['Mobility', 'High Shot A', 'High Scored A', 'Low Shot A', 'Low Scored A'],
     'teleop': ['High Shot', 'High Scored', 'Low Shot', 'Low Scored', 'Defense on', 'Defense by'],
-    'endgame': ['Climb Start Time', 'Climb Level', 'Climb End Time'],
+    'endgame': ['Climb Start', 'Climb Level', 'Climb End'],
     'comments': ['comments']
 }
 
