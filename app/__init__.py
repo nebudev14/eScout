@@ -33,7 +33,10 @@ def main():
 def login():
     if 'user' in session:
         if 'gamephase' in session:
-            return render_template('continue.html', gamephase=session['gamephase'], username=session['user'])
+            info = {}
+            for point in ['type', 'match', 'team']:
+                info[point] = session[point]
+            return render_template('continue.html', gamephase=session['gamephase'], username=session['user'], info=info)
         else:
             return redirect('/scout/selection')
     if request.method == 'GET':
@@ -44,6 +47,13 @@ def login():
     session.clear()
     session['user'] = request.form['username']
     return redirect('/')
+
+@app.route('/clear')
+def clear():
+    user = session['user']
+    session.clear()
+    session['user'] = user
+    return redirect('/scout/selection')
 
 @app.route('/logout')
 def logout():
@@ -81,7 +91,7 @@ def submit():
         session['Mobility'] = ''
     for key in request.form:
         session[key] = request.form[key]
-    if session['gamephase'] == 'submit':
+    if request.form['next'] == 'submit':
         user = session['user']
         session.clear()
         session['user'] = user
