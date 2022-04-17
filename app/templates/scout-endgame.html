@@ -41,10 +41,11 @@
                 <div class="input-group mb-3">
                     <label class="input-group-text" for="ClimbLevel">Climb Level</label>
                     <select class="form-select" id="inputGroupSelect01" name="Climb Level" required>
-                        <option value="M" {% if info['Climb Level'] == 'M' %}selected{% endif %}>Mid</option>
-                        <option value="L" {% if info['Climb Level'] == 'L' %}selected{% endif %}>Low</option>
-                        <option value="H" {% if info['Climb Level'] == 'H' %}selected{% endif %}>High</option>
-                        <option value="T" {% if info['Climb Level'] == 'T' %}selected{% endif %}>Traversal</option>
+                        <option value="None" {% if info['Climb Level'] == 'None' %}selected{% endif %}>None</option>
+                        <option value="Low" {% if info['Climb Level'] == 'Low' %}selected{% endif %}>Low</option>
+                        <option value="Mid" {% if info['Climb Level'] == 'Mid' %}selected{% endif %}>Mid</option>
+                        <option value="High" {% if info['Climb Level'] == 'High' %}selected{% endif %}>High</option>
+                        <option value="Traverse" {% if info['Climb Level'] == 'Traverse' %}selected{% endif %}>Traversal</option>
                     </select>
                 </div>
                 <div class="input-group mb-3">

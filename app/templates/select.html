@@ -30,8 +30,13 @@
         {% endwith %}
         <div class="alert alert-light" role="alert"></div>
         <div class="d-grid gap-2 col-6 mx-auto">
-            <a class="btn btn-primary py-5 mb-3" href="/login">Start Scouting!</a>
-            <a class="btn btn-secondary" href="/view">View Scouting Data</a>
+            <form method="post">
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="team">Team #</label>
+                    <input type="text" class="form-control" name="team" id="team"}>
+                </div>
+                <button type="submit" class="btn btn-primary">View Data</button>
+            </form>
         </div>
     </body>
 </html>

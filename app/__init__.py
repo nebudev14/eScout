@@ -7,7 +7,7 @@ with open('secretkey.txt') as key_file:
     secretkey = key_file.read()
 app.secret_key = secretkey
 client = MongoClient()
-db = client.scouting_data
+db = client.scouting
 
 scoutingdata = {
     'selection': [],
@@ -16,6 +16,28 @@ scoutingdata = {
     'endgame': ['Climb Start', 'Climb Level', 'Climb End'],
     'comments': ['comments']
 }
+
+def enterData(s):
+    obj = {
+        'match': s['type'] + s['match'],
+        'team': s['team'],
+        'person': s['user'],
+        'mobility': s['Mobility'],
+        'ah': s['High Shot A'],
+        'ahs': s['High Scored A'],
+        'al': s['Low Shot A'],
+        'als': s['Low Scored A'],
+        'th': s['High Shot'],
+        'ths': s['High Scored'],
+        'tl': s['Low Shot'],
+        'tls': s['Low Scored'],
+        'do': s['Defense on'],
+        'db': s['Defense by'],
+        'climb': s['Climb Level'],
+        'time': abs(int(s['Climb Start']) - int(s['Climb End'])),
+        'comment': s['comments']
+    }
+    db.comp.insert_one(obj)
 
 gamephases = ['auton', 'teleop', 'endgame']
 
@@ -46,7 +68,7 @@ def login():
         return redirect('/login')
     session.clear()
     session['user'] = request.form['username']
-    return redirect('/')
+    return redirect('/scout/selection')
 
 @app.route('/clear')
 def clear():
@@ -92,6 +114,7 @@ def submit():
     for key in request.form:
         session[key] = request.form[key]
     if request.form['next'] == 'submit':
+        enterData(session)
         user = session['user']
         session.clear()
         session['user'] = user
@@ -99,9 +122,13 @@ def submit():
         return redirect('/')
     return redirect('/scout/'+request.form['next'])
 
-@app.route('/view')
+@app.route('/view', methods=['POST', 'GET'])
 def view():
-    return render_template('viewdata.html')
+    if request.method == 'GET':
+        return render_template('select.html')
+    matches = db.comp.find({'team': request.form['team']})
+    comments = db.comp.find({'team': request.form['team']})
+    return render_template('viewdata.html', team=request.form['team'], matches=matches, comments=comments)
 
 if __name__ == '__main__':
     app.debug = True

@@ -16,6 +16,7 @@
         <nav class="navbar navbar-light bg-light">
             <div class="container-fluid">
                 <a class="navbar-brand" href="/">eScout</a>
+                <span class="nav-toggler">Team {{ team }}</span>
                 {% if login %}
                 <a class="nav-link" href="/logout">Hi {{username}}! Not you? Logout</a>
                 {% endif %}
@@ -29,9 +30,41 @@
             {% endif %}
         {% endwith %}
         <div class="alert alert-light" role="alert"></div>
-        <div class="d-grid gap-2 col-6 mx-auto">
-            <a class="btn btn-primary py-5 mb-3" href="/login">Start Scouting!</a>
-            <a class="btn btn-secondary" href="/view">View Scouting Data</a>
+        <table class="table">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">Match</th>
+                <th scope="col">Mobility</th>
+                <th scope="col">Auton High</th>
+                <th scope="col">Auton Low</th>
+                <th scope="col">Teleop High</th>
+                <th scope="col">Teleop Low</th>
+                <th scope="col">Defense</th>
+                <th scope="col">Climb</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for entry in matches %}
+              <tr>
+                <td>{{ entry['match'] }}</td>
+                <td>{{ entry['mobility'] }}</td>
+                <td>{{ entry['ahs'] }}/{{ entry['ah'] }}</td>
+                <td>{{ entry['als'] }}/{{ entry['al'] }}</td>
+                <td>{{ entry['ths'] }}/{{ entry['th'] }}</td>  
+                <td>{{ entry['tls'] }}/{{ entry['tl'] }}</td>
+                <td>{% if entry['do'] != '' %}On {{ entry['di'] }}{% endif %} {% if entry['db'] != '' %}By {{ entry['db'] }}{% endif %}</td>
+                <td>{{ entry['climb'] }} in {{ entry['time'] }}s</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+        </table>
+        <div class="container">
+            <ul>
+                {% for entry in comments %}
+                <li>{{ entry['match'] }} - {{ entry['comment'] }} </li>
+                {% endfor %}
+            </ul>
         </div>
+
     </body>
 </html>
