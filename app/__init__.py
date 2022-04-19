@@ -18,6 +18,8 @@ scoutingdata = {
 }
 
 def enterData(s):
+    if s['Climb Start'] == '' or s['Climb End'] == '':
+        s['Climb Start'] = s['Climb End'] = '0'
     obj = {
         'match': s['type'] + s['match'],
         'team': s['team'],
@@ -131,5 +133,4 @@ def view():
     return render_template('viewdata.html', team=request.form['team'], matches=matches, comments=comments)
 
 if __name__ == '__main__':
-    app.debug = True
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0', port=5000)
