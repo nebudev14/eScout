@@ -133,3 +133,4 @@ dmypy.json
 
 # Secret Key that I don't want leaked
 secretkey.txt
+database.txt

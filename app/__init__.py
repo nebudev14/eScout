@@ -1,13 +1,18 @@
 from flask import Flask, render_template, request, redirect, session, flash
 from pymongo import MongoClient
 import json
+import urllib.parse
 
 app = Flask(__name__)
 with open('secretkey.txt') as key_file:
     secretkey = key_file.read()
 app.secret_key = secretkey
-client = MongoClient()
+
+with open('database.txt') as db_file:
+    db_link = db_file.read()
+client = MongoClient(db_link)
 db = client.scouting
+
 
 scoutingdata = {
     'selection': [],
