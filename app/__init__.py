@@ -18,7 +18,10 @@ scoutingdata = {
 }
 
 def enterData(s):
-    if s['Climb Start'] == '' or s['Climb End'] == '':
+    try:
+        int(s['Climb Start'])
+        int(s['Climb End'])
+    except ValueError:
         s['Climb Start'] = s['Climb End'] = '0'
     obj = {
         'match': s['type'] + s['match'],
