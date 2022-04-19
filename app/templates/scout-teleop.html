@@ -45,39 +45,63 @@
             <form action="/submit" method="post">
                 <div class="input-group mb-1">
                     <label class="input-group-text" for="HighShot">High Goal Shot</label>
-                    <input type="number" class="form-control" name="High Shot" id="HighShot" value="{% if info['High Shot'] == '' %}0{% else %}{{ info['High Shot'] }}{% endif %}">
+                    <input type="number" class="form-control" name="High Shot" id="HighShot" value="{% if info['High Shot'] == '' %}0{% else %}{{ info['High Shot'] }}{% endif %}" readonly>
                 </div>
-                <div class="btn-toolbar gap-2 mb-2">
-                    <button type="button" class="btn btn-warning px-4 mx-2" onclick="increment('HighShot', -1)">-1</button>
-                    <button type="button" class="btn btn-secondary px-4 mx-2" onclick="increment('HighShot',1)">+1</button>
-                    <button type="button" class="btn btn-success px-4 mx-2" onclick="increment('HighShot',2)">+2</button>
+                <div class="row mb-2">
+                    <div class="col-4">
+                    <button type="button" class="btn btn-warning" onclick="increment('HighShot', -1)">-1</button>
+                    </div>
+                    <div class="col-4">
+                    <button type="button" class="btn btn-secondary" onclick="increment('HighShot',1)">+1</button>
+                    </div>
+                    <div class="col-4">
+                    <button type="button" class="btn btn-success" onclick="increment('HighShot',2)">+2</button>
+                    </div>
                 </div>
                 <div class="input-group mb-1">
                     <label class="input-group-text" for="HighScored">High Goal Scored</label>
-                    <input type="number" class="form-control" name="High Scored" id="HighScored" value="{% if info['High Scored'] == '' %}0{% else %}{{ info['High Scored'] }}{% endif %}">
+                    <input type="number" class="form-control" name="High Scored" id="HighScored" value="{% if info['High Scored'] == '' %}0{% else %}{{ info['High Scored'] }}{% endif %}" readonly>
                 </div>
-                <div class="btn-toolbar gap-2 mb-2">
-                    <button type="button" class="btn btn-warning px-4 mx-2" onclick="increment('HighScored', -1)">-1</button>
-                    <button type="button" class="btn btn-secondary px-4 mx-2" onclick="increment('HighScored',1)">+1</button>
-                    <button type="button" class="btn btn-success px-4 mx-2" onclick="increment('HighScored',2)">+2</button>
+                <div class="row mb-2">
+                    <div class="col-4">
+                    <button type="button" class="btn btn-warning" onclick="increment('HighScored', -1)">-1</button>
+                    </div>  
+                    <div class="col-4">
+                    <button type="button" class="btn btn-secondary" onclick="increment('HighScored',1)">+1</button>
+                    </div>
+                    <div class="col-4">
+                    <button type="button" class="btn btn-success" onclick="increment('HighScored',2)">+2</button>
+                    </div>
                 </div>
                 <div class="input-group mb-1">
                     <label class="input-group-text" for="LowShot">Low Goal Shot</label>
-                    <input type="number" class="form-control" name="Low Shot" id="LowShot" value="{% if info['Low Shot'] == '' %}0{% else %}{{ info['Low Shot'] }}{% endif %}">
+                    <input type="number" class="form-control" name="Low Shot" id="LowShot" value="{% if info['Low Shot'] == '' %}0{% else %}{{ info['Low Shot'] }}{% endif %}" readonly>
                 </div>
-                <div class="btn-toolbar gap-2 mb-2">
-                    <button type="button" class="btn btn-warning px-4 mx-2" onclick="increment('LowShot', -1)">-1</button>
-                    <button type="button" class="btn btn-secondary px-4 mx-2" onclick="increment('LowShot',1)">+1</button>
-                    <button type="button" class="btn btn-success px-4 mx-2" onclick="increment('LowShot',2)">+2</button>
+                <div class="row mb-2">
+                    <div class="col-4">
+                    <button type="button" class="btn btn-warning" onclick="increment('LowShot', -1)">-1</button>
+                    </div>
+                    <div class="col-4">
+                    <button type="button" class="btn btn-secondary" onclick="increment('LowShot',1)">+1</button>
+                    </div>
+                    <div class="col-4">
+                    <button type="button" class="btn btn-success" onclick="increment('LowShot',2)">+2</button>
+                    </div>
                 </div>
                 <div class="input-group mb-1">
                     <label class="input-group-text" for="LowScored">Low Goal Scored</label>
-                    <input type="number" class="form-control" name="Low Scored" id="LowScored" value="{% if info['Low Scored'] == '' %}0{% else %}{{ info['Low Scored'] }}{% endif %}">
+                    <input type="number" class="form-control" name="Low Scored" id="LowScored" value="{% if info['Low Scored'] == '' %}0{% else %}{{ info['Low Scored'] }}{% endif %}" readonly>
                 </div>
-                <div class="btn-toolbar gap-2 mb-2">
-                    <button type="button" class="btn btn-warning px-4 mx-2" onclick="increment('LowScored', -1)">-1</button>
-                    <button type="button" class="btn btn-secondary px-4 mx-2" onclick="increment('LowScored',1)">+1</button>
-                    <button type="button" class="btn btn-success px-4 mx-2" onclick="increment('LowScored',2)">+2</button>
+                <div class="row mb-2">
+                    <div class="col-4">
+                    <button type="button" class="btn btn-warning" onclick="increment('LowScored', -1)">-1</button>
+                    </div>
+                    <div class="col-4">
+                    <button type="button" class="btn btn-secondary" onclick="increment('LowScored',1)">+1</button>
+                    </div>
+                    <div class="col-4">
+                    <button type="button" class="btn btn-success" onclick="increment('LowScored',2)">+2</button>
+                    </div>
                 </div>
                 <div class="input-group mb-3">
                     <label class="input-group-text" for="DefenseOn">Defense On</label>
@@ -87,9 +111,13 @@
                     <label class="input-group-text" for="DefendedBy">Defended By</label>
                     <input type="text" class="form-control" name="Defense by" id="DefendedBy" value="{{ info['Defended by'] }}">
                 </div>
-                <div class="dgrid gap-2">
+                <div class="row">
+                    <div class="col-6">
                     <button type="submit" class="btn btn-primary" name="next" value="auton">Auton</button>
+                    </div>
+                    <div class="col-6">
                     <button type="submit" class="btn btn-primary" name="next" value="endgame">Endgame</button>
+                    </div>
                 </div>
             </form>
         </div>
