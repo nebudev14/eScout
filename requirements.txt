@@ -1,4 +1,5 @@
 click==8.1.2
+dnspython==2.2.1
 Flask==2.1.1
 importlib-metadata==4.11.3
 itsdangerous==2.1.2
