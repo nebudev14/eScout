@@ -1,7 +1,5 @@
 from flask import Flask, render_template, request, redirect, session, flash
 from pymongo import MongoClient
-import json
-import urllib.parse
 
 app = Flask(__name__)
 with open('secretkey.txt') as key_file:
