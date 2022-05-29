@@ -45,20 +45,20 @@
                 <div id="auton">
                     <h3>Auton</h3>
                 </div>
-                <div class="form-group row mb-2">
-                    <label for="Mobility" class="col-4">Mobility</label>
-                    <div class="col-2">
-                        <input class="form-check-input" type="checkbox" name="Mobility" id="Mobility" value="True">
-                    </div>
-                    <div class="col-6"></div>
+                <div class="input-group mb-2">
+                    <div class="input-group-text">Mobility</div>
+                    <select class="form-select" id="Mobility" name="Mobility" required>
+                        <option value="Y">Yes</option>
+                        <option value="N" selected>No</option>
+                    </select>
                 </div>
                 <div class="form-group row">
                     <label class="col-4">High Goal</label>
                     <div class="col-8">
                         <div class="input-group">
-                            <input type="number" class="form-control" name="High Goal Scored A" id="HighScoredA" value="0" disabled>
+                            <input type="number" class="form-control" name="High Scored A" id="HighScoredA" value="0" readonly>
                             <div class="input-group-text">/</div>
-                            <input type="number" class="form-control" name="High Goal Shot A" id="HighShotA" value="0" disabled>
+                            <input type="number" class="form-control" name="High Shot A" id="HighShotA" value="0" readonly>
                         </div>
                     </div>
                 </div>
@@ -80,9 +80,9 @@
                     <label class="col-4">Low Goal</label>
                     <div class="col-8">
                         <div class="input-group">
-                            <input type="number" class="form-control" name="Low Goal Scored A" id="LowScoredA" value="0" disabled>
+                            <input type="number" class="form-control" name="Low Scored A" id="LowScoredA" value="0" readonly>
                             <div class="input-group-text">/</div>
-                            <input type="number" class="form-control" name="Low Goal Shot A" id="LowShotA" value="0" disabled>
+                            <input type="number" class="form-control" name="Low Shot A" id="LowShotA" value="0" readonly>
                         </div>
                     </div>
                 </div>
@@ -107,9 +107,9 @@
                     <label class="col-4">High Goal</label>
                     <div class="col-8">
                         <div class="input-group">
-                            <input type="number" class="form-control" name="High Goal Scored" id="HighScoredT" value="0" disabled>
+                            <input type="number" class="form-control" name="High Scored" id="HighScoredT" value="0" readonly>
                             <div class="input-group-text">/</div>
-                            <input type="number" class="form-control" name="High Goal Shot" id="HighShotT" value="0" disabled>
+                            <input type="number" class="form-control" name="High Shot" id="HighShotT" value="0" readonly>
                         </div>
                     </div>
                 </div>
@@ -131,9 +131,9 @@
                     <label class="col-4">Low Goal</label>
                     <div class="col-8">
                         <div class="input-group">
-                            <input type="number" class="form-control" name="Low Goal Scored" id="LowScoredT" value="0" disabled>
+                            <input type="number" class="form-control" name="Low Scored" id="LowScoredT" value="0" readonly>
                             <div class="input-group-text">/</div>
-                            <input type="number" class="form-control" name="Low Goal Shot" id="LowShotT" value="0" disabled>
+                            <input type="number" class="form-control" name="Low Shot" id="LowShotT" value="0" readonly>
                         </div>
                     </div>
                 </div>
@@ -172,7 +172,7 @@
                 <div class="input-group mb-1">
                     <label class="input-group-text" for="ClimbLevel">Climb Level</label>
                     <select class="form-select" id="ClimbLevel" name="Climb Level" required>
-                        <option value="None">None</option>
+                        <option value="None" selected>None</option>
                         <option value="Low">Low</option>
                         <option value="Mid">Mid</option>
                         <option value="High">High</option>
@@ -191,7 +191,7 @@
                 </div>
                 <div class="row mb-5">
                     <div class="col-12">
-                    <button type="submit" class="btn btn-primary btn-lg btn-block" name="next" value="submit">Submit</button>
+                    <button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
                     </div>
                 </div>
             </form>

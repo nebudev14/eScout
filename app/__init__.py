@@ -140,8 +140,12 @@ def submit():
 #        flash('Your data has been recorded!','success')
 #        return redirect('/')
 #    return redirect('/scout/'+request.form['next'])
+    print(request.form)
     data = {}
     data['user'] = session['user']
+    data['team'] = session['team']
+    data['type'] = session['type']
+    data['match'] = session['match']
     for key in request.form:
         data[key] = request.form[key]
     enterData(data)
