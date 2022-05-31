@@ -19,6 +19,7 @@ db = client.scouting
 #    'endgame': ['Climb Start', 'Climb Level', 'Climb End'],
 #    'comments': ['comments']
 #}
+event = ''
 
 def enterData(s):
     try:
@@ -103,7 +104,7 @@ def selection():
     if 'user' not in session:
         flash('Invalid Session','danger')
         return redirect('/')
-    return render_template('selection.html')
+    return render_template('selection.html', event=event)
 
 @app.route('/scout')
 def scout():
@@ -121,7 +122,11 @@ def select():
         flash('Invalid Session','danger')
         return redirect('/')
     session['team'] = request.form['team']
-    session['type'] = request.form['type']
+    if request.form['event'] != event:
+        match = request.form['event'] + ' '
+    else:
+        match = ''
+    session['type'] = match + request.form['type']
     session['match'] = request.form['match']
 #    return redirect('/scout/auton')
     return redirect('/scout')
