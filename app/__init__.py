@@ -48,6 +48,67 @@ def enterData(s):
     }
     db.comp.insert_one(obj)
 
+def compute():
+    teamData = db.teams
+    teamData.drop()
+    data = db.comp
+    teams = data.distinct('team')
+    climbPoints = {
+        'None': 0,
+        'Low': 4,
+        'Mid': 6,
+        'High': 10,
+        'Traverse': 15
+    }
+    dataDict = dict()
+    for team in teams:
+        matches = data.find({'team':team})
+        i = j = climb = mobility = time = 0
+        ah = al = th = tl = [0, 0]
+        for match in matches:
+            if match['mobility'] == 'Y':
+                mobility += 1
+            ah = [ah[0] + int(match['ahs']), ah[1] + int(match['ah'])]
+            al = [al[0] + int(match['als']), al[1] + int(match['al'])]
+            th = [th[0] + int(match['ths']), th[1] + int(match['th'])]
+            tl = [tl[0] + int(match['tls']), tl[1] + int(match['tl'])]
+            climb += climbPoints[match['climb']]
+            if match['climb'] != 'None':
+                time += int(match['time'])
+                j += 1
+            i += 1
+        dataDict[team] = {
+            'team': team,
+            'mobility': mobility / i,
+            'ah': ah[1] / i,
+            'ahs': ah[0] / i,
+            'al': al[1] / i,
+            'als': al[0] / i,
+            'th': th[1] / i,
+            'ths': th[0] / i,
+            'tl': tl[1] / i,
+            'tls': tl[0] / i,
+            'clm': climb / i,
+            'time' : 0 if j == 0 else time / j
+        }
+    for team in teams:
+        matches = data.find({'team':team})
+        i = defense = 0
+        for match in matches:
+            if match['do'] in teams:
+                temp = data.find_one({'team':match['do'], 'match':match['match']})
+                defense += 2 * (dataDict[match['do']]['ths'] - int(match['ths'])) + (dataDict[match['do']]['tls'] - int(match['tls'])) + (dataDict[match['do']]['climb'] - climbPoints[match['match']])
+                i += 1
+        if i == 0:
+            dataDict[team]['def'] = -1
+        else:
+            dataDict[team]['def'] = defense / i
+        dataDict[team]['acc'] = -1 if (dataDict[team]['ah'] + dataDict[team]['al'] + dataDict[team]['th'] + dataDict[team]['tl']) == 0 else (dataDict[team]['ahs'] + dataDict[team]['als'] + dataDict[team]['ths'] + dataDict[team]['tls']) / (dataDict[team]['ah'] + dataDict[team]['al'] + dataDict[team]['th'] + dataDict[team]['tl'])
+        dataDict[team]['bal'] = dataDict[team]['ahs'] + dataDict[team]['als'] + dataDict[team]['ths'] + dataDict[team]['tls']
+        dataDict[team]['pts'] = dataDict[team]['ahs'] * 4 + dataDict[team]['als'] * 2 + dataDict[team]['ths'] * 2 + dataDict[team]['tls'] + dataDict[team]['clm']
+        teamData.insert_one(dataDict[team])
+
+
 #gamephases = ['auton', 'teleop', 'endgame']
 
 @app.route('/')
@@ -164,6 +225,14 @@ def view():
     matches = db.comp.find({'team': request.form['team']})
     comments = db.comp.find({'team': request.form['team']})
     return render_template('viewdata.html', team=request.form['team'], matches=matches, comments=comments)
+
+@app.route('/viewall', methods=['POST', 'GET'])
+def viewall():
+    compute()
+    if request.method == 'GET':
+        return render_template('viewall.html', teams=db.teams.find().sort({'pts':-1}))
+    return render_template('viewall.html', teams=db.teams.find().sort(request.form['sort'],-1))
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
