@@ -97,8 +97,9 @@ def compute():
         for match in matches:
             if match['do'] in teams:
                 temp = data.find_one({'team':match['do'], 'match':match['match']})
-                defense += 2 * (dataDict[match['do']]['ths'] - int(match['ths'])) + (dataDict[match['do']]['tls'] - int(match['tls'])) + (dataDict[match['do']]['climb'] - climbPoints[match['match']])
-                i += 1
+                if temp != None > 0:
+                    defense += 2 * (dataDict[match['do']]['ths'] - int(temp['ths'])) + (dataDict[match['do']]['tls'] - int(temp['tls'])) + (dataDict[match['do']]['clm'] - climbPoints[temp['climb']])
+                    i += 1
         if i == 0:
             dataDict[team]['def'] = -1
         else:
