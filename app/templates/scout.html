@@ -34,11 +34,13 @@
 
             function addTeamsDefended(id) {
                 if(document.getElementById(id).value !== "") teamsDefended.push(document.getElementById(id).value);
+                document.getElementById("defenseOnTeams").value = document.getElementById("defenseOnTeams").value + " " + document.getElementById(id).value;
                 document.getElementById(id).value = "";
             }
 
             function addTeamsDefendedBy(id) {
                 if(document.getElementById(id).value !== "") teamsDefendedBy.push(document.getElementById(id).value);
+                document.getElementById("defenseByTeams").value = document.getElementById("defenseByTeams").value + " " + document.getElementById(id).value;
                 document.getElementById(id).value = "";
             }
 
@@ -191,13 +193,15 @@
                     <div class="input-group">
                         <div class="input-group-text">Defense Played On</div>
                         <input type="number" class="form-control" name="Defense on" id="defenseOn">
-                        <button class="btn btn-success btn-sm btn-block" type="button" onclick="addTeamsDefendedBy('defenseOn')">+</button>
+                        <button class="btn btn-success btn-sm btn-block" type="button" onclick="addTeamsDefended('defenseOn')">+</button>
                     </div>
+                    <input class="mb-3 form-control" id="defenseOnTeams" value="" disabled></input>
                     <div class="mt-1 input-group">
                         <div class="input-group-text">Defense On Bot By</div>
                         <input type="number" class="form-control" name="Defense by" id="defenseBy">
                         <button class="btn btn-success btn-sm btn-block" type="button" onclick="addTeamsDefendedBy('defenseBy')">+</button>
                     </div>
+                    <input class="form-control" id="defenseByTeams" value="" disabled></input>
                 </div>
                 <div id="Endgame" class="mt-5">
                     <h3>Endgame</h3>

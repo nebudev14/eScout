@@ -215,7 +215,12 @@ def submit():
     data['match'] = session['match']
     for key in request.form:
         data[key] = request.form[key]
-    enterData(data)
+        print(key)
+    
+    print(request)
+    # data['Defense on']
+    # data['Defense by']
+    # enterData(data)
     flash('Your data has been recorded!','success')
     return redirect('/')
 
