@@ -27,6 +27,21 @@
                 }
             }
             
+            // mid code but wtver
+            let teamsDefended = []; // Teams that the current team defended against
+            let teamsDefendedBy = []; // Teams that held defense on current team
+
+
+            function addTeamsDefended(id) {
+                if(document.getElementById(id).value !== "") teamsDefended.push(document.getElementById(id).value);
+                document.getElementById(id).value = "";
+            }
+
+            function addTeamsDefendedBy(id) {
+                if(document.getElementById(id).value !== "") teamsDefendedBy.push(document.getElementById(id).value);
+                document.getElementById(id).value = "";
+            }
+
         </script>
     
     </head>
@@ -175,11 +190,13 @@
                     <h5>Defense</h5>
                     <div class="input-group">
                         <div class="input-group-text">Defense Played On</div>
-                        <input type="number" class="form-control" name="Defense on">
+                        <input type="number" class="form-control" name="Defense on" id="defenseOn">
+                        <button class="btn btn-success btn-sm btn-block" type="button" onclick="addTeamsDefendedBy('defenseOn')">+</button>
                     </div>
                     <div class="mt-1 input-group">
                         <div class="input-group-text">Defense On Bot By</div>
-                        <input type="number" class="form-control" name="Defense by">
+                        <input type="number" class="form-control" name="Defense by" id="defenseBy">
+                        <button class="btn btn-success btn-sm btn-block" type="button" onclick="addTeamsDefendedBy('defenseBy')">+</button>
                     </div>
                 </div>
                 <div id="Endgame" class="mt-5">
