@@ -52,32 +52,42 @@
                         <option value="N" selected>No</option>
                     </select>
                 </div>
-                <div class="form-group row">
-                    <label class="col-4">High Goal</label>
+                <div class="form-group">
+                    <label class="col-4 mb-2 mt-3">High Goal</label>
+                    <div class="form-group row mb-2">
+                        <div class="col-4">
+                            <button class="btn btn-primary btn-lg btn-block" type="button" onclick="increment(['HighScoredA','HighShotA'])">Score</button>
+                        </div>
+                        <div class="col-4">
+                            <button class="btn btn-danger btn-lg btn-block" type="button" onclick="increment(['HighShotA'])">Miss</button>
+                        </div>
+                    </div>
                     <div class="col-8">
-                        <div class="input-group">
+                        <div class="input-group mb-2">
                             <input type="number" class="form-control" name="High Scored A" id="HighScoredA" value="0" readonly>
                             <div class="input-group-text">/</div>
                             <input type="number" class="form-control" name="High Shot A" id="HighShotA" value="0" readonly>
                         </div>
                     </div>
                 </div>
-                <div class="form-group row">
+                <div class="form-group row mb-3">
                     <div class="col-4">
-                        <button class="btn btn-primary btn-lg btn-block" type="button" onclick="increment(['HighScoredA','HighShotA'])">Score</button>
-                    </div>
-                    <div class="col-4">
-                        <button class="btn btn-danger btn-lg btn-block" type="button" onclick="increment(['HighShotA'])">Miss</button>
-                    </div>
-                    <div class="col-2">
                         <button class="btn btn-warning btn-lg btn-block" type="button" onclick="increment(['HighScoredA'],-1)">-1</button>
                     </div>
-                    <div class="col-2">
+                    <div class="col-4">
                         <button class="btn btn-warning btn-lg btn-block" type="button" onclick="increment(['HighShotA'],-1)">-1 </button>
                     </div>
                 </div>
-                <div class="form-group row mt-3">
-                    <label class="col-4">Low Goal</label>
+                <div class="form-group mb-3">
+                    <label class="col-4 mb-2 mt-3">Low Goal</label>
+                    <div class="form-group row mb-2">
+                        <div class="col-4">
+                            <button class="btn btn-primary btn-lg btn-block" type="button" onclick="increment(['LowScoredA','LowShotA'])">Score</button>
+                        </div>
+                        <div class="col-4">
+                            <button class="btn btn-danger btn-lg btn-block" type="button" onclick="increment(['LowShotA'])">Miss</button>
+                        </div>
+                    </div>
                     <div class="col-8">
                         <div class="input-group">
                             <input type="number" class="form-control" name="Low Scored A" id="LowScoredA" value="0" readonly>
@@ -86,68 +96,66 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group row">
+                <div class="form-group row mb-3">
                     <div class="col-4">
-                        <button class="btn btn-primary btn-lg btn-block" type="button" onclick="increment(['LowScoredA','LowShotA'])">Score</button>
-                    </div>
-                    <div class="col-4">
-                        <button class="btn btn-danger btn-lg btn-block" type="button" onclick="increment(['LowShotA'])">Miss</button>
-                    </div>
-                    <div class="col-2">
                         <button class="btn btn-warning btn-lg btn-block" type="button" onclick="increment(['LowScoredA'],-1)">-1</button>
                     </div>
-                    <div class="col-2">
+                    <div class="col-4">
                         <button class="btn btn-warning btn-lg btn-block" type="button" onclick="increment(['LowShotA'],-1)">-1 </button>
                     </div>
                 </div>
                 <div id="Teleop" class="mt-5">
                     <h3>Teleop</h3>
                 </div>
-                <div class="form-group row">
-                    <label class="col-4">High Goal</label>
+                <div class="form-group">
+                    <label class="col-4 mb-2">High Goal</label>
+                    <div class="form-group row mb-2">
+                        <div class="col-4">
+                            <button class="btn btn-primary btn-lg btn-block" type="button" onclick="increment(['HighScoredT','HighShotT'])">Score</button>
+                        </div>
+                        <div class="col-4">
+                            <button class="btn btn-danger btn-lg btn-block" type="button" onclick="increment(['HighShotT'])">Miss</button>
+                        </div>
+                    </div>
                     <div class="col-8">
-                        <div class="input-group">
+                        <div class="input-group mb-2">
                             <input type="number" class="form-control" name="High Scored" id="HighScoredT" value="0" readonly>
                             <div class="input-group-text">/</div>
                             <input type="number" class="form-control" name="High Shot" id="HighShotT" value="0" readonly>
                         </div>
                     </div>
                 </div>
-                <div class="form-group row">
+                <div class="form-group row mb-3">
                     <div class="col-4">
-                        <button class="btn btn-primary btn-lg btn-block" type="button" onclick="increment(['HighScoredT','HighShotT'])">Score</button>
-                    </div>
-                    <div class="col-4">
-                        <button class="btn btn-danger btn-lg btn-block" type="button" onclick="increment(['HighShotT'])">Miss</button>
-                    </div>
-                    <div class="col-2">
                         <button class="btn btn-warning btn-lg btn-block" type="button" onclick="increment(['HighScoredT'],-1)">-1</button>
                     </div>
-                    <div class="col-2">
+                    <div class="col-4">
                         <button class="btn btn-warning btn-lg btn-block" type="button" onclick="increment(['HighShotT'],-1)">-1 </button>
                     </div>
                 </div>
                 <div class="form-group row mt-3">
-                    <label class="col-4">Low Goal</label>
+                    <label class="col-4 mb-2">Low Goal</label>
+                    <div class="form-group row mb-2">
+                        <div class="col-4">
+                            <button class="btn btn-primary btn-lg btn-block" type="button" onclick="increment(['LowScoredT','LowShotT'])">Score</button>
+                        </div>
+                        <div class="col-4">
+                            <button class="btn btn-danger btn-lg btn-block" type="button" onclick="increment(['LowShotT'])">Miss</button>
+                        </div>
+                    </div>
                     <div class="col-8">
-                        <div class="input-group">
+                        <div class="input-group mb-2">
                             <input type="number" class="form-control" name="Low Scored" id="LowScoredT" value="0" readonly>
                             <div class="input-group-text">/</div>
                             <input type="number" class="form-control" name="Low Shot" id="LowShotT" value="0" readonly>
                         </div>
                     </div>
                 </div>
-                <div class="form-group row">
+                <div class="form-group row mb-3">
                     <div class="col-4">
-                        <button class="btn btn-primary btn-lg btn-block" type="button" onclick="increment(['LowScoredT','LowShotT'])">Score</button>
-                    </div>
-                    <div class="col-4">
-                        <button class="btn btn-danger btn-lg btn-block" type="button" onclick="increment(['LowShotT'])">Miss</button>
-                    </div>
-                    <div class="col-2">
                         <button class="btn btn-warning btn-lg btn-block" type="button" onclick="increment(['LowScoredT'],-1)">-1</button>
                     </div>
-                    <div class="col-2">
+                    <div class="col-4">
                         <button class="btn btn-warning btn-lg btn-block" type="button" onclick="increment(['LowShotT'],-1)">-1 </button>
                     </div>
                 </div>
