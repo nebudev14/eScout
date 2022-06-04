@@ -20,6 +20,13 @@
                     document.getElementById(id[i]).value = x;
                 }
             }
+
+            function resetScore(id) {
+                for(let i = 0; i < id.length; i++) {
+                    document.getElementById(id[i]).value = 0;
+                }
+            }
+            
         </script>
     
     </head>
@@ -40,12 +47,12 @@
             {% endif %}
         {% endwith %}
         <div class="alert alert-light" role="alert"></div>
-        <div class="d-grid col-8 mx-auto">
+        <div class="mx-auto d-grid col-8">
             <form action="/submit" method="post">
                 <div id="auton">
                     <h3>Auton</h3>
                 </div>
-                <div class="input-group mb-2">
+                <div class="mb-2 input-group">
                     <div class="input-group-text">Mobility</div>
                     <select class="form-select" id="Mobility" name="Mobility" required>
                         <option value="Y">Yes</option>
@@ -53,8 +60,8 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label class="col-4 mb-2 mt-3">High Goal</label>
-                    <div class="form-group row mb-2">
+                    <label class="mt-3 mb-2 col-4">High Goal</label>
+                    <div class="mb-2 form-group row">
                         <div class="col-4">
                             <button class="btn btn-primary btn-lg btn-block" type="button" onclick="increment(['HighScoredA','HighShotA'])">Score</button>
                         </div>
@@ -63,14 +70,16 @@
                         </div>
                     </div>
                     <div class="col-8">
-                        <div class="input-group mb-2">
+                        <div class="mb-2 input-group">
                             <input type="number" class="form-control" name="High Scored A" id="HighScoredA" value="0" readonly>
                             <div class="input-group-text">/</div>
                             <input type="number" class="form-control" name="High Shot A" id="HighShotA" value="0" readonly>
+                            <button class="btn btn-dark btn-sm btn-block" type="button" onclick="resetScore(['HighScoredA', 'HighShotA'])">Reset</button>
+
                         </div>
                     </div>
                 </div>
-                <div class="form-group row mb-3">
+                <div class="mb-3 form-group row">
                     <div class="col-4">
                         <button class="btn btn-warning btn-lg btn-block" type="button" onclick="increment(['HighScoredA'],-1)">-1</button>
                     </div>
@@ -78,9 +87,9 @@
                         <button class="btn btn-warning btn-lg btn-block" type="button" onclick="increment(['HighShotA'],-1)">-1 </button>
                     </div>
                 </div>
-                <div class="form-group mb-3">
-                    <label class="col-4 mb-2 mt-3">Low Goal</label>
-                    <div class="form-group row mb-2">
+                <div class="mb-3 form-group">
+                    <label class="mt-3 mb-2 col-4">Low Goal</label>
+                    <div class="mb-2 form-group row">
                         <div class="col-4">
                             <button class="btn btn-primary btn-lg btn-block" type="button" onclick="increment(['LowScoredA','LowShotA'])">Score</button>
                         </div>
@@ -93,10 +102,11 @@
                             <input type="number" class="form-control" name="Low Scored A" id="LowScoredA" value="0" readonly>
                             <div class="input-group-text">/</div>
                             <input type="number" class="form-control" name="Low Shot A" id="LowShotA" value="0" readonly>
+                            <button class="btn btn-dark btn-sm btn-block" type="button" onclick="resetScore(['LowScoredA', 'LowShotA'])">Reset</button>
                         </div>
                     </div>
                 </div>
-                <div class="form-group row mb-3">
+                <div class="mb-3 form-group row">
                     <div class="col-4">
                         <button class="btn btn-warning btn-lg btn-block" type="button" onclick="increment(['LowScoredA'],-1)">-1</button>
                     </div>
@@ -108,8 +118,8 @@
                     <h3>Teleop</h3>
                 </div>
                 <div class="form-group">
-                    <label class="col-4 mb-2">High Goal</label>
-                    <div class="form-group row mb-2">
+                    <label class="mb-2 col-4">High Goal</label>
+                    <div class="mb-2 form-group row">
                         <div class="col-4">
                             <button class="btn btn-primary btn-lg btn-block" type="button" onclick="increment(['HighScoredT','HighShotT'])">Score</button>
                         </div>
@@ -118,14 +128,15 @@
                         </div>
                     </div>
                     <div class="col-8">
-                        <div class="input-group mb-2">
+                        <div class="mb-2 input-group">
                             <input type="number" class="form-control" name="High Scored" id="HighScoredT" value="0" readonly>
                             <div class="input-group-text">/</div>
                             <input type="number" class="form-control" name="High Shot" id="HighShotT" value="0" readonly>
+                            <button class="btn btn-dark btn-sm btn-block" type="button" onclick="resetScore(['HighScoredT', 'HighShotT'])">Reset</button>
                         </div>
                     </div>
                 </div>
-                <div class="form-group row mb-3">
+                <div class="mb-3 form-group row">
                     <div class="col-4">
                         <button class="btn btn-warning btn-lg btn-block" type="button" onclick="increment(['HighScoredT'],-1)">-1</button>
                     </div>
@@ -133,9 +144,9 @@
                         <button class="btn btn-warning btn-lg btn-block" type="button" onclick="increment(['HighShotT'],-1)">-1 </button>
                     </div>
                 </div>
-                <div class="form-group row mt-3">
-                    <label class="col-4 mb-2">Low Goal</label>
-                    <div class="form-group row mb-2">
+                <div class="mt-3 form-group">
+                    <label class="mb-2 col-4">Low Goal</label>
+                    <div class="mb-2 form-group row">
                         <div class="col-4">
                             <button class="btn btn-primary btn-lg btn-block" type="button" onclick="increment(['LowScoredT','LowShotT'])">Score</button>
                         </div>
@@ -144,14 +155,15 @@
                         </div>
                     </div>
                     <div class="col-8">
-                        <div class="input-group mb-2">
+                        <div class="mb-2 input-group">
                             <input type="number" class="form-control" name="Low Scored" id="LowScoredT" value="0" readonly>
                             <div class="input-group-text">/</div>
                             <input type="number" class="form-control" name="Low Shot" id="LowShotT" value="0" readonly>
+                            <button class="btn btn-dark btn-sm btn-block" type="button" onclick="resetScore(['LowScoredT', 'LowShotT'])">Reset</button>
                         </div>
                     </div>
                 </div>
-                <div class="form-group row mb-3">
+                <div class="mb-3 form-group row">
                     <div class="col-4">
                         <button class="btn btn-warning btn-lg btn-block" type="button" onclick="increment(['LowScoredT'],-1)">-1</button>
                     </div>
@@ -165,7 +177,7 @@
                         <div class="input-group-text">Defense Played On</div>
                         <input type="number" class="form-control" name="Defense on">
                     </div>
-                    <div class="input-group mt-1">
+                    <div class="mt-1 input-group">
                         <div class="input-group-text">Defense On Bot By</div>
                         <input type="number" class="form-control" name="Defense by">
                     </div>
@@ -173,11 +185,11 @@
                 <div id="Endgame" class="mt-5">
                     <h3>Endgame</h3>
                 </div>
-                <div class="input-group mb-1">
+                <div class="mb-1 input-group">
                     <label class="input-group-text" for="ClimbStart">Climb Start Time</label>
                     <input type="number" class="form-control" name="Climb Start" id="DefenseOn">
                 </div>
-                <div class="input-group mb-1">
+                <div class="mb-1 input-group">
                     <label class="input-group-text" for="ClimbLevel">Climb Level</label>
                     <select class="form-select" id="ClimbLevel" name="Climb Level" required>
                         <option value="None" selected>None</option>
@@ -187,17 +199,17 @@
                         <option value="Traverse">Traversal</option>
                     </select>
                 </div>
-                <div class="input-group mb-1">
+                <div class="mb-1 input-group">
                     <label class="input-group-text" for="ClimbEnd">Climb End Time</label>
                     <input type="number" class="form-control" name="Climb End" id="ClimbEnd">
                 </div>
                 <div id="Comments" class="mt-5">
                     <h3>Comments</h3>
                 </div>
-                <div class="form-group mb-1">
+                <div class="mb-1 form-group">
                     <textarea class="form-control" name="comments" rows="10" id="comments"></textarea>
                 </div>
-                <div class="row mb-5">
+                <div class="mb-5 row">
                     <div class="col-12">
                     <button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
                     </div>
