@@ -5,7 +5,7 @@ import "../styles/globals.css";
 function App({ Component, pageProps }) {
   return (
     <SessionProvider session={pageProps.session}>
-      <div className="text-white bg-black">
+      <div className="bg-slate-100">
         <Nav />
         <Component {...pageProps} />{" "}
       </div>
