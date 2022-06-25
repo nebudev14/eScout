@@ -6,6 +6,7 @@ export default function Home() {
   const { data: session, isLoading } = useSession();
 
   console.log(session)
+  
 
   return (
     <>

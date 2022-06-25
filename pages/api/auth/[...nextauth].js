@@ -2,24 +2,26 @@ import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
 export default NextAuth({
-    providers: [
-        GoogleProvider({
-            clientId: process.env.GOOGLE_CLIENT_ID,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-            
-        })
-    ],
-    jwt: {
-        encryption: true,
+  providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    }),
+  ],
+  events: {
+    async signIn({ user }) {
+      // console.log(user);
     },
-    secret: process.env.secret,
-    callbacks: {
-        async jwt(token, account) {
-            if (account?.accessToken) {
-                token.accessToken = account.accessToken
-            }
-            return token;
-        },
-
-    }
-})
+  },
+  jwt: {
+    encryption: true,
+  },
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.user = user;
+      }
+      return token;
+    },
+  },
+});
