@@ -10,7 +10,7 @@ export default NextAuth({
   ],
   events: {
     async signIn({ user }) {
-      // console.log(user);
+      console.log(user)
     },
   },
   jwt: {

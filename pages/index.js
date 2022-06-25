@@ -1,15 +1,14 @@
 import Head from "next/head";
 import Image from "next/image";
+import Protected from "../components/Protected";
 import { signIn, signOut, useSession } from "next-auth/react";
 
 export default function Home() {
   const { data: session, isLoading } = useSession();
 
-  console.log(session)
-  
 
   return (
-    <>
+    <Protected>
       {isLoading ? (
         <h1 className="text-white">Loading...</h1>
       ) : (
@@ -33,6 +32,6 @@ export default function Home() {
           </button>
         </div>
       )}
-    </>
+    </Protected>
   );
 }
