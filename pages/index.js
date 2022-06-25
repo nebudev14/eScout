@@ -1,11 +1,9 @@
-import Head from "next/head";
-import Image from "next/image";
+import Link from "next/link";
 import Protected from "../components/Protected";
 import { signIn, signOut, useSession } from "next-auth/react";
 
 export default function Home() {
   const { data: session, isLoading } = useSession();
-
 
   return (
     <Protected>
@@ -19,10 +17,11 @@ export default function Home() {
           >
             Sign in
           </button> */}
-
-          <button className="p-4 mb-4 text-white duration-200 border border-pink-600 rounded-xl hover:bg-pink-600">
-            Start scouting!
-          </button>
+          <Link href="/scout" passHref>
+            <button className="p-4 mb-4 text-white duration-200 border border-pink-600 rounded-xl hover:bg-pink-600">
+              Start scouting!
+            </button>
+          </Link>
           <button className="px-8 py-4 text-white duration-200 border rounded-xl border-cyan-400 hover:bg-cyan-400">
             View scouting data
           </button>
