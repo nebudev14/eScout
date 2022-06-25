@@ -13,17 +13,13 @@ export default function Home() {
         <h1 className="text-white">Loading...</h1>
       ) : (
         <div className="flex flex-col items-center justify-center h-screen">
-          <button
+          {/* <button
             className="p-4 mb-4 text-white duration-200 border border-green-400 rounded-xl hover:border-green-400"
             onClick={() => signIn()}
           >
             Sign in
-          </button>
-          {session && (
-            <div>
-              <h1 className="text-white">{session.user.email}</h1>
-            </div>
-          )}
+          </button> */}
+
           <button className="p-4 mb-4 text-white duration-200 border border-pink-600 rounded-xl hover:bg-pink-600">
             Start scouting!
           </button>
