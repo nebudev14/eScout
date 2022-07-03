@@ -9,12 +9,19 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@prisma/client": "4.0.0",
+    "@trpc/client": "^9.25.3",
+    "@trpc/next": "^9.25.3",
+    "@trpc/react": "^9.25.3",
+    "@trpc/server": "^9.25.3",
     "dotenv": "^16.0.1",
     "next": "12.2.0",
     "next-auth": "^4.8.0",
+    "prisma": "^4.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-icons": "^4.4.0"
+    "react-icons": "^4.4.0",
+    "react-query": "^3.39.1"
   },
   "devDependencies": {
     "@types/node": "18.0.0",
