@@ -4,7 +4,7 @@ import { SessionProvider } from "next-auth/react";
 import { Nav } from "../components/nav";
 import "../styles/globals.css";
 import { withTRPC } from "@trpc/next";
-import type { AppRouter } from "../server/router";
+import type { AppRouter } from "../server/routers/app";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
