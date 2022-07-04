@@ -17,16 +17,16 @@ model User {
 }
 
 model Team {
-  name   String
-  number Int    @unique
-
-  creator   User    @relation(fields: [creatorId], references: [id], name: "created")
+  name      String
+  number    Int     @unique
   creatorId String  @id
+  creator   User    @relation(fields: [creatorId], references: [id], name: "created")
   members   User[]  @relation(name: "members")
   entries   Entry[]
 }
 
 model Entry {
-  id  String @id
-  
+  id         String @id
+  team       Team   @relation(fields: [teamNumber], references: [number])
+  teamNumber Int
 }
