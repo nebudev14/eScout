@@ -8,17 +8,25 @@ datasource db {
 }
 
 model User {
-  id    String @id
-  name  String
-  email String
-  image String
-  team  Team?
+  id           String @id
+  name         String
+  email        String
+  image        String
+  teamsCreated Team[] @relation(name: "created")
+  teamsJoined  Team[] @relation(name: "members")
 }
 
 model Team {
   name   String
   number Int    @unique
 
-  creator   User   @relation(fields: [creatorId], references: [id])
-  creatorId String @id
+  creator   User    @relation(fields: [creatorId], references: [id], name: "created")
+  creatorId String  @id
+  members   User[]  @relation(name: "members")
+  entries   Entry[]
+}
+
+model Entry {
+  id  String @id
+  
 }
