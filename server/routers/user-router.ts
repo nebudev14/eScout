@@ -4,7 +4,7 @@ import { z } from "zod";
 export const userRouter = createRouter()
   .mutation("create", {
     input: z.object({
-      id: z.string().uuid(),
+      id: z.string(),
       name: z.string(),
       email: z.string(),
       image: z.string(),

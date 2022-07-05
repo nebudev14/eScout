@@ -1,10 +1,10 @@
 import type { NextPage } from "next";
 import Link from "next/link";
 import { Protected } from "../components/auth/Protected";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { useMutation } from "../hooks/trpc";
 
 const Home: NextPage = () => {
-  const { data: session } = useSession();
+  const user = useMutation("user.create");
 
   return (
     <Protected>
@@ -23,7 +23,17 @@ const Home: NextPage = () => {
             Scout!
           </button>
         </Link>
-        <button className="px-8 py-4 text-xl text-white duration-200 bg-purple-500 border rounded-lg hover:bg-purple-400">
+        <button
+          className="px-8 py-4 text-xl text-white duration-200 bg-purple-500 border rounded-lg hover:bg-purple-400"
+          onClick={async () => {
+            await user.mutateAsync({
+              id: "b",
+              name: "warren",
+              email: "dasf",
+              image: "asdf",
+            });
+          }}
+        >
           View scouting data
         </button>
       </div>
