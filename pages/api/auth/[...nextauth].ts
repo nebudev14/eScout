@@ -11,20 +11,10 @@ export default NextAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
   ],
-  events: {
-    async signIn({ user }) {
-      console.log(user);
-    },
-  },
   callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        token.user = user;
-      }
-      return token;
-    },
     async session({ session, user }) {
       session.user = user;
+      
       return session;
     }
   },
