@@ -1,13 +1,12 @@
 import type { NextPage } from "next";
 import Link from "next/link";
-import { Protected } from "../components/auth/Protected";
+import { Protected } from "../components/auth/protected";
 import { useMutation } from "../hooks/trpc";
 import { useSession } from "next-auth/react";
 
 const Home: NextPage = () => {
   const user = useMutation("user.create");
-  const { data } = useSession();
-  
+
   return (
     <Protected>
       <div className="flex flex-col items-center justify-center h-screen">
