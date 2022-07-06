@@ -1,14 +1,9 @@
 import { createRouter } from "../create-router";
-import { z } from "zod";
+import { createUserSchema, getUserSchema } from "../schemas/user-schemas";
 
 export const userRouter = createRouter()
   .mutation("create", {
-    input: z.object({
-      id: z.string(),
-      name: z.string(),
-      email: z.string(),
-      image: z.string(),
-    }),
+    input: createUserSchema,
     async resolve({ input, ctx }) {
       return await ctx.prisma.user.create({
         data: {
@@ -21,9 +16,7 @@ export const userRouter = createRouter()
     },
   })
   .query("get-by-id", {
-    input: z.object({
-      userId: z.string().uuid(),
-    }),
+    input: getUserSchema,
     async resolve({ ctx, input }) {
       return await ctx.prisma.user.findUnique({
         where: { id: input.userId },
