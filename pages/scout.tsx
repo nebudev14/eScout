@@ -18,7 +18,7 @@ const Scout: NextPage = () => {
               <option>Semifinal</option>
               <option>Final</option>
             </select>
-            <Input id="matchNumber" placeholder="Match number" />
+            <Input id="matchNumber" placeholder="Match number" readonly={false} />
           </Container>
           <Container>
             

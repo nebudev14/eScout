@@ -1,8 +1,16 @@
 import React from "react";
 
-export const Input: React.FC<React.PropsWithChildren<{ id: string, placeholder: string }>> = ({
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  children?: React.ReactNode;
+  id: string,
+  placeholder?: string
+  readonly: boolean,
+}
+
+export const Input: React.FC<InputProps> = ({
   children,
   id,
+  readonly,
   placeholder
 }) => {
   return (
@@ -10,6 +18,7 @@ export const Input: React.FC<React.PropsWithChildren<{ id: string, placeholder: 
       className="p-2 text-lg leading-tight border rounded shadow focus:outline-none focus:shadow-outline"
       id={id}
       autoComplete="off"
+      readOnly={readonly}
       placeholder={placeholder}
     >
       {children}
