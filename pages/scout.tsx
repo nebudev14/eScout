@@ -1,13 +1,24 @@
 import type { NextPage } from "next";
+import React, { FormEventHandler } from "react";
 import { Protected } from "../components/auth/protected";
 import { Container } from "../components/ui/container";
 import { Input } from "../components/ui/input";
+
+
+const submitData = async (event: React.SyntheticEvent) => {
+  event.preventDefault();
+  const target = event.target as typeof event.target & {
+    matchNumber: { value: string };
+  }
+
+  console.log(target.matchNumber.value);
+}
 
 const Scout: NextPage = () => {
   return (
     <Protected>
       <div className="flex items-start justify-center h-screen p-4">
-        <form>
+        <form onSubmit={submitData}>
           <Container>
             <select
               id="matchType"
@@ -26,6 +37,9 @@ const Scout: NextPage = () => {
           <div className="grid grid-cols-1">
             <Input id="eventName" readonly={false} placeholder="Event name" />
           </div>
+          <button type="submit">
+            submit!!
+          </button>
         </form>
       </div>
     </Protected>
