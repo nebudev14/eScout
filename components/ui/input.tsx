@@ -1,8 +1,8 @@
 import React from "react";
 
-interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+interface InputProps {
   children?: React.ReactNode;
-  id: string,
+  id?: string,
   placeholder?: string
   readonly: boolean,
 }
@@ -20,6 +20,7 @@ export const Input: React.FC<InputProps> = ({
       autoComplete="off"
       readOnly={readonly}
       placeholder={placeholder}
+      required
     >
       {children}
     </input>

@@ -20,9 +20,12 @@ const Scout: NextPage = () => {
             </select>
             <Input id="matchNumber" placeholder="Match number" readonly={false} />
           </Container>
-          <Container>
-            
-          </Container>
+          <div className="grid grid-cols-1">
+            <Input id="teamNumber" readonly={false} placeholder="Team number" />
+          </div>
+          <div className="grid grid-cols-1">
+            <Input id="eventName" readonly={false} placeholder="Event name" />
+          </div>
         </form>
       </div>
     </Protected>
