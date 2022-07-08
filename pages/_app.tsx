@@ -1,7 +1,7 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { SessionProvider } from "next-auth/react";
-import { Nav } from "../components/nav";
+import { Nav } from "../components/ui/nav";
 import "../styles/globals.css";
 import { withTRPC } from "@trpc/next";
 import type { AppRouter } from "../server/routers/app";
