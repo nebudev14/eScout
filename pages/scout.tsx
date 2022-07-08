@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import React, { FormEventHandler } from "react";
+import React from "react";
 import { Protected } from "../components/auth/protected";
 import { Container } from "../components/ui/container";
 import { Input } from "../components/ui/input";
@@ -17,8 +17,8 @@ const submitData = async (event: React.SyntheticEvent) => {
 const Scout: NextPage = () => {
   return (
     <Protected>
-      <div className="flex items-start justify-center h-screen p-4">
-        <form onSubmit={submitData}>
+      <div className="h-screen p-4">
+        <form onSubmit={submitData} className="grid grid-cols-1">
           <Container>
             <select
               id="matchType"
@@ -31,14 +31,10 @@ const Scout: NextPage = () => {
             </select>
             <Input id="matchNumber" placeholder="Match number" readonly={false} />
           </Container>
-          <div className="grid grid-cols-1">
-            <Input id="teamNumber" readonly={false} placeholder="Team number" />
-          </div>
-          <div className="grid grid-cols-1">
-            <Input id="eventName" readonly={false} placeholder="Event name" />
-          </div>
-          <button type="submit">
-            submit!!
+          <Input id="teamNumber" readonly={false} placeholder="Team number" />
+          <Input id="eventName" readonly={false} placeholder="Event name" />  
+          <button type="submit" className="p-2 mt-2 text-lg text-white bg-teal-500 rounded shadow focus:outline-none focus:shadow-outline hover:bg-teal-700">
+            Submit
           </button>
         </form>
       </div>
