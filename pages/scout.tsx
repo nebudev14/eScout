@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import { Protected } from "../components/auth/protected";
 import { Container } from "../components/ui/container";
+import { Input } from "../components/ui/input";
 
 const Scout: NextPage = () => {
   return (
@@ -17,8 +18,11 @@ const Scout: NextPage = () => {
               <option>Semifinal</option>
               <option>Final</option>
             </select>
-            <input id="matchNumber" className="p-2 text-lg leading-tight border rounded shadow focus:outline-none focus:shadow-outline" />
-            </Container>
+            <Input id="matchNumber" placeholder="Match number" />
+          </Container>
+          <Container>
+            
+          </Container>
         </form>
       </div>
     </Protected>
