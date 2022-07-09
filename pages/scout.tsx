@@ -6,6 +6,7 @@ import { MatchInfo } from "../components/ui/form/match-info";
 import { ScoreBoard } from "../components/ui/form/score-board";
 import { Input } from "../components/ui/input";
 import { MatchType } from "@prisma/client";
+import { getNumberById } from "../util/get-number-by-id";
 
 const submitData = async (event: React.SyntheticEvent) => {
   event.preventDefault();
@@ -25,15 +26,15 @@ const submitData = async (event: React.SyntheticEvent) => {
     eventName: target.eventName.value,
     mobility: (target.mobility.value === "yes"),
     
-    autoHighShotsMade: Number(document.getElementById("autoHighGoalShots")?.innerText),
-    autoHighShotsTotal: Number(document.getElementById("autoHighGoalTotal")?.innerText),
-    autoLowShotsMade: Number(document.getElementById("autoLowGoalShots")?.innerText),
-    autoLowShotsTotal: Number(document.getElementById("autoLowGoalTotal")?.innerText),
+    autoHighShotsMade: getNumberById("autoHighGoalShots"),
+    autoHighShotsTotal: getNumberById("autoHighGoalTotal"),
+    autoLowShotsMade: getNumberById("autoLowGoalShots"),
+    autoLowShotsTotal: getNumberById("autoLowGoalTotal"),
     
-    teleopHighShotsMade: Number(document.getElementById("teleopHighGoalShots")?.innerText),
-    teleopHighShotsTotal: Number(document.getElementById("teleopHighGoalTotal")?.innerText),
-    teleopLowShotsMade: Number(document.getElementById("teleopLowGoalShots")?.innerText),
-    teleopLowShotsTotal: Number(document.getElementById("teleopLowGoalTotal")?.innerText),
+    teleopHighShotsMade: getNumberById("teleopHighGoalShots"),
+    teleopHighShotsTotal: getNumberById("teleopHighGoalTotal"),
+    teleopLowShotsMade: getNumberById("teleopLowGoalShots"),
+    teleopLowShotsTotal: getNumberById("teleopLowGoalTotal"),
     
   };
 
@@ -148,6 +149,7 @@ const Scout: NextPage = () => {
             className="p-4 border rounded-xl border-slate-300"
             autoComplete="off"
             rows={10}
+            placeholder="Team 1155 and 2265 popped off this round!"
           />
           <button
             type="submit"
