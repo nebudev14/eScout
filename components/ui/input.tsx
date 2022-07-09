@@ -4,16 +4,11 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   children?: React.ReactNode;
 }
 
-export const Input: React.FC<InputProps> = ({
-  children,
-  ...rest
-}) => {
+export const Input: React.FC<InputProps> = ({ ...rest }) => {
   return (
     <input
       {...rest}
       className="p-2 text-lg leading-tight border rounded shadow focus:outline-none focus:shadow-outline"
-    >
-      {children}
-    </input>
+    />
   );
 };

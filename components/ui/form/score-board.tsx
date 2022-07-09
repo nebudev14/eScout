@@ -11,7 +11,7 @@ export const ScoreBoard: React.FC<{ label: string; id: string }> = ({
   return (
     <div className="mt-2">
       <Container>
-        <label className="p-2 text-lg font-semibold leading-tight border rounded shadow focus:outline-none focus:shadow-outline">
+        <label className="p-2 text-lg font-semibold leading-tight border rounded shadow bg-slate-200 focus:outline-none focus:shadow-outline">
           {label}
         </label>
         <div className="flex items-center text-lg font-medium leading-tight border rounded shadow focus:outline-none focus:shadow-outline justify-evenly">
