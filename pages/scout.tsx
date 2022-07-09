@@ -5,12 +5,20 @@ import { Container } from "../components/ui/container";
 import { MatchInfo } from "../components/ui/form/match-info";
 import { ScoreBoard } from "../components/ui/form/score-board";
 import { Input } from "../components/ui/input";
+import { MatchType } from "@prisma/client";
 
 const submitData = async (event: React.SyntheticEvent) => {
   event.preventDefault();
   const target = event.target as typeof event.target & {
+    // Match Info
+    matchType: { value: MatchType };
     matchNumber: { value: string };
     teamNumber: { value: string };
+    eventName: { value: string };
+  };
+
+  const data = {
+    
   };
 
   console.log(document.getElementById("highGoalShots")?.innerText);
@@ -21,6 +29,7 @@ const Scout: NextPage = () => {
     <Protected>
       <div className="h-full px-56 py-4 lg:px-4">
         <form onSubmit={submitData} className="grid grid-cols-1">
+          <h1 className="mt-4 mb-2 text-3xl font-semibold">Match Info</h1>
           <MatchInfo />
           <h1 className="mb-4 text-3xl font-semibold">Auto</h1>
           <Container>
@@ -31,8 +40,8 @@ const Scout: NextPage = () => {
               id="mobility"
               className="p-2 text-lg leading-tight border rounded shadow focus:outline-none focus:shadow-outline"
             >
-              <option>No</option>
-              <option>Yes</option>
+              <option value="false" >No</option>
+              <option value="true" >Yes</option>
             </select>
           </Container>
           <ScoreBoard label="High Goal" id="autoHighGoal" />
@@ -53,7 +62,7 @@ const Scout: NextPage = () => {
                   placeholder="Team number"
                   autoComplete="off"
                 />
-                <button className="flex items-center justify-center px-2 text-white bg-blue-500 border-t border-b border-l rounded-r p bg-blue-lighter border-blue-lighter text-blue-dark">
+                <button className="flex items-center justify-center px-4 text-white bg-blue-500 border-t border-b border-l rounded-r p bg-blue-lighter border-blue-lighter text-blue-dark">
                   +
                 </button>
               </div>
@@ -70,7 +79,7 @@ const Scout: NextPage = () => {
                 placeholder="Team number"
                 autoComplete="off"
               />
-              <button className="flex items-center justify-center px-2 text-white bg-blue-500 border-t border-b border-l rounded-r p bg-blue-lighter border-blue-lighter text-blue-dark">
+              <button className="flex items-center justify-center px-4 text-white bg-blue-500 border-t border-b border-l rounded-r p bg-blue-lighter border-blue-lighter text-blue-dark">
                 +
               </button>
             </div>
@@ -118,7 +127,12 @@ const Scout: NextPage = () => {
             </select>
           </Container>
           <h1 className="my-4 text-3xl font-semibold ">Comments</h1>
-          <textarea id="comments" className="p-4 border rounded-xl border-slate-300" autoComplete="off" rows={10}  />
+          <textarea
+            id="comments"
+            className="p-4 border rounded-xl border-slate-300"
+            autoComplete="off"
+            rows={10}
+          />
           <button
             type="submit"
             className="p-2 mt-4 text-lg font-semibold text-white bg-teal-500 rounded shadow focus:outline-none focus:shadow-outline hover:bg-teal-700"

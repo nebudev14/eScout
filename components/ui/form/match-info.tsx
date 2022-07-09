@@ -1,5 +1,6 @@
 import { Container } from "../container";
 import { Input } from "../input";
+import { MatchType } from "@prisma/client";
 
 export const MatchInfo: React.FC = () => {
   return (
@@ -9,10 +10,10 @@ export const MatchInfo: React.FC = () => {
           id="matchType"
           className="p-2 text-lg leading-tight border rounded shadow focus:outline-none focus:shadow-outline"
         >
-          <option>Qualification</option>
-          <option>Quarterfinal</option>
-          <option>Semifinal</option>
-          <option>Final</option>
+          <option value={MatchType.QUALIFICATION}>Qualification</option>
+          <option value={MatchType.QUARTERFINAL}>Quarterfinal</option>
+          <option value={MatchType.SEMIFINAL} >Semifinal</option>
+          <option value={MatchType.FINAL}>Final</option>
         </select>
         <Input id="matchNumber" placeholder="Match number" type="number" autoComplete="off" required />
       </Container>
