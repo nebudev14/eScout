@@ -1,5 +1,5 @@
-import { Container } from "./container";
-import { Input } from "./input";
+import { Container } from "../container";
+import { Input } from "../input";
 
 export const MatchInfo: React.FC = () => {
   return (
