@@ -19,14 +19,14 @@ const Home: NextPage = () => {
           </button> */}
         <Link href="/scout" passHref>
           <button
-            className="px-4 py-2 mb-4 text-3xl text-white duration-200 bg-teal-500 border rounded-md hover:bg-teal-700"
+            className="px-4 py-2 mb-4 text-3xl text-white duration-200 bg-teal-500 rounded-md hover:bg-teal-700"
             type="button"
           >
             Scout!
           </button>
         </Link>
         <button
-          className="px-8 py-4 text-xl text-white duration-200 bg-purple-500 border rounded-lg hover:bg-purple-400"
+          className="px-8 py-4 text-xl text-white duration-200 bg-purple-500 rounded-lg hover:bg-purple-400"
           onClick={async () => {
             await user.mutateAsync({
               id: "b",

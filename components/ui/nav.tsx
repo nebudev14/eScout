@@ -7,7 +7,7 @@ export const Nav: React.FC = () => {
   return (
     <>
       {session && (
-        <div className="flex items-center justify-start px-4 py-2 border-b-2 border-gray-200">
+        <div className="flex items-center justify-start px-4 py-2 border-b-2 border-gray-200 dark:border-gray-800 dark:text-white">
           {/* <img src={session?.user?.image} className="w-12 mr-4 rounded-full" /> */}
           <h2 className="text-lg">{session?.user?.name}</h2>
           <button className="ml-auto" onClick={() => signOut()}>

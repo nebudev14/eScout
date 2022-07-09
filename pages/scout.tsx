@@ -19,10 +19,10 @@ const submitData = async (event: React.SyntheticEvent) => {
 const Scout: NextPage = () => {
   return (
     <Protected>
-      <div className="h-full p-4">
+      <div className="h-full px-56 py-4 lg:px-4">
         <form onSubmit={submitData} className="grid grid-cols-1">
           <MatchInfo />
-          <h1 className="mb-2 text-xl font-semibold">Auto</h1>
+          <h1 className="mb-2 text-3xl font-semibold">Auto</h1>
           <Container>
             <label className="p-2 text-lg font-semibold leading-tight border rounded shadow bg-slate-200 focus:outline-none focus:shadow-outline">
               Mobility
@@ -37,10 +37,10 @@ const Scout: NextPage = () => {
           </Container>
           <ScoreBoard label="High Goal" id="autoHighGoal" />
           <ScoreBoard label="Low Goal" id="autoLowGoal" />
-          <h1 className="mt-4 mb-2 text-xl font-semibold">Teleop</h1>
+          <h1 className="mt-4 mb-2 text-3xl font-semibold">Teleop</h1>
           <ScoreBoard label="High Goal" id="teleopHighGoal" />
           <ScoreBoard label="Low Goal" id="teleopLowGoal" />
-          <h1 className="my-2 text-xl font-semibold ">Defense</h1>
+          <h1 className="my-4 text-3xl font-semibold ">Defense</h1>
           <Container>
             <label className="flex items-center justify-start p-2 text-lg leading-tight border rounded shadow bg-slate-200 focus:outline-none focus:shadow-outline">
               Defended

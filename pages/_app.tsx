@@ -9,9 +9,11 @@ import type { AppRouter } from "../server/routers/app";
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <SessionProvider session={pageProps.session}>
-      <div className="bg-slate-100">
-        <Nav />
-        <Component {...pageProps} />
+      <div className="">
+        <div className="bg-slate-100 dark:bg-slate-900">
+          <Nav />
+          <Component {...pageProps} />
+        </div>
       </div>
     </SessionProvider>
   );
@@ -25,7 +27,7 @@ export default withTRPC<AppRouter>({
      */
     const url = process.env.VERCEL_URL
       ? `https://${process.env.VERCEL_URL}/api/trpc`
-      : 'http://localhost:3000/api/trpc';
+      : "http://localhost:3000/api/trpc";
 
     return {
       url,
