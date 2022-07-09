@@ -21,8 +21,12 @@ const Scout: NextPage = () => {
     <Protected>
       <div className="h-screen p-4">
         <form onSubmit={submitData} className="grid grid-cols-1">
-          <MatchInfo />
-          <button type="submit" className="p-2 mt-2 text-lg text-white bg-teal-500 rounded shadow focus:outline-none focus:shadow-outline hover:bg-teal-700">
+          <MatchInfo  />
+          <h1 className="text-xl font-semibold">Auto</h1>
+          <Container>
+            
+          </Container>
+          <button type="submit" className="p-2 mt-2 text-lg font-semibold text-white bg-teal-500 rounded shadow focus:outline-none focus:shadow-outline hover:bg-teal-700">
             Submit
           </button>
         </form>

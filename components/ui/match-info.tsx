@@ -3,7 +3,7 @@ import { Input } from "./input";
 
 export const MatchInfo: React.FC = () => {
   return (
-    <>
+    <div className="grid grid-cols-1 mb-8">
       <Container>
         <select
           id="matchType"
@@ -14,10 +14,10 @@ export const MatchInfo: React.FC = () => {
           <option>Semifinal</option>
           <option>Final</option>
         </select>
-        <Input id="matchNumber" placeholder="Match number" readonly={false} />
+        <Input id="matchNumber" placeholder="Match number" type="number" />
       </Container>
-      <Input id="teamNumber" readonly={false} placeholder="Team number" />
-      <Input id="eventName" readonly={false} placeholder="Event name" />
-    </>
+      <Input id="teamNumber" placeholder="Team number" type="number" />
+      <Input id="eventName" placeholder="Event name" />
+    </div>
   );
 };
