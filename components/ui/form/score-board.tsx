@@ -25,7 +25,7 @@ export const ScoreBoard: React.FC<{ label: string; id: string }> = ({
       <Container>
         <Container>
           <button
-            className="p-2 text-lg font-semibold text-white bg-green-500 rounded-tl rounded-bl shadow focus:outline-none focus:shadow-outline hover:bg-teal-700"
+            className="p-2 text-lg font-semibold text-white bg-green-500 rounded-tl rounded-bl shadow focus:outline-none focus:shadow-outline"
             type="button"
             onClick={() => {
               setShot(shot + 1);
@@ -35,7 +35,7 @@ export const ScoreBoard: React.FC<{ label: string; id: string }> = ({
             Score
           </button>
           <button
-            className="w-full p-2 text-lg font-semibold text-white bg-red-500 shadow border- focus:outline-none focus:shadow-outline hover:bg-teal-700"
+            className="w-full p-2 text-lg font-semibold text-white bg-red-500 shadow border- focus:outline-none focus:shadow-outline"
             type="button"
             onClick={() => setTotal(total + 1)}
           >
@@ -44,7 +44,7 @@ export const ScoreBoard: React.FC<{ label: string; id: string }> = ({
         </Container>
         <Container>
           <button
-            className="p-2 text-lg font-semibold text-white bg-yellow-500 border-r-2 shadow focus:outline-none focus:shadow-outline hover:bg-teal-700"
+            className="p-2 text-lg font-semibold text-white bg-yellow-500 border-r-2 shadow focus:outline-none focus:shadow-outline"
             type="button"
             onClick={() => {
               if (shot !== 0) setShot(shot - 1);
@@ -53,7 +53,7 @@ export const ScoreBoard: React.FC<{ label: string; id: string }> = ({
             -1
           </button>
           <button
-            className="p-2 text-lg font-semibold text-white bg-yellow-500 rounded-tr rounded-br shadow focus:outline-none focus:shadow-outline hover:bg-teal-700"
+            className="p-2 text-lg font-semibold text-white bg-yellow-500 rounded-tr rounded-br shadow focus:outline-none focus:shadow-outline"
             type="button"
             onClick={() => {
               if (total !== 0) setTotal(total - 1);

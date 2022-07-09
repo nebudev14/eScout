@@ -15,13 +15,29 @@ const submitData = async (event: React.SyntheticEvent) => {
     matchNumber: { value: string };
     teamNumber: { value: string };
     eventName: { value: string };
+    mobility: { value: string };
   };
 
   const data = {
+    matchType: target.matchType.value,
+    matchNumber: target.matchNumber.value,
+    teamNumber: target.teamNumber.value,
+    eventName: target.eventName.value,
+    mobility: (target.mobility.value === "yes"),
+    
+    autoHighShotsMade: Number(document.getElementById("autoHighGoalShots")?.innerText),
+    autoHighShotsTotal: Number(document.getElementById("autoHighGoalTotal")?.innerText),
+    autoLowShotsMade: Number(document.getElementById("autoLowGoalShots")?.innerText),
+    autoLowShotsTotal: Number(document.getElementById("autoLowGoalTotal")?.innerText),
+    
+    teleopHighShotsMade: Number(document.getElementById("teleopHighGoalShots")?.innerText),
+    teleopHighShotsTotal: Number(document.getElementById("teleopHighGoalTotal")?.innerText),
+    teleopLowShotsMade: Number(document.getElementById("teleopLowGoalShots")?.innerText),
+    teleopLowShotsTotal: Number(document.getElementById("teleopLowGoalTotal")?.innerText),
     
   };
 
-  console.log(document.getElementById("highGoalShots")?.innerText);
+  console.log(data)
 };
 
 const Scout: NextPage = () => {
@@ -40,8 +56,8 @@ const Scout: NextPage = () => {
               id="mobility"
               className="p-2 text-lg leading-tight border rounded shadow focus:outline-none focus:shadow-outline"
             >
-              <option value="false" >No</option>
-              <option value="true" >Yes</option>
+              <option value="no" >No</option>
+              <option value="yes" >Yes</option>
             </select>
           </Container>
           <ScoreBoard label="High Goal" id="autoHighGoal" />
