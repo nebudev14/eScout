@@ -35,6 +35,7 @@ const Scout: NextPage = () => {
             </select>
           </Container>
           <ScoreBoard label="High Goal" />
+          <ScoreBoard label="Low Goal" />
           <button
             type="submit"
             className="p-2 mt-4 text-lg font-semibold text-white bg-teal-500 rounded shadow focus:outline-none focus:shadow-outline hover:bg-teal-700"

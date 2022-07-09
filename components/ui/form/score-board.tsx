@@ -3,7 +3,7 @@ import { Container } from "../container";
 
 export const ScoreBoard: React.FC<{ label: string }> = ({ label }) => {
   return (
-    <>
+    <div className="mt-2">
       <Container>
         <label className="p-2 text-lg font-semibold leading-tight border rounded shadow focus:outline-none focus:shadow-outline">
           {label}
@@ -40,6 +40,6 @@ export const ScoreBoard: React.FC<{ label: string }> = ({ label }) => {
           </button>
         </Container>
       </Container>
-    </>
+    </div>
   );
 };
