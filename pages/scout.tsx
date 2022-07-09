@@ -12,7 +12,7 @@ const submitData = async (event: React.SyntheticEvent) => {
     teamNumber: { value: string };
   };
 
-  console.log(target.matchNumber.value);
+  // console.log(document.getElementById("highGoalShots")?.innerText);
 };
 
 const Scout: NextPage = () => {
@@ -34,8 +34,8 @@ const Scout: NextPage = () => {
               <option>Yes</option>
             </select>
           </Container>
-          <ScoreBoard label="High Goal" />
-          <ScoreBoard label="Low Goal" />
+          <ScoreBoard label="High Goal" id="highGoal" />
+          <ScoreBoard label="Low Goal" id="lowGoal" />
           <button
             type="submit"
             className="p-2 mt-4 text-lg font-semibold text-white bg-teal-500 rounded shadow focus:outline-none focus:shadow-outline hover:bg-teal-700"
