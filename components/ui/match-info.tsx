@@ -14,10 +14,10 @@ export const MatchInfo: React.FC = () => {
           <option>Semifinal</option>
           <option>Final</option>
         </select>
-        <Input id="matchNumber" placeholder="Match number" type="number" />
+        <Input id="matchNumber" placeholder="Match number" type="number" required />
       </Container>
-      <Input id="teamNumber" placeholder="Team number" type="number" />
-      <Input id="eventName" placeholder="Event name" />
+      <Input id="teamNumber" placeholder="Team number" type="number" required />
+      <Input id="eventName" placeholder="Event name" required />
     </div>
   );
 };
