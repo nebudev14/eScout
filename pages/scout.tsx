@@ -25,6 +25,13 @@ const Scout: NextPage = () => {
       teamNumber: { value: string };
       eventName: { value: string };
       mobility: { value: string };
+
+      // End game data
+      climbStart: { value: string };
+      climbEnd: { value: string };
+
+      // Comments
+      comments: { value: string };
     };
 
     const data = {
@@ -46,6 +53,11 @@ const Scout: NextPage = () => {
 
       defended: defended,
       defendedBy: defendedBy,
+
+      climbStart: Number(target.climbStart.value),
+      climbEnd: Number(target.climbEnd.value),
+
+      
     };
 
     console.log(data);
