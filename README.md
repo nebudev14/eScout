@@ -1,34 +1,28 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Setting up the project
 
-## Getting Started
+## Prerequesites:
+- node.js
+- npm (comes with node.js installer)
+- yarn
+- docker
+- the will to live
 
-First, run the development server:
+## Steps
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+1. Clone the repository
+2. Ask Warren for the .env file, which contains all the credentials.
+3. Run "yarn" in terminal to install dependencies 
+4. Run "docker-compose up" in terminal
+5. Run "yarn prisma db push"
+6. Run "yarn prisma generate"
+7. Run "yarn dev" to run dev server and go to localhost:3000 to look at website
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Important!!!
+Everytime you want to startup the server, you have to start up the db with "docker-compose up", then start the server with "yarn dev"
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+If you make changes to the prisma.schema file, you have to sync changes with 3 commands
+- yarn prisma migrate reset
+- yarn prisma generate
+- yarn prisma db push
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Have fun!
