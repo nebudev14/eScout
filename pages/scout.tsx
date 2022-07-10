@@ -7,12 +7,14 @@ import { ScoreBoard } from "../components/ui/form/score-board";
 import { Input } from "../components/ui/input";
 import { MatchType } from "@prisma/client";
 import { getNumberById } from "../util/get-number-by-id";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 const Scout: NextPage = () => {
+  const defendedRef = useRef<HTMLInputElement>(null);
+  const defendedByRef = useRef<HTMLInputElement>(null);
 
-  const [defended, setDefended] = useState<number[]>([]);
-  const [defendedBy, setDefendedBy] = useState([]);
+  const [defended, setDefended] = useState<Number[]>([]);
+  const [defendedBy, setDefendedBy] = useState<Number[]>([]);
 
   const submitData = async (event: React.SyntheticEvent) => {
     event.preventDefault();
@@ -86,18 +88,19 @@ const Scout: NextPage = () => {
                   id="defended"
                   placeholder="Team number"
                   autoComplete="off"
+                  ref={defendedRef}
                 />
                 <button
                   type="button"
                   className="flex items-center justify-center px-4 text-white bg-blue-500 border-t border-b border-l rounded-r p bg-blue-lighter border-blue-lighter text-blue-dark"
                   onClick={() => {
-                    
-                    let temp = document.getElementById(
-                      "defended"
-                    ) as HTMLInputElement;
-                    setDefended([...defended, Number(temp.value)]);
-                    console.log(defended);
-                    
+                    if (defendedRef.current !== null) {
+                      setDefended([
+                        ...defended,
+                        Number(defendedRef.current?.value),
+                      ]);
+                      defendedRef.current.value = "";
+                    }
                   }}
                 >
                   +
@@ -105,6 +108,7 @@ const Scout: NextPage = () => {
               </div>
             </Container>
           </div>
+
           <Container>
             <label className="flex items-center justify-start p-2 text-lg leading-tight border rounded shadow bg-slate-200 focus:outline-none focus:shadow-outline">
               Defended by
@@ -116,16 +120,19 @@ const Scout: NextPage = () => {
                 type="number"
                 placeholder="Team number"
                 autoComplete="off"
+                ref={defendedByRef}
               />
               <button
                 type="button"
                 className="flex items-center justify-center px-4 text-white bg-blue-500 border-t border-b border-l rounded-r p bg-blue-lighter border-blue-lighter text-blue-dark"
                 onClick={() => {
-                  defendedBy.push(getNumberById("defendedBy"));
-                  let temp = document.getElementById(
-                    "defendedBy"
-                  ) as HTMLInputElement;
-                  temp.innerHTML = "";
+                  if (defendedByRef.current !== null) {
+                    setDefendedBy([
+                      ...defendedBy,
+                      Number(defendedByRef.current?.value),
+                    ]);
+                    defendedByRef.current.value = "";
+                  }
                 }}
               >
                 +
