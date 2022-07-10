@@ -7,41 +7,48 @@ import { ScoreBoard } from "../components/ui/form/score-board";
 import { Input } from "../components/ui/input";
 import { MatchType } from "@prisma/client";
 import { getNumberById } from "../util/get-number-by-id";
-
-const submitData = async (event: React.SyntheticEvent) => {
-  event.preventDefault();
-  const target = event.target as typeof event.target & {
-    // Match Info
-    matchType: { value: MatchType };
-    matchNumber: { value: string };
-    teamNumber: { value: string };
-    eventName: { value: string };
-    mobility: { value: string };
-  };
-
-  const data = {
-    matchType: target.matchType.value,
-    matchNumber: target.matchNumber.value,
-    teamNumber: target.teamNumber.value,
-    eventName: target.eventName.value,
-    mobility: (target.mobility.value === "yes"),
-    
-    autoHighShotsMade: getNumberById("autoHighGoalShots"),
-    autoHighShotsTotal: getNumberById("autoHighGoalTotal"),
-    autoLowShotsMade: getNumberById("autoLowGoalShots"),
-    autoLowShotsTotal: getNumberById("autoLowGoalTotal"),
-    
-    teleopHighShotsMade: getNumberById("teleopHighGoalShots"),
-    teleopHighShotsTotal: getNumberById("teleopHighGoalTotal"),
-    teleopLowShotsMade: getNumberById("teleopLowGoalShots"),
-    teleopLowShotsTotal: getNumberById("teleopLowGoalTotal"),
-    
-  };
-
-  console.log(data)
-};
+import { useState } from "react";
 
 const Scout: NextPage = () => {
+
+  const [defended, setDefended] = useState<number[]>([]);
+  const [defendedBy, setDefendedBy] = useState([]);
+
+  const submitData = async (event: React.SyntheticEvent) => {
+    event.preventDefault();
+    const target = event.target as typeof event.target & {
+      // Match Info
+      matchType: { value: MatchType };
+      matchNumber: { value: string };
+      teamNumber: { value: string };
+      eventName: { value: string };
+      mobility: { value: string };
+    };
+
+    const data = {
+      matchType: target.matchType.value,
+      matchNumber: target.matchNumber.value,
+      teamNumber: target.teamNumber.value,
+      eventName: target.eventName.value,
+      mobility: target.mobility.value === "yes",
+
+      autoHighShotsMade: getNumberById("autoHighGoalShots"),
+      autoHighShotsTotal: getNumberById("autoHighGoalTotal"),
+      autoLowShotsMade: getNumberById("autoLowGoalShots"),
+      autoLowShotsTotal: getNumberById("autoLowGoalTotal"),
+
+      teleopHighShotsMade: getNumberById("teleopHighGoalShots"),
+      teleopHighShotsTotal: getNumberById("teleopHighGoalTotal"),
+      teleopLowShotsMade: getNumberById("teleopLowGoalShots"),
+      teleopLowShotsTotal: getNumberById("teleopLowGoalTotal"),
+
+      defended: defended,
+      defendedBy: defendedBy,
+    };
+
+    console.log(data);
+  };
+
   return (
     <Protected>
       <div className="h-full px-56 py-4 lg:px-4">
@@ -57,8 +64,8 @@ const Scout: NextPage = () => {
               id="mobility"
               className="p-2 text-lg leading-tight border rounded shadow focus:outline-none focus:shadow-outline"
             >
-              <option value="no" >No</option>
-              <option value="yes" >Yes</option>
+              <option value="no">No</option>
+              <option value="yes">Yes</option>
             </select>
           </Container>
           <ScoreBoard label="High Goal" id="autoHighGoal" />
@@ -75,11 +82,24 @@ const Scout: NextPage = () => {
               <div className="flex">
                 <input
                   className="w-10/12 h-full p-2 text-lg border rounded-l border-blue-lighter"
-                  type="text"
+                  type="number"
+                  id="defended"
                   placeholder="Team number"
                   autoComplete="off"
                 />
-                <button className="flex items-center justify-center px-4 text-white bg-blue-500 border-t border-b border-l rounded-r p bg-blue-lighter border-blue-lighter text-blue-dark">
+                <button
+                  type="button"
+                  className="flex items-center justify-center px-4 text-white bg-blue-500 border-t border-b border-l rounded-r p bg-blue-lighter border-blue-lighter text-blue-dark"
+                  onClick={() => {
+                    
+                    let temp = document.getElementById(
+                      "defended"
+                    ) as HTMLInputElement;
+                    setDefended([...defended, Number(temp.value)]);
+                    console.log(defended);
+                    
+                  }}
+                >
                   +
                 </button>
               </div>
@@ -92,11 +112,22 @@ const Scout: NextPage = () => {
             <div className="flex">
               <input
                 className="w-10/12 h-full p-2 text-lg border rounded-l border-blue-lighter"
-                type="text"
+                id="defendedBy"
+                type="number"
                 placeholder="Team number"
                 autoComplete="off"
               />
-              <button className="flex items-center justify-center px-4 text-white bg-blue-500 border-t border-b border-l rounded-r p bg-blue-lighter border-blue-lighter text-blue-dark">
+              <button
+                type="button"
+                className="flex items-center justify-center px-4 text-white bg-blue-500 border-t border-b border-l rounded-r p bg-blue-lighter border-blue-lighter text-blue-dark"
+                onClick={() => {
+                  defendedBy.push(getNumberById("defendedBy"));
+                  let temp = document.getElementById(
+                    "defendedBy"
+                  ) as HTMLInputElement;
+                  temp.innerHTML = "";
+                }}
+              >
                 +
               </button>
             </div>
@@ -146,7 +177,7 @@ const Scout: NextPage = () => {
           <h1 className="my-4 text-3xl font-semibold ">Comments</h1>
           <textarea
             id="comments"
-            className="p-4 border rounded-xl border-slate-300"
+            className="p-4 border rounded-xl border-slate-300 focus:outline-none"
             autoComplete="off"
             rows={10}
             placeholder="Team 1155 and 2265 popped off this round!"
