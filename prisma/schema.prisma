@@ -42,34 +42,44 @@ model VerificationToken {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  image         String?
-  emailVerified DateTime?
-  accounts      Account[]
-  sessions      Session[]
-  teamsCreated  Team[]    @relation("created")
-  teamsJoined   Team[]    @relation("members")
+  id             String    @id @default(cuid())
+  name           String?
+  email          String?   @unique
+  image          String?
+  emailVerified  DateTime?
+  accounts       Account[]
+  sessions       Session[]
+  teamsCreated   Team[]    @relation("created")
+  teamsJoined    Team[]    @relation("members")
+  pendingInvites Invite[]
 }
 
 model Team {
-  name      String
-  number    Int     @unique
-  creatorId String  @id
-  creator   User    @relation("created", fields: [creatorId], references: [id])
-  entries   Entry[]
-  members   User[]  @relation("members")
+  name           String
+  number         Int      @unique
+  creatorId      String   @id
+  creator        User     @relation("created", fields: [creatorId], references: [id])
+  entries        Entry[]
+  members        User[]   @relation("members")
+  createdInvites Invite[]
 }
 
 model Entry {
   id          String    @id
-  teamNumber  Int
+  teamNumber  Int       @unique
   event       String
   matchNumber Int
   matchType   MatchType
   rungLevel   RungLevel
   team        Team      @relation(fields: [teamNumber], references: [number])
+}
+
+model Invite {
+  id         String @id
+  team       Team   @relation(fields: [teamNumber], references: [number])
+  teamNumber Int    @unique
+  user       User   @relation(fields: [userId], references: [id])
+  userId     String
 }
 
 enum MatchType {
