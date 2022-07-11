@@ -37,8 +37,8 @@ const Scout: NextPage = () => {
 
     const data = {
       matchType: target.matchType.value,
-      matchNumber: target.matchNumber.value,
-      teamNumber: target.teamNumber.value,
+      matchNumber: Number(target.matchNumber.value),
+      teamNumber: Number(target.teamNumber.value),
       eventName: target.eventName.value,
       mobility: target.mobility.value === "yes",
 
