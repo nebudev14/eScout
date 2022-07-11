@@ -5,7 +5,7 @@ import { Container } from "../components/ui/container";
 import { MatchInfo } from "../components/ui/form/match-info";
 import { ScoreBoard } from "../components/ui/form/score-board";
 import { Input } from "../components/ui/input";
-import { MatchType } from "@prisma/client";
+import { MatchType, RungLevel } from "@prisma/client";
 import { getNumberById } from "../util/get-number-by-id";
 import { useState, useRef } from "react";
 
@@ -29,6 +29,7 @@ const Scout: NextPage = () => {
       // End game data
       climbStart: { value: string };
       climbEnd: { value: string };
+      climbRung: { value: RungLevel };
 
       // Comments
       comments: { value: string };
@@ -56,8 +57,9 @@ const Scout: NextPage = () => {
 
       climbStart: Number(target.climbStart.value),
       climbEnd: Number(target.climbEnd.value),
-
+      climbRung: target.climbRung.value,
       
+      comments: target.comments.value
     };
 
     console.log(data);
@@ -183,14 +185,14 @@ const Scout: NextPage = () => {
               Climb rung
             </label>
             <select
-              id="climbBar"
+              id="climbRung"
               className="p-2 text-lg leading-tight border rounded shadow focus:outline-none focus:shadow-outline"
             >
-              <option>None</option>
-              <option>Low</option>
-              <option>Mid</option>
-              <option>High</option>
-              <option>Traversal</option>
+              <option value={RungLevel.NONE}>None</option>
+              <option value={RungLevel.LOW}>Low</option>
+              <option value={RungLevel.MID}>Mid</option>
+              <option value={RungLevel.HIGH}>High</option>
+              <option value={RungLevel.TRAVERSAL}>Traversal</option>
             </select>
           </Container>
           <h1 className="my-4 text-3xl font-semibold ">Comments</h1>

@@ -3,26 +3,24 @@ generator client {
 }
 
 datasource db {
-  provider = "postgres"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-// Next-auth requirements
 model Account {
   id                String  @id @default(cuid())
   userId            String
   type              String
   provider          String
   providerAccountId String
-  refresh_token     String? @db.Text
-  access_token      String? @db.Text
+  refresh_token     String?
+  access_token      String?
   expires_at        Int?
   token_type        String?
   scope             String?
-  id_token          String? @db.Text
+  id_token          String?
   session_state     String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
@@ -47,33 +45,31 @@ model User {
   id            String    @id @default(cuid())
   name          String?
   email         String?   @unique
-  emailVerified DateTime?
   image         String?
-
-  teamsCreated Team[]    @relation(name: "created")
-  teamsJoined  Team[]    @relation(name: "members")
-  accounts     Account[]
-  sessions     Session[]
+  emailVerified DateTime?
+  accounts      Account[]
+  sessions      Session[]
+  teamsCreated  Team?     @relation("created")
+  teamsJoined   Team[]    @relation("members")
 }
 
 model Team {
   name      String
   number    Int     @unique
   creatorId String  @id
-  creator   User    @relation(fields: [creatorId], references: [id], name: "created")
-  members   User[]  @relation(name: "members")
+  creator   User    @relation("created", fields: [creatorId], references: [id])
   entries   Entry[]
+  members   User[]  @relation("members")
 }
 
 model Entry {
   id          String    @id
-  team        Team      @relation(fields: [teamNumber], references: [number])
   teamNumber  Int
   event       String
-  matchType   MatchType
   matchNumber Int
-  
-  // add more fields related to rapid react
+  matchType   MatchType
+  rungLevel   RungLevel
+  team        Team      @relation(fields: [teamNumber], references: [number])
 }
 
 enum MatchType {
@@ -81,4 +77,12 @@ enum MatchType {
   QUARTERFINAL
   SEMIFINAL
   FINAL
+}
+
+enum RungLevel {
+  NONE
+  LOW
+  MID
+  HIGH
+  TRAVERSAL
 }
