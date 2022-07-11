@@ -19,7 +19,7 @@ const Home: NextPage = () => {
   return (
     <Protected>
       <div className="flex flex-col items-center justify-center h-screen">
-        {data?.teamsCreated === null && data?.teamsJoined === null ? (
+        {data?.teamsCreated.length === 0 && data?.teamsJoined.length === 0 ? (
           <h1>You have no teams!</h1>
         ) : (
           <h1>yaeh</h1>
