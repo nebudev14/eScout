@@ -49,7 +49,7 @@ model User {
   emailVerified DateTime?
   accounts      Account[]
   sessions      Session[]
-  teamsCreated  Team?     @relation("created")
+  teamsCreated  Team[]    @relation("created")
   teamsJoined   Team[]    @relation("members")
 }
 

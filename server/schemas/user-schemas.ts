@@ -8,5 +8,5 @@ export const createUserSchema = z.object({
 });
 
 export const getUserSchema = z.object({
-  userId: z.string().uuid(),
+  userId: z.string(),
 });
