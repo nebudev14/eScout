@@ -2,11 +2,11 @@ import type { NextPage } from "next";
 import Link from "next/link";
 import { Protected } from "../components/auth/protected";
 import { useMutation, useQuery } from "../hooks/trpc";
-import { useSession } from "next-auth/react";
 
 const Home: NextPage = () => {
-  const user = useMutation("user.create");
-  const { data } = useSession();
+  const { data, isLoading } = useQuery([
+    ""
+  ])
   
   return (
     <Protected>
@@ -30,14 +30,6 @@ const Home: NextPage = () => {
         </Link>
         <button
           className="px-8 py-4 text-xl text-white duration-200 bg-purple-500 rounded-lg hover:bg-purple-400"
-          onClick={async () => {
-            await user.mutateAsync({
-              id: "b",
-              name: "warren",
-              email: "dasf",
-              image: "asdf",
-            });
-          }}
         >
           View scouting data
         </button>

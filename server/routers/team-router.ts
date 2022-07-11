@@ -1,5 +1,6 @@
+import { resolve } from "path/posix";
 import { createRouter } from "../create-router";
-import { createTeamSchema, getTeamSchema } from "../schemas/team-schemas";
+import { createTeamSchema, getTeamsByUser, getTeamSchema } from "../schemas/team-schemas";
 
 export const teamRouter = createRouter()
   .mutation("create", {
@@ -31,4 +32,12 @@ export const teamRouter = createRouter()
         },
       });
     },
+  })
+  .query("get-by-userid", {
+    input: getTeamsByUser,
+    async resolve({ input, ctx }) {
+      return await ctx.prisma.team.findUnique({
+        where: { creatorId: input.userId }
+      })
+    }
   });

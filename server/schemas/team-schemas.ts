@@ -8,3 +8,7 @@ export const createTeamSchema = z.object({
 export const getTeamSchema = z.object({
     number: z.number()
 })
+
+export const getTeamsByUser = z.object({
+    userId: z.string().uuid()
+})
