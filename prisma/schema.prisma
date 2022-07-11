@@ -75,7 +75,7 @@ model Entry {
 }
 
 model Invite {
-  id         String @id
+  id         String @id @default(cuid())
   team       Team   @relation(fields: [teamNumber], references: [number])
   teamNumber Int    @unique
   user       User   @relation(fields: [userId], references: [id])
