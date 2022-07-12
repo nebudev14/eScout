@@ -1,11 +1,14 @@
-import { resolve } from "path";
 import { createRouter } from "../create-router";
-import { createInviteSchema, acceptInviteSchema } from "../schemas/invite-schema";
+import {
+  createInviteSchema,
+  acceptInviteSchema,
+} from "../schemas/invite-schema";
 
 export const inviteRouter = createRouter()
   .mutation("create", {
     input: createInviteSchema,
     async resolve({ input, ctx }) {
+      console.log('pog')
       return await ctx.prisma.invite.create({
         data: {
           teamNumber: input.team,
@@ -21,15 +24,15 @@ export const inviteRouter = createRouter()
         where: { number: input.team },
         data: {
           members: {
-            create: {
-              id: input.userId
+            connect: {
+              id: input.userId,
             },
           },
         },
       });
-      
+
       await ctx.prisma.invite.delete({
-        where: { id: input.id }
+        where: { id: input.id },
       });
     },
   });
