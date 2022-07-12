@@ -8,11 +8,10 @@ export const inviteRouter = createRouter()
   .mutation("create", {
     input: createInviteSchema,
     async resolve({ input, ctx }) {
-      console.log('pog')
       return await ctx.prisma.invite.create({
         data: {
           teamNumber: input.team,
-          userId: input.userId,
+          userId: input.userId
         },
       });
     },
