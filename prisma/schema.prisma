@@ -67,25 +67,31 @@ model Team {
 model Entry {
   id                   String    @id
   team                 Team      @relation(fields: [teamNumber], references: [number])
+  teamNumber           Int
+  
+  matchNumber          Int
+  matchType            MatchType
+  eventName            String
+  
+  mobility             Boolean
   autoHighShotsMade    Int
   autoHighShotsTotal   Int
   autoLowShotsMade     Int
   autoLowShotsTotal    Int
-  climbEnd             Int
-  climbRung            RungLevel
-  climbStart           Int
-  comments             String
-  defended             Int[]
-  defendedBy           Int[]
-  eventName            String
-  matchNumber          Int
-  matchType            MatchType
-  mobility             Boolean
-  teamNumber           Int
+  
   teleopHighShotsMade  Int
   teleopHighShotsTotal Int
   teleopLowShotsMade   Int 
   teleopLowShotsTotal  Int
+  
+  climbStart           Int
+  climbEnd             Int
+  climbRung            RungLevel
+  
+  defended             Int[]
+  defendedBy           Int[]
+  
+  comments             String
 }
 
 model Invite {
