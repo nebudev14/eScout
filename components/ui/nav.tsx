@@ -5,9 +5,11 @@ import { FaUserFriends } from "react-icons/fa";
 import { GrNotes } from "react-icons/gr";
 import { MdAnalytics } from "react-icons/md";
 import { Menu } from "@headlessui/react";
+import { useRouter } from "next/router";
 
 export const Nav: React.FC = () => {
   const { data: session } = useSession();
+  const router = useRouter();
 
   return (
     <>
@@ -37,7 +39,7 @@ export const Nav: React.FC = () => {
                   <Menu.Item>
                     {({ active }) => (
                       <button
-                        className="flex items-center w-full px-2 py-2 text-sm text-yellow-600 duration-200 rounded-md group hover:text-white hover:bg-yellow-500"
+                        className="flex items-center w-full px-2 py-2 text-sm text-yellow-500 duration-200 rounded-md group hover:text-white hover:bg-yellow-500"
                       >
                         <FaUserFriends className="mr-2" /> Join a team
                       </button>
@@ -48,6 +50,7 @@ export const Nav: React.FC = () => {
                   <Menu.Item>
                     {({ active }) => (
                       <button
+                        
                         className="flex items-center w-full px-2 py-2 text-sm text-purple-500 duration-200 rounded-md group hover:text-white hover:bg-purple-400"
                       >
                         <GrNotes className="mr-2" /> Scout
