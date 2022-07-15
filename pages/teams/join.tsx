@@ -8,3 +8,5 @@ const JoinTeam: NextPage = () => {
     </Protected>
   );
 }
+
+export default JoinTeam;

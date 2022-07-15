@@ -31,6 +31,7 @@ export const Nav: React.FC = () => {
                     {({ active }) => (
                       <button
                         className="flex items-center w-full px-2 py-2 text-sm text-black duration-200 rounded-md group hover:text-white hover:bg-black"
+                        onClick={() => router.push("/teams")}
                       >
                         <IoMdBuild className="mr-2" /> Manage teams
                       </button>
@@ -40,6 +41,7 @@ export const Nav: React.FC = () => {
                     {({ active }) => (
                       <button
                         className="flex items-center w-full px-2 py-2 text-sm text-yellow-500 duration-200 rounded-md group hover:text-white hover:bg-yellow-500"
+                        onClick={() => router.push("/teams/join")}
                       >
                         <FaUserFriends className="mr-2" /> Join a team
                       </button>
@@ -50,8 +52,8 @@ export const Nav: React.FC = () => {
                   <Menu.Item>
                     {({ active }) => (
                       <button
-                        
                         className="flex items-center w-full px-2 py-2 text-sm text-purple-500 duration-200 rounded-md group hover:text-white hover:bg-purple-400"
+                        onClick={() => router.push("/scout")}
                       >
                         <GrNotes className="mr-2" /> Scout
                       </button>

@@ -1,12 +1,12 @@
 import type { NextPage } from "next";
 import React from "react";
-import { Protected } from "../components/auth/protected";
-import { Container } from "../components/ui/container";
-import { MatchInfo } from "../components/ui/form/match-info";
-import { ScoreBoard } from "../components/ui/form/score-board";
-import { Input } from "../components/ui/input";
+import { Protected } from "../../components/auth/protected";
+import { Container } from "../../components/ui/container";
+import { MatchInfo } from "../../components/ui/form/match-info";
+import { ScoreBoard } from "../../components/ui/form/score-board";
+import { Input } from "../../components/ui/input";
 import { MatchType, RungLevel } from "@prisma/client";
-import { getNumberById } from "../util/get-number-by-id";
+import { getNumberById } from "../../util/get-number-by-id";
 import { useState, useRef } from "react";
 
 const Scout: NextPage = () => {

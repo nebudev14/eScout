@@ -4,7 +4,9 @@ import { Protected } from "../../components/auth/protected";
 const ManageTeams: NextPage = () => {
   return (
     <Protected>
-      
+
     </Protected>
   );
 }
+
+export default ManageTeams;
