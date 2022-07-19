@@ -89,6 +89,7 @@ const Scout: NextPage = () => {
           <h1 className="mt-4 mb-2 text-3xl font-semibold">Teleop</h1>
           <ScoreBoard label="High Goal" id="teleopHighGoal" />
           <ScoreBoard label="Low Goal" id="teleopLowGoal" />
+
           <h1 className="my-4 text-3xl font-semibold ">Defense</h1>
           <div className="mb-2">
             <Container>
