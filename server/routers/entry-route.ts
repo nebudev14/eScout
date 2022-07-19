@@ -1,5 +1,6 @@
+import { Console } from "console";
 import { createRouter } from "../create-router";
-import { createEntrySchema } from "../schemas/entry-schema";
+import { createEntrySchema, getEntrySchema } from "../schemas/entry-schema";
 
 export const entryRouter = createRouter()
   .mutation("create", {
@@ -37,5 +38,13 @@ export const entryRouter = createRouter()
                 comments: input.comments
             }
         });
+    }
+}).query("get-by-id", {
+    input : getEntrySchema,
+    async resolve({input, ctx}) {
+        console.log("danny was also here");
+        return await ctx.prisma.entry.findUnique({
+            where: { id: input.id }
+        })
     }
 });

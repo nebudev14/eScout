@@ -65,7 +65,7 @@ model Team {
 }
 
 model Entry {
-  id                   String    @id
+  id                   String    @id @default(cuid())
   team                 Team      @relation(fields: [teamNumber], references: [number])
   teamNumber           Int
   
