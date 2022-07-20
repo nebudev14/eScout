@@ -2,9 +2,8 @@ import type { NextPage } from "next";
 import { useSession } from "next-auth/react";
 import { Protected } from "../../components/auth/protected";
 import { useQuery } from "../../hooks/trpc";
-import { Fragment, useState } from "react";
+import React, { Fragment, useState, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { Input } from "../../components/ui/input";
 
 const ManageTeams: NextPage = () => {
   const { data: session } = useSession();
@@ -13,7 +12,20 @@ const ManageTeams: NextPage = () => {
     { userId: session?.user?.id as string },
   ]);
 
+  const 
   const [isOpen, setIsOpen] = useState(false);
+  
+  const createTeam = async (event: React.SyntheticEvent) => {
+    event.preventDefault();
+    const target = event.target as typeof event.target & {
+      teamName: { value: string };
+      teamNum: { value: string };
+    }
+
+    
+
+  }
+
 
   if (isLoading || !data) return <h1>Loading..</h1>;
 
@@ -36,6 +48,8 @@ const ManageTeams: NextPage = () => {
           <h1>sike</h1>
         )}
       </div>
+      
+      {/* Modal */}
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog
           as="div"
@@ -75,25 +89,30 @@ const ManageTeams: NextPage = () => {
                     <p className="text-sm text-gray-500"></p>
                   </div>
 
-                  <div className="mt-4 ">
-                    <h1 className="mr-2 font-semibold">Team name</h1>
-                    <input className="w-full p-1 border-2 rounded-lg outline-none" />
-                  </div>
+                  <form onSubmit={createTeam}>
+                    <div className="mt-4 ">
+                      <h1 className="mr-2 font-semibold">Team name</h1>
+                      <input id="teamName" className="w-full p-1 border-2 rounded-lg outline-none" />
+                    </div>
 
-                  <div className="mt-4 ">
-                    <h1 className="mr-2 font-semibold">Team number</h1>
-                    <input className="w-full p-1 border-2 rounded-lg outline-none" type="number" />
-                  </div>
+                    <div className="mt-4 ">
+                      <h1 className="mr-2 font-semibold" id="teamNum">Team number</h1>
+                      <input
+                        className="w-full p-1 border-2 rounded-lg outline-none"
+                        type="number"
+                      />
+                    </div>
 
-                  <div className="mt-4">
-                    <button
-                      type="button"
-                      className="inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-green-400 border border-transparent rounded-md hover:bg-purple-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      Create
-                    </button>
-                  </div>
+                    <div className="mt-4">
+                      <button
+                        type="submit"
+                        className="inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-green-400 border border-transparent rounded-md hover:bg-purple-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        Create
+                      </button>
+                    </div>
+                  </form>
                 </Dialog.Panel>
               </Transition.Child>
             </div>
