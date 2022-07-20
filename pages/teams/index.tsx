@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import { useSession } from "next-auth/react";
 import { Protected } from "../../components/auth/protected";
-import { useQuery } from "../../hooks/trpc";
+import { useMutation, useQuery } from "../../hooks/trpc";
 import React, { Fragment, useState, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 
@@ -12,20 +12,21 @@ const ManageTeams: NextPage = () => {
     { userId: session?.user?.id as string },
   ]);
 
-  const 
+  const mutateTeam = useMutation("team.create");
   const [isOpen, setIsOpen] = useState(false);
-  
+
   const createTeam = async (event: React.SyntheticEvent) => {
     event.preventDefault();
     const target = event.target as typeof event.target & {
       teamName: { value: string };
       teamNum: { value: string };
-    }
+    };
 
-    
-
-  }
-
+    await mutateTeam.mutateAsync({
+      name: target.teamName.value,
+      number: Number(target.teamNum.value),
+    });
+  };
 
   if (isLoading || !data) return <h1>Loading..</h1>;
 
@@ -48,7 +49,7 @@ const ManageTeams: NextPage = () => {
           <h1>sike</h1>
         )}
       </div>
-      
+
       {/* Modal */}
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog
@@ -92,14 +93,24 @@ const ManageTeams: NextPage = () => {
                   <form onSubmit={createTeam}>
                     <div className="mt-4 ">
                       <h1 className="mr-2 font-semibold">Team name</h1>
-                      <input id="teamName" className="w-full p-1 border-2 rounded-lg outline-none" />
+                      <input
+                        id="teamName"
+                        className="w-full p-1 border-2 rounded-lg outline-none"
+                        required
+                        autoComplete="off"
+                      />
                     </div>
 
                     <div className="mt-4 ">
-                      <h1 className="mr-2 font-semibold" id="teamNum">Team number</h1>
+                      <h1 className="mr-2 font-semibold" id="teamNum">
+                        Team number
+                      </h1>
                       <input
                         className="w-full p-1 border-2 rounded-lg outline-none"
+                        id="teamNum"
                         type="number"
+                        required
+                        autoComplete="off"
                       />
                     </div>
 
