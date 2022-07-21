@@ -1,4 +1,3 @@
-import { resolve } from "path/posix";
 import { createRouter } from "../create-router";
 import { createTeamSchema, getTeamSchema } from "../schemas/team-schemas";
 

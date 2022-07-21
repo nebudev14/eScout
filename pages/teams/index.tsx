@@ -1,18 +1,25 @@
 import type { NextPage } from "next";
 import { useSession } from "next-auth/react";
 import { Protected } from "../../components/auth/protected";
-import { useMutation, useQuery } from "../../hooks/trpc";
+import { trpc, useMutation, useQuery } from "../../hooks/trpc";
 import React, { Fragment, useState, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 
 const ManageTeams: NextPage = () => {
   const { data: session } = useSession();
-  const { data, isLoading } = useQuery([
+  const { data: userData, isLoading } = useQuery([
     "user.get-by-id",
     { userId: session?.user?.id as string },
   ]);
 
-  const mutateTeam = useMutation("team.create");
+  const { invalidateQueries } = trpc.useContext();
+
+  const mutateTeam = useMutation("team.create", {
+    onSuccess() {
+      invalidateQueries("user.get-by-id")
+    }
+  });
+  
   const [isOpen, setIsOpen] = useState(false);
 
   const createTeam = async (event: React.SyntheticEvent) => {
@@ -28,7 +35,7 @@ const ManageTeams: NextPage = () => {
     });
   };
 
-  if (isLoading || !data) return <h1>Loading..</h1>;
+  if (isLoading || !userData) return <h1>Loading..</h1>;
 
   return (
     <Protected>
@@ -41,12 +48,16 @@ const ManageTeams: NextPage = () => {
             Create
           </button>
         </div>
-        {data?.teamsCreated.length === 0 && data?.teamsJoined.length === 0 ? (
+        {userData?.teamsCreated.length === 0 && userData?.teamsJoined.length === 0 ? (
           <div className="flex items-center justify-center">
             <h1 className="mb-4 text-2xl">You don&apos;t have any teams!</h1>
           </div>
         ) : (
-          <h1>sike</h1>
+          <div>
+            {userData?.teamsCreated.map((team, i) => (
+              <h1 key={i}>{team.name}</h1>
+            ))}
+          </div>
         )}
       </div>
 
