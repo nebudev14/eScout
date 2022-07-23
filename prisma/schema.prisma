@@ -42,56 +42,62 @@ model VerificationToken {
 }
 
 model User {
-  id             String    @id @default(cuid())
+  id             String     @id @default(cuid())
   name           String?
-  email          String?   @unique
+  email          String?    @unique
   image          String?
   emailVerified  DateTime?
   accounts       Account[]
   sessions       Session[]
-  teamsCreated   Team[]    @relation("created")
-  teamsJoined    Team[]    @relation("members")
+  teams          TeamUser[]
   pendingInvites Invite[]
+}
+
+model TeamUser {
+  userId     String       @unique
+  teamNumber Int
+  user       User         @relation(fields: [userId], references: [id])
+  team       Team         @relation(fields: [teamNumber], references: [number])
+  status     MemberStatus
 }
 
 model Team {
   name           String
-  number         Int      @unique
-  creatorId      String   @id
-  creator        User     @relation("created", fields: [creatorId], references: [id])
+  number         Int        @unique
+  creatorId      String     @id
   entries        Entry[]
-  members        User[]   @relation("members")
+  members        TeamUser[]
   createdInvites Invite[]
 }
 
 model Entry {
-  id                   String    @id @default(cuid())
-  team                 Team      @relation(fields: [teamNumber], references: [number])
-  teamNumber           Int
-  
-  matchNumber          Int
-  matchType            MatchType
-  eventName            String
-  
-  mobility             Boolean
-  autoHighShotsMade    Int
-  autoHighShotsTotal   Int
-  autoLowShotsMade     Int
-  autoLowShotsTotal    Int
-  
+  id         String @id @default(cuid())
+  team       Team   @relation(fields: [teamNumber], references: [number])
+  teamNumber Int
+
+  matchNumber Int
+  matchType   MatchType
+  eventName   String
+
+  mobility           Boolean
+  autoHighShotsMade  Int
+  autoHighShotsTotal Int
+  autoLowShotsMade   Int
+  autoLowShotsTotal  Int
+
   teleopHighShotsMade  Int
   teleopHighShotsTotal Int
-  teleopLowShotsMade   Int 
+  teleopLowShotsMade   Int
   teleopLowShotsTotal  Int
-  
-  climbStart           Int
-  climbEnd             Int
-  climbRung            RungLevel
-  
-  defended             Int[]
-  defendedBy           Int[]
-  
-  comments             String
+
+  climbStart Int
+  climbEnd   Int
+  climbRung  RungLevel
+
+  defended   Int[]
+  defendedBy Int[]
+
+  comments String
 }
 
 model Invite {
@@ -102,6 +108,11 @@ model Invite {
   userId     String
 }
 
+enum MemberStatus {
+  CREATOR
+  MEMBER
+}
+
 enum MatchType {
   QUALIFICATION
   QUARTERFINAL
@@ -109,6 +120,7 @@ enum MatchType {
   FINAL
 }
 
+// Rapid React Enums
 enum RungLevel {
   NONE
   LOW
