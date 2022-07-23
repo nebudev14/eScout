@@ -63,7 +63,6 @@ model TeamUser {
 model Team {
   name           String
   number         Int        @unique
-  creatorId      String     @id
   entries        Entry[]
   members        TeamUser[]
   inviteId       String     @unique

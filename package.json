@@ -17,6 +17,7 @@
     "@trpc/react": "^9.25.3",
     "@trpc/server": "^9.25.3",
     "dotenv": "^16.0.1",
+    "nanoid": "^4.0.0",
     "next": "12.2.0",
     "next-auth": "^4.8.0",
     "prisma": "^4.0.0",

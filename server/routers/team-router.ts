@@ -1,5 +1,7 @@
 import { createRouter } from "../create-router";
 import { createTeamSchema, getTeamSchema } from "../schemas/team-schemas";
+import { MemberStatus } from "@prisma/client";
+import { nanoid } from "nanoid";
 
 export const teamRouter = createRouter()
   .mutation("create", {
@@ -9,11 +11,12 @@ export const teamRouter = createRouter()
         data: {
           name: input.name,
           number: input.number,
-          creatorId: ctx.session!.user.id,
+          inviteId: nanoid(6),
           members: {
-            connect: {
-              id: ctx.session!.user.id,
-            },
+            create: {
+                userId: ctx.session!.user.id,
+                status: MemberStatus.CREATOR    
+            }
           },
         },
       });
@@ -24,11 +27,9 @@ export const teamRouter = createRouter()
     async resolve({ input, ctx }) {
       return await ctx.prisma.team.findUnique({
         where: { number: input.number },
-        select: {
-          name: true,
-          creator: true,
-          members: true,
-        },
+        include: {
+          members: true
+        }
       });
     },
   });
