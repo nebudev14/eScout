@@ -53,8 +53,8 @@ model User {
 }
 
 model TeamUser {
-  userId     String       @unique
-  teamNumber Int
+  userId     String       
+  teamNumber Int          @unique
   user       User         @relation(fields: [userId], references: [id])
   team       Team         @relation(fields: [teamNumber], references: [number])
   status     MemberStatus

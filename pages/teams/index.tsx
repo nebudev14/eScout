@@ -124,7 +124,7 @@ const ManageTeams: NextPage = () => {
                       <h1 className="mr-2 font-semibold">Team name</h1>
                       <input
                         id="teamName"
-                        className="w-full p-1 border-2 rounded-lg outline-none"
+                        className="w-full p-2 border-2 rounded-lg outline-none"
                         required
                         autoComplete="off"
                       />
@@ -135,7 +135,7 @@ const ManageTeams: NextPage = () => {
                         Team number
                       </h1>
                       <input
-                        className="w-full p-1 border-2 rounded-lg outline-none"
+                        className="w-full p-2 border-2 rounded-lg outline-none"
                         id="teamNum"
                         type="number"
                         required
