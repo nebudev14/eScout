@@ -21,6 +21,11 @@ export const userRouter = createRouter()
       return await ctx.prisma.user.findUnique({
         where: { id: input.userId },
         include: {
+          teams: {
+            include: {
+              team: true
+            }
+          }
         },
       });
     },

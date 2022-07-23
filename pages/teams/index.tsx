@@ -48,14 +48,14 @@ const ManageTeams: NextPage = () => {
             Create
           </button>
         </div>
-        {userData?.teamsCreated.length === 0 && userData?.teamsJoined.length === 0 ? (
+        {userData?.teams.length === 0 ? (
           <div className="flex items-center justify-center">
             <h1 className="mb-4 text-2xl">You don&apos;t have any teams!</h1>
           </div>
         ) : (
           <div>
-            {userData?.teamsCreated.map((team, i) => (
-              <h1 key={i}>{team.name}</h1>
+            {userData?.teams.map((team, i) => (
+              <h1 key={i}>{team.team.name}</h1>
             ))}
           </div>
         )}
