@@ -2,8 +2,10 @@ import type { NextPage } from "next";
 import { useSession } from "next-auth/react";
 import { Protected } from "../../components/auth/protected";
 import { trpc, useMutation, useQuery } from "../../hooks/trpc";
-import React, { Fragment, useState, useRef } from "react";
+import React, { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import { FaUser, FaUserFriends } from "react-icons/fa";
+import { GrNotes } from "react-icons/gr";
 
 const ManageTeams: NextPage = () => {
   const { data: session } = useSession();
@@ -16,10 +18,10 @@ const ManageTeams: NextPage = () => {
 
   const mutateTeam = useMutation("team.create", {
     onSuccess() {
-      invalidateQueries("user.get-by-id")
-    }
+      invalidateQueries("user.get-by-id");
+    },
   });
-  
+
   const [isOpen, setIsOpen] = useState(false);
 
   const createTeam = async (event: React.SyntheticEvent) => {
@@ -53,9 +55,25 @@ const ManageTeams: NextPage = () => {
             <h1 className="mb-4 text-2xl">You don&apos;t have any teams!</h1>
           </div>
         ) : (
-          <div>
-            {userData?.teams.map((team, i) => (
-              <h1 key={i}>{team.team.name}</h1>
+          <div className="grid grid-cols-1">
+            {userData?.teams.map((data, i) => (
+              <div
+                key={i}
+                className="px-6 py-4 mb-4 border shadow-md rounded-xl bg-slate-50"
+              >
+                <div className="mb-2">
+                  <h1 className="mb-1 text-2xl">{data.team.name}</h1>
+                  <h1>Team {data.team.number}</h1>
+                </div>
+                <h1 className="flex items-center mb-2 text-xl">
+                  <GrNotes className="mr-2" /> {data.team.entries.length} scout
+                  entries
+                </h1>
+                <h1 className="flex items-center mb-2 text-xl">
+                  <FaUserFriends className="mr-2" /> {data.team.members.length}{" "}
+                  members
+                </h1>
+              </div>
             ))}
           </div>
         )}

@@ -23,7 +23,12 @@ export const userRouter = createRouter()
         include: {
           teams: {
             include: {
-              team: true
+              team: {
+                include: {
+                  entries: true,
+                  members: true
+                }
+              }
             }
           }
         },
