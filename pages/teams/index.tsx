@@ -55,25 +55,24 @@ const ManageTeams: NextPage = () => {
             <h1 className="mb-4 text-2xl">You don&apos;t have any teams!</h1>
           </div>
         ) : (
-          <div className="grid grid-cols-1">
+          <div className="grid grid-cols-2 gap-6 md:grid-cols-1">
             {userData?.teams.map((data, i) => (
-              <div
-                key={i}
-                className="px-6 py-4 mb-4 border shadow-md rounded-xl bg-slate-50"
-              >
-                <div className="mb-2">
-                  <h1 className="mb-1 text-2xl">{data.team.name}</h1>
-                  <h1>Team {data.team.number}</h1>
+              <a key={i} href={`/teams/${data.teamNumber}`} className="border shadow-md rounded-xl bg-slate-50">
+                <div className="px-6 py-4">
+                  <div className="mb-2">
+                    <h1 className="mb-1 text-2xl">{data.team.name}</h1>
+                    <h1>Team {data.teamNumber}</h1>
+                  </div>
+                  <h1 className="flex items-center mb-2 text-xl">
+                    <GrNotes className="mr-2" /> {data.team.entries.length}{" "}
+                    scout entries
+                  </h1>
+                  <h1 className="flex items-center mb-2 text-xl ">
+                    <FaUserFriends className="mr-2 text-yellow-500" />{" "}
+                    {data.team.members.length} members
+                  </h1>
                 </div>
-                <h1 className="flex items-center mb-2 text-xl">
-                  <GrNotes className="mr-2" /> {data.team.entries.length} scout
-                  entries
-                </h1>
-                <h1 className="flex items-center mb-2 text-xl">
-                  <FaUserFriends className="mr-2" /> {data.team.members.length}{" "}
-                  members
-                </h1>
-              </div>
+              </a>
             ))}
           </div>
         )}
