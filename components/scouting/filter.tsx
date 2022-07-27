@@ -5,6 +5,7 @@ export const Filter: React.FC = () => {
 
   const query = {
     entryTeamNumber: 1155,
+    mobility: true,
   }
 
   const { data: entryData } = useQuery([
@@ -27,8 +28,8 @@ export const Filter: React.FC = () => {
       </div>
       <div className="flex flex-wrap">
         {Object.keys(query).map((key, i) => (
-          <div key={i} className="p-2 text-sm text-white bg-red-400 rounded-lg">
-            {key}: {query[key as keyof typeof query]}
+          <div key={i} className="p-2 mx-2 my-2 text-sm text-white bg-red-400 rounded-lg">
+            {key}: {query[key as keyof typeof query].toString()}
           </div>
         ))}
       </div>
