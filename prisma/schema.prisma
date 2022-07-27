@@ -42,18 +42,18 @@ model VerificationToken {
 }
 
 model User {
-  id             String     @id @default(cuid())
-  name           String?
-  email          String?    @unique
-  image          String?
-  emailVerified  DateTime?
-  accounts       Account[]
-  sessions       Session[]
-  teams          TeamUser[]
+  id            String     @id @default(cuid())
+  name          String?
+  email         String?    @unique
+  image         String?
+  emailVerified DateTime?
+  accounts      Account[]
+  sessions      Session[]
+  teams         TeamUser[]
 }
 
 model TeamUser {
-  userId     String       
+  userId     String
   teamNumber Int          @unique
   user       User         @relation(fields: [userId], references: [id])
   team       Team         @relation(fields: [teamNumber], references: [number])
@@ -61,11 +61,11 @@ model TeamUser {
 }
 
 model Team {
-  name           String
-  number         Int        @unique
-  entries        Entry[]
-  members        TeamUser[]
-  inviteId       String     @unique
+  name     String
+  number   Int        @unique
+  entries  Entry[]
+  members  TeamUser[]
+  inviteId String     @unique
 }
 
 model Entry {
@@ -73,9 +73,10 @@ model Entry {
   team       Team   @relation(fields: [teamNumber], references: [number])
   teamNumber Int
 
-  matchNumber Int
-  matchType   MatchType
-  eventName   String
+  matchNumber     Int
+  matchType       MatchType
+  eventName       String
+  entryTeamNumber Int
 
   mobility           Boolean
   autoHighShotsMade  Int
