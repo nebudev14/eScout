@@ -1,14 +1,7 @@
 import { Prisma } from "@prisma/client";
-import { z } from "zod";
+import { object, z } from "zod";
 import { createRouter } from "../create-router";
-import { createEntrySchema, getEntrySchema } from "../schemas/entry-schema";
-
-const query = {
-  entryTeamNumber: 1155,
-  mobility: true
-}
-
-const test = Prisma.validator< Prisma.EntryWhereInput>()(query);
+import { createEntrySchema, filterEntrySchema, getEntrySchema } from "../schemas/entry-schema";
 
 
 export const entryRouter = createRouter()
@@ -62,8 +55,16 @@ export const entryRouter = createRouter()
     }),
     async resolve({ input, ctx }) {
       return await ctx.prisma.entry.findMany({
+        where: { teamNumber: input.teamNumber }
+      })
+    }
+  }).query("get-by-filter", {
+    input: filterEntrySchema,
+    async resolve({ input, ctx }) {
+      const filteredQuery = Prisma.validator< Prisma.EntryWhereInput>()(input);
+      return await ctx.prisma.entry.findMany({
         where: {
-          ...test
+          ...filteredQuery
         }
       })
     }

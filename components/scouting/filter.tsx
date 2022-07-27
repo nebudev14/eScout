@@ -3,9 +3,13 @@ import { useQuery } from "../../hooks/trpc";
 
 export const Filter: React.FC = () => {
 
+  const query = {
+    entryTeamNumber: 1155,
+  }
+
   const { data: entryData } = useQuery([
-    "entry.get-by-team",
-    { teamNumber: 1155 }
+    "entry.get-by-filter",
+    query
   ]);
   
   console.log(entryData)
