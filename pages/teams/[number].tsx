@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { Protected } from "../../components/auth/protected";
 import { Filter } from "../../components/scouting/filter";
 import { useQuery } from "../../hooks/trpc";
+import { Prisma } from "@prisma/client";
 
 const TeamContent: NextPage = () => {
   const router = useRouter();
@@ -10,8 +11,11 @@ const TeamContent: NextPage = () => {
     "team.get-by-number",
     { number: Number(router.query.number) }
   ])
+  
+  
+  
 
-
+  
   return (
     <Protected>
       <div className="h-screen px-2 py-4">

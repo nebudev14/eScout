@@ -1,7 +1,15 @@
-import { Console } from "console";
+import { Prisma } from "@prisma/client";
 import { z } from "zod";
 import { createRouter } from "../create-router";
 import { createEntrySchema, getEntrySchema } from "../schemas/entry-schema";
+
+const query = {
+  entryTeamNumber: 1155,
+  mobility: true
+}
+
+const test = Prisma.validator< Prisma.EntryWhereInput>()(query);
+
 
 export const entryRouter = createRouter()
   .mutation("create", {
@@ -48,13 +56,15 @@ export const entryRouter = createRouter()
         where: { id: input.id },
       });
     },
-  }).query("get-by-team", {
+  }).query("get-by-team", { 
     input: z.object({
       teamNumber: z.number()
     }),
     async resolve({ input, ctx }) {
       return await ctx.prisma.entry.findMany({
-        where: { teamNumber: input.teamNumber }
+        where: {
+          ...test
+        }
       })
     }
   });
