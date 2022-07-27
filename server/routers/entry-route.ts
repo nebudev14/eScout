@@ -1,4 +1,5 @@
 import { Console } from "console";
+import { z } from "zod";
 import { createRouter } from "../create-router";
 import { createEntrySchema, getEntrySchema } from "../schemas/entry-schema";
 
@@ -47,4 +48,13 @@ export const entryRouter = createRouter()
         where: { id: input.id },
       });
     },
+  }).query("get-by-team", {
+    input: z.object({
+      teamNumber: z.number()
+    }),
+    async resolve({ input, ctx }) {
+      return await ctx.prisma.entry.findMany({
+        where: { teamNumber: input.teamNumber }
+      })
+    }
   });
