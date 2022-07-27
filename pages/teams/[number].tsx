@@ -1,6 +1,7 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { Protected } from "../../components/auth/protected";
+import { Filter } from "../../components/scouting/filter";
 import { useQuery } from "../../hooks/trpc";
 
 const TeamContent: NextPage = () => {
@@ -13,9 +14,12 @@ const TeamContent: NextPage = () => {
 
   return (
     <Protected>
-      <div className="px-2 py-4">
+      <div className="h-screen px-2 py-4">
         <h1 className="mb-2 text-4xl">{data?.name}</h1>
-        <h1 className="text-xl">Team {data?.number}</h1>
+        <h1 className="mb-6 text-xl">Team {data?.number}</h1>
+        <div className="flex flex-col items-center justify-center px-6">
+          <Filter />
+        </div>
       </div>
     </Protected>
   );
