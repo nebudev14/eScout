@@ -2,7 +2,7 @@ import { useSession, signOut } from "next-auth/react";
 import { BiLogOut, BiMenu } from "react-icons/bi";
 import { IoMdBuild } from "react-icons/io";
 import { FaUserFriends } from "react-icons/fa";
-import { GrNotes } from "react-icons/gr";
+import { CgNotes } from "react-icons/cg";
 import { MdAnalytics } from "react-icons/md";
 import { Menu } from "@headlessui/react";
 import { useRouter } from "next/router";
@@ -37,34 +37,15 @@ export const Nav: React.FC = () => {
                       </button>
                     )}
                   </Menu.Item>
-                  <Menu.Item>
-                    {({ active }) => (
-                      <button
-                        className="flex items-center w-full px-2 py-2 text-sm text-yellow-500 duration-200 rounded-md group hover:text-white hover:bg-yellow-500"
-                        onClick={() => router.push("/teams/join")}
-                      >
-                        <FaUserFriends className="mr-2" /> Join a team
-                      </button>
-                    )}
-                  </Menu.Item>
                 </div>
                 <div className="px-1 py-1">
                   <Menu.Item>
                     {({ active }) => (
                       <button
-                        className="flex items-center w-full px-2 py-2 text-sm text-purple-500 duration-200 rounded-md group hover:text-white hover:bg-purple-400"
+                        className="flex items-center w-full px-2 py-2 text-sm text-yellow-500 duration-200 rounded-md group hover:text-white hover:bg-yellow-400"
                         onClick={() => router.push("/scout")}
                       >
-                        <GrNotes className="mr-2" /> Scout
-                      </button>
-                    )}
-                  </Menu.Item>
-                  <Menu.Item>
-                    {({ active }) => (
-                      <button
-                        className="flex items-center w-full px-2 py-2 text-sm text-green-500 duration-200 rounded-md group hover:text-white hover:bg-green-500"
-                      >
-                        <MdAnalytics className="mr-2" /> View scout data
+                        <CgNotes className="mr-2" /> Scout
                       </button>
                     )}
                   </Menu.Item>

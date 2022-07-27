@@ -4,8 +4,8 @@ import { Protected } from "../../components/auth/protected";
 import { trpc, useMutation, useQuery } from "../../hooks/trpc";
 import React, { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { FaUser, FaUserFriends } from "react-icons/fa";
-import { GrNotes } from "react-icons/gr";
+import { FaUserFriends } from "react-icons/fa";
+import { CgNotes } from "react-icons/cg";
 
 const ManageTeams: NextPage = () => {
   const { data: session } = useSession();
@@ -57,14 +57,14 @@ const ManageTeams: NextPage = () => {
         ) : (
           <div className="grid grid-cols-2 gap-6 md:grid-cols-1">
             {userData?.teams.map((data, i) => (
-              <a key={i} href={`/teams/${data.teamNumber}`} className="border shadow-md rounded-xl bg-slate-50">
+              <a key={i} href={`/teams/${data.teamNumber}`} className="duration-100 border shadow-md rounded-xl bg-slate-50 hover:shadow-lg">
                 <div className="px-6 py-4">
                   <div className="mb-2">
                     <h1 className="mb-1 text-2xl">{data.team.name}</h1>
                     <h1>Team {data.teamNumber}</h1>
                   </div>
                   <h1 className="flex items-center mb-2 text-xl">
-                    <GrNotes className="mr-2" /> {data.team.entries.length}{" "}
+                    <CgNotes className="mr-2 text-purple-500" /> {data.team.entries.length}{" "}
                     scout entries
                   </h1>
                   <h1 className="flex items-center mb-2 text-xl ">

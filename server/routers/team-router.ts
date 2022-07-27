@@ -41,7 +41,7 @@ export const teamRouter = createRouter()
       })
     }
   })
-  .query("get-by-id", {
+  .query("get-by-number", {
     input: getTeamSchema,
     async resolve({ input, ctx }) {
       return await ctx.prisma.team.findUnique({
