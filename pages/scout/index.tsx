@@ -10,6 +10,7 @@ import { getNumberById } from "../../util/get-number-by-id";
 import { useState, useRef } from "react";
 import { useSession } from "next-auth/react";
 import { useMutation, useQuery } from "../../hooks/trpc";
+import { useRouter } from "next/router";
 
 const Scout: NextPage = () => {
   const defendedRef = useRef<HTMLInputElement>(null);
@@ -25,6 +26,7 @@ const Scout: NextPage = () => {
   ]);
 
   const submitEntry = useMutation("entry.create");
+  const router = useRouter();
 
   const submitData = async (event: React.SyntheticEvent) => {
     event.preventDefault();
@@ -81,6 +83,7 @@ const Scout: NextPage = () => {
 
     // weee data submit
     await submitEntry.mutateAsync(data);
+    router.push("/teams")
   };
 
   return (
