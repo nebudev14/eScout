@@ -29,7 +29,10 @@ export const teamRouter = createRouter()
     }),
     async resolve({ input, ctx }) {
       return await ctx.prisma.team.update({
-        where: { inviteId: input.inviteId },
+        where: { 
+          inviteId: input.inviteId, 
+          
+        },
         data: {
           members: {
             create: {
