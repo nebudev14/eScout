@@ -17,7 +17,7 @@ export const MatchInfo: React.FC = () => {
         </select>
         <Input id="matchNumber" placeholder="Match number" type="number" autoComplete="off" required />
       </Container>
-      <Input id="teamNumber" placeholder="Team number" type="number" autoComplete="off" required />
+      <Input id="entryTeamNumber" placeholder="Team number" type="number" autoComplete="off" required />
       <Input id="eventName" placeholder="Event name" autoComplete="off" required />
     </div>
   );

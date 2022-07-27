@@ -3,7 +3,7 @@ import { MatchType, RungLevel } from "@prisma/client";
 
 export const createEntrySchema = z.object({
     teamNumber: z.number(),
-    
+    entryTeamNumber: z.number(),
     matchNumber: z.number(),
     matchType: z.nativeEnum(MatchType),
     eventName: z.string(),

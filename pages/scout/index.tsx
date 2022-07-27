@@ -9,20 +9,22 @@ import { MatchType, RungLevel } from "@prisma/client";
 import { getNumberById } from "../../util/get-number-by-id";
 import { useState, useRef } from "react";
 import { useSession } from "next-auth/react";
-import { useQuery } from "../../hooks/trpc";
+import { useMutation, useQuery } from "../../hooks/trpc";
 
 const Scout: NextPage = () => {
   const defendedRef = useRef<HTMLInputElement>(null);
   const defendedByRef = useRef<HTMLInputElement>(null);
 
-  const [defended, setDefended] = useState<Number[]>([]);
-  const [defendedBy, setDefendedBy] = useState<Number[]>([]);
+  const [defended, setDefended] = useState<number[]>([]);
+  const [defendedBy, setDefendedBy] = useState<number[]>([]);
 
   const { data: session } = useSession();
   const userData = useQuery([
     "user.get-by-id",
     { userId: session?.user.id as string },
   ]);
+
+  const submitEntry = useMutation("entry.create");
 
   const submitData = async (event: React.SyntheticEvent) => {
     event.preventDefault();
@@ -41,13 +43,19 @@ const Scout: NextPage = () => {
 
       // Comments
       comments: { value: string };
+
+      // Entry team
+      entryTeamNumber: { value: string };
+      
     };
 
     const data = {
-      matchType: target.matchType.value,
-      matchNumber: Number(target.matchNumber.value),
       teamNumber: Number(target.teamNumber.value),
+      entryTeamNumber: Number(target.entryTeamNumber.value),
+      matchNumber: Number(target.matchNumber.value),
+      matchType: target.matchType.value,
       eventName: target.eventName.value,
+      
       mobility: target.mobility.value === "yes",
 
       autoHighShotsMade: getNumberById("autoHighGoalShots"),
@@ -60,17 +68,19 @@ const Scout: NextPage = () => {
       teleopLowShotsMade: getNumberById("teleopLowGoalShots"),
       teleopLowShotsTotal: getNumberById("teleopLowGoalTotal"),
 
-      defended: defended,
-      defendedBy: defendedBy,
-
       climbStart: Number(target.climbStart.value),
       climbEnd: Number(target.climbEnd.value),
       climbRung: target.climbRung.value,
 
+      defended: defended,
+      defendedBy: defendedBy,
+
       comments: target.comments.value,
+
     };
 
-    console.log(data);
+    // weee data submit
+    await submitEntry.mutateAsync(data);
   };
 
   return (
@@ -217,7 +227,7 @@ const Scout: NextPage = () => {
               Submit data to
             </label>
             <select
-              id="receiveTeam"
+              id="teamNumber"
               className="p-2 text-lg leading-tight border rounded shadow focus:outline-none focus:shadow-outline"
             >
               {userData?.data?.teams.map((team, i) => (
