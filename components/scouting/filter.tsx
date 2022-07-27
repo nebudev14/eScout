@@ -1,26 +1,34 @@
 import { useQuery } from "../../hooks/trpc";
-
+import { useRef } from "react";
+import { options } from "./filter-options";
 
 export const Filter: React.FC = () => {
-
+  const optionRef = useRef<HTMLSelectElement>(null);
+  
   const query = {
     entryTeamNumber: 1155,
     mobility: true,
   }
-
+  
   const { data: entryData } = useQuery([
     "entry.get-by-filter",
     query
   ]);
   
-  console.log(entryData)
+  // console.log(optionRef.current?.value)
   
   return (
     <>
       <div className="flex items-center mb-4 shadow-sm justfiy-center">
-        <select className="h-full p-2 rounded-l-lg">
+        <select className="h-full p-2 rounded-l-lg" ref={optionRef}>
           <option>
             Team
+          </option>
+          <option>
+            Event
+          </option>
+          <option>
+            Mobility
           </option>
         </select>
         <input className="w-full p-2 outline-none"  />

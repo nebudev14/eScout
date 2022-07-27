@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container } from "../container";
+import { Container } from "../../ui/container";
 
 export const ScoreBoard: React.FC<{ label: string; id: string }> = ({
   label,

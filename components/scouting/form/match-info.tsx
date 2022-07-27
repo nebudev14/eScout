@@ -1,5 +1,5 @@
-import { Container } from "../container";
-import { Input } from "../input";
+import { Container } from "../../ui/container";
+import { Input } from "../../ui/input";
 import { MatchType } from "@prisma/client";
 
 export const MatchInfo: React.FC = () => {
