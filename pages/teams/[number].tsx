@@ -17,7 +17,7 @@ const TeamContent: NextPage = () => {
       <div className="h-screen px-6 py-4">
         <h1 className="mb-2 text-4xl">{data?.name}</h1>
         <h1 className="mb-6 text-xl">Team {data?.number}</h1>
-        <div className="flex flex-col items-center justify-center px-6">
+        <div className="flex flex-col items-center justify-center">
           <Filter />
         </div>
       </div>

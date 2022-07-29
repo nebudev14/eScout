@@ -1,16 +1,27 @@
 import { useQuery } from "../../hooks/trpc";
-import { useRef } from "react";
+import React, { useRef } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 
 export const Filter: React.FC = () => {
-
-
+  interface Query {
+    entryTeamNumber?: number;
+    eventName?: string;
+  }
+  
   const teamNumber = useRef<HTMLInputElement>(null);
   const eventName = useRef<HTMLInputElement>(null);
-  
-  const input = {};
+
+  const input: Query = {};
 
   const { data: entryData } = useQuery(["entry.get-by-filter", input]);
+  console.log(input);
+
+  const searchEntry = async (event: React.SyntheticEvent) => {
+    event.preventDefault();
+    if (Number(teamNumber.current?.value) !== 0) input.entryTeamNumber = Number(teamNumber.current?.value);
+    if (eventName.current?.value !== "") input.eventName = eventName.current?.value;
+
+  };
 
   return (
     <>
@@ -31,16 +42,18 @@ export const Filter: React.FC = () => {
             ref={teamNumber}
             type="number"
             placeholder="Team number"
-            required
+            autoComplete="off"
           />
           <input
             className="w-full p-2 shadow-md outline-none"
             ref={eventName}
             placeholder="Event name"
-            
-            required
+            autoComplete="off"
           />
-          <button className="p-2 text-xl text-white bg-pink-600 rounded-r-lg shadow-md" type="submit">
+          <button
+            className="p-2 text-xl text-white bg-pink-600 rounded-r-lg shadow-md"
+            type="submit"
+          >
             <AiOutlineSearch />
           </button>
         </form>
