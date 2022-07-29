@@ -18,7 +18,7 @@ const TeamContent: NextPage = () => {
         <h1 className="mb-2 text-4xl">{data?.name}</h1>
         <h1 className="mb-6 text-xl">Team {data?.number}</h1>
         <div className="flex flex-col items-center justify-center">
-          <Filter />
+          <Filter teamNum={Number(router.query.number)} />
         </div>
       </div>
     </Protected>
