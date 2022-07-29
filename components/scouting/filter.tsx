@@ -66,7 +66,7 @@ export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
             <AiOutlineSearch />
           </button>
         </form>
-        <div className="grid w-full grid-cols-1 mb-4">
+        <div className="grid w-full grid-cols-1 mb-4 h-[50vh] overflow-scroll">
           {entryData?.map((entry, i) => (
             <div
               className="py-2 mb-6 border shadow-xl rounded-xl bg-slate-50"
