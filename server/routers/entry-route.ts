@@ -60,7 +60,7 @@ export const entryRouter = createRouter()
   }).query("get-by-filter", {
     input: filterEntrySchema,
     async resolve({ input, ctx }) {
-      const filteredQuery = Prisma.validator< Prisma.EntryWhereInput>()(input);
+      const filteredQuery = Prisma.validator<Prisma.EntryWhereInput>()(input);
       return await ctx.prisma.entry.findMany({
         where: {
           ...filteredQuery

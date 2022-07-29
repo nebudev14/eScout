@@ -1,5 +1,5 @@
 import { trpc, useQuery } from "../../hooks/trpc";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 
 export const Filter: React.FC = () => {
@@ -10,17 +10,19 @@ export const Filter: React.FC = () => {
   
   const teamNumber = useRef<HTMLInputElement>(null);
   const eventName = useRef<HTMLInputElement>(null);
-
-  const input: Query = {};
+  
+  const [input, setInput] = useState({});
   const { data: entryData } = useQuery(["entry.get-by-filter", input]);
   const { invalidateQueries } = trpc.useContext();
 
   const searchEntry = async (event: React.SyntheticEvent) => {
     event.preventDefault();
-    if (Number(teamNumber.current?.value) !== 0) input.entryTeamNumber = Number(teamNumber.current?.value);
-    if (eventName.current?.value !== "") input.eventName = eventName.current?.value;
-    console.log(input)
+    const newInput: Query = {}
+    if (Number(teamNumber.current?.value) !== 0) newInput.entryTeamNumber = Number(teamNumber.current?.value);
+    if (eventName.current?.value !== "") newInput.eventName = eventName.current?.value;
+    setInput(newInput);
     invalidateQueries("entry.get-by-filter");
+    console.log(entryData)
   };
 
   return (
