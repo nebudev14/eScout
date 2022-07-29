@@ -44,7 +44,6 @@ export const entryRouter = createRouter()
   .query("get-by-id", {
     input: getEntrySchema,
     async resolve({ input, ctx }) {
-      console.log("danny was also here");
       return await ctx.prisma.entry.findUnique({
         where: { id: input.id },
       });
