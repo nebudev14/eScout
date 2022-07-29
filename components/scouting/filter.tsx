@@ -60,7 +60,7 @@ export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
             autoComplete="off"
           />
           <button
-            className="p-2 text-xl text-white bg-yellow-500 rounded-r-lg shadow-md"
+            className="p-2 text-xl text-white rounded-r-lg shadow-md bg-cyan-500"
             type="submit"
           >
             <AiOutlineSearch />
@@ -69,15 +69,16 @@ export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
         <div className="grid w-full grid-cols-1 mb-4">
           {entryData?.map((entry, i) => (
             <div
-              className="mb-4 border rounded-lg shadow-md bg-slate-50"
+              className="py-2 mb-6 border shadow-xl rounded-xl bg-slate-50"
               key={i}
             >
-              <div className="grid grid-cols-2 px-6 py-4">
+              <div className="grid grid-cols-2 px-5 py-4">
                 <div>
-                  <h1>Team {entry?.entryTeamNumber}</h1>
-                  <h1 className="text-xl">{entry?.eventName}</h1>
+                  <h1 className="text-sm">{entry?.matchType} {entry?.matchNumber}</h1>
+                  <h1>{entry?.eventName}</h1>
+                  <h1 className="text-xl">Team {entry?.entryTeamNumber}</h1>
                 </div>
-                <div className="flex flex-col">
+                <div className="flex flex-col text-right">
                   <div>
                     <b>{entry.autoHighShotsMade + entry.autoLowShotsMade}</b>{" "}
                     total auto goals
@@ -97,9 +98,6 @@ export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
                     {entry.climbRung} Rung
                   </div>
                 </div>
-              </div>
-              <div className="py-1 text-sm text-center text-white bg-black rounded-b-lg">
-                {entry.matchType} {entry.matchNumber}
               </div>
             </div>
           ))}

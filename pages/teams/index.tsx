@@ -44,7 +44,7 @@ const ManageTeams: NextPage = () => {
       <div className="flex flex-col h-screen px-6 py-4">
         <div className="flex items-start justify-start">
           <button
-            className="px-3 py-2 mb-8 text-sm text-white duration-200 bg-purple-500 rounded-md hover:bg-purple-600"
+            className="px-3 py-2 mb-8 text-sm text-white duration-200 bg-pink-600 rounded-md hover:bg-pink-700"
             onClick={() => setIsOpen(true)}
           >
             Create
@@ -64,11 +64,11 @@ const ManageTeams: NextPage = () => {
                     <h1>Team {data.teamNumber}</h1>
                   </div>
                   <h1 className="flex items-center mb-2 text-xl">
-                    <CgNotes className="mr-2 text-purple-500" /> {data.team.entries.length}{" "}
+                    <CgNotes className="mr-2 text-pink-500" /> {data.team.entries.length}{" "}
                     scout entries
                   </h1>
                   <h1 className="flex items-center mb-2 text-xl ">
-                    <FaUserFriends className="mr-2 text-yellow-500" />{" "}
+                    <FaUserFriends className="mr-2 text-cyan-500" />{" "}
                     {data.team.members.length} members
                   </h1>
                 </div>
