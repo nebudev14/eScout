@@ -1,4 +1,4 @@
-import { useQuery } from "../../hooks/trpc";
+import { trpc, useQuery } from "../../hooks/trpc";
 import React, { useRef } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 
@@ -12,15 +12,15 @@ export const Filter: React.FC = () => {
   const eventName = useRef<HTMLInputElement>(null);
 
   const input: Query = {};
-
   const { data: entryData } = useQuery(["entry.get-by-filter", input]);
-  console.log(input);
+  const { invalidateQueries } = trpc.useContext();
 
   const searchEntry = async (event: React.SyntheticEvent) => {
     event.preventDefault();
     if (Number(teamNumber.current?.value) !== 0) input.entryTeamNumber = Number(teamNumber.current?.value);
     if (eventName.current?.value !== "") input.eventName = eventName.current?.value;
-
+    console.log(input)
+    invalidateQueries("entry.get-by-filter");
   };
 
   return (
@@ -35,8 +35,8 @@ export const Filter: React.FC = () => {
           </div>
         ))}
       </div> */}
-      <div className="flex items-center mb-4 shadow-sm justfiy-center">
-        <form className="flex items-center justify-center">
+      <div className="flex flex-col items-center mb-4 shadow-sm justfiy-center">
+        <form className="flex items-center justify-center mb-6" onSubmit={searchEntry}>
           <input
             className="w-full p-2 border-r-4 rounded-l-lg shadow-md outline-none"
             ref={teamNumber}
@@ -57,6 +57,13 @@ export const Filter: React.FC = () => {
             <AiOutlineSearch />
           </button>
         </form>
+        <div className="grid grid-cols-1">
+          {entryData?.map((entry, i) => (
+            <div key={i}>
+              <h1>{entry.autoHighShotsMade}</h1>
+            </div>
+          ))}
+        </div>
       </div>
     </>
   );
