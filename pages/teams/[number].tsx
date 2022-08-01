@@ -2,6 +2,7 @@ import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { Protected } from "../../components/auth/protected";
 import { Filter } from "../../components/scouting/filter";
+import { Competitions } from "../../components/scouting/competitions";
 import { useQuery } from "../../hooks/trpc";
 import { Tab } from "@headlessui/react";
 
@@ -18,7 +19,7 @@ const TeamContent: NextPage = () => {
     <Protected>
       <div className="h-screen px-6 py-4">
         <h1 className="mb-2 text-4xl">{data?.name}</h1>
-        <h1 className="mb-6 text-xl">Team {data?.number}</h1>
+        <h1 className="mb-4 text-xl">Team {data?.number}</h1>
         <div className="flex flex-col items-center justify-center">
           <Tab.Group>
             <Tab.List className="grid grid-cols-2">
@@ -34,11 +35,13 @@ const TeamContent: NextPage = () => {
                 </Tab>
               ))}
             </Tab.List>
-            <Tab.Panels>
+            <Tab.Panels className="mt-4">
               <Tab.Panel>
                 <Filter teamNum={Number(router.query.number)} />
               </Tab.Panel>
-              <Tab.Panel>Content 2</Tab.Panel>
+              <Tab.Panel>
+                <Competitions /> 
+              </Tab.Panel>
             </Tab.Panels>
           </Tab.Group>
         </div>

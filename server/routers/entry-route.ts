@@ -3,7 +3,6 @@ import { object, z } from "zod";
 import { createRouter } from "../create-router";
 import { createEntrySchema, filterEntrySchema, getEntrySchema } from "../schemas/entry-schema";
 
-
 export const entryRouter = createRouter()
   .mutation("create", {
     input: createEntrySchema,
@@ -14,7 +13,7 @@ export const entryRouter = createRouter()
           userId: input.userId,
           competitionName: input.competitionName,
           teamNumber: input.teamNumber,
-          
+
           entryTeamNumber: input.entryTeamNumber,
           matchNumber: input.matchNumber,
           matchType: input.matchType,

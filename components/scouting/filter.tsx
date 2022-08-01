@@ -43,7 +43,7 @@ export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
           </div>
         ))}
       </div> */}
-      <div className="flex flex-col items-center my-4 shadow-sm justfiy-center">
+      <div className="flex flex-col items-center mb-4 shadow-sm justfiy-center">
         <form className="flex w-full mb-6 " onSubmit={searchEntry}>
           <div className="grid grid-cols-2">
             <select className="w-full h-full p-2 border-r-4 rounded-l-lg shadow-md outline-none">
