@@ -65,6 +65,7 @@ model Team {
   name     String
   number   Int           @unique
   comps    Competition[]
+  entries  Entry[]
   members  TeamUser[]
   inviteId String        @unique
 }
@@ -78,6 +79,8 @@ model Competition {
 
 model Entry {
   id              String      @id @default(cuid())
+  teamNumber      Int         @unique
+  team            Team        @relation(fields: [teamNumber], references: [number])
   competitionName String      @unique
   competition     Competition @relation(fields: [competitionName], references: [name])
   userId          String      @unique
