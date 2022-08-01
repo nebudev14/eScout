@@ -15,4 +15,13 @@ export const compRouter = createRouter()
         }
       })
     }
-  })
+  }).query("get-by-number", {
+    input: z.object({
+      team: z.number()
+    }),
+    async resolve({ input, ctx }) {
+      return await ctx.prisma.competition.findMany({
+        where: { teamNumber: input.team }
+      });
+    }
+  });

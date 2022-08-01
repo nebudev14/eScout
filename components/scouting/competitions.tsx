@@ -8,12 +8,13 @@ export const Competitions: React.FC = () => {
 
   const [isOpen, setIsOpen] = useState(false);
   const mutateComp = useMutation("comp.create");
-
+  
   const createComp = async (event: React.SyntheticEvent) => {
     event.preventDefault();
     const target = event.target as typeof event.target & {
       compName: { value: string };
     };
+
 
     await mutateComp.mutateAsync({
       name: target.compName.value,
