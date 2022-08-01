@@ -62,16 +62,23 @@ model TeamUser {
 
 model Team {
   name     String
-  number   Int        @unique
-  entries  Entry[]
+  number   Int           @unique
+  comps    Competition[]
   members  TeamUser[]
-  inviteId String     @unique
+  inviteId String        @unique
+}
+
+model Competition {
+  name       String  @unique
+  team       Team    @relation(fields: [teamNumber], references: [number])
+  teamNumber Int
+  entries    Entry[]
 }
 
 model Entry {
-  id         String @id @default(cuid())
-  team       Team   @relation(fields: [teamNumber], references: [number])
-  teamNumber Int
+  id              String      @id @default(cuid())
+  competitionName String
+  competition     Competition @relation(fields: [competitionName], references: [name])
 
   matchNumber     Int
   matchType       MatchType
