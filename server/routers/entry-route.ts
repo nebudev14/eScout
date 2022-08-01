@@ -11,7 +11,10 @@ export const entryRouter = createRouter()
       console.log("danny was here");
       return await ctx.prisma.entry.create({
         data: {
+          userId: input.userId,
+          competitionName: input.competitionName,
           teamNumber: input.teamNumber,
+          
           entryTeamNumber: input.entryTeamNumber,
           matchNumber: input.matchNumber,
           matchType: input.matchType,

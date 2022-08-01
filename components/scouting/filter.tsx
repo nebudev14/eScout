@@ -1,7 +1,7 @@
 import { trpc, useQuery } from "../../hooks/trpc";
 import React, { useRef, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
-
+import { Tab } from "@headlessui/react";
 export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
   interface Query {
     teamNumber: number;
@@ -11,12 +11,12 @@ export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
 
   const teamNumber = useRef<HTMLInputElement>(null);
   const eventName = useRef<HTMLInputElement>(null);
-  
+
   const [entryAttribute, setEntryAttribute] = useState();
   const [input, setInput] = useState({
     teamNumber: teamNum,
   });
-  
+
   const { data: entryData } = useQuery(["entry.get-by-filter", input]);
   const { invalidateQueries } = trpc.useContext();
 
@@ -43,26 +43,19 @@ export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
           </div>
         ))}
       </div> */}
-      <div className="flex flex-col items-center mb-4 shadow-sm justfiy-center">
-        <form
-          className="flex w-full mb-6 "
-          onSubmit={searchEntry}
-        >
-          <select
-            className="w-full h-full p-2 border-r-4 rounded-l-lg shadow-md outline-none"
-          >
-            <option value="entryTeamNumber">
-              Team
-            </option>
-            <option value="eventName">
-              Event
-            </option>
-          </select>
-          <input
-            className="w-full p-2 shadow-md outline-none"
-            ref={eventName}
-            autoComplete="off"
-          />
+      <div className="flex flex-col items-center my-4 shadow-sm justfiy-center">
+        <form className="flex w-full mb-6 " onSubmit={searchEntry}>
+          <div className="grid grid-cols-2">
+            <select className="w-full h-full p-2 border-r-4 rounded-l-lg shadow-md outline-none">
+              <option value="entryTeamNumber">Team</option>
+              <option value="eventName">Event</option>
+            </select>
+            <input
+              className="w-full p-2 shadow-md outline-none"
+              ref={eventName}
+              autoComplete="off"
+            />
+          </div>
           <button
             className="p-2 text-xl text-white rounded-r-lg shadow-md bg-cyan-500"
             type="submit"
@@ -78,7 +71,9 @@ export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
             >
               <div className="grid grid-cols-2 px-5 py-4">
                 <div>
-                  <h1 className="text-sm">{entry?.matchType} {entry?.matchNumber}</h1>
+                  <h1 className="text-sm">
+                    {entry?.matchType} {entry?.matchNumber}
+                  </h1>
                   <h1>{entry?.eventName}</h1>
                   <h1 className="text-xl">Team {entry?.entryTeamNumber}</h1>
                 </div>
@@ -98,9 +93,7 @@ export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
                       ? "No climb"
                       : entry.climbStart - entry.climbEnd + " second climb"}
                   </div>
-                  <div>
-                    {entry.climbRung} Rung
-                  </div>
+                  <div>{entry.climbRung} Rung</div>
                 </div>
               </div>
             </div>
