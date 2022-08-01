@@ -1,12 +1,25 @@
 import React, { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import { useMutation } from "../../hooks/trpc";
+import { useRouter } from "next/router";
 
 export const Competitions: React.FC = () => {
+  const router = useRouter();
+
   const [isOpen, setIsOpen] = useState(false);
+  const mutateComp = useMutation("comp.create");
 
   const createComp = async (event: React.SyntheticEvent) => {
     event.preventDefault();
-  }
+    const target = event.target as typeof event.target & {
+      compName: { value: string };
+    };
+
+    await mutateComp.mutateAsync({
+      name: target.compName.value,
+      team: Number(router.query.number),
+    });
+  };
 
   return (
     <div>
@@ -65,7 +78,7 @@ export const Competitions: React.FC = () => {
                         autoComplete="off"
                       />
                     </div>
-                    
+
                     <div className="mt-4">
                       <button
                         type="submit"
