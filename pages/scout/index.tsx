@@ -9,21 +9,17 @@ import { MatchType, RungLevel } from "@prisma/client";
 import { getNumberById } from "../../util/get-number-by-id";
 import { useState, useRef } from "react";
 import { useSession } from "next-auth/react";
-import { useMutation, useQuery } from "../../hooks/trpc";
+import { useMutation } from "../../hooks/trpc";
 import { useRouter } from "next/router";
 
 const Scout: NextPage = () => {
   const { data: session } = useSession();
 
-  const userData = useQuery([
-    "user.get-by-id",
-    { userId: session?.user.id as string },
-  ]);
 
   const submitEntry = useMutation("entry.create");
   const router = useRouter();
   
-  const [selectedTeam, setSelectedTeam] = useState(userData?.data?.teams[0].teamNumber);
+  
   // const comps = useQuery()
   
   const defendedRef = useRef<HTMLInputElement>(null);
@@ -231,25 +227,7 @@ const Scout: NextPage = () => {
             rows={10}
             placeholder="Team 1155 and 2265 popped off this round!"
           />
-          <Container>
-            <label className="p-2 text-lg leading-tight border rounded shadow bg-slate-200 focus:outline-none focus:shadow-outline">
-              Submit data to
-            </label>
-            <select
-              id="teamNumber"
-              className="p-2 text-lg leading-tight border rounded shadow focus:outline-none focus:shadow-outline"
-              value={selectedTeam}
-              onChange={(event: React.SyntheticEvent) => {
-                setSelectedTeam(Number((event.target as HTMLSelectElement).value))
-              }}
-            >
-              {userData?.data?.teams.map((team, i) => (
-                <option key={i} value={team.teamNumber}>
-                  {team.teamNumber}
-                </option>
-              ))}
-            </select>
-          </Container>
+
           <button
             type="submit"
             className="p-2 mt-4 text-lg font-semibold text-white bg-teal-500 rounded shadow focus:outline-none focus:shadow-outline hover:bg-teal-700"
