@@ -11,10 +11,12 @@ export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
 
   const teamNumber = useRef<HTMLInputElement>(null);
   const eventName = useRef<HTMLInputElement>(null);
-
+  
+  const [entryAttribute, setEntryAttribute] = useState();
   const [input, setInput] = useState({
     teamNumber: teamNum,
   });
+  
   const { data: entryData } = useQuery(["entry.get-by-filter", input]);
   const { invalidateQueries } = trpc.useContext();
 
@@ -43,20 +45,22 @@ export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
       </div> */}
       <div className="flex flex-col items-center mb-4 shadow-sm justfiy-center">
         <form
-          className="flex items-center justify-center mb-6"
+          className="flex w-full mb-6 "
           onSubmit={searchEntry}
         >
-          <input
-            className="w-full p-2 border-r-4 rounded-l-lg shadow-md outline-none"
-            ref={teamNumber}
-            type="number"
-            placeholder="Team number"
-            autoComplete="off"
-          />
+          <select
+            className="w-full h-full p-2 border-r-4 rounded-l-lg shadow-md outline-none"
+          >
+            <option value="entryTeamNumber">
+              Team
+            </option>
+            <option value="eventName">
+              Event
+            </option>
+          </select>
           <input
             className="w-full p-2 shadow-md outline-none"
             ref={eventName}
-            placeholder="Event name"
             autoComplete="off"
           />
           <button

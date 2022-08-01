@@ -50,6 +50,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   teams         TeamUser[]
+  entries       Entry[]
 }
 
 model TeamUser {
@@ -77,8 +78,10 @@ model Competition {
 
 model Entry {
   id              String      @id @default(cuid())
-  competitionName String
+  competitionName String      @unique
   competition     Competition @relation(fields: [competitionName], references: [name])
+  userId          String      @unique
+  user            User        @relation(fields: [userId], references: [id])
 
   matchNumber     Int
   matchType       MatchType
