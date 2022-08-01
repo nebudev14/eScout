@@ -13,13 +13,8 @@ import { useMutation, useQuery } from "../../hooks/trpc";
 import { useRouter } from "next/router";
 
 const Scout: NextPage = () => {
-  const defendedRef = useRef<HTMLInputElement>(null);
-  const defendedByRef = useRef<HTMLInputElement>(null);
-
-  const [defended, setDefended] = useState<number[]>([]);
-  const [defendedBy, setDefendedBy] = useState<number[]>([]);
-
   const { data: session } = useSession();
+
   const userData = useQuery([
     "user.get-by-id",
     { userId: session?.user.id as string },
@@ -27,6 +22,15 @@ const Scout: NextPage = () => {
 
   const submitEntry = useMutation("entry.create");
   const router = useRouter();
+  
+  const [selectedTeam, setSelectedTeam] = useState(userData?.data?.teams[0].teamNumber);
+  const comps = useQuery()
+  
+  const defendedRef = useRef<HTMLInputElement>(null);
+  const defendedByRef = useRef<HTMLInputElement>(null);
+
+  const [defended, setDefended] = useState<number[]>([]);
+  const [defendedBy, setDefendedBy] = useState<number[]>([]);
 
   const submitData = async (event: React.SyntheticEvent) => {
     event.preventDefault();
@@ -234,6 +238,10 @@ const Scout: NextPage = () => {
             <select
               id="teamNumber"
               className="p-2 text-lg leading-tight border rounded shadow focus:outline-none focus:shadow-outline"
+              value={selectedTeam}
+              onChange={(event: React.SyntheticEvent) => {
+                setSelectedTeam(Number((event.target as HTMLSelectElement).value))
+              }}
             >
               {userData?.data?.teams.map((team, i) => (
                 <option key={i} value={team.teamNumber}>
