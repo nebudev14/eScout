@@ -25,6 +25,7 @@ const TeamContent: NextPage = () => {
             <Tab.List className="grid grid-cols-2">
               {tabs.map((content, i) => (
                 <Tab
+                key={i}
                   className={({ selected }) =>
                     selected
                       ? "px-6 py-2 outline-none border-b-2 border-pink-600"

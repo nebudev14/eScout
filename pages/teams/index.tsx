@@ -1,9 +1,7 @@
 import type { NextPage } from "next";
 import { useSession } from "next-auth/react";
 import { Protected } from "../../components/auth/protected";
-import { trpc, useMutation, useQuery } from "../../hooks/trpc";
-import React, { Fragment, useState } from "react";
-import { Dialog, Transition } from "@headlessui/react";
+import { useQuery } from "../../hooks/trpc";
 import { FaUserFriends } from "react-icons/fa";
 import { CgNotes } from "react-icons/cg";
 import { useAtom } from "jotai";
