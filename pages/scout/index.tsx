@@ -24,7 +24,7 @@ const Scout: NextPage = () => {
   const router = useRouter();
   
   const [selectedTeam, setSelectedTeam] = useState(userData?.data?.teams[0].teamNumber);
-  const comps = useQuery()
+  // const comps = useQuery()
   
   const defendedRef = useRef<HTMLInputElement>(null);
   const defendedByRef = useRef<HTMLInputElement>(null);
