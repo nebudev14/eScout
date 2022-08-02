@@ -9,31 +9,31 @@ import { Combobox } from "@headlessui/react";
 export const MatchInfo: React.FC = () => {
   
   const [selectedTeam, setSelectedTeam] = useState<number>();
-  const [selectedComp, setSelectedComp] = useState();
+  const [selectedComp, setSelectedComp] = useState<string>();
   const { data: session } = useSession();
-  const { data: userData, isLoading } = useQuery([
+  const { data: userData } = useQuery([
     "user.get-by-id",
     { userId: session?.user.id as string },
   ]);
-
+  
   useEffect(() => {
     setSelectedTeam(userData?.teams[0].teamNumber)
+    setSelectedComp(userData?.teams[0].team.comps.at(0)?.name)
   }, [userData?.teams]);
-
-  const { data: compData } = useQuery([
+  
+  const { data: compData, isLoading } = useQuery([
     "comp.get-by-number",
     { team: Number(selectedTeam) },
   ]);
   
-  const [compQuery, setCompQuery] = useState("");
-
+  const [compQuery, setCompQuery] = useState(""); 
   const filteredComps =
     compQuery === ""
       ? compData
       : compData?.filter((compData: Competition) => {
           return compData.name.toLowerCase().includes(compQuery.toLowerCase());
         });
-        
+
   return (
     <div className="grid grid-cols-1 mb-8">
       <Container>
