@@ -2,21 +2,38 @@ import { Container } from "../../ui/container";
 import { Input } from "../../ui/input";
 import { MatchType } from "@prisma/client";
 import { useQuery } from "../../../hooks/trpc";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
+import { Combobox } from "@headlessui/react";
 
 export const MatchInfo: React.FC = () => {
+  
+  const [selectedTeam, setSelectedTeam] = useState<number>();
+  const [selectedComp, setSelectedComp] = useState();
   const { data: session } = useSession();
-
-  const userData = useQuery([
+  const { data: userData, isLoading } = useQuery([
     "user.get-by-id",
     { userId: session?.user.id as string },
   ]);
 
-  const [selectedTeam, setSelectedTeam] = useState(
-    userData?.data?.teams[0].teamNumber
-  );
+  useEffect(() => {
+    setSelectedTeam(userData?.teams[0].teamNumber)
+  }, [userData?.teams]);
 
+  const { data: compData } = useQuery([
+    "comp.get-by-number",
+    { team: Number(selectedTeam) },
+  ]);
+  
+  const [compQuery, setCompQuery] = useState("");
+
+  const filteredComps =
+    compQuery === ""
+      ? compData
+      : compData.filter((compData: string) => {
+          return compData.toLowerCase().includes(compQuery.toLowerCase());
+        });
+        
   return (
     <div className="grid grid-cols-1 mb-8">
       <Container>
@@ -49,7 +66,7 @@ export const MatchInfo: React.FC = () => {
             setSelectedTeam(Number((event.target as HTMLSelectElement).value));
           }}
         >
-          {userData?.data?.teams.map((team, i) => (
+          {userData?.teams.map((team, i) => (
             <option key={i} value={team.teamNumber}>
               {team.teamNumber}
             </option>
@@ -63,13 +80,16 @@ export const MatchInfo: React.FC = () => {
         autoComplete="off"
         required
       />
-      <Input
-        id="eventName"
-        placeholder="Event name"
-        autoComplete="off"
-        required
-      />
-
+    <Combobox value={selectedComp} onChange={setSelectedComp}>
+      <Combobox.Input onChange={(event) => setCompQuery(event.target.value)} />
+      <Combobox.Options>
+        {filteredComps.map((comp: string) => (
+          <Combobox.Option key={comp} value={comp}>
+            {comp}
+          </Combobox.Option>
+        ))}
+      </Combobox.Options>
+    </Combobox>
     </div>
   );
 };

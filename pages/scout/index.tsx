@@ -36,6 +36,9 @@ const Scout: NextPage = () => {
       matchNumber: { value: string };
       teamNumber: { value: string };
       eventName: { value: string };
+      // Entry team
+      entryTeamNumber: { value: string };
+
       mobility: { value: string };
 
       // End game data
@@ -46,9 +49,6 @@ const Scout: NextPage = () => {
       // Comments
       comments: { value: string };
 
-      // Entry team
-      entryTeamNumber: { value: string };
-      
     };
 
     const data = {
