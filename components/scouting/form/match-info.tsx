@@ -1,6 +1,6 @@
 import { Container } from "../../ui/container";
 import { Input } from "../../ui/input";
-import { MatchType } from "@prisma/client";
+import { Competition, MatchType } from "@prisma/client";
 import { useQuery } from "../../../hooks/trpc";
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
@@ -30,8 +30,8 @@ export const MatchInfo: React.FC = () => {
   const filteredComps =
     compQuery === ""
       ? compData
-      : compData.filter((compData: string) => {
-          return compData.toLowerCase().includes(compQuery.toLowerCase());
+      : compData?.filter((compData: Competition) => {
+          return compData.name.toLowerCase().includes(compQuery.toLowerCase());
         });
         
   return (
@@ -83,9 +83,9 @@ export const MatchInfo: React.FC = () => {
     <Combobox value={selectedComp} onChange={setSelectedComp}>
       <Combobox.Input onChange={(event) => setCompQuery(event.target.value)} />
       <Combobox.Options>
-        {filteredComps.map((comp: string) => (
-          <Combobox.Option key={comp} value={comp}>
-            {comp}
+        {filteredComps?.map((comp: Competition) => (
+          <Combobox.Option key={comp.name} value={comp.name}>
+            {comp.name}
           </Combobox.Option>
         ))}
       </Combobox.Options>
