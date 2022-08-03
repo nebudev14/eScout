@@ -9,7 +9,7 @@ import { HiSelector } from "react-icons/hi";
 
 export const MatchInfo: React.FC = () => {
   const [selectedTeam, setSelectedTeam] = useState<number>();
-  const [selectedComp, setSelectedComp] = useState<string>();
+  const [selectedComp, setSelectedComp] = useState<Competition>();
   const { data: session } = useSession();
   const { data: userData } = useQuery([
     "user.get-by-id",
@@ -18,7 +18,7 @@ export const MatchInfo: React.FC = () => {
 
   useEffect(() => {
     setSelectedTeam(userData?.teams[0].teamNumber);
-    setSelectedComp(userData?.teams[0].team.comps.at(0)?.name);
+    setSelectedComp(userData?.teams[0].team.comps.at(0));
   }, [userData?.teams]);
 
   const { data: compData, isLoading } = useQuery([
@@ -85,6 +85,7 @@ export const MatchInfo: React.FC = () => {
           <div className="relative w-full overflow-hidden text-left bg-white rounded shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
             <Combobox.Input
               className="p-2 text-lg leading-tight rounded focus:outline-none focus:shadow-outline"
+              displayValue={(comp: Competition) => comp?.name}
               onChange={(event) => setCompQuery(event.target.value)}
             />
             <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
@@ -98,7 +99,7 @@ export const MatchInfo: React.FC = () => {
             {filteredComps?.map((comp: Competition) => (
               <Combobox.Option
                 key={comp.name}
-                value={comp.name}
+                value={comp}
                 className="relative px-3 py-2 select-none ursor-default p"
               >
                 {comp.name}

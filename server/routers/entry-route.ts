@@ -11,7 +11,7 @@ export const entryRouter = createRouter()
       return await ctx.prisma.entry.create({
         data: {
           userId: input.userId,
-          competitionName: input.competitionName,
+          compId: input.competitionId,
           teamNumber: input.teamNumber,
 
           entryTeamNumber: input.entryTeamNumber,

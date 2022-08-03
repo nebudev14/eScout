@@ -19,7 +19,6 @@ const Scout: NextPage = () => {
   const submitEntry = useMutation("entry.create");
   const router = useRouter();
   
-  
   // const comps = useQuery()
   
   const defendedRef = useRef<HTMLInputElement>(null);

@@ -4,7 +4,7 @@ import { MatchType, RungLevel } from "@prisma/client";
 export const createEntrySchema = z.object({
     userId: z.string().cuid(),
     teamNumber: z.number(),
-    competitionName: z.string(),
+    competitionId: z.string().cuid(),
 
     entryTeamNumber: z.number(),
     matchNumber: z.number(),
