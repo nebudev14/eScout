@@ -89,8 +89,8 @@ model Entry {
 
   matchNumber     Int
   matchType       MatchType
-  eventName       String
   entryTeamNumber Int
+  compName        String
 
   mobility           Boolean
   autoHighShotsMade  Int

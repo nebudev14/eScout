@@ -13,7 +13,7 @@ export const entryRouter = createRouter()
           userId: input.userId,
           compId: input.competitionId,
           teamNumber: input.teamNumber,
-          eventName: input.eventName,
+          compName: input.compName,
 
           entryTeamNumber: input.entryTeamNumber,
           matchNumber: input.matchNumber,

@@ -35,7 +35,6 @@ const Scout: NextPage = () => {
       matchType: { value: MatchType };
       matchNumber: { value: string };
       teamNumber: { value: string };
-      eventName: { value: string };
       // Entry team
       entryTeamNumber: { value: string };
 
@@ -55,11 +54,11 @@ const Scout: NextPage = () => {
       teamNumber: Number(target.teamNumber.value),
       userId: session?.user.id as string,
       competitionId: selectedComp?.id as string,
-
+      compName: selectedComp?.name as string,
       entryTeamNumber: Number(target.entryTeamNumber.value),
       matchNumber: Number(target.matchNumber.value),
       matchType: target.matchType.value,
-      eventName: target.eventName.value,
+
       
       mobility: target.mobility.value === "yes",
 

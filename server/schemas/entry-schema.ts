@@ -5,7 +5,7 @@ export const createEntrySchema = z.object({
     userId: z.string(),
     teamNumber: z.number(),
     competitionId: z.string(),
-    eventName: z.string(),
+    compName: z.string(),
 
     entryTeamNumber: z.number(),
     matchNumber: z.number(),
