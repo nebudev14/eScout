@@ -2,14 +2,14 @@ import { z } from "zod";
 import { MatchType, RungLevel } from "@prisma/client";
 
 export const createEntrySchema = z.object({
-    userId: z.string().cuid(),
+    userId: z.string(),
     teamNumber: z.number(),
-    competitionId: z.string().cuid(),
+    competitionId: z.string(),
+    eventName: z.string(),
 
     entryTeamNumber: z.number(),
     matchNumber: z.number(),
     matchType: z.nativeEnum(MatchType),
-    eventName: z.string(),
 
     mobility: z.boolean(),
 

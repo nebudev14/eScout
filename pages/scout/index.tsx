@@ -11,15 +11,16 @@ import { useState, useRef } from "react";
 import { useSession } from "next-auth/react";
 import { useMutation } from "../../hooks/trpc";
 import { useRouter } from "next/router";
+import { useAtom } from "jotai";
+import { setSelectedCompAtom } from "../../server/atoms";
 
 const Scout: NextPage = () => {
   const { data: session } = useSession();
-
-
-  const submitEntry = useMutation("entry.create");
   const router = useRouter();
   
-  // const comps = useQuery()
+  const submitEntry = useMutation("entry.create");
+  
+  const [selectedComp, ] = useAtom(setSelectedCompAtom);
   
   const defendedRef = useRef<HTMLInputElement>(null);
   const defendedByRef = useRef<HTMLInputElement>(null);
@@ -52,7 +53,8 @@ const Scout: NextPage = () => {
 
     const data = {
       teamNumber: Number(target.teamNumber.value),
-      userId: session?.user.id,
+      userId: session?.user.id as string,
+      competitionId: selectedComp?.id as string,
 
       entryTeamNumber: Number(target.entryTeamNumber.value),
       matchNumber: Number(target.matchNumber.value),
@@ -83,7 +85,7 @@ const Scout: NextPage = () => {
     };
 
     // weee data submit
-    // await submitEntry.mutateAsync(data);
+    await submitEntry.mutateAsync(data);
     router.push("/teams")
   };
 
