@@ -6,7 +6,7 @@ export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
   interface Query {
     teamNumber: number;
     entryTeamNumber?: number;
-    eventName?: string;
+    compName?: string;
   }
 
   const teamNumber = useRef<HTMLInputElement>(null);
@@ -26,7 +26,7 @@ export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
     if (Number(teamNumber.current?.value) !== 0)
       newInput.entryTeamNumber = Number(teamNumber.current?.value);
     if (eventName.current?.value !== "")
-      newInput.eventName = eventName.current?.value;
+      newInput.compName = eventName.current?.value;
     setInput(newInput);
     invalidateQueries("entry.get-by-filter");
   };
@@ -74,7 +74,7 @@ export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
                   <h1 className="text-sm">
                     {entry?.matchType} {entry?.matchNumber}
                   </h1>
-                  <h1>{entry?.eventName}</h1>
+                  <h1>{entry?.compName}</h1>
                   <h1 className="text-xl">Team {entry?.entryTeamNumber}</h1>
                 </div>
                 <div className="flex flex-col text-right">

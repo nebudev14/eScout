@@ -37,7 +37,7 @@ export const filterEntrySchema = z.object({
     teamNumber: z.number(),
     entryTeamNumber: z.number().optional(),
     matchType: z.nativeEnum(MatchType).optional(),
-    eventName: z.string().optional(),
+    compName: z.string().optional(),
 
     mobility: z.boolean().optional(),
 
