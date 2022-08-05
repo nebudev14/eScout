@@ -6,10 +6,12 @@ import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { Combobox } from "@headlessui/react";
 import { HiSelector } from "react-icons/hi";
+import { useAtom } from "jotai";
+import { setSelectedCompAtom } from "../../../server/atoms";
 
 export const MatchInfo: React.FC = () => {
   const [selectedTeam, setSelectedTeam] = useState<number>();
-  const [selectedComp, setSelectedComp] = useState<Competition>();
+  const [selectedComp, setSelectedComp] = useAtom(setSelectedCompAtom);
   const { data: session } = useSession();
   const { data: userData } = useQuery([
     "user.get-by-id",
