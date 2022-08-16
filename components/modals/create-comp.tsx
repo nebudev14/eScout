@@ -2,13 +2,19 @@ import { useAtom } from "jotai";
 import { createCompModalAtom } from "../../server/atoms";
 import React, { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { useMutation } from "../../hooks/trpc";
+import { trpc, useMutation } from "../../hooks/trpc";
 import { useRouter } from "next/router";
 
 export const CreateCompModal: React.FC = () => {
   const [isOpen, setIsOpen] = useAtom(createCompModalAtom);
   const router = useRouter();
-  const mutateComp = useMutation("comp.create");
+  const { invalidateQueries } = trpc.useContext();
+
+  const mutateComp = useMutation("comp.create", {
+    onSuccess() {
+      invalidateQueries("comp.get-by-number");
+    }
+  });
 
   const createComp = async (event: React.SyntheticEvent) => {
     event.preventDefault();
