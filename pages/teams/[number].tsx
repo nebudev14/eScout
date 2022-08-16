@@ -41,7 +41,7 @@ const TeamContent: NextPage = () => {
                 <Filter teamNum={Number(router.query.number)} />
               </Tab.Panel>
               <Tab.Panel>
-                <Competitions /> 
+                <Competitions teamNum={Number(router.query.number)} /> 
               </Tab.Panel>
             </Tab.Panels>
           </Tab.Group>
