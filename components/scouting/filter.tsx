@@ -23,6 +23,7 @@ export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
   const searchEntry = async (event: React.SyntheticEvent) => {
     event.preventDefault();
     const newInput: Query = { teamNumber: teamNum };
+    console.log(newInput)
     if (Number(teamNumber.current?.value) !== 0)
       newInput.entryTeamNumber = Number(teamNumber.current?.value);
     if (eventName.current?.value !== "")
@@ -57,10 +58,10 @@ export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
             />
           </div>
           <button
-            className="p-2 text-xl text-white rounded-r-lg shadow-md bg-cyan-500"
+            className="px-3 py-2 text-xl text-white rounded-r-lg shadow-md bg-cyan-500"
             type="submit"
           >
-            <AiOutlineSearch />
+            +
           </button>
         </form>
         <div className="grid w-full grid-cols-1 ">
