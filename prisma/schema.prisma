@@ -125,7 +125,7 @@ enum MatchType {
   FINAL
 }
 
-// Rapid React Enums
+// Rapid React Enums 
 enum RungLevel {
   NONE
   LOW

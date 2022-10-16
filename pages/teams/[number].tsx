@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { Protected } from "../../components/auth/protected";
-import { Filter } from "../../components/scouting/filter";
+import { Filter } from "../../components/scouting/filter/filter";
 import { Competitions } from "../../components/scouting/competitions";
 import { useQuery } from "../../hooks/trpc";
 import { Tab } from "@headlessui/react";

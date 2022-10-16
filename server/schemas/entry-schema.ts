@@ -34,7 +34,6 @@ export const createEntrySchema = z.object({
 });
 
 export const filterEntrySchema = z.object({
-    teamNumber: z.number(),
     entryTeamNumber: z.number().optional(),
     matchType: z.nativeEnum(MatchType).optional(),
     compName: z.string().optional(),
