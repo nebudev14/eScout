@@ -4,24 +4,17 @@ import { AiOutlineConsoleSql, AiOutlineSearch } from "react-icons/ai";
 import { Tab } from "@headlessui/react";
 import type { Query } from "../../../types/filter-types";
 export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
-
-  const teamNumber = useRef<HTMLInputElement>(null);
-  const eventName = useRef<HTMLInputElement>(null);
-
-  const [entryAttribute, setEntryAttribute] = useState();
-  const [input, setInput] = useState<Query>({});
+  const [queryAttribute, setQueryAttribute] = useState<string>("entryTeamNumber");
+  const [query, setQuery] = useState<Query>({});
 
   const { invalidateQueries } = trpc.useContext();
-  const { data: entryData } = useQuery(["entry.get-by-filter", input]);
+  const { data: entryData } = useQuery(["entry.get-by-filter", query]);
 
   const searchEntry = async (event: React.SyntheticEvent) => {
     event.preventDefault();
-    
-    // query["entryTeamNumber"] = 2265;
-    // console.log(query)
-    setInput({...input, "entryTeamNumber": 2265})
-    invalidateQueries("entry.get-by-filter");
 
+    setQuery({ ...query, entryTeamNumber: 2265 });
+    invalidateQueries("entry.get-by-filter");
   };
 
   return (
@@ -29,13 +22,18 @@ export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
       <div className="flex flex-col items-center mb-4 shadow-sm justfiy-center">
         <form className="flex w-full mb-6 " onSubmit={searchEntry}>
           <div className="grid grid-cols-2">
-            <select className="w-full h-full p-2 border-r-4 rounded-l-lg shadow-md outline-none" >
+            <select
+              className="w-full h-full p-2 border-r-4 rounded-l-lg shadow-md outline-none"
+              onChange={async (event: React.SyntheticEvent) => {
+                setQueryAttribute((event.target as HTMLSelectElement).value);
+              }}
+            >
               <option value="entryTeamNumber">Team</option>
               <option value="eventName">Event</option>
             </select>
             <input
               className="w-full p-2 shadow-md outline-none"
-              ref={eventName}
+              // ref={eventName}
               autoComplete="off"
             />
           </div>
@@ -44,15 +42,18 @@ export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
             type="submit"
           >
             +
-          </button> 
+          </button>
         </form>
-        {/* <div className="flex flex-wrap mb-4">
-        {Object.keys(query).map((key, i) => (
-          <div key={i} className="p-2 text-sm text-white bg-red-400 rounded-lg">
-            {key}: {query[key as keyof typeof query]}
-          </div>
-        ))}
-      </div> */}
+        <div className="flex flex-wrap mb-4">
+          {Object.keys(query).map((key, i) => (
+            <div
+              key={i}
+              className="p-2 text-sm text-white bg-red-600 rounded-lg"
+            >
+              {key}: {query[key as keyof typeof query]}
+            </div>
+          ))}
+        </div>
         <div className="grid w-full grid-cols-1 ">
           {entryData?.map((entry, i) => (
             <div
