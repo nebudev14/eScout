@@ -1,6 +1,6 @@
 import { trpc, useQuery } from "../../../hooks/trpc";
 import React, { useRef, useState } from "react";
-import { AiOutlineSearch } from "react-icons/ai";
+import { AiOutlineConsoleSql, AiOutlineSearch } from "react-icons/ai";
 import { Tab } from "@headlessui/react";
 import type { Query } from "../../../types/filter-types";
 export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
@@ -9,33 +9,19 @@ export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
   const eventName = useRef<HTMLInputElement>(null);
 
   const [entryAttribute, setEntryAttribute] = useState();
-  const [input, setInput] = useState({
-    teamNumber: teamNum,
-  });
+  const [input, setInput] = useState<Query>({});
 
-  const query: Query = {
-    // entryTeamNumber: 2265,
-  }
-
-
-  
-  const { data: entryData } = useQuery(["entry.get-by-filter", query]);
   const { invalidateQueries } = trpc.useContext();
+  const { data: entryData } = useQuery(["entry.get-by-filter", input]);
 
   const searchEntry = async (event: React.SyntheticEvent) => {
     event.preventDefault();
-    // const newInput: Query = { teamNumber: teamNum };
-    // console.log(newInput)
-    // if (Number(teamNumber.current?.value) !== 0)
-    //   newInput.entryTeamNumber = Number(teamNumber.current?.value);
-    // if (eventName.current?.value !== "")
-    //   newInput.compName = eventName.current?.value;
-    // setInput(newInput);
-    const test = "entryTeamNumber" as keyof typeof query
-    // query[test] = 2;
-
+    
+    // query["entryTeamNumber"] = 2265;
+    // console.log(query)
+    setInput({...input, "entryTeamNumber": 2265})
     invalidateQueries("entry.get-by-filter");
-    console.log(entryData)
+
   };
 
   return (
@@ -60,6 +46,13 @@ export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
             +
           </button> 
         </form>
+        {/* <div className="flex flex-wrap mb-4">
+        {Object.keys(query).map((key, i) => (
+          <div key={i} className="p-2 text-sm text-white bg-red-400 rounded-lg">
+            {key}: {query[key as keyof typeof query]}
+          </div>
+        ))}
+      </div> */}
         <div className="grid w-full grid-cols-1 ">
           {entryData?.map((entry, i) => (
             <div
