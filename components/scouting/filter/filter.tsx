@@ -3,6 +3,7 @@ import React, { useRef, useState } from "react";
 import { AiOutlineConsoleSql, AiOutlineSearch } from "react-icons/ai";
 import { Tab } from "@headlessui/react";
 import type { Query } from "../../../types/filter-types";
+import { DynamicInput } from "./dynamic-input";
 export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
   const [queryAttribute, setQueryAttribute] = useState<string>("entryTeamNumber");
   const [query, setQuery] = useState<Query>({});
@@ -29,13 +30,9 @@ export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
               }}
             >
               <option value="entryTeamNumber">Team</option>
-              <option value="eventName">Event</option>
+              <option value="compName">Event</option>
             </select>
-            <input
-              className="w-full p-2 shadow-md outline-none"
-              // ref={eventName}
-              autoComplete="off"
-            />
+            <DynamicInput attribute={queryAttribute} />
           </div>
           <button
             className="px-3 py-2 text-xl text-white rounded-r-lg shadow-md bg-cyan-500"
