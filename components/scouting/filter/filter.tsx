@@ -3,7 +3,9 @@ import React, { useRef, useState } from "react";
 import { AiOutlineConsoleSql, AiOutlineSearch } from "react-icons/ai";
 import { Tab } from "@headlessui/react";
 import type { Query } from "../../../types/filter-types";
-import { DynamicInput } from "./dynamic-input";
+import { DynamicInput, inputs } from "./dynamic-input";
+import { MatchType } from "@prisma/client";
+
 export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
   const [queryAttribute, setQueryAttribute] = useState<string>("entryTeamNumber");
   const [query, setQuery] = useState<Query>({});
@@ -14,7 +16,10 @@ export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
   const searchEntry = async (event: React.SyntheticEvent) => {
     event.preventDefault();
 
-    setQuery({ ...query, entryTeamNumber: 2265 });
+
+    console.log()
+    // let test = query[v]
+    // setQuery({ ...query, entryTeamNumber: 2265 });
     invalidateQueries("entry.get-by-filter");
   };
 
