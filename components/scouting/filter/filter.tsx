@@ -7,6 +7,7 @@ import { DynamicInput, inputs } from "./dynamic-input";
 import { MatchType } from "@prisma/client";
 import { useAtom } from "jotai";
 import { setSearchQueryAtom } from "../../../server/atoms";
+import { FilterCard } from "../../ui/filter-card";
 
 export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
   const [queryAttribute, setQueryAttribute] =
@@ -29,7 +30,7 @@ export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
     const newQuery = query;
     newQuery[target.queryType.value] = currentInput?.userInput;
     setQuery(newQuery);
-    console.log(query)
+    // console.log(qu)
     invalidateQueries("entry.get-by-filter");
   };
 
@@ -69,38 +70,7 @@ export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
         </div>
         <div className="grid w-full grid-cols-1 ">
           {entryData?.map((entry, i) => (
-            <div
-              className="py-2 mb-6 border shadow-xl rounded-xl bg-slate-50"
-              key={i}
-            >
-              <div className="grid grid-cols-2 px-5 py-4">
-                <div>
-                  <h1 className="text-sm">
-                    {entry?.matchType} {entry?.matchNumber}
-                  </h1>
-                  <h1>{entry?.compName}</h1>
-                  <h1 className="text-xl">Team {entry?.entryTeamNumber}</h1>
-                </div>
-                <div className="flex flex-col text-right">
-                  <div>
-                    <b>{entry.autoHighShotsMade + entry.autoLowShotsMade}</b>{" "}
-                    total auto goals
-                  </div>
-                  <div>
-                    <b>
-                      {entry.teleopHighShotsMade + entry.teleopLowShotsMade}
-                    </b>{" "}
-                    total teleop goals
-                  </div>
-                  <div>
-                    {entry.climbEnd - entry.climbStart === 0
-                      ? "No climb"
-                      : entry.climbStart - entry.climbEnd + " second climb"}
-                  </div>
-                  <div>{entry.climbRung} Rung</div>
-                </div>
-              </div>
-            </div>
+            <FilterCard entry={entry} />
           ))}
         </div>
       </div>
