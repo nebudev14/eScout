@@ -21,6 +21,22 @@ export const FilterCard: React.FC<{ entry: Entry }> = ({ entry }) => {
             teleop goals
           </div>
           <div>
+            <b>
+              {(
+                ((entry.autoHighShotsMade +
+                  entry.autoLowShotsMade +
+                  entry.teleopHighShotsMade +
+                  entry.teleopHighShotsMade) /
+                  (entry.autoHighShotsTotal +
+                    entry.autoHighShotsMade +
+                    entry.teleopHighShotsMade +
+                    entry.teleopLowShotsTotal)) *
+                100
+              ).toFixed(2)}
+            </b>
+            % accuracy
+          </div>
+          <div>
             {entry.climbEnd - entry.climbStart === 0
               ? "No climb"
               : entry.climbStart - entry.climbEnd + " second climb"}
