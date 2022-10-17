@@ -28,7 +28,7 @@ export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
 
     // let test = query[v]
     const newQuery = query;
-    
+
     newQuery[target.queryType.value] = currentInput?.userInput;
     setQuery(newQuery);
     invalidateQueries("entry.get-by-filter");
@@ -59,14 +59,16 @@ export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
           </button>
         </form>
         <div className="flex flex-wrap mb-4">
-          {Object.keys(query).map((key, i) => (
-            <div
-              key={i}
-              className="p-2 text-sm text-white bg-red-600 rounded-lg"
-            >
-              {key}: {query[key as keyof typeof query]}
-            </div>
-          ))}
+          {Object.keys(query)
+            .filter((e) => query[e as keyof typeof query] !== undefined)
+            .map((key, i) => (
+              <div
+                key={i}
+                className="p-2 text-sm text-white bg-red-600 rounded-lg"
+              >
+                {key}: {query[key as keyof typeof query]}
+              </div>
+            ))}
         </div>
         <div className="grid w-full grid-cols-1 ">
           {entryData?.map((entry, i) => (
