@@ -5,24 +5,31 @@ import { Tab } from "@headlessui/react";
 import type { Query } from "../../../types/filter-types";
 import { DynamicInput, inputs } from "./dynamic-input";
 import { MatchType } from "@prisma/client";
+import { useAtom } from "jotai";
+import { setSearchQueryAtom } from "../../../server/atoms";
 
 export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
-  const [queryAttribute, setQueryAttribute] = useState<string>("entryTeamNumber");
+  const [queryAttribute, setQueryAttribute] =
+    useState<string>("entryTeamNumber");
   const [query, setQuery] = useState<Query>({});
 
-  const { invalidateQueries } = trpc.useContext();
   const { data: entryData } = useQuery(["entry.get-by-filter", query]);
+  const { invalidateQueries } = trpc.useContext();
 
+  const [currentInput] = useAtom(setSearchQueryAtom);
 
   const searchEntry = async (event: React.SyntheticEvent) => {
     event.preventDefault();
 
+    const target = event.target as typeof event.target & {
+      queryType: { value: keyof Query };
+    };
+
     // let test = query[v]
-    const test = "compName";
     const newQuery = query;
-    newQuery[test] = "Battlecry"
-    console.log(newQuery)
+    newQuery[target.queryType.value] = currentInput?.userInput;
     setQuery(newQuery);
+    console.log(query)
     invalidateQueries("entry.get-by-filter");
   };
 
@@ -32,6 +39,7 @@ export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
         <form className="flex w-full mb-6 " onSubmit={searchEntry}>
           <div className="grid grid-cols-2">
             <select
+              id="queryType"
               className="w-full h-full p-2 border-r-4 rounded-l-lg shadow-md outline-none"
               onChange={async (event: React.SyntheticEvent) => {
                 setQueryAttribute((event.target as HTMLSelectElement).value);

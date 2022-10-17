@@ -1,3 +1,6 @@
+import { useAtom } from "jotai";
+import { setSearchQueryAtom } from "../../../server/atoms";
+
 export const inputs = {
   entryTeamNumber: {
     element: "input",
@@ -12,6 +15,8 @@ export const inputs = {
 export const DynamicInput: React.FC<{ attribute: string }> = ({
   attribute,
 }) => {
+  const [, setCurrentInput] = useAtom(setSearchQueryAtom);
+
   if (Object.keys(inputs).includes(attribute)) {
     const index = Object.keys(inputs).indexOf(attribute);
     const input = Object.values(inputs).at(index);
@@ -22,6 +27,16 @@ export const DynamicInput: React.FC<{ attribute: string }> = ({
           className="w-full p-2 shadow-md outline-none"
           autoComplete="off"
           type={input?.inputType}
+          onChange={async (event: React.SyntheticEvent) => {
+            const inpValue =
+              input?.inputType == "number"
+                ? Number((event.target as HTMLInputElement).value)
+                : (event.target as HTMLInputElement).value;
+            setCurrentInput({
+              userInput: inpValue,
+              comparable: false,
+            });
+          }}
         />
       );
     } else {

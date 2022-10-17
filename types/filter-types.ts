@@ -8,7 +8,7 @@ export interface Query {
 }
 
 export interface InputType {
-  userInput: string | number;
+  userInput: any; // im a disappointment
   comparable: boolean;
   comparison?: string;
 }
