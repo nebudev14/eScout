@@ -64,9 +64,15 @@ export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
             .map((key, i) => (
               <div
                 key={i}
-                className="p-2 text-sm text-white bg-red-600 rounded-lg"
+                className="flex p-2 text-sm text-white bg-red-600 rounded-lg"
               >
-                {key}: {query[key as keyof typeof query]}
+                <div className="px-1">{key}: {query[key as keyof typeof query]}</div>
+                <button className="pl-2 bg-red-600" onClick={async (event: React.SyntheticEvent) => {
+                  const current = query;
+                  current[key as keyof typeof query] = undefined;
+                  setQuery(current);
+                  invalidateQueries("entry.get-by-filter");
+                }}>X</button>
               </div>
             ))}
         </div>
