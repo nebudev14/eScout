@@ -6,3 +6,9 @@ export interface Query {
   matchType?: MatchType;
   mobility?: boolean;
 }
+
+export interface InputType {
+  userInput: string | number;
+  comparable: boolean;
+  comparison?: string;
+}

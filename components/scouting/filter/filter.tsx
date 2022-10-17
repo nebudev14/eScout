@@ -13,7 +13,6 @@ export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
   const { invalidateQueries } = trpc.useContext();
   const { data: entryData } = useQuery(["entry.get-by-filter", query]);
 
-  console.log(query)
 
   const searchEntry = async (event: React.SyntheticEvent) => {
     event.preventDefault();
