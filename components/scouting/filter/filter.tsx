@@ -28,9 +28,9 @@ export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
 
     // let test = query[v]
     const newQuery = query;
+    
     newQuery[target.queryType.value] = currentInput?.userInput;
     setQuery(newQuery);
-    // console.log(qu)
     invalidateQueries("entry.get-by-filter");
   };
 

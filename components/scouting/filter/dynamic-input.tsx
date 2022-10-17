@@ -33,7 +33,7 @@ export const DynamicInput: React.FC<{ attribute: string }> = ({
                 ? Number((event.target as HTMLInputElement).value)
                 : (event.target as HTMLInputElement).value;
             setCurrentInput({
-              userInput: inpValue,
+              userInput: inpValue == 0 || inpValue == "" ? undefined : inpValue,
               comparable: false,
             });
           }}
