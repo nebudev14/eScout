@@ -9,6 +9,7 @@ import { useAtom } from "jotai";
 import { setSearchQueryAtom } from "../../../server/atoms";
 import { FilterCard } from "../../ui/filter-card";
 import { FilterStats } from "./filter-stats";
+import { calculateStats } from "../../../util/calculate-stats";
 
 export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
   const [queryAttribute, setQueryAttribute] =
@@ -19,6 +20,7 @@ export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
   const { invalidateQueries } = trpc.useContext();
 
   const [currentInput] = useAtom(setSearchQueryAtom);
+  console.log(calculateStats(entryData))
 
   const searchEntry = async (event: React.SyntheticEvent) => {
     event.preventDefault();
@@ -80,7 +82,7 @@ export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
         </div>
         <div className="grid w-full grid-cols-1 ">
           {entryData?.map((entry, i) => (
-            <FilterCard entry={entry} />
+            <FilterCard entry={entry} key={i} />
           ))}
         </div>
       </div>
