@@ -8,6 +8,7 @@ import { MatchType } from "@prisma/client";
 import { useAtom } from "jotai";
 import { setSearchQueryAtom } from "../../../server/atoms";
 import { FilterCard } from "../../ui/filter-card";
+import { FilterStats } from "./filter-stats";
 
 export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
   const [queryAttribute, setQueryAttribute] =
@@ -37,7 +38,8 @@ export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
   return (
     <>
       <div className="flex flex-col items-center mb-4 shadow-sm justfiy-center">
-        <form className="flex w-full mb-6 " onSubmit={searchEntry}>
+        <FilterStats />
+        <form className="flex w-full mt-4 mb-6 " onSubmit={searchEntry}>
           <div className="grid grid-cols-2">
             <select
               id="queryType"

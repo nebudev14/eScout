@@ -3,6 +3,7 @@ import { useAtom } from "jotai";
 import { CreateCompModal } from "../modals/create-comp";
 import { useQuery } from "../../hooks/trpc";
 
+
 export const Competitions: React.FC<{ teamNum: number }> = ({ teamNum }) => {
   const [, setIsOpen] = useAtom(createCompModalAtom);
   const { data: allComps } = useQuery([
