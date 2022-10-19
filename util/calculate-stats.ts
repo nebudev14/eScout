@@ -1,4 +1,4 @@
-import { Entry } from "@prisma/client";
+import type{ Entry } from "@prisma/client";
 
 interface BallStats {
   // Auto
@@ -40,6 +40,13 @@ export interface Statistics {
 
 }
 
+function sum(data: Entry[] | undefined, key: keyof Entry) {
+  let ans = 0;
+  data?.filter((e) => e[key]).forEach(e => ans += (e[key] as number))
+
+  return ans;   
+}
+
 export function calculateStats(data: Entry[] | undefined): any {
   // let ballStats: BallStats = {
 
@@ -53,5 +60,5 @@ export function calculateStats(data: Entry[] | undefined): any {
   //   ballStats,
   //   climbStats
   // };
-  return data?.filter((e) => e.autoHighShotsMade).reduce((a, { autoHighShotsMade }) => a + autoHighShotsMade, 0)
+  return sum(data, "autoHighShotsMade" as keyof Entry)
 }
