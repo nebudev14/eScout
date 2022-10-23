@@ -50,7 +50,7 @@ export const entryRouter = createRouter()
         where: { id: input.id },
       });
     },
-  }).query("get-by-team", { 
+  }).query("get-by-team", {
     input: z.object({
       teamNumber: z.number()
     }),
@@ -62,9 +62,10 @@ export const entryRouter = createRouter()
   }).query("get-by-filter", {
     input: filterEntrySchema,
     async resolve({ input, ctx }) {
-      const filteredQuery = Prisma.validator<Prisma.EntryWhereInput>()(input);
+      const filteredQuery = Prisma.validator<Prisma.EntryWhereInput>()(input.query);
       return await ctx.prisma.entry.findMany({
         where: {
+          teamNumber: input.teamNumber,
           ...filteredQuery
         }
       })

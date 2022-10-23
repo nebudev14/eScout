@@ -1,7 +1,7 @@
 import { createRouter }from "../create-router";
 import { userRouter } from "./user-router";
 import { teamRouter } from "./team-router";
-import { entryRouter } from "./entry-route";
+import { entryRouter } from "./entry-router";
 import { compRouter } from "./comp-router";
 
 export const appRouter = createRouter()
