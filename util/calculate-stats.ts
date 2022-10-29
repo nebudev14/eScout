@@ -47,10 +47,12 @@ function sum(data: Entry[] | undefined, key: keyof Entry) {
   return ans;
 }
 
-export function calculateStats(data: Entry[] | undefined): any {
-  // let ballStats: BallStats = {
 
-  // };
+
+export function calculateStats(data: Entry[] | undefined): any {
+  let ballStats: BallStats = {
+    
+  };
 
   // let climbStats: ClimbStats = {
 

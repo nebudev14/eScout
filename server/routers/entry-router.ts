@@ -1,5 +1,5 @@
 import { Prisma } from "@prisma/client";
-import { object, z } from "zod";
+import { z } from "zod";
 import { createRouter } from "../create-router";
 import { createEntrySchema, filterEntrySchema, getEntrySchema } from "../schemas/entry-schema";
 
