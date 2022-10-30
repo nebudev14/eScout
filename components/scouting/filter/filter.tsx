@@ -23,7 +23,8 @@ export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
   const { invalidateQueries } = trpc.useContext();
 
   const [currentInput] = useAtom(setSearchQueryAtom);
-  console.log(calculateStats(entryData));
+  // console.log(calculateStats(entryData));
+  
 
   const searchEntry = async (event: React.SyntheticEvent) => {
     event.preventDefault();
@@ -38,7 +39,10 @@ export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
     newQuery[target.queryType.value] = currentInput?.userInput;
     setQuery(newQuery);
     invalidateQueries("entry.get-by-filter");
+    console.log(calculateStats(entryData))
   };
+
+  // console.log(entryData!.length)
 
   return (
     <>

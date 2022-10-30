@@ -1,4 +1,5 @@
 import type { Entry } from "@prisma/client";
+import { RungLevel } from "@prisma/client";
 
 interface BallStats {
   // Auto
@@ -46,8 +47,13 @@ function sum(data: Entry[] | undefined, key: keyof Entry): number {
   return ans;
 }
 
-export function calculateStats(data: Entry[] | undefined): any {
+function countRungs(data: Entry[] | undefined, rungLevel: RungLevel): number {
+  const rungs = data?.filter((e) => e.climbRung === rungLevel);
+  return rungs === undefined ? 0 : rungs.length;
+}
 
+export function calculateStats(data: Entry[] | undefined): Statistics {
+  console.log(data!)
   let ballStats: BallStats = {
     autoHighShotsMade: sum(data, "autoHighShotsMade"),
     autoHighShotsTotal: sum(data, "autoHighShotsTotal"),
@@ -69,13 +75,18 @@ export function calculateStats(data: Entry[] | undefined): any {
     averageLowShots: (sum(data, "autoLowShotsMade") + sum(data, "teleopLowShotsMade")) / data!.length,
   };
 
-  // let climbStats: ClimbStats = {
+  let climbStats: ClimbStats = {
+    averageClimbTime: (sum(data, "climbEnd") - sum(data, "climbStart")) / data!.length,
+    noClimb: countRungs(data, RungLevel.NONE),
+    lowClimb: countRungs(data, RungLevel.LOW),
+    midClimb: countRungs(data, RungLevel.MID),
+    highClimb: countRungs(data, RungLevel.HIGH),
+    travClimb: countRungs(data, RungLevel.TRAVERSAL)
+  }
 
-  // }
+  return {
+    ballStats,
+    climbStats
+  };
 
-  // return {
-  //   ballStats,
-  //   climbStats
-  // };
-  
 }
