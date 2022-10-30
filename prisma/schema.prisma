@@ -80,11 +80,11 @@ model Competition {
 
 model Entry {
   id              String      @id @default(cuid())
-  teamNumber      Int         
+  teamNumber      Int
   team            Team        @relation(fields: [teamNumber], references: [number])
-  compId          String      
+  compId          String
   competition     Competition @relation(fields: [compId], references: [id])
-  userId          String      
+  userId          String
   user            User        @relation(fields: [userId], references: [id])
 
   matchNumber     Int
@@ -125,7 +125,7 @@ enum MatchType {
   FINAL
 }
 
-// Rapid React Enums 
+// Rapid React Enums
 enum RungLevel {
   NONE
   LOW
@@ -133,3 +133,4 @@ enum RungLevel {
   HIGH
   TRAVERSAL
 }
+
