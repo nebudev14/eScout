@@ -31,7 +31,6 @@ export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
       queryType: { value: keyof Query };
     };
 
-    // let test = query[v]
     const newQuery = query;
 
     newQuery[target.queryType.value] = currentInput?.userInput;
@@ -40,12 +39,10 @@ export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
 
   };
 
-  // console.log(entryData!.length)
-
   return (
     <>
       <div className="flex flex-col items-center mb-4 shadow-sm justfiy-center">
-        {Object.keys(query).length != 0 ? <FilterStats stats={calculateStats(entryData)} /> : null}
+        <FilterStats stats={calculateStats(entryData!)} />
         <form className="flex w-full mt-4 mb-6 " onSubmit={searchEntry}>
           <div className="grid grid-cols-2">
             <select

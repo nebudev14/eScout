@@ -52,8 +52,8 @@ function countRungs(data: Entry[] | undefined, rungLevel: RungLevel): number {
   return rungs === undefined ? 0 : rungs.length;
 }
 
-export function calculateStats(data: Entry[] | undefined): Statistics {
-  console.log(data!)
+export function calculateStats(data: Entry[]): Statistics {
+  // console.log(data.length)
   let ballStats: BallStats = {
     autoHighShotsMade: sum(data, "autoHighShotsMade"),
     autoHighShotsTotal: sum(data, "autoHighShotsTotal"),
@@ -71,12 +71,12 @@ export function calculateStats(data: Entry[] | undefined): Statistics {
     teleopHighPercentage: sum(data, "teleopHighShotsMade") / sum(data, "teleopHighShotsTotal"),
     teleopLowPercentage: sum(data, "teleopLowShotsMade") / sum(data, "teleopLowShotsTotal"),
 
-    averageHighShots: (sum(data, "autoHighShotsMade") + sum(data, "teleopHighShotsMade")) / data!.length,
-    averageLowShots: (sum(data, "autoLowShotsMade") + sum(data, "teleopLowShotsMade")) / data!.length,
+    averageHighShots: (sum(data, "autoHighShotsMade") + sum(data, "teleopHighShotsMade")) / data?.length,
+    averageLowShots: (sum(data, "autoLowShotsMade") + sum(data, "teleopLowShotsMade")) / data?.length,
   };
 
   let climbStats: ClimbStats = {
-    averageClimbTime: (sum(data, "climbEnd") - sum(data, "climbStart")) / data!.length,
+    averageClimbTime: (sum(data, "climbEnd") - sum(data, "climbStart")) / data?.length,
     noClimb: countRungs(data, RungLevel.NONE),
     lowClimb: countRungs(data, RungLevel.LOW),
     midClimb: countRungs(data, RungLevel.MID),

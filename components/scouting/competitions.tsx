@@ -11,6 +11,8 @@ export const Competitions: React.FC<{ teamNum: number }> = ({ teamNum }) => {
     { team: teamNum },
   ]);
 
+  console.log(allComps)
+
   return (
     <div className="flex flex-col items-center justify-center">
       <button
