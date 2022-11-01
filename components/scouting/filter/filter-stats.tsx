@@ -1,9 +1,17 @@
-import { Entry } from "@prisma/client"
-// <{ data: Entry[] }> = ({data}) 
-export const FilterStats: React.FC = () => {
+import { Statistics } from "../../../util/calculate-stats";
+
+// <{ data: Entry[] }> = ({data})
+export const FilterStats: React.FC<{ stats: Statistics }> = (
+  stats,
+) => {
   return (
-    <div className="flex items-center w-full px-4 py-2 bg-gray-300 rounded-lg r">
-      <h1></h1>
+    <div className="flex flex-col w-full px-4 py-3 bg-gray-300 rounded-lg r">
+      <div className="mb-2">
+        <h1>Ball Statistics</h1>
+      </div>
+      <div>
+        <h1>Climb Statistics</h1>
+      </div>
     </div>
   );
-}
+};

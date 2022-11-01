@@ -23,8 +23,6 @@ export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
   const { invalidateQueries } = trpc.useContext();
 
   const [currentInput] = useAtom(setSearchQueryAtom);
-  // console.log(calculateStats(entryData));
-  
 
   const searchEntry = async (event: React.SyntheticEvent) => {
     event.preventDefault();
@@ -39,7 +37,7 @@ export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
     newQuery[target.queryType.value] = currentInput?.userInput;
     setQuery(newQuery);
     invalidateQueries("entry.get-by-filter");
-    console.log(calculateStats(entryData))
+
   };
 
   // console.log(entryData!.length)
@@ -47,7 +45,7 @@ export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
   return (
     <>
       <div className="flex flex-col items-center mb-4 shadow-sm justfiy-center">
-        <FilterStats />
+        {Object.keys(query).length != 0 ? <FilterStats stats={calculateStats(entryData)} /> : null}
         <form className="flex w-full mt-4 mb-6 " onSubmit={searchEntry}>
           <div className="grid grid-cols-2">
             <select
