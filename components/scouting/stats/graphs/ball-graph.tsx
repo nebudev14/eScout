@@ -3,6 +3,7 @@ import { Line } from "react-chartjs-2";
 import {
   Chart,
   ChartData,
+  LineOptions,
   ChartOptions,
   CategoryScale,
   LinearScale,
@@ -11,6 +12,7 @@ import {
   Title,
   Tooltip,
   Legend,
+  CoreChartOptions,
 } from "chart.js";
 import { Entry } from "@prisma/client";
 
@@ -57,8 +59,30 @@ export const BallGraph: React.FC<{ entries: Entry[] }> = ({ entries }) => {
     ],
   };
 
-  const options: ChartOptions = {
+  const options: ChartOptions<'line'> = {
     responsive: true,
+    plugins: {
+      title: {
+        display: true,
+        text: "Ball shots"
+      },
+    },
+    scales: {
+      x: {
+        display: true,
+        title: {
+          display: true,
+          text: "Qualification #"
+        }
+      },
+      y: {
+        display: true,
+        title: {
+          display: true,
+          text: "Number of cargo scored"
+        }
+      }
+    }
   };
 
   return (
