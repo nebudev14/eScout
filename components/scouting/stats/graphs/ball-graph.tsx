@@ -24,9 +24,9 @@ export const BallGraph: React.FC<{ entries: Entry[] }> = ({ entries }) => {
     Tooltip,
     Legend
   );
-  entries.sort((a, b) => a.matchNumber - b.matchNumber);
-  const matchNumbers: string[] = entries.map((e) => e.matchNumber.toString());
-  const shots: number[] = entries.map((e) => e.autoHighShotsMade);
+  entries!?.sort((a, b) => a.matchNumber - b.matchNumber);
+  const matchNumbers: string[] = entries!?.map((e) => e.matchNumber.toString());
+  const shots: number[] = entries!?.map((e) => e.autoHighShotsMade);
 
   const data: ChartData<"line"> = {
     labels: matchNumbers,
