@@ -92,7 +92,7 @@ export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
             <FilterCard entry={entry} key={i} />
           ))}
         </div>
-        <FilterStats stats={calculateStats(entryData!)} />
+        <FilterStats data={entryData!} stats={calculateStats(entryData!)} />
       </div>
     </div>
   );
