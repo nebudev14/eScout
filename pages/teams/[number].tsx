@@ -17,11 +17,12 @@ const TeamContent: NextPage = () => {
 
   return (
     <Protected>
-      <div className="h-full px-6 py-4">
+      <div className="h-full px-16 py-4">
         <h1 className="mb-2 text-4xl">{data?.name}</h1>
         <h1 className="mb-4 text-xl">Team {data?.number}</h1>
-        <div className="flex flex-col items-center justify-center">
+        <div className="">
           <Tab.Group>
+            <div className="flex flex-col items-start text-2xl">
             <Tab.List className="grid grid-cols-2">
               {tabs.map((content, i) => (
                 <Tab
@@ -36,6 +37,7 @@ const TeamContent: NextPage = () => {
                 </Tab>
               ))}
             </Tab.List>
+            </div>
             <Tab.Panels className="mt-4">
               <Tab.Panel>
                 <Filter teamNum={Number(router.query.number)} />

@@ -36,14 +36,12 @@ export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
     newQuery[target.queryType.value] = currentInput?.userInput;
     setQuery(newQuery);
     invalidateQueries("entry.get-by-filter");
-
   };
 
   return (
-    <>
-      <div className="flex flex-col items-center mb-4 shadow-sm justfiy-center">
-        <FilterStats stats={calculateStats(entryData!)} />
-        <form className="flex w-full mt-4 mb-6 " onSubmit={searchEntry}>
+    <div>
+      <div className="grid grid-cols-2 gap-10">
+        <form className="flex w-full mt-4" onSubmit={searchEntry}>
           <div className="grid grid-cols-2">
             <select
               id="queryType"
@@ -89,12 +87,13 @@ export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
               </div>
             ))}
         </div>
-        <div className="grid w-full grid-cols-1 ">
+        <div className="grid h-[30rem] grid-cols-1 overflow-y-scroll">
           {entryData?.map((entry, i) => (
             <FilterCard entry={entry} key={i} />
           ))}
         </div>
+        <FilterStats stats={calculateStats(entryData!)} />
       </div>
-    </>
+    </div>
   );
 };
