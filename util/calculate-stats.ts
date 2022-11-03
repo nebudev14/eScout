@@ -1,5 +1,6 @@
 import type { Entry } from "@prisma/client";
 import { RungLevel } from "@prisma/client";
+import { number } from "zod";
 
 interface BallStats {
   // Auto
@@ -52,31 +53,34 @@ function countRungs(data: Entry[], rungLevel: RungLevel): number {
   return rungs === undefined ? 0 : rungs.length;
 }
 
+function nanFormat(value: number): number {
+  return isNaN(value) ? 0 : value;
+}
+
 export function calculateStats(data: Entry[]): Statistics {
-  // console.log(data.length)
   let ballStats: BallStats = {
     autoHighShotsMade: sum(data, "autoHighShotsMade"),
     autoHighShotsTotal: sum(data, "autoHighShotsTotal"),
     autoLowShotsMade: sum(data, "autoLowShotsMade"),
     autoLowShotsTotal: sum(data, "autoLowShotsTotal"),
 
-    autoHighPercentage: sum(data, "autoHighShotsMade") / sum(data, "autoHighShotsTotal"),
-    autoLowPercentage: sum(data, "autoLowShotsMade") / sum(data, "autoLowShotsTotal"),
+    autoHighPercentage: nanFormat(sum(data, "autoHighShotsMade") / sum(data, "autoHighShotsTotal")),
+    autoLowPercentage: nanFormat(sum(data, "autoLowShotsMade") / sum(data, "autoLowShotsTotal")),
 
     teleopHighShotsMade: sum(data, "teleopHighShotsMade"),
     teleopHighShotsTotal: sum(data, "teleopHighShotsTotal"),
     teleopLowShotsMade: sum(data, "teleopLowShotsMade"),
     teleopLowShotsTotal: sum(data, "teleopLowShotsTotal"),
 
-    teleopHighPercentage: sum(data, "teleopHighShotsMade") / sum(data, "teleopHighShotsTotal"),
-    teleopLowPercentage: sum(data, "teleopLowShotsMade") / sum(data, "teleopLowShotsTotal"),
+    teleopHighPercentage: nanFormat(sum(data, "teleopHighShotsMade") / sum(data, "teleopHighShotsTotal")),
+    teleopLowPercentage: nanFormat(sum(data, "teleopLowShotsMade") / sum(data, "teleopLowShotsTotal")),
 
-    averageHighShots: (sum(data, "autoHighShotsMade") + sum(data, "teleopHighShotsMade")) / data?.length,
-    averageLowShots: (sum(data, "autoLowShotsMade") + sum(data, "teleopLowShotsMade")) / data?.length,
+    averageHighShots: nanFormat((sum(data, "autoHighShotsMade") + sum(data, "teleopHighShotsMade")) / data?.length),
+    averageLowShots: nanFormat((sum(data, "autoLowShotsMade") + sum(data, "teleopLowShotsMade")) / data?.length),
   };
 
   let climbStats: ClimbStats = {
-    averageClimbTime: (sum(data, "climbEnd") - sum(data, "climbStart")) / data?.length,
+    averageClimbTime: nanFormat((sum(data, "climbEnd") - sum(data, "climbStart")) / data?.length),
     noClimb: countRungs(data, RungLevel.NONE),
     lowClimb: countRungs(data, RungLevel.LOW),
     midClimb: countRungs(data, RungLevel.MID),
