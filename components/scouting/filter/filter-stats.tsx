@@ -3,6 +3,7 @@ import { percentageFormat, Statistics } from "../../../util/calculate-stats";
 // <{ data: Entry[] }> = ({data})
 export const FilterStats: React.FC<{ stats: Statistics }> = ({ stats }) => {
   const ballStats = stats.ballStats;
+  const climbStats = stats.climbStats;
 
   const totalTeleopShotsMade =
     ballStats.teleopHighShotsMade + ballStats.teleopLowShotsMade;
@@ -25,7 +26,7 @@ export const FilterStats: React.FC<{ stats: Statistics }> = ({ stats }) => {
         </h1>
         <h1 className="my-1 text-lg">
           <b>
-            {totalBallsMade} / {totalBallsMade}
+            {totalBallsMade} / {totalBallsShot}
           </b>{" "}
           total shots made ({percentageFormat(totalBallsMade / totalBallsShot)}
           %)
@@ -105,9 +106,12 @@ export const FilterStats: React.FC<{ stats: Statistics }> = ({ stats }) => {
           </div>
         </div>
       </div>
-      <h1 className="text-xl ">
+      <h1 className="text-2xl ">
         <b>Climb Statistics</b>
       </h1>
+      <h1 className="my-1 text-lg">
+        Average climb timb: <b>{climbStats.averageClimbTime} </b>
+        </h1>
     </div>
   );
 };
