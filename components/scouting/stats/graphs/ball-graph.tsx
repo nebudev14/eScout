@@ -1,9 +1,7 @@
-import { Statistics } from "../../../../util/calculate-stats";
 import { Line } from "react-chartjs-2";
 import {
   Chart,
   ChartData,
-  LineOptions,
   ChartOptions,
   CategoryScale,
   LinearScale,
@@ -64,7 +62,7 @@ export const BallGraph: React.FC<{ entries: Entry[] }> = ({ entries }) => {
     plugins: {
       title: {
         display: true,
-        text: "Ball shots"
+        text: "Cargo shots"
       },
     },
     scales: {

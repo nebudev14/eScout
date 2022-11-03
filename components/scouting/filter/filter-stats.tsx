@@ -3,6 +3,7 @@ import { NumberStats } from "../stats/number-stats";
 import { Tab } from "@headlessui/react";
 import { BallGraph } from "../stats/graphs/ball-graph";
 import { Entry } from "@prisma/client";
+import { ClimbGraph } from "../stats/graphs/climb-graph";
 
 export const FilterStats: React.FC<{ data: Entry[], stats: Statistics }> = ({ data, stats }) => {
   const tabs = ["Numerical Data", "Ball Graphs", "Climb Graphs"];
@@ -33,7 +34,7 @@ export const FilterStats: React.FC<{ data: Entry[], stats: Statistics }> = ({ da
           <Tab.Panel>
             <BallGraph entries={data} />
           </Tab.Panel>
-          <Tab.Panel>climb grpah</Tab.Panel>
+          <Tab.Panel><ClimbGraph entries={data} stats={stats} /></Tab.Panel>
         </Tab.Panels>
       </Tab.Group>
     </div>
