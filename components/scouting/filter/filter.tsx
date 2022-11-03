@@ -87,7 +87,7 @@ export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
               </div>
             ))}
         </div>
-        <div className={`grid grid-cols-1 overflow-y-scroll ${entryData!?.length > 2 ? `h-[30rem]` : ``}`}>
+        <div className={`grid grid-cols-1 overflow-y-scroll ${entryData!?.length > 2 ? `h-[35rem]` : ``}`}>
           {entryData?.map((entry, i) => (
             <FilterCard entry={entry} key={i} />
           ))}

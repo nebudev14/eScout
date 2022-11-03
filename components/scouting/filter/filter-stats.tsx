@@ -109,9 +109,27 @@ export const FilterStats: React.FC<{ stats: Statistics }> = ({ stats }) => {
       <h1 className="text-2xl ">
         <b>Climb Statistics</b>
       </h1>
-      <h1 className="my-1 text-lg">
-        Average climb timb: <b>{climbStats.averageClimbTime} </b>
+      <h1 className="my-1 text-md">
+        Average climb timb: <b>{climbStats.averageClimbTime.toFixed(2)}</b>{" "}
+        seconds
+      </h1>
+      <div className="px-4 py-3 mt-2 bg-gray-400 rounded-lg">
+        <h1>
+          No Climb: <b>{climbStats.noClimb}</b> matches
         </h1>
+        <h1>
+          Low Rung: <b>{climbStats.lowClimb}</b> matches
+        </h1>
+        <h1>
+          Mid Rung: <b>{climbStats.midClimb}</b> matches
+        </h1>
+        <h1>
+          High Rung: <b>{climbStats.highClimb}</b> matches
+        </h1>
+        <h1>
+          Traversal Rung: <b>{climbStats.travClimb}</b> matches
+        </h1>
+      </div>
     </div>
   );
 };
