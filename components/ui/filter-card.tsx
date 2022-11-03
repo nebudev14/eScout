@@ -1,4 +1,5 @@
 import { Entry } from "@prisma/client";
+import { percentageFormat } from "../../util/calculate-stats";
 
 export const FilterCard: React.FC<{ entry: Entry }> = ({ entry }) => {
   const totalAuto = entry.autoHighShotsMade + entry.autoLowShotsMade;
@@ -20,7 +21,7 @@ export const FilterCard: React.FC<{ entry: Entry }> = ({ entry }) => {
             Team <b>{entry?.entryTeamNumber}</b>
           </h1>
           <div>
-            {totalShots === 0 ? 0 : (((totalAuto + totalTeleop) / totalShots) * 100).toFixed(2)}%
+            {totalShots === 0 ? 0 : (percentageFormat((totalAuto + totalTeleop) / totalShots))}%
             accuracy
           </div>
         </div>

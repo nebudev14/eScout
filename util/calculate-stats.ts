@@ -57,6 +57,10 @@ function nanFormat(value: number): number {
   return isNaN(value) ? 0 : value;
 }
 
+export function percentageFormat(value: number): string {
+  return (value*100).toFixed(2);
+}
+
 export function calculateStats(data: Entry[]): Statistics {
   let ballStats: BallStats = {
     autoHighShotsMade: sum(data, "autoHighShotsMade"),
