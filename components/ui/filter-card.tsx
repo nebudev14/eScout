@@ -12,10 +12,14 @@ export const FilterCard: React.FC<{ entry: Entry }> = ({ entry }) => {
     entry.teleopHighShotsTotal +
     entry.teleopLowShotsTotal;
 
-  const [currentEntry, ] = useAtom(selectEntryAtom);
+  const [currentEntry] = useAtom(selectEntryAtom);
 
   return (
-    <div className={`py-2 mb-6 duration-200 border hover:shadow-lg hover:cursor-pointer rounded-xl bg-slate-50 ${entry === currentEntry ? `shadow-xl` : `shadow-md` }`}>
+    <div
+      className={`py-2 mb-6 duration-200 border hover:shadow-lg hover:cursor-pointer rounded-xl bg-slate-50 ${
+        entry === currentEntry ? `shadow-xl` : `shadow-md`
+      }`}
+    >
       <div className="grid grid-cols-2 px-5 py-4">
         <div>
           <h1 className="text-sm">
@@ -23,11 +27,20 @@ export const FilterCard: React.FC<{ entry: Entry }> = ({ entry }) => {
           </h1>
           <h1>{entry.compName}</h1>
           <h1 className="text-xl">
-            Team <b>{entry?.entryTeamNumber}</b>
+            Team{" "}
+            <b
+              className={`${
+                entry === currentEntry ? `text-pink-600` : `text-black`
+              } duration-200`}
+            >
+              {entry?.entryTeamNumber}
+            </b>
           </h1>
           <div>
-            {totalShots === 0 ? 0 : (percentageFormat((totalAuto + totalTeleop) / totalShots))}%
-            accuracy
+            {totalShots === 0
+              ? 0
+              : percentageFormat((totalAuto + totalTeleop) / totalShots)}
+            % accuracy
           </div>
         </div>
 
