@@ -17,11 +17,11 @@ import { setSelectedCompAtom } from "../../server/atoms";
 const Scout: NextPage = () => {
   const { data: session } = useSession();
   const router = useRouter();
-  
+
   const submitEntry = useMutation("entry.create");
-  
-  const [selectedComp, ] = useAtom(setSelectedCompAtom);
-  
+
+  const [selectedComp] = useAtom(setSelectedCompAtom);
+
   const defendedRef = useRef<HTMLInputElement>(null);
   const defendedByRef = useRef<HTMLInputElement>(null);
 
@@ -47,7 +47,6 @@ const Scout: NextPage = () => {
 
       // Comments
       comments: { value: string };
-
     };
 
     const data = {
@@ -59,7 +58,6 @@ const Scout: NextPage = () => {
       matchNumber: Number(target.matchNumber.value),
       matchType: target.matchType.value,
 
-      
       mobility: target.mobility.value === "yes",
 
       autoHighShotsMade: getNumberById("autoHighGoalShots"),
@@ -80,17 +78,16 @@ const Scout: NextPage = () => {
       defendedBy: defendedBy,
 
       comments: target.comments.value,
-
     };
 
     // weee data submit
     await submitEntry.mutateAsync(data);
-    router.push("/teams")
+    router.push("/teams");
   };
 
   return (
     <Protected>
-      <div className="h-full px-56 py-4 lg:px-4">
+      <div className="h-full py-4 px-80 lg:px-4">
         <form onSubmit={submitData} className="grid grid-cols-1">
           <h1 className="mt-4 mb-2 text-3xl font-semibold">Match Info</h1>
           <MatchInfo />
@@ -107,37 +104,74 @@ const Scout: NextPage = () => {
               <option value="yes">Yes</option>
             </select>
           </Container>
-          <ScoreBoard label="High Goal" id="autoHighGoal" />
-          <ScoreBoard label="Low Goal" id="autoLowGoal" />
+          <div className="grid grid-cols-2 gap-10 mt-3 md:grid-cols-none md:mt-0">
+            <ScoreBoard label="High Goal" id="autoHighGoal" />
+            <ScoreBoard label="Low Goal" id="autoLowGoal" />
+          </div>
           <h1 className="mt-4 mb-2 text-3xl font-semibold">Teleop</h1>
-          <ScoreBoard label="High Goal" id="teleopHighGoal" />
-          <ScoreBoard label="Low Goal" id="teleopLowGoal" />
+          <div className="grid grid-cols-2 gap-10 md:grid-cols-none">
+            <ScoreBoard label="High Goal" id="teleopHighGoal" />
+            <ScoreBoard label="Low Goal" id="teleopLowGoal" />
+          </div>
 
           <h1 className="my-4 text-3xl font-semibold ">Defense</h1>
-          <div className="mb-2">
+          <div className="grid grid-cols-2 gap-6 md:grid-cols-none md:gap-0">
+            <div className="md:mb-2">
+              <Container>
+                <label className="flex items-center justify-start p-2 text-lg leading-tight border rounded shadow bg-slate-200 focus:outline-none focus:shadow-outline">
+                  Defended
+                </label>
+                <div className="flex">
+                  <input
+                    className="w-10/12 h-full p-2 text-lg border rounded-l border-blue-lighter"
+                    type="number"
+                    id="defended"
+                    placeholder="Team number"
+                    autoComplete="off"
+                    ref={defendedRef}
+                  />
+                  <button
+                    type="button"
+                    className="flex items-center justify-center px-4 text-white bg-blue-500 border-t border-b border-l rounded-r p bg-blue-lighter border-blue-lighter text-blue-dark"
+                    onClick={() => {
+                      if (defendedRef.current !== null) {
+                        setDefended([
+                          ...defended,
+                          Number(defendedRef.current?.value),
+                        ]);
+                        defendedRef.current.value = "";
+                      }
+                    }}
+                  >
+                    +
+                  </button>
+                </div>
+              </Container>
+            </div>
+
             <Container>
               <label className="flex items-center justify-start p-2 text-lg leading-tight border rounded shadow bg-slate-200 focus:outline-none focus:shadow-outline">
-                Defended
+                Defended by
               </label>
               <div className="flex">
                 <input
                   className="w-10/12 h-full p-2 text-lg border rounded-l border-blue-lighter"
+                  id="defendedBy"
                   type="number"
-                  id="defended"
                   placeholder="Team number"
                   autoComplete="off"
-                  ref={defendedRef}
+                  ref={defendedByRef}
                 />
                 <button
                   type="button"
                   className="flex items-center justify-center px-4 text-white bg-blue-500 border-t border-b border-l rounded-r p bg-blue-lighter border-blue-lighter text-blue-dark"
                   onClick={() => {
-                    if (defendedRef.current !== null) {
-                      setDefended([
-                        ...defended,
-                        Number(defendedRef.current?.value),
+                    if (defendedByRef.current !== null) {
+                      setDefendedBy([
+                        ...defendedBy,
+                        Number(defendedByRef.current?.value),
                       ]);
-                      defendedRef.current.value = "";
+                      defendedByRef.current.value = "";
                     }
                   }}
                 >
@@ -146,37 +180,6 @@ const Scout: NextPage = () => {
               </div>
             </Container>
           </div>
-
-          <Container>
-            <label className="flex items-center justify-start p-2 text-lg leading-tight border rounded shadow bg-slate-200 focus:outline-none focus:shadow-outline">
-              Defended by
-            </label>
-            <div className="flex">
-              <input
-                className="w-10/12 h-full p-2 text-lg border rounded-l border-blue-lighter"
-                id="defendedBy"
-                type="number"
-                placeholder="Team number"
-                autoComplete="off"
-                ref={defendedByRef}
-              />
-              <button
-                type="button"
-                className="flex items-center justify-center px-4 text-white bg-blue-500 border-t border-b border-l rounded-r p bg-blue-lighter border-blue-lighter text-blue-dark"
-                onClick={() => {
-                  if (defendedByRef.current !== null) {
-                    setDefendedBy([
-                      ...defendedBy,
-                      Number(defendedByRef.current?.value),
-                    ]);
-                    defendedByRef.current.value = "";
-                  }
-                }}
-              >
-                +
-              </button>
-            </div>
-          </Container>
           <h1 className="my-4 text-3xl font-semibold ">Endgame</h1>
           <div className="mb-2">
             <Container>

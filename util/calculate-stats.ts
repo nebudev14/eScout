@@ -47,7 +47,7 @@ function sum(data: Entry[] | undefined, key: keyof Entry): number {
   return ans;
 }
 
-function countRungs(data: Entry[] | undefined, rungLevel: RungLevel): number {
+function countRungs(data: Entry[], rungLevel: RungLevel): number {
   const rungs = data?.filter((e) => e.climbRung === rungLevel);
   return rungs === undefined ? 0 : rungs.length;
 }
