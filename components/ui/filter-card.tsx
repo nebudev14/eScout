@@ -1,5 +1,7 @@
 import { Entry } from "@prisma/client";
 import { percentageFormat } from "../../util/calculate-stats";
+import { useAtom } from "jotai";
+import { selectEntryAtom } from "../../server/atoms";
 
 export const FilterCard: React.FC<{ entry: Entry }> = ({ entry }) => {
   const totalAuto = entry.autoHighShotsMade + entry.autoLowShotsMade;
@@ -9,8 +11,11 @@ export const FilterCard: React.FC<{ entry: Entry }> = ({ entry }) => {
     entry.autoLowShotsTotal +
     entry.teleopHighShotsTotal +
     entry.teleopLowShotsTotal;
+
+  const [currentEntry, ] = useAtom(selectEntryAtom);
+
   return (
-    <div className="py-2 mb-6 border shadow-xl rounded-xl bg-slate-50">
+    <div className={`py-2 mb-6 duration-200 border hover:shadow-lg hover:cursor-pointer rounded-xl bg-slate-50 ${entry === currentEntry ? `shadow-xl` : `shadow-md` }`}>
       <div className="grid grid-cols-2 px-5 py-4">
         <div>
           <h1 className="text-sm">

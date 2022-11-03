@@ -6,7 +6,7 @@ import type { Query } from "../../../types/filter-types";
 import { DynamicInput, inputs } from "./dynamic-input";
 import { MatchType } from "@prisma/client";
 import { useAtom } from "jotai";
-import { setSearchQueryAtom } from "../../../server/atoms";
+import { selectEntryAtom, setSearchQueryAtom } from "../../../server/atoms";
 import { FilterCard } from "../../ui/filter-card";
 import { FilterStats } from "./filter-stats";
 import { calculateStats } from "../../../util/calculate-stats";
@@ -23,6 +23,7 @@ export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
   const { invalidateQueries } = trpc.useContext();
 
   const [currentInput] = useAtom(setSearchQueryAtom);
+  const [currentEntry, setCurrentSelectedEntry] = useAtom(selectEntryAtom);
 
   const searchEntry = async (event: React.SyntheticEvent) => {
     event.preventDefault();
@@ -87,12 +88,30 @@ export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
               </div>
             ))}
         </div>
-        <div className={`grid grid-cols-1 overflow-y-scroll ${entryData!?.length > 2 ? `h-[35rem]` : ``}`}>
+        <div
+          className={`grid grid-cols-1 overflow-y-scroll ${
+            entryData!?.length > 2 ? `h-[35rem]` : ``
+          }`}
+        >
           {entryData?.map((entry, i) => (
-            <FilterCard entry={entry} key={i} />
+            <div
+              key={i}
+              onClick={() =>
+                currentEntry === entry
+                  ? setCurrentSelectedEntry(undefined)
+                  : setCurrentSelectedEntry(entry)
+              }
+            >
+              <FilterCard entry={entry} />
+            </div>
           ))}
         </div>
-        <FilterStats data={entryData!} stats={calculateStats(entryData!)} />
+        <FilterStats
+          data={currentEntry === undefined ? entryData! : [currentEntry]}
+          stats={calculateStats(
+            currentEntry === undefined ? entryData! : [currentEntry]
+          )}
+        />
       </div>
     </div>
   );

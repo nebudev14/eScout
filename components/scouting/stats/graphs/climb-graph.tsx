@@ -12,7 +12,7 @@ import {
   ArcElement,
 } from "chart.js";
 import { Line, Pie } from "react-chartjs-2";
-import { Entry } from "@prisma/client";
+import { Entry, RungLevel } from "@prisma/client";
 import { Statistics } from "../../../../util/calculate-stats";
 
 export const ClimbGraph: React.FC<{ entries: Entry[]; stats: Statistics }> = ({
@@ -34,6 +34,7 @@ export const ClimbGraph: React.FC<{ entries: Entry[]; stats: Statistics }> = ({
   entries!?.sort((a, b) => a.matchNumber - b.matchNumber);
   const matchNumbers: string[] = entries!?.map((e) => e.matchNumber.toString());
   const climbTimes: number[] = entries!?.map((e) => e.climbStart - e.climbEnd);
+  const rungLevelPerMatch: RungLevel[] = entries!?.map((e) => e.climbRung);
   const rungLevels: number[] = [
     climbStats.noClimb,
     climbStats.lowClimb,
@@ -53,6 +54,7 @@ export const ClimbGraph: React.FC<{ entries: Entry[]; stats: Statistics }> = ({
         backgroundColor: "rgba(255, 99, 132, 0.5)",
       },
     ],
+    
   };
 
   const rungData: ChartData<"pie"> = {
