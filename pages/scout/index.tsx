@@ -148,6 +148,16 @@ const Scout: NextPage = () => {
                 </div>
               </Container>
             </div>
+            <div className="flex flex-wrap">
+              {defended.map((team, i) => (
+                <div
+                  className="px-2 py-1 my-2 mr-2 bg-gray-300 rounded-md"
+                  key={i}
+                >
+                  {team}
+                </div>
+              ))}
+            </div>
 
             <Container>
               <label className="flex items-center justify-start p-2 text-lg leading-tight border rounded shadow bg-slate-200 focus:outline-none focus:shadow-outline">
@@ -179,7 +189,18 @@ const Scout: NextPage = () => {
                 </button>
               </div>
             </Container>
+            <div className="flex flex-wrap">
+              {defendedBy.map((team, i) => (
+                <div
+                  className="px-2 py-1 my-2 mr-2 bg-gray-300 rounded-md"
+                  key={i}
+                >
+                  {team}
+                </div>
+              ))}
+            </div>
           </div>
+
           <h1 className="my-4 text-3xl font-semibold ">Endgame</h1>
           <div className="mb-2">
             <Container>
