@@ -35,7 +35,7 @@ export const NumberStats: React.FC<{ stats: Statistics }> = ({ stats }) => {
             {ballStats.autoHighShotsMade + ballStats.teleopHighShotsMade} /{" "}
             {ballStats.autoHighShotsTotal + ballStats.teleopHighShotsTotal}
           </b>{" "}
-          total high shots (average {ballStats.averageHighShots} per game)
+          total high shots (average {ballStats.averageHighShots.toFixed(2)} per game)
         </h1>
         <h1 className="text-md">
           <b>
@@ -43,7 +43,7 @@ export const NumberStats: React.FC<{ stats: Statistics }> = ({ stats }) => {
             {ballStats.autoLowShotsTotal + ballStats.teleopLowShotsTotal}
           </b>{" "}
           total low shots (average{" "}
-          {percentageFormat(ballStats.autoLowPercentage)} per game)
+          {ballStats.averageLowShots.toFixed(2)} per game)
         </h1>
 
         <div className="grid grid-cols-2 gap-6 mx-3 mt-4 mb-3">
