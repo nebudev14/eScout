@@ -134,12 +134,13 @@ const Scout: NextPage = () => {
                     type="button"
                     className="flex items-center justify-center px-4 text-white bg-blue-500 border-t border-b border-l rounded-r p bg-blue-lighter border-blue-lighter text-blue-dark"
                     onClick={() => {
-                      if (defendedRef.current !== null) {
+                      const teamNum = Number(defendedRef.current!.value);
+                      if (teamNum !== 0 && defended.indexOf(teamNum) === -1) {
                         setDefended([
                           ...defended,
-                          Number(defendedRef.current?.value),
+                          teamNum,
                         ]);
-                        defendedRef.current.value = "";
+                        defendedRef.current!.value = "";
                       }
                     }}
                   >
@@ -155,6 +156,14 @@ const Scout: NextPage = () => {
                   key={i}
                 >
                   {team}
+                  <span
+                    className="ml-1 text-red-500 text-md"
+                    onClick={() =>
+                      setDefended(defended.splice(defended.indexOf(team), 1))
+                    }
+                  >
+                    X
+                  </span>
                 </div>
               ))}
             </div>
@@ -176,12 +185,13 @@ const Scout: NextPage = () => {
                   type="button"
                   className="flex items-center justify-center px-4 text-white bg-blue-500 border-t border-b border-l rounded-r p bg-blue-lighter border-blue-lighter text-blue-dark"
                   onClick={() => {
-                    if (defendedByRef.current !== null) {
+                    const teamNum = Number(defendedByRef.current!.value);
+                    if (teamNum !== 0 && defendedBy.indexOf(teamNum) === -1) {
                       setDefendedBy([
                         ...defendedBy,
-                        Number(defendedByRef.current?.value),
+                        teamNum,
                       ]);
-                      defendedByRef.current.value = "";
+                      defendedByRef.current!.value = "";
                     }
                   }}
                 >
@@ -196,6 +206,16 @@ const Scout: NextPage = () => {
                   key={i}
                 >
                   {team}
+                  <span
+                    className="ml-1 text-red-500 text-md"
+                    onClick={() =>
+                      setDefendedBy(
+                        defendedBy.splice(defendedBy.indexOf(team), 1)
+                      )
+                    }
+                  >
+                    X
+                  </span>
                 </div>
               ))}
             </div>
