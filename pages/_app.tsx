@@ -9,8 +9,8 @@ import type { AppRouter } from "../server/routers/app";
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <SessionProvider session={pageProps.session}>
-      <div className="">
-        <div className="bg-slate-100 dark:bg-slate-900">
+      <div className="dark">
+        <div className="bg-slate-100 dark:bg-black">
           <Nav />
           <Component {...pageProps} />
         </div>
