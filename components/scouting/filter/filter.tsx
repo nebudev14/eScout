@@ -46,7 +46,7 @@ export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
           <div className="grid grid-cols-2">
             <select
               id="queryType"
-              className="w-full h-full p-2 border-r-4 rounded-l-lg shadow-md outline-none"
+              className="w-full h-full p-2 border-r-4 rounded-l-lg shadow-md outline-none dark:text-white dark:bg-zinc-900 dark:border-zinc-700"
               onChange={async (event: React.SyntheticEvent) => {
                 setQueryAttribute((event.target as HTMLSelectElement).value);
               }}

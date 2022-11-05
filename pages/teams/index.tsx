@@ -38,7 +38,7 @@ const ManageTeams: NextPage = () => {
         ) : (
           <div className="grid grid-cols-2 gap-6 md:grid-cols-1">
             {userData?.teams.map((data, i) => (
-              <a key={i} href={`/teams/${data.teamNumber}`} className="duration-100 border shadow-md dark:border-none dark:text-white rounded-xl dark:bg-gray-800 bg-slate-50 hover:shadow-lg">
+              <a key={i} href={`/teams/${data.teamNumber}`} className="duration-100 border shadow-md dark:border-none dark:text-white rounded-xl dark:bg-zinc-900 bg-slate-50 hover:shadow-lg">
                 <div className="px-6 py-4">
                   <div className="mb-2">
                     <h1 className="mb-1 text-2xl">{data.team.name}</h1>

@@ -11,12 +11,12 @@ export const ScoreBoard: React.FC<{ label: string; id: string }> = ({
   return (
     <div className="mt-2">
       <Container>
-        <label className="p-2 text-lg font-semibold leading-tight border rounded shadow bg-slate-200 dark:bg-zinc-800 dark:border-none focus:outline-none focus:shadow-outline">
+        <label className="p-2 text-lg font-semibold leading-tight border rounded shadow bg-slate-200 dark:bg-zinc-900 dark:border-none focus:outline-none focus:shadow-outline">
           {label}
         </label>
-        <div className="flex items-center text-lg font-medium leading-tight border rounded shadow dark:border-zinc-800 focus:outline-none focus:shadow-outline justify-evenly">
+        <div className="flex items-center text-lg font-medium leading-tight border rounded shadow dark:bg-zinc-700 dark:border-zinc-800 focus:outline-none focus:shadow-outline justify-evenly">
           <h1 id={`${id}Shots`}>{shot}</h1>
-          <h1 className="flex items-center justify-center h-full px-4 text-center border-l-2 border-r-2 border-slate-300">
+          <h1 className="flex items-center justify-center h-full px-4 text-center border-l-2 border-r-2 border-slate-300 dark:border-zinc-600">
             /
           </h1>
           <h1 id={`${id}Total`}>{total}</h1>
@@ -25,7 +25,7 @@ export const ScoreBoard: React.FC<{ label: string; id: string }> = ({
       <Container>
         <Container>
           <button
-            className="p-2 text-lg font-semibold text-white bg-green-500 rounded-tl rounded-bl shadow dark:bg-pink-600 focus:outline-none focus:shadow-outline"
+            className="p-2 text-lg font-semibold text-white bg-green-500 rounded-tl rounded-bl shadow dark:bg-green-600 focus:outline-none focus:shadow-outline"
             type="button"
             onClick={() => {
               setShot(shot + 1);
@@ -35,7 +35,7 @@ export const ScoreBoard: React.FC<{ label: string; id: string }> = ({
             Score
           </button>
           <button
-            className="p-2 text-lg font-semibold text-white bg-red-500 shadow dark:bg-cyan-500 focus:outline-none focus:shadow-outline"
+            className="p-2 text-lg font-semibold text-white bg-red-500 shadow dark:bg-rose-600 focus:outline-none focus:shadow-outline"
             type="button"
             onClick={() => setTotal(total + 1)}
           >

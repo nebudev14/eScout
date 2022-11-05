@@ -10,7 +10,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <SessionProvider session={pageProps.session}>
       <div className="dark">
-        <div className="bg-slate-100 dark:bg-black">
+        <div className="bg-slate-100 dark:bg-zinc-800">
           <Nav />
           <Component {...pageProps} />
         </div>

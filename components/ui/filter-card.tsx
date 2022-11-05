@@ -16,7 +16,7 @@ export const FilterCard: React.FC<{ entry: Entry }> = ({ entry }) => {
 
   return (
     <div
-      className={`py-2 mb-6 duration-200 border hover:shadow-lg hover:cursor-pointer rounded-xl bg-slate-50 ${
+      className={`py-2 mb-6 duration-200 border hover:shadow-lg hover:cursor-pointer rounded-xl bg-slate-50 dark:bg-zinc-900 dark:border-zinc-600 dark:text-white ${
         entry === currentEntry ? `shadow-xl` : `shadow-md`
       }`}
     >
@@ -30,7 +30,7 @@ export const FilterCard: React.FC<{ entry: Entry }> = ({ entry }) => {
             Team{" "}
             <b
               className={`${
-                entry === currentEntry ? `text-pink-600` : `text-black`
+                entry === currentEntry ? `text-pink-600` : `text-black dark:text-white`
               } duration-200`}
             >
               {entry?.entryTeamNumber}

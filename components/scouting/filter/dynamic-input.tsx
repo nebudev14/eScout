@@ -24,7 +24,7 @@ export const DynamicInput: React.FC<{ attribute: string }> = ({
     if (input?.element == "input") {
       return (
         <input
-          className="w-full p-2 shadow-md outline-none"
+          className="w-full p-2 shadow-md outline-none dark:text-white dark:bg-zinc-900"
           autoComplete="off"
           type={input?.inputType}
           onChange={async (event: React.SyntheticEvent) => {

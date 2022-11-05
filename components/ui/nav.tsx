@@ -25,12 +25,12 @@ export const Nav: React.FC = () => {
                 </Menu.Button>
               </div>
 
-              <Menu.Items className="absolute right-0 w-56 mt-2 origin-top-right divide-y divide-gray-100 rounded-md shadow-lg bg-slate-100 ring-1 ring-black ring-opacity-5 focus:outline-none">
+              <Menu.Items className="absolute right-0 w-56 mt-2 origin-top-right divide-y divide-gray-100 rounded-md shadow-lg dark:divide-zinc-700 dark:bg-zinc-900 bg-slate-100 ring-1 ring-black ring-opacity-5 focus:outline-none">
                 <div className="px-1 py-1 ">
                   <Menu.Item>
                     {({ active }) => (
                       <button
-                        className="flex items-center w-full px-2 py-2 text-sm text-black duration-200 rounded-md group hover:text-white hover:bg-black"
+                        className="flex items-center w-full px-2 py-2 text-sm text-black duration-200 rounded-md dark:text-white group hover:text-white hover:bg-black"
                         onClick={() => router.push("/teams")}
                       >
                         <IoMdBuild className="mr-2" /> Manage teams
@@ -69,7 +69,7 @@ export const Nav: React.FC = () => {
                       onClick={() => signOut()}
                         className="flex items-center w-full px-2 py-2 text-sm text-red-500 duration-200 rounded-md group hover:text-white hover:bg-red-400"
                       >
-                        <BiLogOut className="mr-2 duration-200" /> Log out 
+                        <BiLogOut className="mr-2 duration-200" /> Log out
                       </button>
                     )}
                   </Menu.Item>
