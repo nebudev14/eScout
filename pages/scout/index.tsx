@@ -115,7 +115,7 @@ const Scout: NextPage = () => {
           </div>
 
           <h1 className="my-4 text-3xl font-semibold ">Defense</h1>
-          <div className="grid grid-cols-2 gap-6 md:grid-cols-none md:gap-0">
+          <div className="">
             <div className="md:mb-2">
               <Container>
                 <label className="flex items-center justify-start p-2 text-lg leading-tight border rounded shadow bg-slate-200 dark:bg-zinc-900 dark:border-zinc-700 focus:outline-none focus:shadow-outline">
@@ -149,7 +149,7 @@ const Scout: NextPage = () => {
             <div className="flex flex-wrap">
               {defended.map((team, i) => (
                 <div
-                  className="px-2 py-1 my-2 mr-2 bg-gray-300 rounded-md"
+                  className="px-2 py-1 my-2 mr-2 bg-gray-300 rounded-md dark:bg-zinc-700"
                   key={i}
                 >
                   {team}
@@ -196,7 +196,7 @@ const Scout: NextPage = () => {
             <div className="flex flex-wrap">
               {defendedBy.map((team, i) => (
                 <div
-                  className="px-2 py-1 my-2 mr-2 bg-gray-300 rounded-md"
+                  className="px-2 py-1 my-2 mr-2 bg-gray-300 rounded-md dark:bg-zinc-700"
                   key={i}
                 >
                   {team}

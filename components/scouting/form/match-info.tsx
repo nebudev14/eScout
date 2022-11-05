@@ -39,12 +39,12 @@ export const MatchInfo: React.FC = () => {
   return (
     <div className="grid grid-cols-1 mb-8">
       <Container>
-        <label className="p-3 py-2 text-lg leading-tight border rounded shadow dark:bg-zinc-900 dark:border-none bg-slate-200 text-cetner focus:outline-none focus:shadow-outline">
+        <label className="p-3 py-2 text-lg leading-tight border rounded shadow dark:bg-zinc-900 dark:border-zinc-700 bg-slate-200 text-cetner focus:outline-none focus:shadow-outline">
           Submit data to
         </label>
         <select
           id="teamNumber"
-          className="p-2 text-lg leading-tight border rounded shadow focus:outline-none focus:shadow-outline dark:bg-zinc-900 dark:text-white dark:border-none"
+          className="p-2 text-lg leading-tight border rounded shadow focus:outline-none focus:shadow-outline dark:bg-zinc-900 dark:text-white dark:border-zinc-700"
           value={selectedTeam}
           onChange={(event: React.SyntheticEvent) => {
             setSelectedTeam(Number((event.target as HTMLSelectElement).value));
@@ -60,7 +60,7 @@ export const MatchInfo: React.FC = () => {
       <Container>
         <select
           id="matchType"
-          className="p-2 text-lg leading-tight border rounded shadow focus:outline-none focus:shadow-outline dark:border-none dark:text-white dark:bg-zinc-900"
+          className="p-2 text-lg leading-tight border rounded shadow focus:outline-none focus:shadow-outline dark:border-zinc-700 dark:text-white dark:bg-zinc-900"
         >
           <option value={MatchType.QUALIFICATION}>Qualification</option>
           <option value={MatchType.QUARTERFINAL}>Quarterfinal</option>
@@ -83,10 +83,10 @@ export const MatchInfo: React.FC = () => {
         required
       />
       <Combobox value={selectedComp} onChange={setSelectedComp}>
-        <div className="relative border dark:border-none">
-          <div className="relative w-full overflow-hidden text-left bg-white rounded shadow-md cursor-default dark:border-none dark:text-white dark:bg-zinc-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
+        <div className="relative border rounded-b dark:border-zinc-700">
+          <div className="relative w-full overflow-hidden text-left bg-white rounded shadow-md cursor-default dark:border-zinc-700 dark:text-white dark:bg-zinc-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
             <Combobox.Input
-              className="p-2 text-lg leading-tight rounded focus:outline-none focus:shadow-outline dark:border-none dark:text-white dark:bg-zinc-900"
+              className="p-2 text-lg leading-tight rounded focus:outline-none focus:shadow-outline dark:border-zinc-700 dark:text-white dark:bg-zinc-900"
               displayValue={(comp: Competition) => comp?.name}
               onChange={(event) => setCompQuery(event.target.value)}
             />
@@ -97,7 +97,7 @@ export const MatchInfo: React.FC = () => {
               />
             </Combobox.Button>
           </div>
-          <Combobox.Options className="absolute w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg dark:border-none dark:text-white dark:bg-zinc-900 max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+          <Combobox.Options className="absolute w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg dark:border-zinc-700 dark:text-white dark:bg-zinc-900 max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
             {filteredComps?.map((comp: Competition) => (
               <Combobox.Option
                 key={comp.name}
