@@ -27,7 +27,7 @@ export const FilterStats: React.FC<{ data: Entry[], stats: Statistics }> = ({ da
             ))}
           </Tab.List>
         </div>
-        <Tab.Panels className="mt-4">
+        <Tab.Panels className="mt-4 ">
           <Tab.Panel>
             <NumberStats stats={stats} />
           </Tab.Panel>

@@ -54,7 +54,7 @@ export const ClimbGraph: React.FC<{ entries: Entry[]; stats: Statistics }> = ({
         backgroundColor: "rgba(255, 99, 132, 0.5)",
       },
     ],
-    
+
   };
 
   const rungData: ChartData<"pie"> = {

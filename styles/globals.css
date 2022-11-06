@@ -12,6 +12,11 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
+*[data-theme='dark'] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(39 39 42 / var(--tw-bg-opacity));
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -29,3 +34,4 @@ a {
 ::-webkit-scrollbar-thumb {
   background-color: #db2777;
 }
+
