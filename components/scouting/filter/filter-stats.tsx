@@ -6,7 +6,7 @@ import { Entry } from "@prisma/client";
 import { ClimbGraph } from "../stats/graphs/climb-graph";
 
 export const FilterStats: React.FC<{ data: Entry[], stats: Statistics }> = ({ data, stats }) => {
-  const tabs = ["Numerical Data", "Cargo Graphs", "Climb Graphs"];
+  const tabs = ["General", "Cargo", "Climb"];
 
   return (
     <div>
@@ -18,8 +18,8 @@ export const FilterStats: React.FC<{ data: Entry[], stats: Statistics }> = ({ da
                 key={i}
                 className={({ selected }) =>
                   selected
-                    ? "px-6 py-2 md:px-0 outline-none border-b-2 border-pink-600"
-                    : "px-6 py-2 md:px-0"
+                    ? "px-6 py-2 outline-none border-b-2 border-pink-600"
+                    : "px-6 py-2"
                 }
               >
                 {content}

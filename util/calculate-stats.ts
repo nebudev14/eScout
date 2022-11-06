@@ -41,7 +41,7 @@ export interface Statistics {
   climbStats: ClimbStats;
 }
 
-function sum(data: Entry[] | undefined, key: keyof Entry): number {
+export function sum(data: Entry[] | undefined, key: keyof Entry): number {
   let ans = 0;
   data?.filter((e) => e[key]).forEach(e => ans += (e[key] as number))
 
