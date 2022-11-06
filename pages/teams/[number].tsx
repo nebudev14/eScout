@@ -17,12 +17,12 @@ const TeamContent: NextPage = () => {
 
   return (
     <Protected>
-      <div className="h-full px-16 py-8 dark:text-white">
+      <div className="h-full px-16 py-8 md:px-8 dark:text-white">
         <h1 className="mb-2 text-4xl">{data?.name}</h1>
         <h1 className="mb-4 text-xl">Team {data?.number}</h1>
         <div className="">
           <Tab.Group>
-            <div className="flex flex-col items-start text-2xl">
+            <div className="flex flex-col items-start text-2xl md:text-lg md:items-center">
             <Tab.List className="grid grid-cols-2">
               {tabs.map((content, i) => (
                 <Tab

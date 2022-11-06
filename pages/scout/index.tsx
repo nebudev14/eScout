@@ -87,7 +87,7 @@ const Scout: NextPage = () => {
 
   return (
     <Protected>
-      <div className="h-full py-4 dark:text-white px-80 lg:px-4 ">
+      <div className="h-full py-4 dark:text-white px-96 lg:px-4 ">
         <form onSubmit={submitData} className="grid grid-cols-1">
           <h1 className="mt-4 mb-2 text-3xl font-semibold">Match Info</h1>
           <MatchInfo />

@@ -6,20 +6,20 @@ import { Entry } from "@prisma/client";
 import { ClimbGraph } from "../stats/graphs/climb-graph";
 
 export const FilterStats: React.FC<{ data: Entry[], stats: Statistics }> = ({ data, stats }) => {
-  const tabs = ["Numerical Data", "Ball Graphs", "Climb Graphs"];
+  const tabs = ["Numerical Data", "Cargo Graphs", "Climb Graphs"];
 
   return (
     <div>
       <Tab.Group>
-        <div className="flex flex-col items-center text-xl">
+        <div className="flex flex-col items-center text-xl md:text-base">
           <Tab.List className="grid grid-cols-3">
             {tabs.map((content, i) => (
               <Tab
                 key={i}
                 className={({ selected }) =>
                   selected
-                    ? "px-6 py-2 outline-none border-b-2 border-pink-600"
-                    : "px-6 py-2"
+                    ? "px-6 py-2 md:px-0 outline-none border-b-2 border-pink-600"
+                    : "px-6 py-2 md:px-0"
                 }
               >
                 {content}

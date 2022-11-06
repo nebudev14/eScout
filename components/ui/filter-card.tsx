@@ -16,7 +16,7 @@ export const FilterCard: React.FC<{ entry: Entry }> = ({ entry }) => {
 
   return (
     <div
-      className={`py-2 mb-6 duration-200 border hover:shadow-lg hover:cursor-pointer rounded-xl bg-slate-50 dark:bg-zinc-900 dark:border-zinc-600 dark:text-white ${
+      className={`mr-2 py-2 mb-6 duration-200 border hover:shadow-lg hover:cursor-pointer rounded-xl bg-slate-50 dark:bg-zinc-900 dark:border-zinc-600 dark:text-white ${
         entry === currentEntry ? `shadow-xl` : `shadow-md`
       }`}
     >

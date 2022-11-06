@@ -41,7 +41,7 @@ export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
 
   return (
     <div>
-      <div className="grid grid-cols-2 gap-10">
+      <div className="grid grid-cols-2 gap-10 md:flex md:flex-col">
         <form className="flex w-full mt-4" onSubmit={searchEntry}>
           <div className="grid grid-cols-2">
             <select
@@ -63,7 +63,7 @@ export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
             +
           </button>
         </form>
-        <div className="flex flex-wrap mb-4">
+        <div className="flex flex-wrap mb-4 md:mb-0">
           {Object.keys(query)
             .filter((e) => query[e as keyof typeof query] !== undefined)
             .map((key, i) => (

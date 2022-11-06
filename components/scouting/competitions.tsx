@@ -2,6 +2,7 @@ import { createCompModalAtom } from "../../server/atoms";
 import { useAtom } from "jotai";
 import { CreateCompModal } from "../modals/create-comp";
 import { useQuery } from "../../hooks/trpc";
+import { calculateStats } from "../../util/calculate-stats";
 
 
 export const Competitions: React.FC<{ teamNum: number }> = ({ teamNum }) => {
@@ -10,8 +11,6 @@ export const Competitions: React.FC<{ teamNum: number }> = ({ teamNum }) => {
     "comp.get-by-number",
     { team: teamNum },
   ]);
-
-  console.log(allComps)
 
   return (
     <div className="flex flex-col items-center justify-center">
