@@ -19,7 +19,7 @@ export const Competitions: React.FC<{ teamNum: number }> = ({ teamNum }) => {
       >
         Create
       </button>
-      <div className="grid w-full grid-cols-3 gap-6">
+      <div className="grid w-full grid-cols-3 gap-6 md:grid-cols-1 md:gap-2">
         {allComps?.map((comp, i) => (
           <div
             className="py-2 mb-6 border shadow-lg rounded-xl bg-slate-50"
