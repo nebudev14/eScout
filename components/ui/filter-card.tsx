@@ -1,9 +1,10 @@
-import { Entry } from "@prisma/client";
+import { Entry, User } from "@prisma/client";
 import { percentageFormat } from "../../util/calculate-stats";
 import { useAtom } from "jotai";
 import { selectEntryAtom } from "../../server/atoms";
+import Image from "next/image";
 
-export const FilterCard: React.FC<{ entry: Entry }> = ({ entry }) => {
+export const FilterCard: React.FC<{ entry: Entry, user: User }> = ({ entry, user }) => {
   const totalAuto = entry.autoHighShotsMade + entry.autoLowShotsMade;
   const totalTeleop = entry.teleopHighShotsMade + entry.teleopLowShotsMade;
   const totalShots =
@@ -16,11 +17,11 @@ export const FilterCard: React.FC<{ entry: Entry }> = ({ entry }) => {
 
   return (
     <div
-      className={`mr-2 py-2 mb-6 duration-200 border hover:shadow-lg hover:cursor-pointer rounded-xl bg-slate-50 dark:bg-zinc-900 dark:border-zinc-600 dark:text-white ${
+      className={`mr-2 py-2 my-2 duration-200 border hover:shadow-lg hover:cursor-pointer rounded-xl bg-slate-50 dark:bg-zinc-900 dark:border-zinc-600 dark:text-white ${
         entry === currentEntry ? `shadow-xl` : `shadow-md`
       }`}
     >
-      <div className="grid grid-cols-2 px-5 py-4">
+      <div className="grid grid-cols-2 px-5 pt-4 pb-2">
         <div>
           <h1 className="text-sm">
             {entry.matchType} {entry?.matchNumber}
@@ -60,6 +61,10 @@ export const FilterCard: React.FC<{ entry: Entry }> = ({ entry }) => {
           </div>
           <div>{entry.climbRung} Rung</div>
         </div>
+      </div>
+      <div className="flex items-center px-5 pb-2">
+        <Image src={user.image as string} width={35} height={35} className="rounded-full" />
+        <h1 className="ml-2">{user.name}</h1>
       </div>
     </div>
   );

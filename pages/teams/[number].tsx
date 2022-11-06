@@ -17,7 +17,7 @@ const TeamContent: NextPage = () => {
 
   return (
     <Protected>
-      <div className="h-screen px-16 py-8 md:px-8 dark:text-white">
+      <div className="h-screen px-16 py-8 md:px-8 dark:text-white md:h-full">
         <h1 className="mb-2 text-4xl">{data?.name}</h1>
         <h1 className="mb-4 text-xl">Team {data?.number}</h1>
         <div className="">

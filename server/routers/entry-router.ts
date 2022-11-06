@@ -67,6 +67,9 @@ export const entryRouter = createRouter()
         where: {
           teamNumber: input.teamNumber,
           ...filteredQuery
+        },
+        include: {
+          user: true,
         }
       })
     }

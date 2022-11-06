@@ -23,7 +23,7 @@ export const compRouter = createRouter()
       return await ctx.prisma.competition.findMany({
         where: { teamNumber: input.team },
         include: {
-          entries: true
+          entries: true,
         }
       });
     }

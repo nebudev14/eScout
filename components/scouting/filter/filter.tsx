@@ -102,7 +102,7 @@ export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
                   : setCurrentSelectedEntry(entry)
               }
             >
-              <FilterCard entry={entry} />
+              <FilterCard entry={entry} user={entry?.user} />
             </div>
           ))}
         </div>
