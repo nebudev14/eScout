@@ -25,23 +25,29 @@ export const ManagePitScout: React.FC<{ teamNum: number }> = ({ teamNum }) => {
       </button>
       <div className="grid w-full grid-cols-3 gap-6 md:grid-cols-1 md:gap-2">
         {allPitScouts?.map((pitScout, i) => (
-          <div
-            className="py-2 mb-6 border shadow-lg rounded-xl bg-slate-50 dark:bg-zinc-900 dark:border-zinc-700"
-            key={i}
-          >
-            <div className="px-5 py-4">
-              <div className="flex items-center justify-start mb-2">
-                <h1 className="mr-auto text-xl">
-                  <b>{pitScout.name}</b>
+          <Link key={i} href={`/teams/${teamNum}/pitscout/${pitScout.id}`} passHref>
+            <div className="py-2 mb-6 border shadow-lg hover:cursor-pointer rounded-xl bg-slate-50 dark:bg-zinc-900 dark:border-zinc-700">
+              <div className="px-5 py-4">
+                <div className="flex items-center justify-start mb-2">
+                  <h1 className="mr-auto text-xl">
+                    <b>{pitScout.name}</b>
+                  </h1>
+                  <Link
+                    href={`/teams/${teamNum}/pitscout/edit/${pitScout.id}`}
+                    passHref
+                  >
+                    <BsPencilFill
+                      size={25}
+                      className="duration-150 hover:cursor-pointer hover:text-pink-600"
+                    />
+                  </Link>
+                </div>
+                <h1 className="text-lg">
+                  {pitScout?.questions?.length} Questions
                 </h1>
-                <Link href={`/teams/${teamNum}/pitscout/edit/${pitScout.id}`} passHref>
-                  <BsPencilFill size={25} className="hover:cursor-pointer" />
-                </Link>
               </div>
-              <h1 className="text-lg">{pitScout?.questions?.length} Questions</h1>
-              <h1 className="text-lg">{pitScout?.responses?.length} Responses</h1>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
 

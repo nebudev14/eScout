@@ -65,7 +65,7 @@ export const pitRouter = createRouter()
         userId: z.string(),
         entryTeamNumber: z.number(),
       }).array()
-    }), 
+    }),
     async resolve({ input, ctx }) {
       return await ctx.prisma.pitResponse.createMany({
         data: input.data
@@ -93,7 +93,11 @@ export const pitRouter = createRouter()
       return await ctx.prisma.pitForm.findUnique({
         where: { id: input.id },
         include: {
-          questions: true,
+          questions: {
+            include: {
+              PitResponse: true
+            }
+          },
         },
       });
     },

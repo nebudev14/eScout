@@ -36,7 +36,6 @@ const PitScout: NextPage = () => {
 
   const submitData = async (event: React.SyntheticEvent) => {
     event.preventDefault();
-    
 
     const target = event.target as any // i am sorry
     let results: any = []; // i am sorry squared
@@ -50,7 +49,7 @@ const PitScout: NextPage = () => {
       })
     })
 
-    
+
     await submitEntry.mutateAsync({data: results});
     router.push("/teams");
 
@@ -149,7 +148,7 @@ const PitScout: NextPage = () => {
             {" "}
             <button
               type="submit"
-              className="p-2 mt-4 text-lg font-semibold text-white bg-pink-600 rounded shadow focus:outline-none focus:shadow-outline hover:bg-teal-700"
+              className="p-2 mt-4 text-lg font-semibold text-white duration-200 bg-pink-600 rounded shadow focus:outline-none focus:shadow-outline hover:bg-pink-700"
             >
               Submit
             </button>
