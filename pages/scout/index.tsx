@@ -4,7 +4,7 @@ import { Protected } from "../../components/auth/protected";
 import { Container } from "../../components/ui/container";
 import { MatchInfo } from "../../components/scouting/form/match-info";
 import { ScoreBoard } from "../../components/scouting/form/score-board";
-import { Input } from "../../components/ui/input"
+import { Input } from "../../components/ui/input";
 import { MatchType, RungLevel } from "@prisma/client";
 import { getNumberById } from "../../util/get-number-by-id";
 import { useState, useRef } from "react";
@@ -12,8 +12,8 @@ import { useSession } from "next-auth/react";
 import { useMutation } from "../../hooks/trpc";
 import { useRouter } from "next/router";
 import { useAtom } from "jotai";
-import { setSelectedCompAtom } from "../../server/atoms";
-import NoTeams from "../../components/ui/no-teams";
+import { setPreScoutAtom, setSelectedCompAtom } from "../../server/atoms";
+import { Switch } from "@headlessui/react";
 
 const Scout: NextPage = () => {
   const { data: session } = useSession();
@@ -28,6 +28,7 @@ const Scout: NextPage = () => {
 
   const [defended, setDefended] = useState<number[]>([]);
   const [defendedBy, setDefendedBy] = useState<number[]>([]);
+  const [prescout, setPrescout] = useAtom(setPreScoutAtom);
 
   const submitData = async (event: React.SyntheticEvent) => {
     event.preventDefault();
@@ -36,6 +37,7 @@ const Scout: NextPage = () => {
       matchType: { value: MatchType };
       matchNumber: { value: string };
       teamNumber: { value: string };
+      videoLink: { value: string };
       // Entry team
       entryTeamNumber: { value: string };
 
@@ -86,21 +88,36 @@ const Scout: NextPage = () => {
     router.push("/teams");
   };
 
-
   return (
     <Protected>
       <div className="h-full py-4 dark:text-white px-96 lg:px-4 ">
         <form onSubmit={submitData} className="grid grid-cols-1">
           <h1 className="mt-4 mb-2 text-3xl font-semibold">Match Info</h1>
           <MatchInfo />
+          <div className="flex items-center mb-6">
+            <h1 className="mr-4 text-2xl font-semibold">Prescout</h1>
+            <Switch
+              checked={prescout}
+              onChange={setPrescout}
+              className={`${
+                prescout ? "bg-pink-600" : "bg-zinc-600"
+              } relative  inline-flex h-6 w-11 items-center rounded-full`}
+            >
+              <span
+                className={`${
+                  prescout ? "translate-x-6" : "translate-x-1"
+                } inline-block h-4 w-4 transform rounded-full duration-300 ease-in-out bg-white transition`}
+              />
+            </Switch>
+          </div>
           <h1 className="mb-4 text-3xl font-semibold">Auto</h1>
           <Container>
-            <label className="p-2 text-lg font-semibold leading-tight border rounded shadow bg-slate-200 dark:bg-zinc-900 dark:border-none focus:outline-none focus:shadow-outline">
+            <label className="p-2 text-lg font-semibold leading-tight border rounded shadow bg-slate-200 dark:bg-zinc-900 dark:border-zinc-600 focus:outline-none focus:shadow-outline">
               Mobility
             </label>
             <select
               id="mobility"
-              className="p-2 text-lg leading-tight border rounded shadow dark:bg-zinc-900 dark:border-none focus:outline-none focus:shadow-outline"
+              className="p-2 text-lg leading-tight border rounded shadow dark:bg-zinc-900 dark:border-zinc-600 focus:outline-none focus:shadow-outline"
             >
               <option value="no">No</option>
               <option value="yes">Yes</option>
@@ -269,7 +286,11 @@ const Scout: NextPage = () => {
           <button
             type="submit"
             disabled={selectedComp === undefined}
-            className={`p-2 mt-4 text-lg font-semibold text-white duration-150 bg-teal-500 rounded shadow focus:outline-none focus:shadow-outline ${selectedComp === undefined ? 'hover:cursor-not-allowed' : 'hover:bg-teal-700'}`}
+            className={`p-2 mt-4 text-lg font-semibold text-white duration-150 bg-teal-500 rounded shadow focus:outline-none focus:shadow-outline ${
+              selectedComp === undefined
+                ? "hover:cursor-not-allowed"
+                : "hover:bg-teal-700"
+            }`}
           >
             Submit
           </button>
