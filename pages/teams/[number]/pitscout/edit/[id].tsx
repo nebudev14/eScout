@@ -16,7 +16,7 @@ const EditPitScout: React.FC = () => {
   const [, setIsOpen] = useAtom(createQuestionModalAtom);
 
   return (
-    <div className="min-h-screen px-48 py-12 dark:text-white">
+    <div className="min-h-screen px-48 py-12 dark:text-white md:px-4">
       <BiArrowBack
         size={30}
         className="mb-4 duration-150 hover:text-pink-600 hover:cursor-pointer"
