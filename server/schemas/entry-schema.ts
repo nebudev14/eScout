@@ -43,6 +43,7 @@ export const filterEntrySchema = z.object({
     compName: z.string().optional(),
 
     mobility: z.boolean().optional(),
+    prescout: z.boolean().optional()
 
     // autoHighShotsMade: z.number(),
     // autoHighShotsTotal: z.number(),

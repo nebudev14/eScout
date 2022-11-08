@@ -4,12 +4,17 @@ import { setSearchQueryAtom } from "../../../server/atoms";
 export const inputs = {
   entryTeamNumber: {
     element: "input",
-    inputType: "number",
+    inputs: "number",
   },
   compName: {
     element: "input",
-    inputType: "text",
+    inputs: "text",
   },
+  prescout: {
+    element: "select",
+    inputs: "text",
+    options: [false, true]
+  }
 };
 
 export const DynamicInput: React.FC<{ attribute: string }> = ({
@@ -26,10 +31,10 @@ export const DynamicInput: React.FC<{ attribute: string }> = ({
         <input
           className="w-full p-2 shadow-md outline-none dark:text-white dark:bg-zinc-900"
           autoComplete="off"
-          type={input?.inputType}
+          type={input?.inputs}
           onChange={async (event: React.SyntheticEvent) => {
             const inpValue =
-              input?.inputType == "number"
+              input?.inputs == "number"
                 ? Number((event.target as HTMLInputElement).value)
                 : (event.target as HTMLInputElement).value;
             setCurrentInput({
@@ -40,7 +45,11 @@ export const DynamicInput: React.FC<{ attribute: string }> = ({
         />
       );
     } else {
-      return <select></select>;
+      return (
+        <select>
+          
+        </select>
+      );
     }
   }
 

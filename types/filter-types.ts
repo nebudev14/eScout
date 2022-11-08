@@ -5,6 +5,7 @@ export interface Query {
   compName?: string;
   matchType?: MatchType;
   mobility?: boolean;
+  prescout?: boolean;
 }
 
 export interface InputType {
