@@ -30,8 +30,15 @@ const ViewPitScout: React.FC = () => {
               <b>Team {entry}</b>
             </h1>
             {data?.questions.map((question) => (
-              <div className="flex flex-col">
-                <h1 className="text-lg">{question.prompt}</h1>
+              <div className="flex flex-col my-4">
+                <h1 className="text-2xl">{question.prompt}</h1>
+                <h1 className="text-lg">
+                  {
+                    question.PitResponse.filter(
+                      (e) => e.entryTeamNumber === entry
+                    )?.at(0)?.response
+                  }
+                </h1>
               </div>
             ))}
           </div>
