@@ -1,11 +1,11 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { Protected } from "../../components/auth/protected";
-import { Filter } from "../../components/scouting/filter/filter";
-import { ManageCompetitions } from "../../components/ui/misc/competitions";
-import { useQuery } from "../../hooks/trpc";
+import { Protected } from "../../../components/auth/protected";
+import { Filter } from "../../../components/scouting/filter/filter";
+import { ManageCompetitions } from "../../../components/ui/misc/competitions";
+import { useQuery } from "../../../hooks/trpc";
 import { Tab } from "@headlessui/react";
-import { ManagePitScout } from "../../components/ui/misc/pit-scout";
+import { ManagePitScout } from "../../../components/ui/misc/pit-scout";
 
 const TeamContent: NextPage = () => {
   const router = useRouter();

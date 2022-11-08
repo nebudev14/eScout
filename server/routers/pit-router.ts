@@ -30,3 +30,17 @@ export const pitRouter = createRouter()
       })
     }
   })
+  .query("get-by-id", {
+    input: z.object({
+      id: z.string()
+    }),
+    async resolve({ input, ctx }) {
+      return await ctx.prisma.pitForm.findUnique({
+        where: { id: input.id },
+        include: {
+          questions: true,
+          responses: true
+        }
+      })
+    }
+  })
