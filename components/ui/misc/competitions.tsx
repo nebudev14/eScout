@@ -14,7 +14,7 @@ export const ManageCompetitions: React.FC<{ teamNum: number }> = ({
   ]);
 
   return (
-    <div className="h-screen">
+    <div className="min-h-screen">
       <h1 className="my-4 text-2xl">
         <b>Competitions</b>
       </h1>
@@ -24,7 +24,7 @@ export const ManageCompetitions: React.FC<{ teamNum: number }> = ({
       >
         Create
       </button>
-      <div className="grid w-full grid-cols-3 gap-6 overflow-y-scroll md:grid-cols-1 md:gap-2">
+      <div className="grid w-full grid-cols-3 gap-6 md:grid-cols-1 md:gap-2">
         {allComps?.map((comp, i) => (
           <div
             className="py-2 mb-6 border shadow-lg rounded-xl bg-slate-50 dark:bg-zinc-900 dark:border-zinc-700"

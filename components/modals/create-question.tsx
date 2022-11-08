@@ -21,11 +21,11 @@ export const CreateQuestionModal: React.FC = () => {
 
   const mutatePitScout = useMutation("pit.add-question", {
     onSuccess() {
-      invalidateQueries("pit.get-by-number");
+      invalidateQueries("pit.get-by-id");
     },
   });
 
-  const createComp = async (event: React.SyntheticEvent) => {
+  const createQuestion = async (event: React.SyntheticEvent) => {
     event.preventDefault();
     const target = event.target as typeof event.target & {
       questionName: { value: string };
@@ -38,6 +38,9 @@ export const CreateQuestionModal: React.FC = () => {
       type: target.questionType.value,
       possibleResponses: selectOptions,
     });
+    
+    setSelectOptions([]);
+    
   };
 
   return (
@@ -80,7 +83,7 @@ export const CreateQuestionModal: React.FC = () => {
                   <p className="text-sm text-gray-500"></p>
                 </div>
 
-                <form onSubmit={createComp}>
+                <form onSubmit={createQuestion}>
                   <div className="mt-4 ">
                     <h1 className="mr-2 font-semibold">Question</h1>
                     <input
@@ -122,6 +125,7 @@ export const CreateQuestionModal: React.FC = () => {
                         />
                         <button
                           formNoValidate
+                          type="button"
                           className="px-3 py-1 text-lg text-white rounded-r-lg bg-cyan-500"
                           onClick={() => {
                             if (currentOption !== "") {

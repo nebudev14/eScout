@@ -1,6 +1,7 @@
 import { useAtom } from "jotai";
 import { useRouter } from "next/router";
 import { CreateQuestionModal } from "../../../../../components/modals/create-question";
+import QuestionCard from "../../../../../components/ui/question-card";
 import { useQuery } from "../../../../../hooks/trpc";
 import { createQuestionModalAtom } from "../../../../../server/atoms";
 
@@ -14,8 +15,8 @@ const EditPitScout: React.FC = () => {
   const [, setIsOpen] = useAtom(createQuestionModalAtom);
 
   return (
-    <div className="h-screen px-48 py-12 dark:text-white">
-      <div className="flex items-center justify-start">
+    <div className="min-h-screen px-48 py-12 dark:text-white">
+      <div className="flex items-center justify-start mb-4">
         <h1 className="mr-auto text-3xl">
           <b>{data?.name}</b>
         </h1>
@@ -25,6 +26,14 @@ const EditPitScout: React.FC = () => {
         >
           +
         </button>
+      </div>
+      <div className="grid grid-cols-2">
+        <div className="grid grid-cols-1 gap-2 overflow-y-scroll">
+        {data?.questions.map((question, i) => (
+          <QuestionCard key={i} question={question} />
+        ))}
+        </div>
+        <div />
       </div>
 
       <CreateQuestionModal />
