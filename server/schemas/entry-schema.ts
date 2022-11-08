@@ -10,6 +10,8 @@ export const createEntrySchema = z.object({
   entryTeamNumber: z.number(),
   matchNumber: z.number(),
   matchType: z.nativeEnum(MatchType),
+  prescout: z.boolean(),
+  videoLink: z.string().optional(),
 
   mobility: z.boolean(),
 

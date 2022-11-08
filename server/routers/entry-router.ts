@@ -18,6 +18,8 @@ export const entryRouter = createRouter()
           entryTeamNumber: input.entryTeamNumber,
           matchNumber: input.matchNumber,
           matchType: input.matchType,
+          prescout: input.prescout,
+          video: input.videoLink,
 
           mobility: input.mobility,
 

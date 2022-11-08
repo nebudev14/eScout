@@ -60,6 +60,8 @@ const Scout: NextPage = () => {
       entryTeamNumber: Number(target.entryTeamNumber.value),
       matchNumber: Number(target.matchNumber.value),
       matchType: target.matchType.value,
+      prescout: prescout,
+      video: prescout ? target.videoLink.value : undefined,
 
       mobility: target.mobility.value === "yes",
 
