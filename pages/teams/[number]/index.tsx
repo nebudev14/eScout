@@ -51,8 +51,8 @@ const TeamContent: NextPage = () => {
                       <Tab
                         className={({ selected }) =>
                           selected
-                            ? "px-6 py-2 outline-none border-b-2 border-cyan-400"
-                            : "px-6 py-2"
+                            ? "px-6 py-2 md:px-2 md:text-sm outline-none border-b-2 border-cyan-400"
+                            : "px-6 py-2 md:px-2 md:text-sm"
                         }
                       >
                         Competitions
@@ -60,8 +60,8 @@ const TeamContent: NextPage = () => {
                       <Tab
                         className={({ selected }) =>
                           selected
-                            ? "px-6 py-2 outline-none border-b-2 border-cyan-400"
-                            : "px-6 py-2"
+                            ? "px-6 py-2 md:px-2 md:text-sm outline-none border-b-2 border-cyan-400"
+                            : "px-6 py-2 md:px-2 md:text-sm"
                         }
                       >
                         Pit Scout
@@ -69,8 +69,8 @@ const TeamContent: NextPage = () => {
                       <Tab
                         className={({ selected }) =>
                           selected
-                            ? "px-6 py-2 outline-none border-b-2 border-cyan-400"
-                            : "px-6 py-2"
+                            ? "px-6 py-2 md:px-2 md:text-sm outline-none border-b-2 border-cyan-400"
+                            : "px-6 py-2 md:px-2 md:text-sm"
                         }
                       >
                         Members
