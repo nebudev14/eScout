@@ -7,7 +7,6 @@ import { useQuery } from "../../hooks/trpc";
 
 const PitScout: NextPage = () => {
   const [selectedTeam, setSelectedTeam] = useState<number>();
-  const [pitScout, setSelectedPitScout] = useState<string | undefined>(undefined);
   const { data: session } = useSession();
   const { data: userData } = useQuery([
     "user.get-by-id",
@@ -22,6 +21,11 @@ const PitScout: NextPage = () => {
     "pit.get-by-number",
     { team: Number(selectedTeam) },
   ]);
+
+  const [pitScout, setSelectedPitScout] = useState<string>("");
+  useEffect(() => { // i apologize for breaking the law
+    setSelectedPitScout(data!?.at(0)!?.id)
+  })
 
   return (
     <div className="min-h-screen py-12 px-96 dark:text-white">
@@ -63,6 +67,19 @@ const PitScout: NextPage = () => {
           ))}
         </select>
       </Container>
+
+      <div className="grid grid-cols-1 gap-6 mt-6">
+        {/* this is the stupidest big brain thing i've tried */}
+        {data?.filter(e => e.id === pitScout).at(0)?.questions?.map((question, i) => (
+          <div key={i} className="px-5 py-3 my-2 mr-2 duration-200 border hover:shadow-lg rounded-xl bg-slate-50 dark:bg-zinc-900 dark:border-zinc-600 dark:text-white">
+            <h1 className="text-xl">
+              <b>
+                
+              </b>
+            </h1>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

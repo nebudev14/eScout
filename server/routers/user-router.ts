@@ -27,7 +27,8 @@ export const userRouter = createRouter()
                 include: {
                   entries: true,
                   members: true,
-                  comps: true
+                  comps: true,
+                  pitScouts: true
                 }
               }
             }
