@@ -86,11 +86,6 @@ const Scout: NextPage = () => {
     router.push("/teams");
   };
 
-  if(selectedComp === undefined) return (
-    <div className="flex items-center justify-center min-h-screen dark:text-white">
-      <h1 className="text-3xl">You haven&apos;t made any competitions yet!</h1>
-    </div>
-  );
 
   return (
     <Protected>
@@ -273,7 +268,8 @@ const Scout: NextPage = () => {
 
           <button
             type="submit"
-            className="p-2 mt-4 text-lg font-semibold text-white duration-150 bg-teal-500 rounded shadow focus:outline-none focus:shadow-outline hover:bg-teal-700"
+            disabled={selectedComp === undefined}
+            className={`p-2 mt-4 text-lg font-semibold text-white duration-150 bg-teal-500 rounded shadow focus:outline-none focus:shadow-outline ${selectedComp === undefined ? 'hover:cursor-not-allowed' : 'hover:bg-teal-700'}`}
           >
             Submit
           </button>
