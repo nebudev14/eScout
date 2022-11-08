@@ -86,6 +86,8 @@ model Entry {
   team        Team        @relation(fields: [teamNumber], references: [number])
   compId      String
   competition Competition @relation(fields: [compId], references: [id])
+  // prescout    Boolean
+  // video       String?
   userId      String
   user        User        @relation(fields: [userId], references: [id])
 

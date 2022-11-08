@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { useQuery } from "../../../../hooks/trpc";
+import { BiArrowBack } from "react-icons/bi";
 
 const ViewPitScout: React.FC = () => {
   const router = useRouter();
@@ -12,10 +13,14 @@ const ViewPitScout: React.FC = () => {
     ?.map((e) => e.PitResponse.map((i) => i.entryTeamNumber))
     ?.at(0)
     ?.filter((v, i, a) => a.indexOf(v) === i);
-  console.log(teams);
 
   return (
     <div className="min-h-screen px-48 py-12 md:px-4 dark:text-white">
+      <BiArrowBack
+        size={30}
+        className="mb-4 duration-150 hover:text-pink-600 hover:cursor-pointer"
+        onClick={() => router.back()}
+      />
       <h1 className="mb-2 text-3xl">Pit Scouts</h1>
       <h1 className="text-xl">Team {data?.teamNumber}</h1>
       <h1 className="mb-6 text-xl">{data?.name}</h1>
