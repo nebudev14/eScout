@@ -17,7 +17,7 @@ const Home: NextPage = () => {
 
   return (
     <Protected>
-      <div className="flex flex-col items-center justify-center h-screen">
+      <div className="flex flex-col items-center justify-center h-screen dark:text-white">
         {data?.teams.length === 0 ? (
           <>
             <h1 className="mb-4 text-3xl">You have no teams!</h1>

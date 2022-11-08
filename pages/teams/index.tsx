@@ -22,7 +22,7 @@ const ManageTeams: NextPage = () => {
 
   return (
     <Protected>
-      <div className="flex flex-col h-screen px-6 py-4">
+      <div className="flex flex-col h-screen px-6 py-4 dark:text-white">
         <div className="flex items-start justify-start">
           <button
             className="px-3 py-2 mb-8 text-sm text-white duration-200 bg-pink-600 rounded-md hover:bg-pink-700"
