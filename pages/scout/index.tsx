@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import React from "react";
-import { Protected } from "../../components/auth/protected";
+import  Protected  from "../../components/auth/protected";
 import { Container } from "../../components/ui/container";
 import { MatchInfo } from "../../components/scouting/form/match-info";
 import { ScoreBoard } from "../../components/scouting/form/score-board";

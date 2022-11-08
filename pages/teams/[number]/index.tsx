@@ -1,6 +1,6 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { Protected } from "../../../components/auth/protected";
+import  Protected  from "../../../components/auth/protected";
 import { Filter } from "../../../components/scouting/filter/filter";
 import { ManageCompetitions } from "../../../components/ui/misc/competitions";
 import { useQuery } from "../../../hooks/trpc";

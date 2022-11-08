@@ -3,7 +3,7 @@ import { NextPage } from "next";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
-import { Protected } from "../../components/auth/protected";
+import  Protected  from "../../components/auth/protected";
 import { Container } from "../../components/ui/container";
 import { Input } from "../../components/ui/input";
 import NoTeams from "../../components/ui/no-teams";

@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import { useSession } from "next-auth/react";
-import { Protected } from "../../components/auth/protected";
+import  Protected  from "../../components/auth/protected";
 import { useQuery } from "../../hooks/trpc";
 import { FaUserFriends } from "react-icons/fa";
 import { CgNotes } from "react-icons/cg";

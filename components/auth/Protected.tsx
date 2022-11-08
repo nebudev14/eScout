@@ -1,7 +1,7 @@
 import { signIn, useSession } from "next-auth/react";
 import React from "react";
 
-export const Protected: React.FC<React.PropsWithChildren<{}>> = ({
+const Protected: React.FC<React.PropsWithChildren<{}>> = ({
   children,
 }) => {
   const { status } = useSession();
@@ -10,3 +10,5 @@ export const Protected: React.FC<React.PropsWithChildren<{}>> = ({
 
   return null;
 };
+
+export default Protected

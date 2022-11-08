@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import Link from "next/link";
-import { Protected } from "../components/auth/protected";
+import Protected  from "../components/auth/protected";
 import { useMutation, useQuery } from "../hooks/trpc";
 import { useSession } from "next-auth/react";
 import NoTeams from "../components/ui/no-teams";
