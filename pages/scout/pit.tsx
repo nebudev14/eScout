@@ -89,7 +89,14 @@ const PitScout: NextPage = () => {
                   autoComplete="off"
                 />
               ) : (
-                "balls"
+                <select
+                  id={question.id}
+                  className="p-2 mt-2 text-base leading-tight border rounded shadow focus:outline-none focus:shadow-outline dark:bg-zinc-900 dark:text-white dark:border-zinc-700"
+                >
+                  {question.possibleResponses.map((option, i) => (
+                    <option key={i} value={option}>{option}</option>
+                  ))}
+                </select>
               )}
             </div>
           ))}
