@@ -158,14 +158,15 @@ model PitQuestion {
 }
 
 model PitResponse {
-  id            String      @id @default(cuid())
-  user          User        @relation(fields: [userId], references: [id])
-  response      String
-  question      PitQuestion @relation(fields: [pitQuestionId], references: [id])
-  pitQuestionId String
-  userId        String
-  PitForm       PitForm?    @relation(fields: [pitFormId], references: [id])
-  pitFormId     String?
+  id              String      @id @default(cuid())
+  user            User        @relation(fields: [userId], references: [id])
+  question        PitQuestion @relation(fields: [pitQuestionId], references: [id])
+  response        String
+  pitQuestionId   String
+  entryTeamNumber Int
+  userId          String
+  PitForm         PitForm?    @relation(fields: [pitFormId], references: [id])
+  pitFormId       String?
 }
 
 enum PitQuestionType {

@@ -39,6 +39,24 @@ export const pitRouter = createRouter()
       });
     },
   })
+  .mutation("delete-question", {
+    input: z.object({
+      id: z.string(),
+      questionId: z.string()
+    }),
+    async resolve({ input, ctx }) {
+      return await ctx.prisma.pitForm.update({
+        where: { id: input.id },
+        data: {
+          questions: {
+            delete: {
+              id: input.questionId
+            }
+          }
+        }
+      })
+    }
+  })
   .query("get-by-number", {
     input: z.object({
       team: z.number(),
