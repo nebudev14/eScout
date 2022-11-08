@@ -63,7 +63,7 @@ export const FilterCard: React.FC<{ entry: Entry, user: User }> = ({ entry, user
         </div>
       </div>
       <div className="flex items-center px-5 pb-2">
-        <Image src={user.image as string} width={35} height={35} className="rounded-full" />
+        <Image src={user.image as string} width={35} height={35} className="rounded-full" alt={`${user.name} image`} />
         <h1 className="ml-2">{user.name}</h1>
       </div>
     </div>

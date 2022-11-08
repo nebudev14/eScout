@@ -34,8 +34,8 @@ const ViewPitScout: React.FC = () => {
             <h1 className="mb-4 text-2xl">
               <b>Team {entry}</b>
             </h1>
-            {data?.questions.map((question) => (
-              <div className="flex flex-col my-4">
+            {data?.questions.map((question, i) => (
+              <div key={i} className="flex flex-col my-4">
                 <h1 className="text-2xl">{question.prompt}</h1>
                 <h1 className="text-lg">
                   {

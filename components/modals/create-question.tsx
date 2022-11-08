@@ -38,9 +38,9 @@ export const CreateQuestionModal: React.FC = () => {
       type: target.questionType.value,
       possibleResponses: selectOptions,
     });
-    
+
     setSelectOptions([]);
-    
+
   };
 
   return (
@@ -142,8 +142,8 @@ export const CreateQuestionModal: React.FC = () => {
                       </div>
                       <ul className="px-4 list-disc">
                         {selectOptions.map((option, i) => (
-                          <div className="flex items-center text-center">
-                            <li key={i} className="my-1 text-lg">
+                          <div key={i} className="flex items-center text-center">
+                            <li className="my-1 text-lg">
                               {option}
                             </li>
                             <BsFillTrashFill

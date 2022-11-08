@@ -6,16 +6,21 @@ import React, { useState, useEffect } from "react";
 import { Protected } from "../../components/auth/protected";
 import { Container } from "../../components/ui/container";
 import { Input } from "../../components/ui/input";
+import NoTeams from "../../components/ui/no-teams";
 import { useMutation, useQuery } from "../../hooks/trpc";
 
 const PitScout: NextPage = () => {
   const router = useRouter();
-  const [selectedTeam, setSelectedTeam] = useState<number>();
+  const [selectedTeam, setSelectedTeam] = useState<number | undefined>();
   const { data: session } = useSession();
   const { data: userData } = useQuery([
     "user.get-by-id",
     { userId: session?.user.id as string },
   ]);
+
+  // if(userData?.teams.length === 0) {
+  //   return <NoTeams />
+  // }
 
   useEffect(() => {
     setSelectedTeam(userData?.teams[0].teamNumber);
@@ -30,7 +35,7 @@ const PitScout: NextPage = () => {
   useEffect(() => {
     // i apologize for breaking the law
     setSelectedPitScout(data!?.at(0)!?.id);
-  });
+  }, [setSelectedPitScout, data]);
 
   const submitEntry = useMutation("pit.submit-scout");
 

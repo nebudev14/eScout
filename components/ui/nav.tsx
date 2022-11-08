@@ -17,7 +17,7 @@ export const Nav: React.FC = () => {
       {session && (
         <div className="flex items-center justify-start px-4 py-2 border-b-2 border-gray-200 dark:border-gray-800 dark:text-white">
           <div className="flex items-center mr-auto">
-          <Image src={session?.user?.image as string} width={40} height={40} className="rounded-full" />
+          <Image src={session?.user?.image as string} width={40} height={40} className="rounded-full" alt={`${session?.user?.name} image`} />
           <h2 className="ml-4 text-lg md:w-full">{session?.user?.name}</h2>
           </div>
           <div className="w-56 text-right ">
