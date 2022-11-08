@@ -16,3 +16,17 @@ export const pitRouter = createRouter()
       })
     }
   })
+  .query("get-by-number", {
+    input: z.object({
+      team: z.number()
+    }),
+    async resolve({ input, ctx }) {
+      return await ctx.prisma.pitForm.findMany({
+        where: { teamNumber: input.team },
+        include: {
+          questions: true,
+          responses: true
+        }
+      })
+    }
+  })
