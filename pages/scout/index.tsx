@@ -86,7 +86,11 @@ const Scout: NextPage = () => {
     router.push("/teams");
   };
 
-  if(selectedComp === undefined) return <NoTeams />
+  if(selectedComp === undefined) return (
+    <div className="flex items-center justify-center min-h-screen dark:text-white">
+      <h1 className="text-3xl">You haven&apos;t made any competitions yet!</h1>
+    </div>
+  );
 
   return (
     <Protected>

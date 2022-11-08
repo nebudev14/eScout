@@ -1,4 +1,4 @@
-import { Statistics, percentageFormat } from "../../../util/calculate-stats";
+import { Statistics, percentageFormat, nanFormat } from "../../../util/calculate-stats";
 
 export const NumberStats: React.FC<{ stats: Statistics }> = ({ stats }) => {
   const ballStats = stats.ballStats;
@@ -27,7 +27,7 @@ export const NumberStats: React.FC<{ stats: Statistics }> = ({ stats }) => {
           <b>
             {totalBallsMade} / {totalBallsShot}
           </b>{" "}
-          total shots made ({percentageFormat(totalBallsMade / totalBallsShot)}
+          total shots made ({(percentageFormat(nanFormat(totalBallsMade / totalBallsShot)))}
           %)
         </h1>
         <h1 className="text-md">
@@ -57,7 +57,7 @@ export const NumberStats: React.FC<{ stats: Statistics }> = ({ stats }) => {
                 {ballStats.autoHighShotsTotal + ballStats.autoLowShotsTotal}
               </b>{" "}
               auto shots (
-              {percentageFormat(totalAutoShotsMade / totalAutoShots)}
+              {percentageFormat(nanFormat(totalAutoShotsMade / totalAutoShots))}
               %)
             </h1>
             <h2>
@@ -84,7 +84,7 @@ export const NumberStats: React.FC<{ stats: Statistics }> = ({ stats }) => {
                 {ballStats.teleopHighShotsTotal + ballStats.teleopLowShotsTotal}
               </b>{" "}
               teleop shots (
-              {percentageFormat(totalTeleopShotsMade / totalTeleopShots)}
+              {percentageFormat(nanFormat(totalTeleopShotsMade / totalTeleopShots))}
               %)
             </h1>
             <h2>

@@ -53,7 +53,7 @@ function countRungs(data: Entry[], rungLevel: RungLevel): number {
   return rungs === undefined ? 0 : rungs.length;
 }
 
-function nanFormat(value: number): number {
+export function nanFormat(value: number): number {
   return isNaN(value) ? 0 : value;
 }
 
