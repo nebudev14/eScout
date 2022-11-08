@@ -57,7 +57,7 @@ export const Nav: React.FC = () => {
                   <Menu.Item>
                     {({ active }) => (
                       <button
-                        className="flex items-center w-full px-2 py-2 text-sm text-pink-600 duration-200 rounded-md group hover:text-white hover:bg-yellow-400"
+                        className="flex items-center w-full px-2 py-2 text-sm text-pink-600 duration-200 rounded-md group hover:text-white hover:bg-pink-600"
                         onClick={() => router.push("/scout")}
                       >
                         <CgNotes className="mr-2" /> Pit Scout

@@ -42,15 +42,16 @@ model VerificationToken {
 }
 
 model User {
-  id            String     @id @default(cuid())
+  id            String        @id @default(cuid())
   name          String?
-  email         String?    @unique
+  email         String?       @unique
   image         String?
   emailVerified DateTime?
   accounts      Account[]
   sessions      Session[]
   teams         TeamUser[]
   entries       Entry[]
+  PitResponse   PitResponse[]
 }
 
 model TeamUser {
@@ -62,12 +63,13 @@ model TeamUser {
 }
 
 model Team {
-  name     String
-  number   Int           @unique
-  comps    Competition[]
-  entries  Entry[]
-  members  TeamUser[]
-  inviteId String        @unique
+  name      String
+  number    Int           @unique
+  comps     Competition[]
+  entries   Entry[]
+  members   TeamUser[]
+  pitScouts PitForm[]
+  inviteId  String        @unique
 }
 
 model Competition {
@@ -79,13 +81,13 @@ model Competition {
 }
 
 model Entry {
-  id              String      @id @default(cuid())
-  teamNumber      Int
-  team            Team        @relation(fields: [teamNumber], references: [number])
-  compId          String
-  competition     Competition @relation(fields: [compId], references: [id])
-  userId          String
-  user            User        @relation(fields: [userId], references: [id])
+  id          String      @id @default(cuid())
+  teamNumber  Int
+  team        Team        @relation(fields: [teamNumber], references: [number])
+  compId      String
+  competition Competition @relation(fields: [compId], references: [id])
+  userId      String
+  user        User        @relation(fields: [userId], references: [id])
 
   matchNumber     Int
   matchType       MatchType
@@ -134,3 +136,39 @@ enum RungLevel {
   TRAVERSAL
 }
 
+// Pit Scout
+
+model PitForm {
+  id         String        @id @default(cuid())
+  name       String        @unique
+  teamNumber Int
+  team       Team          @relation(fields: [teamNumber], references: [number])
+  questions  PitQuestion[]
+  responses  PitResponse[]
+}
+
+model PitQuestion {
+  id                String          @id @default(cuid())
+  prompt            String
+  type              PitQuestionType
+  possibleResponses String[]
+  pitFormId         String
+  pitForm           PitForm         @relation(fields: [pitFormId], references: [id])
+  PitResponse       PitResponse[]
+}
+
+model PitResponse {
+  id            String      @id @default(cuid())
+  user          User        @relation(fields: [userId], references: [id])
+  response      String
+  question      PitQuestion @relation(fields: [pitQuestionId], references: [id])
+  pitQuestionId String
+  userId        String
+  PitForm       PitForm?    @relation(fields: [pitFormId], references: [id])
+  pitFormId     String?
+}
+
+enum PitQuestionType {
+  TEXT
+  SELECT
+}
