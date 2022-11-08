@@ -4,16 +4,24 @@ import React, { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { trpc, useMutation } from "../../hooks/trpc";
 import { useRouter } from "next/router";
+import { PitQuestionType } from "@prisma/client";
 
 export const CreateQuestionModal: React.FC = () => {
-  const [isOpen, setIsOpen] = useAtom(createQuestionModalAtom);
   const router = useRouter();
   const { invalidateQueries } = trpc.useContext();
 
-  const mutateComp = useMutation("comp.create", {
+  const [isOpen, setIsOpen] = useAtom(createQuestionModalAtom);
+  const [questionType, setQuestionType] = useState<PitQuestionType>(
+    PitQuestionType.TEXT
+  );
+  const [selectOptions, setSelectOptions] = useState<string[]>([]);
+  // For entering in new options
+  const [currentOption, setCurrentOption] = useState<string>("");
+
+  const mutateComp = useMutation("pit.add-question", {
     onSuccess() {
-      invalidateQueries("comp.get-by-number");
-    }
+      invalidateQueries("pit.get-by-number");
+    },
   });
 
   const createComp = async (event: React.SyntheticEvent) => {
@@ -22,10 +30,10 @@ export const CreateQuestionModal: React.FC = () => {
       compName: { value: string };
     };
 
-    await mutateComp.mutateAsync({
-      name: target.compName.value,
-      team: Number(router.query.number),
-    });
+    // await mutateComp.mutateAsync({
+    //   name: target.compName.value,
+    //   team: Number(router.query.number),
+    // });
   };
 
   return (
@@ -62,7 +70,7 @@ export const CreateQuestionModal: React.FC = () => {
                   as="h3"
                   className="text-lg font-medium leading-6 text-center text-gray-900"
                 >
-                  Create a competition
+                  Add a question
                 </Dialog.Title>
                 <div className="mt-2">
                   <p className="text-sm text-gray-500"></p>
@@ -70,19 +78,67 @@ export const CreateQuestionModal: React.FC = () => {
 
                 <form onSubmit={createComp}>
                   <div className="mt-4 ">
-                    <h1 className="mr-2 font-semibold">Competition name</h1>
+                    <h1 className="mr-2 font-semibold">Question</h1>
                     <input
-                      id="compName"
+                      id="questionName"
                       className="w-full p-2 border-2 rounded-lg outline-none"
                       required
                       autoComplete="off"
                     />
                   </div>
+                  <div className="mt-4 ">
+                    <h1 className="mr-2 font-semibold">Question type</h1>
+                    <select
+                      id="questionType"
+                      className="p-2 text-lg leading-tight border rounded shadow focus:outline-none focus:shadow-outline dark:bg-zinc-900 dark:text-white dark:border-zinc-700"
+                      value={questionType}
+                      onChange={(event: React.SyntheticEvent) => {
+                        setQuestionType(
+                          (event.target as HTMLSelectElement)
+                            .value as PitQuestionType
+                        );
+                      }}
+                    >
+                      <option value={PitQuestionType.TEXT}>Text input</option>
+                      <option value={PitQuestionType.SELECT}>Selection</option>
+                    </select>
+                  </div>
+                  {questionType === PitQuestionType.SELECT ? (
+                    <div className="mt-4">
+                      <div className="flex items-center mb-3">
+                        <h1 className="mr-2 font-semibold">Options</h1>
+                        <input
+                          className="p-1 border-2 rounded-l-lg outline-none"
+                          onChange={(event: React.SyntheticEvent) =>
+                            setCurrentOption(
+                              (event.target as HTMLSelectElement)
+                                .value as string
+                            )
+                          }
+                        />
+                        <button
+                          formNoValidate
+                          className="px-3 py-1 text-lg text-white rounded-r-lg bg-cyan-500"
+                          onClick={() => {
+                            setSelectOptions([...selectOptions, currentOption]);
+                            setCurrentOption(""); 
+                          }}
+                        >
+                          +
+                        </button>
+                      </div>
+                      <ul className="px-4 list-disc">
+                      {selectOptions.map((option, i) => (
+                        <li key={i} className="my-1 text-lg">{option}</li>
+                      ))}
+                      </ul>
+                    </div>
+                  ) : null}
 
                   <div className="mt-4">
                     <button
                       type="submit"
-                      className="inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-pink-600 border border-transparent rounded-md hover:bg-purple-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+                      className="inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-pink-600 border border-transparent rounded-md hover:bg-pink-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
                       onClick={() => setIsOpen(false)}
                     >
                       Create

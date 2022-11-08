@@ -13,7 +13,7 @@ export const ManagePitScout: React.FC<{ teamNum: number }> = ({ teamNum }) => {
   ]);
 
   return (
-    <div>
+    <div className="h-screen">
       <h1 className="my-4 text-2xl">
         <b>Pit Scouts</b>
       </h1>
@@ -34,7 +34,7 @@ export const ManagePitScout: React.FC<{ teamNum: number }> = ({ teamNum }) => {
                 <h1 className="mr-auto text-xl">
                   <b>{pitScout.name}</b>
                 </h1>
-                <Link href={`/teams/${teamNum}/pitscout/${pitScout.id}`} passHref>
+                <Link href={`/teams/${teamNum}/pitscout/edit/${pitScout.id}`} passHref>
                   <BsPencilFill size={25} className="hover:cursor-pointer" />
                 </Link>
               </div>

@@ -14,7 +14,7 @@ export const ManageCompetitions: React.FC<{ teamNum: number }> = ({
   ]);
 
   return (
-    <div className="">
+    <div className="h-screen">
       <h1 className="my-4 text-2xl">
         <b>Competitions</b>
       </h1>
