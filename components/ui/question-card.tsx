@@ -13,7 +13,7 @@ const QuestionCard: React.FC<{ question: PitQuestion }> = ({ question }) => {
   })
 
   return (
-    <div className="px-3 py-2 my-2 mr-2 duration-200 border hover:shadow-lg rounded-xl bg-slate-50 dark:bg-zinc-900 dark:border-zinc-600 dark:text-white">
+    <div className="px-5 py-3 my-2 mr-2 duration-200 border hover:shadow-lg rounded-xl bg-slate-50 dark:bg-zinc-900 dark:border-zinc-600 dark:text-white">
       <div className="flex items-center">
         <h1 className="mr-auto text-xl">
           <b>{question.prompt}</b>
