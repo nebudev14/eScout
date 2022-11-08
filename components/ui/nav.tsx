@@ -58,7 +58,7 @@ export const Nav: React.FC = () => {
                     {({ active }) => (
                       <button
                         className="flex items-center w-full px-2 py-2 text-sm text-pink-600 duration-200 rounded-md group hover:text-white hover:bg-pink-600"
-                        onClick={() => router.push("/scout")}
+                        onClick={() => router.push("/scout/pit")}
                       >
                         <CgNotes className="mr-2" /> Pit Scout
                       </button>
