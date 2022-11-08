@@ -144,7 +144,6 @@ model PitForm {
   teamNumber Int
   team       Team          @relation(fields: [teamNumber], references: [number])
   questions  PitQuestion[]
-  responses  PitResponse[]
 }
 
 model PitQuestion {
@@ -165,8 +164,7 @@ model PitResponse {
   pitQuestionId   String
   entryTeamNumber Int
   userId          String
-  PitForm         PitForm?    @relation(fields: [pitFormId], references: [id])
-  pitFormId       String?
+
 }
 
 enum PitQuestionType {

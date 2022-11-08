@@ -66,7 +66,6 @@ export const pitRouter = createRouter()
         where: { teamNumber: input.team },
         include: {
           questions: true,
-          responses: true,
         },
       });
     },
@@ -80,7 +79,6 @@ export const pitRouter = createRouter()
         where: { id: input.id },
         include: {
           questions: true,
-          responses: true,
         },
       });
     },

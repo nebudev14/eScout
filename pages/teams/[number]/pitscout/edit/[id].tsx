@@ -27,7 +27,7 @@ const EditPitScout: React.FC = () => {
           Editing <b>{data?.name}</b>
         </h1>
         <button
-          className="px-4 py-2 bg-pink-600 rounded-lg hover:bg-pink-700"
+          className="px-4 py-2 text-white bg-pink-600 rounded-lg hover:bg-pink-700"
           onClick={() => setIsOpen(true)}
         >
           +
