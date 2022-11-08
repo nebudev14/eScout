@@ -1,3 +1,4 @@
+import { PitQuestionType } from "@prisma/client";
 import { z } from "zod";
 import { createRouter } from "../create-router";
 
@@ -5,42 +6,64 @@ export const pitRouter = createRouter()
   .mutation("create", {
     input: z.object({
       name: z.string(),
-      team: z.number()
+      team: z.number(),
     }),
     async resolve({ input, ctx }) {
       return await ctx.prisma.pitForm.create({
         data: {
           name: input.name,
-          teamNumber: input.team
-        }
-      })
-    }
+          teamNumber: input.team,
+        },
+      });
+    },
+  })
+  .mutation("add-question", {
+    input: z.object({
+      id: z.string(),
+      prompt: z.string(),
+      type: z.nativeEnum(PitQuestionType),
+      possibleResponses: z.string().array(),
+    }),
+    async resolve({ input, ctx }) {
+      return await ctx.prisma.pitForm.update({
+        where: { id: input.id },
+        data: {
+          questions: {
+            create: {
+              prompt: input.prompt,
+              type: input.type,
+              possibleResponses: input.possibleResponses,
+            },
+          },
+        },
+      });
+    },
   })
   .query("get-by-number", {
     input: z.object({
-      team: z.number()
+      team: z.number(),
     }),
     async resolve({ input, ctx }) {
       return await ctx.prisma.pitForm.findMany({
         where: { teamNumber: input.team },
         include: {
           questions: true,
-          responses: true
-        }
-      })
-    }
+          responses: true,
+        },
+      });
+    },
   })
   .query("get-by-id", {
     input: z.object({
-      id: z.string()
+      id: z.string(),
     }),
     async resolve({ input, ctx }) {
       return await ctx.prisma.pitForm.findUnique({
         where: { id: input.id },
         include: {
           questions: true,
-          responses: true
-        }
-      })
-    }
-  })
+          responses: true,
+        },
+      });
+    },
+  });
