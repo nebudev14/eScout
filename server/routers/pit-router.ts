@@ -57,6 +57,21 @@ export const pitRouter = createRouter()
       })
     }
   })
+  .mutation("submit-scout", {
+    input: z.object({
+      data: z.object({
+        pitQuestionId: z.string(),
+        response: z.string(),
+        userId: z.string(),
+        entryTeamNumber: z.number(),
+      }).array()
+    }), 
+    async resolve({ input, ctx }) {
+      return await ctx.prisma.pitResponse.createMany({
+        data: input.data
+      })
+    }
+  })
   .query("get-by-number", {
     input: z.object({
       team: z.number(),

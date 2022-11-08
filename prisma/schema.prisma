@@ -164,7 +164,6 @@ model PitResponse {
   pitQuestionId   String
   entryTeamNumber Int
   userId          String
-
 }
 
 enum PitQuestionType {
