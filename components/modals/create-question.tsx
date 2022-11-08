@@ -19,7 +19,7 @@ export const CreateQuestionModal: React.FC = () => {
   // For entering in new options
   const [currentOption, setCurrentOption] = useState<string>("");
 
-  const mutateComp = useMutation("pit.add-question", {
+  const mutatePitScout = useMutation("pit.add-question", {
     onSuccess() {
       invalidateQueries("pit.get-by-number");
     },
@@ -28,13 +28,16 @@ export const CreateQuestionModal: React.FC = () => {
   const createComp = async (event: React.SyntheticEvent) => {
     event.preventDefault();
     const target = event.target as typeof event.target & {
-      compName: { value: string };
+      questionName: { value: string };
+      questionType: { value: PitQuestionType };
     };
 
-    // await mutateComp.mutateAsync({
-    //   name: target.compName.value,
-    //   team: Number(router.query.number),
-    // });
+    await mutatePitScout.mutateAsync({
+      id: router.query.id as string,
+      prompt: target.questionName.value,
+      type: target.questionType.value,
+      possibleResponses: selectOptions,
+    });
   };
 
   return (
@@ -142,7 +145,11 @@ export const CreateQuestionModal: React.FC = () => {
                             <BsFillTrashFill
                               size={20}
                               className="ml-2 text-red-500 duration-150 hover:cursor-pointer hover:text-red-600"
-                              onClick={() => setSelectOptions(selectOptions.filter(e => e!== option))}
+                              onClick={() =>
+                                setSelectOptions(
+                                  selectOptions.filter((e) => e !== option)
+                                )
+                              }
                             />
                           </div>
                         ))}
