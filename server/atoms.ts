@@ -2,6 +2,7 @@ import { Competition, Entry } from "@prisma/client";
 import { InputType } from "../types/filter-types";
 import { atom } from "jotai";
 
+export const darkModeAtom = atom<boolean>(true);
 export const createTeamModalAtom = atom<boolean>(false);
 export const createCompModalAtom = atom<boolean>(false);
 export const createPitModalAtom = atom<boolean>(false);

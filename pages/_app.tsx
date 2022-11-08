@@ -5,11 +5,15 @@ import { Nav } from "../components/ui/nav";
 import "../styles/globals.css";
 import { withTRPC } from "@trpc/next";
 import type { AppRouter } from "../server/routers/app";
+import { useAtom } from "jotai";
+import { darkModeAtom } from "../server/atoms";
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const [darkMode, ] = useAtom(darkModeAtom);
+
   return (
     <SessionProvider session={pageProps.session}>
-      <div className="dark">
+      <div className={`duration-150 ${darkMode ? 'dark' : null}`}>
         <div className="bg-slate-100 dark:bg-zinc-800">
           <Nav />
           <Component {...pageProps} />
