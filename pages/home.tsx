@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Protected } from "../components/auth/protected";
 import { useMutation, useQuery } from "../hooks/trpc";
 import { useSession } from "next-auth/react";
+import NoTeams from "../components/ui/no-teams";
 
 const Home: NextPage = () => {
   const { data: session } = useSession();
@@ -19,10 +20,7 @@ const Home: NextPage = () => {
     <Protected>
       <div className="flex flex-col items-center justify-center h-screen dark:text-white">
         {data?.teams.length === 0 ? (
-          <>
-            <h1 className="mb-4 text-3xl">You have no teams!</h1>
-
-          </>
+          <NoTeams />
         ) : (
           <h1>yaeh</h1>
         )}

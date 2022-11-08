@@ -18,12 +18,9 @@ const PitScout: NextPage = () => {
     { userId: session?.user.id as string },
   ]);
 
-  // if(userData?.teams.length === 0) {
-  //   return <NoTeams />
-  // }
-
   useEffect(() => {
-    setSelectedTeam(userData?.teams[0].teamNumber);
+    if (userData?.teams.length !== 0)
+      setSelectedTeam(userData?.teams[0].teamNumber);
   }, [userData?.teams]);
 
   const { data, isLoading } = useQuery([
@@ -39,25 +36,28 @@ const PitScout: NextPage = () => {
 
   const submitEntry = useMutation("pit.submit-scout");
 
+  if (userData?.teams.length === 0) return <NoTeams />;
+
   const submitData = async (event: React.SyntheticEvent) => {
     event.preventDefault();
 
-    const target = event.target as any // i am sorry
+    const target = event.target as any; // i am sorry
     let results: any = []; // i am sorry squared
-    data!?.filter((e) => e.id === pitScout).at(0)!?.questions.forEach(e => {
-      const id = e.id;
-      results.push({
-        pitQuestionId: id,
-        response: target[id].value,
-        userId: session?.user?.id as string,
-        entryTeamNumber: Number(target.entryTeamNumber.value)
-      })
-    })
+    data!
+      ?.filter((e) => e.id === pitScout)
+      .at(0)!
+      ?.questions.forEach((e) => {
+        const id = e.id;
+        results.push({
+          pitQuestionId: id,
+          response: target[id].value,
+          userId: session?.user?.id as string,
+          entryTeamNumber: Number(target.entryTeamNumber.value),
+        });
+      });
 
-
-    await submitEntry.mutateAsync({data: results});
+    await submitEntry.mutateAsync({ data: results });
     router.push("/teams");
-
   };
 
   return (

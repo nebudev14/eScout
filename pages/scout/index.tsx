@@ -13,6 +13,7 @@ import { useMutation } from "../../hooks/trpc";
 import { useRouter } from "next/router";
 import { useAtom } from "jotai";
 import { setSelectedCompAtom } from "../../server/atoms";
+import NoTeams from "../../components/ui/no-teams";
 
 const Scout: NextPage = () => {
   const { data: session } = useSession();
@@ -84,6 +85,8 @@ const Scout: NextPage = () => {
     await submitEntry.mutateAsync(data);
     router.push("/teams");
   };
+
+  if(selectedComp === undefined) return <NoTeams />
 
   return (
     <Protected>
@@ -266,7 +269,7 @@ const Scout: NextPage = () => {
 
           <button
             type="submit"
-            className="p-2 mt-4 text-lg font-semibold text-white bg-teal-500 rounded shadow focus:outline-none focus:shadow-outline hover:bg-teal-700"
+            className="p-2 mt-4 text-lg font-semibold text-white duration-150 bg-teal-500 rounded shadow focus:outline-none focus:shadow-outline hover:bg-teal-700"
           >
             Submit
           </button>
