@@ -5,6 +5,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { trpc, useMutation } from "../../hooks/trpc";
 import { useRouter } from "next/router";
 import { PitQuestionType } from "@prisma/client";
+import { BsFillTrashFill } from "react-icons/bs";
 
 export const CreateQuestionModal: React.FC = () => {
   const router = useRouter();
@@ -120,17 +121,31 @@ export const CreateQuestionModal: React.FC = () => {
                           formNoValidate
                           className="px-3 py-1 text-lg text-white rounded-r-lg bg-cyan-500"
                           onClick={() => {
-                            setSelectOptions([...selectOptions, currentOption]);
-                            setCurrentOption(""); 
+                            if (currentOption !== "") {
+                              setSelectOptions([
+                                ...selectOptions,
+                                currentOption,
+                              ]);
+                              setCurrentOption("");
+                            }
                           }}
                         >
                           +
                         </button>
                       </div>
                       <ul className="px-4 list-disc">
-                      {selectOptions.map((option, i) => (
-                        <li key={i} className="my-1 text-lg">{option}</li>
-                      ))}
+                        {selectOptions.map((option, i) => (
+                          <div className="flex items-center text-center">
+                            <li key={i} className="my-1 text-lg">
+                              {option}
+                            </li>
+                            <BsFillTrashFill
+                              size={20}
+                              className="ml-2 text-red-500 duration-150 hover:cursor-pointer hover:text-red-600"
+                              onClick={() => setSelectOptions(selectOptions.filter(e => e!== option))}
+                            />
+                          </div>
+                        ))}
                       </ul>
                     </div>
                   ) : null}
