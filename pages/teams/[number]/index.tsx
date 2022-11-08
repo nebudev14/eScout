@@ -6,6 +6,7 @@ import { ManageCompetitions } from "../../../components/ui/misc/competitions";
 import { useQuery } from "../../../hooks/trpc";
 import { Tab } from "@headlessui/react";
 import { ManagePitScout } from "../../../components/ui/misc/pit-scout";
+import Members from "../../../components/ui/misc/members";
 
 const TeamContent: NextPage = () => {
   const router = useRouter();
@@ -46,7 +47,7 @@ const TeamContent: NextPage = () => {
               <Tab.Panel>
                 <Tab.Group>
                   <div className="flex flex-col items-center justify-center text-xl md:text-lg md:items-center">
-                    <Tab.List className="grid grid-cols-2">
+                    <Tab.List className="grid grid-cols-3">
                       <Tab
                         className={({ selected }) =>
                           selected
@@ -65,6 +66,15 @@ const TeamContent: NextPage = () => {
                       >
                         Pit Scout
                       </Tab>
+                      <Tab
+                        className={({ selected }) =>
+                          selected
+                            ? "px-6 py-2 outline-none border-b-2 border-cyan-400"
+                            : "px-6 py-2"
+                        }
+                      >
+                        Members
+                      </Tab>
                     </Tab.List>
                   </div>
                   <Tab.Panels className="mt-4">
@@ -75,6 +85,9 @@ const TeamContent: NextPage = () => {
                     </Tab.Panel>
                     <Tab.Panel>
                       <ManagePitScout teamNum={Number(router.query.number)} />
+                    </Tab.Panel>
+                    <Tab.Panel>
+                      <Members teamNum={Number(router.query.number)} />
                     </Tab.Panel>
                   </Tab.Panels>
                 </Tab.Group>

@@ -50,7 +50,11 @@ export const teamRouter = createRouter()
       return await ctx.prisma.team.findUnique({
         where: { number: input.number },
         include: {
-          members: true
+          members: {
+            include: {
+              user: true
+            }
+          }
         }
       });
     },
