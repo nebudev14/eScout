@@ -5,7 +5,7 @@ declare global {
         GOOGLE_CLIENT_SECRET: string;
         DATABASE_URL: string;
         SECRET: string;
-        VERCEL_URL: string;
+        NEXT_PUBLIC_DOMAIN: string;
       }
     }
   }

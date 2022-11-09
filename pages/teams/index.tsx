@@ -10,8 +10,7 @@ import { CreateTeamModal } from "../../components/modals/create-team";
 
 const ManageTeams: NextPage = () => {
   const { data: session } = useSession();
-  console.log(session?.user)
-    
+
   const { data: userData, isLoading } = useQuery([
     "user.get-by-id",
     { userId: session?.user?.id as string },
