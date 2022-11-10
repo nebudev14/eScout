@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import { useSession } from "next-auth/react";
-import  Protected  from "../../components/auth/protected";
+import Protected from "../../components/auth/protected";
 import { useQuery } from "../../hooks/trpc";
 import { FaUserFriends } from "react-icons/fa";
 import { CgNotes } from "react-icons/cg";
@@ -16,10 +16,14 @@ const ManageTeams: NextPage = () => {
     { userId: session?.user?.id as string },
   ]);
 
-
   const [, setIsOpen] = useAtom(createTeamModalAtom);
 
-  if (isLoading || !userData) return <h1>Loading..</h1>;
+  if (isLoading || !userData)
+    return (
+      <h1 className="flex items-center justify-center min-h-screen text-2xl dark:text-white">
+        Loading..
+      </h1>
+    );
 
   return (
     <Protected>
@@ -39,15 +43,19 @@ const ManageTeams: NextPage = () => {
         ) : (
           <div className="grid grid-cols-2 gap-6 md:grid-cols-1">
             {userData?.teams.map((data, i) => (
-              <a key={i} href={`/teams/${data.teamNumber}`} className="duration-100 border shadow-md dark:border-none dark:text-white rounded-xl dark:bg-zinc-900 bg-slate-50 hover:shadow-lg">
+              <a
+                key={i}
+                href={`/teams/${data.teamNumber}`}
+                className="duration-100 border shadow-md dark:border-none dark:text-white rounded-xl dark:bg-zinc-900 bg-slate-50 hover:shadow-lg"
+              >
                 <div className="px-6 py-4">
                   <div className="mb-2">
                     <h1 className="mb-1 text-2xl">{data.team.name}</h1>
                     <h1>Team {data.teamNumber}</h1>
                   </div>
                   <h1 className="flex items-center mb-2 text-xl">
-                    <CgNotes className="mr-2 text-pink-500" /> {data.team.entries.length}{" "}
-                    scout entries
+                    <CgNotes className="mr-2 text-pink-500" />{" "}
+                    {data.team.entries.length} scout entries
                   </h1>
                   <h1 className="flex items-center mb-2 text-xl ">
                     <FaUserFriends className="mr-2 text-cyan-500" />{" "}
@@ -61,7 +69,6 @@ const ManageTeams: NextPage = () => {
       </div>
 
       <CreateTeamModal />
-
     </Protected>
   );
 };
