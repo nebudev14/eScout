@@ -6,7 +6,10 @@ import { BsPencilFill } from "react-icons/bs";
 import Link from "next/link";
 import { User } from "@prisma/client";
 
-export const ManagePitScout: React.FC<{ teamNum: number, isAdmin: boolean }> = ({ teamNum, isAdmin }) => {
+export const ManagePitScout: React.FC<{
+  teamNum: number;
+  isAdmin: boolean;
+}> = ({ teamNum, isAdmin }) => {
   const [, setIsOpen] = useAtom(createPitModalAtom);
   const { data: allPitScouts } = useQuery([
     "pit.get-by-number",
@@ -26,22 +29,28 @@ export const ManagePitScout: React.FC<{ teamNum: number, isAdmin: boolean }> = (
       </button>
       <div className="grid w-full grid-cols-3 gap-6 md:grid-cols-1 md:gap-2">
         {allPitScouts?.map((pitScout, i) => (
-          <Link key={i} href={`/teams/${teamNum}/pitscout/${pitScout.id}`} passHref>
+          <Link
+            key={i}
+            href={`/teams/${teamNum}/pitscout/${pitScout.id}`}
+            passHref
+          >
             <div className="py-2 mb-6 border shadow-lg hover:cursor-pointer rounded-xl bg-slate-50 dark:bg-zinc-900 dark:border-zinc-700">
               <div className="px-5 py-4">
                 <div className="flex items-center justify-start mb-2">
                   <h1 className="mr-auto text-xl">
                     <b>{pitScout.name}</b>
                   </h1>
-                  <Link
-                    href={`/teams/${teamNum}/pitscout/edit/${pitScout.id}`}
-                    passHref
-                  >
-                    <BsPencilFill
-                      size={25}
-                      className="duration-150 hover:cursor-pointer hover:text-pink-600"
-                    />
-                  </Link>
+                  {isAdmin ? (
+                    <Link
+                      href={`/teams/${teamNum}/pitscout/edit/${pitScout.id}`}
+                      passHref
+                    >
+                      <BsPencilFill
+                        size={25}
+                        className="duration-150 hover:cursor-pointer hover:text-pink-600"
+                      />
+                    </Link>
+                  ) : null}
                 </div>
                 <h1 className="text-lg">
                   {pitScout?.questions?.length} Questions
