@@ -14,6 +14,12 @@ export const CreateTeamModal: React.FC = () => {
     },
   });
 
+  const mutateJoinTeam = useMutation("team.accept-invite", {
+    onSuccess() {
+      invalidateQueries("user.get-by-id");
+    },
+  });
+
   const createTeam = async (event: React.SyntheticEvent) => {
     event.preventDefault();
     const target = event.target as typeof event.target & {
@@ -24,6 +30,17 @@ export const CreateTeamModal: React.FC = () => {
     await mutateTeam.mutateAsync({
       name: target.teamName.value,
       number: Number(target.teamNum.value),
+    });
+  };
+
+  const joinTeam = async (event: React.SyntheticEvent) => {
+    event.preventDefault();
+    const target = event.target as typeof event.target & {
+      inviteId: { value: string };
+    };
+
+    await mutateJoinTeam.mutateAsync({
+      inviteId: target.inviteId.value,
     });
   };
 
@@ -127,7 +144,29 @@ export const CreateTeamModal: React.FC = () => {
                         </div>
                       </form>
                     </Tab.Panel>
-                    <Tab.Panel>kek</Tab.Panel>
+                    <Tab.Panel>
+                      <form onSubmit={joinTeam}>
+                        <div className="mt-4 ">
+                          <h1 className="mr-2 font-semibold">Invite ID</h1>
+                          <input
+                            id="inviteId"
+                            className="w-full p-2 border-2 rounded-lg outline-none"
+                            required
+                            autoComplete="off"
+                          />
+                        </div>
+
+                        <div className="mt-4">
+                          <button
+                            type="submit"
+                            className="inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-green-400 border border-transparent rounded-md hover:bg-purple-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                            onClick={() => setIsOpen(false)}
+                          >
+                            Join
+                          </button>
+                        </div>
+                      </form>
+                    </Tab.Panel>
                   </Tab.Panels>
                 </Tab.Group>
               </Dialog.Panel>
