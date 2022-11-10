@@ -4,8 +4,9 @@ import { createPitModalAtom } from "../../../server/atoms";
 import { CreatePitModal } from "../../modals/create-pit";
 import { BsPencilFill } from "react-icons/bs";
 import Link from "next/link";
+import { User } from "@prisma/client";
 
-export const ManagePitScout: React.FC<{ teamNum: number }> = ({ teamNum }) => {
+export const ManagePitScout: React.FC<{ teamNum: number, isAdmin: boolean }> = ({ teamNum, isAdmin }) => {
   const [, setIsOpen] = useAtom(createPitModalAtom);
   const { data: allPitScouts } = useQuery([
     "pit.get-by-number",
