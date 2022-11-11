@@ -18,10 +18,12 @@ const TeamContent: NextPage = () => {
     { number: Number(router.query.number) },
   ]);
 
-  const memberIndex = data?.members.map((e) => e.userId).indexOf(session?.user.id as string);
+  const memberIndex = data?.members
+    .map((e) => e.userId)
+    .indexOf(session?.user.id as string);
   const isMember = memberIndex !== -1;
-  const isAdmin = data?.members.at(Number(memberIndex))?.status === MemberStatus.CREATOR
-
+  const isAdmin =
+    data?.members.at(Number(memberIndex))?.status === MemberStatus.CREATOR;
 
   const tabs = ["Data", "Misc"];
 
@@ -100,7 +102,10 @@ const TeamContent: NextPage = () => {
                         />
                       </Tab.Panel>
                       <Tab.Panel>
-                        <Members teamNum={Number(router.query.number)} />
+                        <Members
+                          teamNum={Number(router.query.number)}
+                          isAdmin={isAdmin}
+                        />
                       </Tab.Panel>
                     </Tab.Panels>
                   </Tab.Group>
