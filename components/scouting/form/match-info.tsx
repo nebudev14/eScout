@@ -85,6 +85,15 @@ export const MatchInfo: React.FC = () => {
         autoComplete="off"
         required
       />
+      {prescout ? (
+        <Input
+          id="videoLink"
+          placeholder="Video Link"
+          type="text"
+          autoComplete="off"
+          required
+        />
+      ) : null}
       <Combobox value={selectedComp} onChange={setSelectedComp}>
         <div className="relative z-50 border rounded-b dark:border-zinc-700">
           <div className="relative w-full overflow-hidden text-left bg-white rounded shadow-md cursor-default dark:border-zinc-700 dark:text-white dark:bg-zinc-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
@@ -113,15 +122,6 @@ export const MatchInfo: React.FC = () => {
           </Combobox.Options>
         </div>
       </Combobox>
-      {prescout ? (
-        <Input
-          id="videoLink"
-          placeholder="Video Link"
-          type="text"
-          autoComplete="off"
-          required
-        />
-      ) : null}
     </div>
   );
 };

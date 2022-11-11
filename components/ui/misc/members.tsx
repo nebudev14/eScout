@@ -40,7 +40,7 @@ export const Members: React.FC<{ teamNum: number; isAdmin: boolean }> = ({
         <b>Members</b>
       </h1>
       <div className="flex items-center justify-start">
-        <h1 className="px-6 py-2 text-2xl font-semibold rounded-l-lg bg-slate-300 dark:bg-zinc-900">
+        <h1 className="px-6 py-2 text-2xl font-semibold rounded-l-lg md:text-lg bg-slate-300 dark:bg-zinc-900">
           {members?.inviteId}
         </h1>
         <button
@@ -57,7 +57,7 @@ export const Members: React.FC<{ teamNum: number; isAdmin: boolean }> = ({
         {members?.members.map((member, i) => (
           <div
             key={i}
-            className="flex items-center justify-start px-8 py-4 border-b-2 dark:border-zinc-700"
+            className="flex items-center justify-start px-8 py-4 border-b-2 md:px-2 dark:border-zinc-700"
           >
             <Image
               src={member.user.image as string}
@@ -66,11 +66,11 @@ export const Members: React.FC<{ teamNum: number; isAdmin: boolean }> = ({
               width={45}
               className="rounded-full"
             />
-            <h1 className="ml-4 mr-auto text-2xl">{member.user.name}</h1>
+            <h1 className="ml-4 mr-auto text-2xl md:text-sm">{member.user.name}</h1>
             {member.status === MemberStatus.CREATOR ? (
-              <RiVipCrownFill size={30} />
+              <RiVipCrownFill size={30} className="md:h-[1.5rem]" />
             ) : (
-              <BsFillPersonFill size={30} />
+              <BsFillPersonFill size={30} className="md:h-[1.5rem]" />
             )}
             {isAdmin ? (
               <Menu as="div" className="relative inline-block text-left">
@@ -78,7 +78,7 @@ export const Members: React.FC<{ teamNum: number; isAdmin: boolean }> = ({
                   <Menu.Button className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-white duration-200 rounded-md outline-none hover:bg-opacity-60 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
                     <RiMoreLine
                       size={30}
-                      className="ml-2 text-black dark:text-white"
+                      className="ml-2 md:ml-0 text-black dark:text-white md:h-[1.5rem]"
                     />
                   </Menu.Button>
                 </div>
