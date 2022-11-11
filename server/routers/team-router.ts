@@ -49,12 +49,33 @@ export const teamRouter = createRouter()
       userId: z.string(),
     }),
     async resolve({ input, ctx }) {
-      return await prisma.team.update({
+      return await ctx.prisma.team.update({
         where: { number: input.team },
         data: {
           members: {
             delete: {
               userId: input.userId,
+            },
+          },
+        },
+      });
+    },
+  })
+  .mutation("promote-member", {
+    input: z.object({
+      team: z.number(),
+      userId: z.string(),
+    }),
+    async resolve({ input, ctx }) {
+      return await ctx.prisma.team.update({
+        where: { number: input.team },
+        data: {
+          members: {
+            update: {
+              where: { userId: input.userId },
+              data: {
+                status: MemberStatus.CREATOR,
+              },
             },
           },
         },
