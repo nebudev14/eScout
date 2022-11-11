@@ -23,7 +23,7 @@ export const Members: React.FC<{ teamNum: number, isAdmin: boolean }> = ({ teamN
         <b>Members</b>
       </h1>
       <div className="flex items-center justify-start">
-        <h1 className="px-6 py-2 text-2xl font-semibold rounded-l-lg dark:bg-zinc-900">
+        <h1 className="px-6 py-2 text-2xl font-semibold rounded-l-lg bg-slate-300 dark:bg-zinc-900">
           {members?.inviteId}
         </h1>
         <button
@@ -58,11 +58,11 @@ export const Members: React.FC<{ teamNum: number, isAdmin: boolean }> = ({ teamN
             {isAdmin ? <Menu as="div" className="relative inline-block text-left">
               <div>
                 <Menu.Button className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-white duration-200 rounded-md outline-none hover:bg-opacity-60 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-                  <RiMoreLine size={30} className="ml-2" />
+                  <RiMoreLine size={30} className="ml-2 text-black dark:text-white" />
                 </Menu.Button>
               </div>
 
-              <Menu.Items className="absolute right-0 z-50 w-56 mt-2 origin-top-right divide-y divide-gray-100 rounded-md shadow-lg dark:divide-zinc-700 dark:bg-zinc-900 bg-slate-100 ring-1 ring-black ring-opacity-5 focus:outline-none">
+              <Menu.Items className="absolute right-0 z-50 w-56 mt-2 origin-top-right divide-y divide-gray-400 rounded-md shadow-lg dark:divide-zinc-700 dark:bg-zinc-900 bg-slate-100 ring-1 ring-black ring-opacity-5 focus:outline-none">
                 <div className="px-1 py-1 ">
                   <Menu.Item>
                     {({ active }) => (
