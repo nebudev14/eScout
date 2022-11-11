@@ -10,7 +10,7 @@ import { calculateStats } from "../../../util/calculate-stats";
 import { Switch } from "@headlessui/react";
 import { Entry } from "@prisma/client";
 
-export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
+export const Filter: React.FC<{ teamNum: number, isAdmin: boolean }> = ({ teamNum, isAdmin }) => {
   const [queryAttribute, setQueryAttribute] =
     useState<string>("entryTeamNumber");
   const [query, setQuery] = useState<Query>({ prescout: false });
@@ -77,7 +77,6 @@ export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
             >
               <option value="entryTeamNumber">Team</option>
               <option value="compName">Event</option>
-              <option value="prescout">Prescout</option>
             </select>
             <DynamicInput attribute={queryAttribute} />
           </div>
@@ -126,7 +125,7 @@ export const Filter: React.FC<{ teamNum: number }> = ({ teamNum }) => {
                   : setCurrentSelectedEntry(entry)
               }
             >
-              <FilterCard entry={entry} user={entry?.user} />
+              <FilterCard entry={entry} user={entry?.user} isAdmin={isAdmin} />
             </div>
           ))}
         </div>

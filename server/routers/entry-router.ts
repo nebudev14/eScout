@@ -1,13 +1,16 @@
 import { Prisma } from "@prisma/client";
 import { z } from "zod";
 import { createRouter } from "../create-router";
-import { createEntrySchema, filterEntrySchema, getEntrySchema } from "../schemas/entry-schema";
+import {
+  createEntrySchema,
+  filterEntrySchema,
+  getEntrySchema,
+} from "../schemas/entry-schema";
 
 export const entryRouter = createRouter()
   .mutation("create", {
     input: createEntrySchema,
     async resolve({ input, ctx }) {
-      console.log("danny was here");
       return await ctx.prisma.entry.create({
         data: {
           userId: input.userId,
@@ -45,6 +48,16 @@ export const entryRouter = createRouter()
       });
     },
   })
+  .mutation("delete-entry", {
+    input: z.object({
+      id: z.string(),
+    }),
+    async resolve({ input, ctx }) {
+      return await ctx.prisma.entry.delete({
+        where: { id: input.id },
+      });
+    },
+  })
   .query("get-by-id", {
     input: getEntrySchema,
     async resolve({ input, ctx }) {
@@ -52,27 +65,31 @@ export const entryRouter = createRouter()
         where: { id: input.id },
       });
     },
-  }).query("get-by-team", {
+  })
+  .query("get-by-team", {
     input: z.object({
-      teamNumber: z.number()
+      teamNumber: z.number(),
     }),
     async resolve({ input, ctx }) {
       return await ctx.prisma.entry.findMany({
-        where: { teamNumber: input.teamNumber }
-      })
-    }
-  }).query("get-by-filter", {
+        where: { teamNumber: input.teamNumber },
+      });
+    },
+  })
+  .query("get-by-filter", {
     input: filterEntrySchema,
     async resolve({ input, ctx }) {
-      const filteredQuery = Prisma.validator<Prisma.EntryWhereInput>()(input.query);
+      const filteredQuery = Prisma.validator<Prisma.EntryWhereInput>()(
+        input.query
+      );
       return await ctx.prisma.entry.findMany({
         where: {
           teamNumber: input.teamNumber,
-          ...filteredQuery
+          ...filteredQuery,
         },
         include: {
           user: true,
-        }
-      })
-    }
+        },
+      });
+    },
   });

@@ -53,7 +53,7 @@ const TeamContent: NextPage = () => {
               </div>
               <Tab.Panels className="mt-4">
                 <Tab.Panel>
-                  <Filter teamNum={Number(router.query.number)} />
+                  <Filter teamNum={Number(router.query.number)} isAdmin={isAdmin} />
                 </Tab.Panel>
                 <Tab.Panel>
                   <Tab.Group>
