@@ -8,6 +8,7 @@ import { Tab } from "@headlessui/react";
 import { ManagePitScout } from "../../../components/ui/misc/pit-scout";
 import Members from "../../../components/ui/misc/members";
 import { useSession } from "next-auth/react";
+import { MemberStatus } from "@prisma/client";
 
 const TeamContent: NextPage = () => {
   const router = useRouter();
@@ -17,15 +18,16 @@ const TeamContent: NextPage = () => {
     { number: Number(router.query.number) },
   ]);
 
-  const isAdmin = data?.members
-  .map((e) => e.userId)
-  .indexOf(session?.user.id as string) !== -1 ;
+  const memberIndex = data?.members.map((e) => e.userId).indexOf(session?.user.id as string);
+  const isMember = memberIndex !== -1;
+  const isAdmin = data?.members.at(Number(memberIndex))?.status === MemberStatus.CREATOR
+
 
   const tabs = ["Data", "Misc"];
 
   return (
     <Protected>
-      {isAdmin? (
+      {isMember ? (
         <div className="min-h-screen px-16 py-8 md:px-8 dark:text-white md:h-full 2xl:h-full">
           <h1 className="mb-2 text-4xl">{data?.name}</h1>
           <h1 className="mb-4 text-xl">Team {data?.number}</h1>
@@ -88,10 +90,14 @@ const TeamContent: NextPage = () => {
                       <Tab.Panel>
                         <ManageCompetitions
                           teamNum={Number(router.query.number)}
+                          isAdmin={isAdmin}
                         />
                       </Tab.Panel>
                       <Tab.Panel>
-                        <ManagePitScout teamNum={Number(router.query.number)} isAdmin={isAdmin} />
+                        <ManagePitScout
+                          teamNum={Number(router.query.number)}
+                          isAdmin={isAdmin}
+                        />
                       </Tab.Panel>
                       <Tab.Panel>
                         <Members teamNum={Number(router.query.number)} />
