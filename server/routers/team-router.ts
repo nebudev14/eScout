@@ -15,9 +15,9 @@ export const teamRouter = createRouter()
           inviteId: nanoid(6),
           members: {
             create: {
-                userId: ctx.session!.user.id,
-                status: MemberStatus.CREATOR
-            }
+              userId: ctx.session!.user.id,
+              status: MemberStatus.CREATOR,
+            },
           },
         },
       });
@@ -37,11 +37,29 @@ export const teamRouter = createRouter()
             create: {
               userId: ctx.session!.user.id,
               status: MemberStatus.MEMBER,
-            }
-          }
-        }
-      })
-    }
+            },
+          },
+        },
+      });
+    },
+  })
+  .mutation("remove-member", {
+    input: z.object({
+      team: z.number(),
+      userId: z.string(),
+    }),
+    async resolve({ input, ctx }) {
+      return await prisma.team.update({
+        where: { number: input.team },
+        data: {
+          members: {
+            delete: {
+              userId: input.userId,
+            },
+          },
+        },
+      });
+    },
   })
   .query("get-by-number", {
     input: getTeamSchema,
@@ -51,10 +69,10 @@ export const teamRouter = createRouter()
         include: {
           members: {
             include: {
-              user: true
-            }
-          }
-        }
+              user: true,
+            },
+          },
+        },
       });
     },
   });
