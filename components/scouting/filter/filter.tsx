@@ -5,10 +5,11 @@ import { DynamicInput, inputs } from "./dynamic-input";
 import { useAtom } from "jotai";
 import { selectEntryAtom, setSearchQueryAtom } from "../../../server/atoms";
 import { FilterCard } from "../../ui/filter-card";
-import { FilterStats } from "./filter-stats";
+import { FilterStats } from "../stats/filter-stats";
 import { calculateStats } from "../../../util/calculate-stats";
 import { Switch } from "@headlessui/react";
 import { Entry } from "@prisma/client";
+import { SingleStats } from "../stats/single-stats";
 
 export const Filter: React.FC<{ teamNum: number, isAdmin: boolean }> = ({ teamNum, isAdmin }) => {
   const [queryAttribute, setQueryAttribute] =
@@ -129,12 +130,8 @@ export const Filter: React.FC<{ teamNum: number, isAdmin: boolean }> = ({ teamNu
             </div>
           ))}
         </div>
-        <FilterStats
-          data={currentEntry === undefined ? entryData! : [currentEntry]}
-          stats={calculateStats(
-            currentEntry === undefined ? entryData! : [currentEntry]
-          )}
-        />
+        {currentEntry === undefined ? <FilterStats data={entryData!} stats={calculateStats(entryData!)} /> : <SingleStats data={[currentEntry]} stats={calculateStats([currentEntry])} />}
+
       </div>
     </div>
   );

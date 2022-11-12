@@ -1,9 +1,9 @@
 import { percentageFormat, Statistics } from "../../../util/calculate-stats";
-import { NumberStats } from "../stats/number-stats";
+import { NumberStats } from "./number-stats";
 import { Tab } from "@headlessui/react";
-import { BallGraph } from "../stats/graphs/ball-graph";
+import { BallGraph } from "./graphs/ball-graph";
 import { Entry } from "@prisma/client";
-import { ClimbGraph } from "../stats/graphs/climb-graph";
+import { ClimbGraph } from "./graphs/climb-graph";
 
 export const FilterStats: React.FC<{ data: Entry[]; stats: Statistics }> = ({
   data,

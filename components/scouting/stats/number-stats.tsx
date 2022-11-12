@@ -11,7 +11,7 @@ export const NumberStats: React.FC<{ stats: Statistics }> = ({ stats }) => {
         <b>Climb Statistics</b>
       </h1>
       <h1 className="my-1 text-md">
-        Average climb timb: <b>{climbStats.averageClimbTime.toFixed(2)}</b>{" "}
+        Average climb time: <b>{climbStats.averageClimbTime.toFixed(2)}</b>{" "}
         seconds
       </h1>
       <div className="px-4 py-3 mt-2 bg-gray-400 rounded-lg dark:bg-zinc-800">
