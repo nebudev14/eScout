@@ -48,6 +48,20 @@ export const entryRouter = createRouter()
       });
     },
   })
+  .mutation("swap-entry", {
+    input: z.object({
+      id: z.string(),
+      prescout: z.boolean()
+    }),
+    async resolve({ input, ctx }) {
+      return await ctx.prisma.entry.update({
+        where: { id: input.id },
+        data: {
+          prescout: input.prescout
+        }
+      })
+    }
+  })
   .mutation("delete-entry", {
     input: z.object({
       id: z.string(),
