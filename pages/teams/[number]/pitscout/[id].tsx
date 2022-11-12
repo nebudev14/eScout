@@ -10,8 +10,7 @@ const ViewPitScout: React.FC = () => {
   ]);
 
   const teams = data?.questions
-    ?.map((e) => e.PitResponse.map((i) => i.entryTeamNumber))
-    ?.at(0)
+    ?.map((e) => e.PitResponse.map((i) => i.entryTeamNumber))[0]
     ?.filter((v, i, a) => a.indexOf(v) === i);
 
   return (
@@ -41,7 +40,7 @@ const ViewPitScout: React.FC = () => {
                   {
                     question.PitResponse.filter(
                       (e) => e.entryTeamNumber === entry
-                    )?.at(0)?.response
+                    )[0]?.response
                   }
                 </h1>
               </div>

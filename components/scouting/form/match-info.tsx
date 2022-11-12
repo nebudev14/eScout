@@ -22,7 +22,7 @@ export const MatchInfo: React.FC = () => {
   useEffect(() => {
     if (userData?.teams.length !== 0) {
       setSelectedTeam(userData?.teams[0].teamNumber);
-      setSelectedComp(userData?.teams[0].team.comps.at(0));
+      setSelectedComp(userData?.teams[0].team.comps[0]);
     }
   }, [userData?.teams, setSelectedComp]);
 

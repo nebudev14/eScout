@@ -23,7 +23,7 @@ const TeamContent: NextPage = () => {
     .indexOf(session?.user.id as string);
   const isMember = memberIndex !== -1;
   const isAdmin =
-    data?.members.at(Number(memberIndex))?.status === MemberStatus.CREATOR;
+    data?.members[(Number(memberIndex))]?.status === MemberStatus.CREATOR;
 
   const tabs = ["Data", "Misc"];
 

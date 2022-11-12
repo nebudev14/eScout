@@ -3,7 +3,7 @@ import { NextPage } from "next";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
-import  Protected  from "../../components/auth/protected";
+import Protected from "../../components/auth/protected";
 import { Container } from "../../components/ui/container";
 import { Input } from "../../components/ui/input";
 import NoTeams from "../../components/ui/no-teams";
@@ -31,7 +31,7 @@ const PitScout: NextPage = () => {
   const [pitScout, setSelectedPitScout] = useState<string>("");
   useEffect(() => {
     // i apologize for breaking the law
-    setSelectedPitScout(data!?.at(0)!?.id);
+    setSelectedPitScout(data![0]!?.id);
   }, [setSelectedPitScout, data]);
 
   const submitEntry = useMutation("pit.submit-scout");
@@ -44,8 +44,7 @@ const PitScout: NextPage = () => {
     const target = event.target as any; // i am sorry
     let results: any = []; // i am sorry squared
     data!
-      ?.filter((e) => e.id === pitScout)
-      .at(0)!
+      ?.filter((e) => e.id === pitScout)[0]!
       ?.questions.forEach((e) => {
         const id = e.id;
         results.push({
@@ -117,8 +116,7 @@ const PitScout: NextPage = () => {
           <div className="grid grid-cols-1 gap-6 mt-6 md:gap-2">
             {/* this is the stupidest big brain thing i've tried */}
             {data
-              ?.filter((e) => e.id === pitScout)
-              .at(0)
+              ?.filter((e) => e.id === pitScout)[0]
               ?.questions?.map((question, i) => (
                 <div
                   key={i}

@@ -9,11 +9,6 @@ export const inputs = {
   compName: {
     element: "input",
     inputs: "text",
-  },
-  prescout: {
-    element: "select",
-    inputs: "text",
-    options: [false, true]
   }
 };
 
@@ -24,7 +19,9 @@ export const DynamicInput: React.FC<{ attribute: string }> = ({
 
   if (Object.keys(inputs).includes(attribute)) {
     const index = Object.keys(inputs).indexOf(attribute);
-    const input = Object.values(inputs).at(index);
+    let inputElements: any[] = [];
+    Object.keys(inputs).forEach(e =>inputElements.push(inputs[e as keyof typeof inputs]))
+    const input = inputElements[index];
 
     if (input?.element == "input") {
       return (
