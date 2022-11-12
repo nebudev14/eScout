@@ -61,7 +61,7 @@ const PitScout: NextPage = () => {
 
   return (
     <Protected>
-      <div className="min-h-screen py-12 px-96 dark:text-white md:px-2">
+      <div className="min-h-screen py-12 px-96 dark:text-white md:px-6">
         <form onSubmit={submitData}>
           <Container>
             <label className="p-2 text-lg leading-tight border rounded shadow dark:bg-zinc-900 dark:border-zinc-700 bg-slate-200 focus:outline-none focus:shadow-outline">
