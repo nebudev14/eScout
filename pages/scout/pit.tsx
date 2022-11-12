@@ -31,7 +31,7 @@ const PitScout: NextPage = () => {
   const [pitScout, setSelectedPitScout] = useState<string>("");
   useEffect(() => {
     // i apologize for breaking the law
-    setSelectedPitScout(data![0]!?.id);
+    setSelectedPitScout(data === undefined ? "" : data![0]!?.id);
   }, [setSelectedPitScout, data]);
 
   const submitEntry = useMutation("pit.submit-scout");
