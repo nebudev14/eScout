@@ -37,7 +37,7 @@ export const CreateTeamModal: React.FC = () => {
     event.preventDefault();
     const target = event.target as typeof event.target & {
       inviteId: { value: string };
-    };
+    };  
 
     await mutateJoinTeam.mutateAsync({
       inviteId: target.inviteId.value,

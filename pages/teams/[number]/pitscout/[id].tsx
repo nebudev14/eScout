@@ -24,7 +24,7 @@ const ViewPitScout: React.FC = () => {
       <h1 className="text-xl">Team {data?.teamNumber}</h1>
       <h1 className="mb-6 text-xl">{data?.name}</h1>
 
-      <div className="grid grid-cols-3 gap-6">
+      <div className="grid grid-cols-3 gap-6 md:grid-cols-1">
         {teams?.map((entry, i) => (
           <div
             key={i}
