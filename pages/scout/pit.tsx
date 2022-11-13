@@ -97,7 +97,7 @@ const PitScout: NextPage = () => {
               }}
             >
               {data?.map((pitscout, i) => (
-                <option key={i} value={pitscout.id}>
+                <option key={i} value={pitscout.id} className="text-base  md:inline-block md:w-full md:whitespace-pre-line md:break-words md:overflow-hidden">
                   {pitscout.name}
                 </option>
               ))}
