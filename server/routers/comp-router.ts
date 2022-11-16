@@ -15,6 +15,16 @@ export const compRouter = createRouter()
         }
       })
     }
+  })
+  .mutation("delete-comp", {
+    input: z.object({
+      id: z.string()
+    }),
+    async resolve({ input, ctx }) {
+      return await ctx.prisma.competition.delete({
+        where: { id: input.id }
+      })
+    }
   }).query("get-by-number", {
     input: z.object({
       team: z.number()

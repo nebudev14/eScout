@@ -55,7 +55,7 @@ const ManageTeams: NextPage = () => {
                   </div>
                   <h1 className="flex items-center mb-2 text-xl">
                     <CgNotes className="mr-2 text-pink-500" />{" "}
-                    {data.team.entries.length} scout entries
+                    {data.team.entries.filter(e => !e.prescout).length} scout entries
                   </h1>
                   <h1 className="flex items-center mb-2 text-xl ">
                     <FaUserFriends className="mr-2 text-cyan-500" />{" "}

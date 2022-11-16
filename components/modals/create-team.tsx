@@ -110,7 +110,7 @@ export const CreateTeamModal: React.FC = () => {
                   <Tab.Panels>
                     <Tab.Panel>
                       <form onSubmit={createTeam}>
-                        {/* <div className="mt-4 ">
+                        <div className="mt-4 ">
                           <h1 className="mr-2 font-semibold">Team name</h1>
                           <input
                             id="teamName"
@@ -141,7 +141,7 @@ export const CreateTeamModal: React.FC = () => {
                           >
                             Create
                           </button>
-                        </div> */}
+                        </div>
                         <h1>currently disabled</h1>
                       </form>
                     </Tab.Panel>

@@ -2,7 +2,7 @@ import { useAtom } from "jotai";
 import { useQuery } from "../../../hooks/trpc";
 import { createPitModalAtom } from "../../../server/atoms";
 import { CreatePitModal } from "../../modals/create-pit";
-import { BsPencilFill } from "react-icons/bs";
+import { BsPencilFill, BsFillTrashFill } from "react-icons/bs";
 import Link from "next/link";
 
 export const ManagePitScout: React.FC<{
@@ -53,9 +53,15 @@ export const ManagePitScout: React.FC<{
                     </Link>
                   ) : null}
                 </div>
-                <h1 className="text-lg">
-                  {pitScout?.questions?.length} Questions
-                </h1>
+                <div className="flex items-center justify-center">
+                  <h1 className="mr-auto text-lg">
+                    {pitScout?.questions?.length} Questions
+                  </h1>
+                  <BsFillTrashFill
+                    size={20}
+                    className="ml-2 text-red-500 duration-150 hover:cursor-pointer hover:text-red-600"
+                  />
+                </div>
               </div>
             </div>
           </Link>

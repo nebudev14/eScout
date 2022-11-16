@@ -3,6 +3,7 @@ import { useAtom } from "jotai";
 import { CreateCompModal } from "../../modals/create-comp";
 import { useQuery } from "../../../hooks/trpc";
 import { calculateStats, sum } from "../../../util/calculate-stats";
+import { BsFillTrashFill } from "react-icons/bs";
 
 export const ManageCompetitions: React.FC<{
   teamNum: number;
@@ -37,9 +38,13 @@ export const ManageCompetitions: React.FC<{
               <div>
                 <h1 className="text-2xl">{comp?.name}</h1>
                 <h1 className="mb-1 text-xl">
-                  {comp?.entries.length} total entries
+                  {comp?.entries.filter((e) => !e.prescout).length} match scout
+                  entries
                 </h1>
-
+                <h1 className="mb-1 text-xl">
+                  {comp?.entries.filter((e) => e.prescout).length} prescout
+                  entries
+                </h1>
                 <div className="text-lg">
                   <h1>
                     <b>
