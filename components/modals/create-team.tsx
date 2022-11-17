@@ -142,7 +142,6 @@ export const CreateTeamModal: React.FC = () => {
                             Create
                           </button>
                         </div>
-                        <h1>currently disabled</h1>
                       </form>
                     </Tab.Panel>
                     <Tab.Panel>
