@@ -84,10 +84,7 @@ const PitScout: NextPage = () => {
               ))}
             </select>
           </Container>
-          <Container>
-            <label className="p-2 text-lg leading-tight border rounded shadow dark:bg-zinc-900 dark:border-zinc-700 bg-slate-200 focus:outline-none focus:shadow-outline">
-              Pit Form
-            </label>
+          <div className="grid grid-cols-1">
             <select
               id="pitForm"
               className="p-2 text-lg leading-tight border rounded shadow focus:outline-none focus:shadow-outline dark:bg-zinc-900 dark:text-white dark:border-zinc-700"
@@ -97,12 +94,12 @@ const PitScout: NextPage = () => {
               }}
             >
               {data?.map((pitscout, i) => (
-                <option key={i} value={pitscout.id} className="text-base  md:inline-block md:w-full md:whitespace-pre-line md:break-words md:overflow-hidden">
+                <option key={i} value={pitscout.id} className="text-base md:inline-block md:w-full md:whitespace-pre-line md:break-words md:overflow-hidden">
                   {pitscout.name}
                 </option>
               ))}
             </select>
-          </Container>
+          </div>
           <div className="grid grid-cols-1">
             <Input
               id="entryTeamNumber"
