@@ -84,7 +84,7 @@ export function calculateStats(data: Entry[]): Statistics {
   };
 
   let climbStats: ClimbStats = {
-    averageClimbTime: nanFormat((sum(data, "climbStart") - sum(data, "climbEnd")) / data?.length),
+    averageClimbTime: Math.abs(nanFormat((sum(data, "climbStart") - sum(data, "climbEnd")) / data?.length)),
     noClimb: countRungs(data, RungLevel.NONE),
     lowClimb: countRungs(data, RungLevel.LOW),
     midClimb: countRungs(data, RungLevel.MID),

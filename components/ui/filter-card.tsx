@@ -80,7 +80,7 @@ export const FilterCard: React.FC<{
           <div>
             {entry.climbEnd - entry.climbStart === 0
               ? "No climb"
-              : entry.climbStart - entry.climbEnd + " second climb"}
+              : Math.abs(entry.climbStart - entry.climbEnd) + " second climb"}
           </div>
           <div>{entry.climbRung} Rung</div>
         </div>

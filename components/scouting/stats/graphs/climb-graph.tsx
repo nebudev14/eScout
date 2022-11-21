@@ -33,7 +33,7 @@ export const ClimbGraph: React.FC<{ entries: Entry[]; stats: Statistics }> = ({
 
   entries!?.sort((a, b) => a.matchNumber - b.matchNumber);
   const matchNumbers: string[] = entries!?.map((e) => e.matchNumber.toString());
-  const climbTimes: number[] = entries!?.map((e) => e.climbStart - e.climbEnd);
+  const climbTimes: number[] = entries!?.map((e) => Math.abs(e.climbStart - e.climbEnd));
   const rungLevelPerMatch: RungLevel[] = entries!?.map((e) => e.climbRung);
   const rungLevels: number[] = [
     climbStats.noClimb,
