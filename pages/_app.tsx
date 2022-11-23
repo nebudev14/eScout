@@ -7,6 +7,7 @@ import { withTRPC } from "@trpc/next";
 import type { AppRouter } from "../server/routers/app";
 import { useAtom } from "jotai";
 import { darkModeAtom } from "../server/atoms";
+import NextNProgress from 'nextjs-progressbar';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [darkMode, ] = useAtom(darkModeAtom);
@@ -15,6 +16,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <SessionProvider session={pageProps.session}>
       <div className={`duration-150 ${darkMode ? 'dark' : null}`}>
         <div className="bg-slate-100 dark:bg-zinc-800">
+          <NextNProgress color="#e11d48" />
           <Nav />
           <Component {...pageProps} />
         </div>

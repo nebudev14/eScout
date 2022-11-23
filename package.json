@@ -22,6 +22,7 @@
     "nanoid": "^4.0.0",
     "next": "12.2.0",
     "next-auth": "^4.8.0",
+    "nextjs-progressbar": "^0.0.16",
     "prettier": "^2.7.1",
     "prisma": "^4.0.0",
     "react": "18.2.0",
