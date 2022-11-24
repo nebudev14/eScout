@@ -1,6 +1,5 @@
 import type { Entry } from "@prisma/client";
 import { RungLevel } from "@prisma/client";
-import { number } from "zod";
 
 interface BallStats {
   // Auto
