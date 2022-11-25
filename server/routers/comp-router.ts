@@ -25,7 +25,7 @@ export const compRouter = createRouter()
         where: { id: input.id }
       })
     }
-  }).query("get-by-number", {
+  }).query("get-by-team-id", {
     input: z.object({
       teamId: z.string()
     }),

@@ -72,7 +72,7 @@ export const pitRouter = createRouter()
       })
     }
   })
-  .query("get-by-number", {
+  .query("get-by-team-id", {
     input: z.object({
       teamId: z.string(),
     }),

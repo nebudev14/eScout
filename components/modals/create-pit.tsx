@@ -12,7 +12,7 @@ export const CreatePitModal: React.FC = () => {
 
   const mutatePitScout = useMutation("pit.create", {
     onSuccess() {
-      invalidateQueries("pit.get-by-number");
+      invalidateQueries("pit.get-by-team-id");
     }
   });
 
@@ -24,7 +24,7 @@ export const CreatePitModal: React.FC = () => {
 
     await mutatePitScout.mutateAsync({
       name: target.pitScoutName.value,
-      team: Number(router.query.number),
+      teamId: router.query.id as string,
     });
   };
 

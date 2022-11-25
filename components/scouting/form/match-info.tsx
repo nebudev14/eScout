@@ -21,13 +21,13 @@ export const MatchInfo: React.FC = () => {
 
   useEffect(() => {
     if (userData?.teams.length !== 0) {
-      setSelectedTeam(userData?.teams[0].teamNumber);
+      setSelectedTeam(userData?.teams[0].team.number);
       setSelectedComp(userData?.teams[0].team.comps[0]);
     }
   }, [userData?.teams, setSelectedComp]);
 
   const { data: compData, isLoading } = useQuery([
-    "comp.get-by-number",
+    "comp.get-by-team-id",
     { team: Number(selectedTeam) },
   ]);
 

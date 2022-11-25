@@ -6,13 +6,13 @@ import { BsPencilFill, BsFillTrashFill } from "react-icons/bs";
 import Link from "next/link";
 
 export const ManagePitScout: React.FC<{
-  teamNum: number;
+  teamId: string;
   isAdmin: boolean;
-}> = ({ teamNum, isAdmin }) => {
+}> = ({ teamId, isAdmin }) => {
   const [, setIsOpen] = useAtom(createPitModalAtom);
   const { data: allPitScouts } = useQuery([
-    "pit.get-by-number",
-    { team: teamNum },
+    "pit.get-by-team-id",
+    { teamId: teamId },
   ]);
 
   return (
@@ -32,7 +32,7 @@ export const ManagePitScout: React.FC<{
         {allPitScouts?.map((pitScout, i) => (
           <Link
             key={i}
-            href={`/teams/${teamNum}/pitscout/${pitScout.id}`}
+            href={`/teams/${teamId}/pitscout/${pitScout.id}`}
             passHref
           >
             <div className="py-2 mb-6 border shadow-lg hover:cursor-pointer rounded-xl bg-slate-50 dark:bg-zinc-900 dark:border-zinc-700">
@@ -43,7 +43,7 @@ export const ManagePitScout: React.FC<{
                   </h1>
                   {isAdmin ? (
                     <Link
-                      href={`/teams/${teamNum}/pitscout/edit/${pitScout.id}`}
+                      href={`/teams/${teamId}/pitscout/edit/${pitScout.id}`}
                       passHref
                     >
                       <BsPencilFill

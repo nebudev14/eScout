@@ -10,33 +10,33 @@ import { MemberStatus } from "@prisma/client";
 import { useState } from "react";
 import { Menu } from "@headlessui/react";
 
-export const Members: React.FC<{ teamNum: number; isAdmin: boolean }> = ({
-  teamNum,
+export const Members: React.FC<{ teamId: string; isAdmin: boolean }> = ({
+  teamId,
   isAdmin,
 }) => {
   const [copy, setCopy] = useState(false);
   const { data: members } = useQuery([
-    "team.get-by-number",
-    { number: teamNum },
+    "team.get-by-id",
+    { teamId: teamId },
   ]);
 
   const { invalidateQueries } = trpc.useContext();
 
   const promoteMember = useMutation("team.promote-member", {
     onSuccess() {
-      invalidateQueries("team.get-by-number");
+      invalidateQueries("team.get-by-id");
     },
   });
 
   const deleteMember = useMutation("team.remove-member", {
     onSuccess() {
-      invalidateQueries("team.get-by-number");
+      invalidateQueries("team.get-by-id");
     },
   });
 
   const regenId = useMutation("team.regen-id", {
     onSuccess() {
-      invalidateQueries("team.get-by-number");
+      invalidateQueries("team.get-by-id");
     },
   });
 
@@ -64,7 +64,7 @@ export const Members: React.FC<{ teamNum: number; isAdmin: boolean }> = ({
           className="text-lg duration-150 hover:text-pink-600 hover:cursor-pointer"
           onClick={async () => {
             await regenId.mutateAsync({
-              team: teamNum,
+              teamId: teamId
             });
           }}
         >
@@ -118,7 +118,7 @@ export const Members: React.FC<{ teamNum: number; isAdmin: boolean }> = ({
                               className="flex items-center w-full px-2 py-2 text-sm text-pink-600 duration-200 rounded-md white group hover:text-white hover:bg-pink-600"
                               onClick={async () => {
                                 await promoteMember.mutateAsync({
-                                  team: teamNum,
+                                  teamId: teamId,
                                   userId: member?.userId,
                                 });
                               }}
@@ -136,7 +136,7 @@ export const Members: React.FC<{ teamNum: number; isAdmin: boolean }> = ({
                             className="flex items-center w-full px-2 py-2 text-sm text-red-500 duration-200 rounded-md group hover:text-white hover:bg-red-500"
                             onClick={async () => {
                               await deleteMember.mutateAsync({
-                                team: teamNum,
+                                teamId: teamId,
                                 userId: member?.userId,
                               });
                             }}

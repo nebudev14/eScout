@@ -11,14 +11,14 @@ import { Switch } from "@headlessui/react";
 import { Entry } from "@prisma/client";
 import { SingleStats } from "../stats/single-stats";
 
-export const Filter: React.FC<{ teamNum: number, isAdmin: boolean }> = ({ teamNum, isAdmin }) => {
+export const Filter: React.FC<{ teamId: string, isAdmin: boolean }> = ({ teamId, isAdmin }) => {
   const [queryAttribute, setQueryAttribute] =
     useState<string>("entryTeamNumber");
   const [query, setQuery] = useState<Query>({ prescout: false });
 
   let { data: entryData } = useQuery([
     "entry.get-by-filter",
-    { teamNumber: teamNum, query },
+    { teamId: teamId, query },
   ]);
 
   const { invalidateQueries } = trpc.useContext();

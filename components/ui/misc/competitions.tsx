@@ -6,13 +6,13 @@ import { calculateStats, sum } from "../../../util/calculate-stats";
 import { BsFillTrashFill } from "react-icons/bs";
 
 export const ManageCompetitions: React.FC<{
-  teamNum: number;
+  teamId: string;
   isAdmin: boolean;
-}> = ({ teamNum, isAdmin }) => {
+}> = ({ teamId, isAdmin }) => {
   const [, setIsOpen] = useAtom(createCompModalAtom);
   const { data: allComps } = useQuery([
-    "comp.get-by-number",
-    { team: teamNum },
+    "comp.get-by-team-id",
+    { teamId: teamId },
   ]);
 
   return (

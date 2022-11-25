@@ -53,7 +53,7 @@ const TeamContent: NextPage = () => {
               </div>
               <Tab.Panels className="mt-4">
                 <Tab.Panel>
-                  <Filter teamNum={Number(data?.number)} isAdmin={isAdmin} />
+                  <Filter teamId={data?.id as string} isAdmin={isAdmin} />
                 </Tab.Panel>
                 <Tab.Panel>
                   <Tab.Group>
@@ -91,19 +91,19 @@ const TeamContent: NextPage = () => {
                     <Tab.Panels className="mt-4">
                       <Tab.Panel>
                         <ManageCompetitions
-                          teamNum={Number(data?.number)}
+                          teamId={data?.id as string}
                           isAdmin={isAdmin}
                         />
                       </Tab.Panel>
                       <Tab.Panel>
                         <ManagePitScout
-                          teamNum={Number(data?.number)}
+                          teamId={data?.id as string}
                           isAdmin={isAdmin}
                         />
                       </Tab.Panel>
                       <Tab.Panel>
                         <Members
-                          teamNum={Number(data?.number)}
+                          teamId={data?.id as string}
                           isAdmin={isAdmin}
                         />
                       </Tab.Panel>

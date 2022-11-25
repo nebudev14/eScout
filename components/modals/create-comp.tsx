@@ -12,7 +12,7 @@ export const CreateCompModal: React.FC = () => {
 
   const mutateComp = useMutation("comp.create", {
     onSuccess() {
-      invalidateQueries("comp.get-by-number");
+      invalidateQueries("comp.get-by-team-id");
     }
   });
 
@@ -24,7 +24,7 @@ export const CreateCompModal: React.FC = () => {
 
     await mutateComp.mutateAsync({
       name: target.compName.value,
-      team: Number(router.query.number),
+      teamId: router.query.id as string,
     });
   };
 
