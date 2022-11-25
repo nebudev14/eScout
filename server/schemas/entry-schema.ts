@@ -36,7 +36,7 @@ export const createEntrySchema = z.object({
 });
 
 export const filterEntrySchema = z.object({
-  teamNumber: z.number(),
+  teamId: z.string(),
   query: z.object({
     entryTeamNumber: z.number().optional(),
     matchType: z.nativeEnum(MatchType).optional(),

@@ -86,7 +86,6 @@ model Competition {
 
 model Entry {
   id          String      @id @default(cuid())
-  teamNumber  Int
   teamId      String
   team        Team        @relation(fields: [teamId], references: [id])
   compId      String

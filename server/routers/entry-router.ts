@@ -82,11 +82,11 @@ export const entryRouter = createRouter()
   })
   .query("get-by-team", {
     input: z.object({
-      teamNumber: z.number(),
+      teamId: z.string(),
     }),
     async resolve({ input, ctx }) {
       return await ctx.prisma.entry.findMany({
-        where: { teamNumber: input.teamNumber },
+        where: { teamId: input.teamId },
       });
     },
   })
@@ -98,7 +98,7 @@ export const entryRouter = createRouter()
       );
       return await ctx.prisma.entry.findMany({
         where: {
-          teamNumber: input.teamNumber,
+          teamId: input.teamId,
           ...filteredQuery,
         },
         include: {
