@@ -6,6 +6,6 @@ export const createTeamSchema = z.object({
 });
 
 export const getTeamSchema = z.object({
-    number: z.number()
+    number: z.string()
 })
 

@@ -46,6 +46,7 @@ model User {
   name          String?
   email         String?       @unique
   image         String?
+  created       DateTime?     @default(now())
   emailVerified DateTime?
   accounts      Account[]
   sessions      Session[]
@@ -55,16 +56,19 @@ model User {
 }
 
 model TeamUser {
-  userId     String       @unique
-  teamNumber Int
+  userId     String       
+  teamId     String
   user       User         @relation(fields: [userId], references: [id])
-  team       Team         @relation(fields: [teamNumber], references: [number])
+  team       Team         @relation(fields: [teamId], references: [id])
   status     MemberStatus
+
+  @@id([userId, teamId])
 }
 
 model Team {
+  id        String      @id @default(cuid())
   name      String
-  number    Int           @unique
+  number    Int           
   comps     Competition[]
   entries   Entry[]
   members   TeamUser[]
@@ -75,15 +79,16 @@ model Team {
 model Competition {
   id         String  @id @default(cuid())
   name       String
-  team       Team    @relation(fields: [teamNumber], references: [number])
-  teamNumber Int
+  team       Team    @relation(fields: [teamId], references: [id])
+  teamId     String
   entries    Entry[]
 }
 
 model Entry {
   id          String      @id @default(cuid())
   teamNumber  Int
-  team        Team        @relation(fields: [teamNumber], references: [number])
+  teamId      String
+  team        Team        @relation(fields: [teamId], references: [id])
   compId      String
   competition Competition @relation(fields: [compId], references: [id])
   prescout    Boolean
@@ -143,8 +148,8 @@ enum RungLevel {
 model PitForm {
   id         String        @id @default(cuid())
   name       String        @unique
-  teamNumber Int
-  team       Team          @relation(fields: [teamNumber], references: [number])
+  teamId      String
+  team       Team          @relation(fields: [teamId], references: [id])
   questions  PitQuestion[]
 }
 
