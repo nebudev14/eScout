@@ -14,8 +14,8 @@ const TeamContent: NextPage = () => {
   const router = useRouter();
   const { data: session } = useSession();
   const { data, isLoading } = useQuery([
-    "team.get-by-number",
-    { number: Number(router.query.number) },
+    "team.get-by-id",
+    { teamId: router.query.id as string },
   ]);
 
   const memberIndex = data?.members
@@ -53,7 +53,7 @@ const TeamContent: NextPage = () => {
               </div>
               <Tab.Panels className="mt-4">
                 <Tab.Panel>
-                  <Filter teamNum={Number(router.query.number)} isAdmin={isAdmin} />
+                  <Filter teamNum={Number(data?.number)} isAdmin={isAdmin} />
                 </Tab.Panel>
                 <Tab.Panel>
                   <Tab.Group>
@@ -91,19 +91,19 @@ const TeamContent: NextPage = () => {
                     <Tab.Panels className="mt-4">
                       <Tab.Panel>
                         <ManageCompetitions
-                          teamNum={Number(router.query.number)}
+                          teamNum={Number(data?.number)}
                           isAdmin={isAdmin}
                         />
                       </Tab.Panel>
                       <Tab.Panel>
                         <ManagePitScout
-                          teamNum={Number(router.query.number)}
+                          teamNum={Number(data?.number)}
                           isAdmin={isAdmin}
                         />
                       </Tab.Panel>
                       <Tab.Panel>
                         <Members
-                          teamNum={Number(router.query.number)}
+                          teamNum={Number(data?.number)}
                           isAdmin={isAdmin}
                         />
                       </Tab.Panel>

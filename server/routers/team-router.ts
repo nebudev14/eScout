@@ -103,7 +103,7 @@ export const teamRouter = createRouter()
       })
     }
   })
-  .query("get-by-number", {
+  .query("get-by-id", {
     input: z.object({
       teamId: z.string()
     }),

@@ -45,13 +45,13 @@ const ManageTeams: NextPage = () => {
             {userData?.teams.map((data, i) => (
               <a
                 key={i}
-                href={`/teams/${data.teamNumber}`}
+                href={`/teams/${data.teamId}`}
                 className="duration-100 border shadow-md dark:border-none dark:text-white rounded-xl dark:bg-zinc-900 bg-slate-50 hover:shadow-lg"
               >
                 <div className="px-6 py-4">
                   <div className="mb-2">
                     <h1 className="mb-1 text-2xl">{data.team.name}</h1>
-                    <h1>Team {data.teamNumber}</h1>
+                    <h1>Team {data.team.number}</h1>
                   </div>
                   <h1 className="flex items-center mb-2 text-xl">
                     <CgNotes className="mr-2 text-pink-500" />{" "}
