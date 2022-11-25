@@ -15,7 +15,7 @@ export const entryRouter = createRouter()
         data: {
           userId: input.userId,
           compId: input.competitionId,
-          teamNumber: input.teamNumber,
+          teamId: input.teamId,
           compName: input.compName,
 
           entryTeamNumber: input.entryTeamNumber,

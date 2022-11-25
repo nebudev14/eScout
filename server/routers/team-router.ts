@@ -1,5 +1,5 @@
 import { createRouter } from "../create-router";
-import { createTeamSchema, getTeamSchema } from "../schemas/team-schemas";
+import { createTeamSchema } from "../schemas/team-schemas";
 import { MemberStatus } from "@prisma/client";
 import { nanoid } from "nanoid";
 import { z } from "zod";
@@ -45,16 +45,19 @@ export const teamRouter = createRouter()
   })
   .mutation("remove-member", {
     input: z.object({
-      team: z.number(),
+      teamId: z.string(),
       userId: z.string(),
     }),
     async resolve({ input, ctx }) {
       return await ctx.prisma.team.update({
-        where: { number: input.team },
+        where: { id: input.teamId },
         data: {
           members: {
             delete: {
-              userId: input.userId,
+              userId_teamId: {
+                userId: input.userId,
+                teamId: input.teamId
+              }
             },
           },
         },
@@ -63,16 +66,21 @@ export const teamRouter = createRouter()
   })
   .mutation("promote-member", {
     input: z.object({
-      team: z.number(),
+      teamId: z.string(),
       userId: z.string(),
     }),
     async resolve({ input, ctx }) {
       return await ctx.prisma.team.update({
-        where: { number: input.team },
+        where: { id: input.teamId },
         data: {
           members: {
             update: {
-              where: { userId: input.userId },
+              where: {
+                userId_teamId: {
+                  userId: input.userId,
+                  teamId: input.teamId
+                }
+              },
               data: {
                 status: MemberStatus.CREATOR,
               },
@@ -84,11 +92,11 @@ export const teamRouter = createRouter()
   })
   .mutation("regen-id", {
     input: z.object({
-      team: z.number()
+      teamId: z.string()
     }),
     async resolve({ input, ctx }) {
       return await ctx.prisma.team.update({
-        where: { number: input.team },
+        where: { id: input.teamId },
         data: {
           inviteId: nanoid(6),
         }
@@ -96,10 +104,12 @@ export const teamRouter = createRouter()
     }
   })
   .query("get-by-number", {
-    input: getTeamSchema,
+    input: z.object({
+      teamId: z.string()
+    }),
     async resolve({ input, ctx }) {
       return await ctx.prisma.team.findUnique({
-        where: { number: input.number },
+        where: { id: input.teamId },
         include: {
           members: {
             include: {

@@ -4,8 +4,3 @@ export const createTeamSchema = z.object({
     name: z.string(),
     number: z.number(), 
 });
-
-export const getTeamSchema = z.object({
-    number: z.string()
-})
-

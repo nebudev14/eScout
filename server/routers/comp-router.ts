@@ -5,13 +5,13 @@ export const compRouter = createRouter()
   .mutation("create", {
     input: z.object({
       name: z.string(),
-      team: z.number()
+      teamId: z.string()
     }),
     async resolve({ input, ctx }) {
       return await ctx.prisma.competition.create({
         data: {
           name: input.name,
-          teamNumber: input.team
+          teamId: input.teamId
         }
       })
     }
@@ -27,11 +27,11 @@ export const compRouter = createRouter()
     }
   }).query("get-by-number", {
     input: z.object({
-      team: z.number()
+      teamId: z.string()
     }),
     async resolve({ input, ctx }) {
       return await ctx.prisma.competition.findMany({
-        where: { teamNumber: input.team },
+        where: { teamId: input.teamId },
         include: {
           entries: true,
         }
