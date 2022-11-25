@@ -20,7 +20,7 @@ const QuestionCard: React.FC<{ question: PitQuestion }> = ({ question }) => {
         </h1>
         <BsFillTrashFill className="duration-150 hover:cursor-pointer hover:text-red-400" onClick={async () => {
           await mutatePitScout.mutateAsync({
-            id: router.query.id as string,
+            id: router.query.pit_id as string,
             questionId: question.id
           })
         }} />

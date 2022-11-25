@@ -8,10 +8,11 @@ import { Container } from "../../components/ui/container";
 import { Input } from "../../components/ui/input";
 import NoTeams from "../../components/ui/no-teams";
 import { useMutation, useQuery } from "../../hooks/trpc";
+import { Team } from "@prisma/client";
 
 const PitScout: NextPage = () => {
   const router = useRouter();
-  const [selectedTeam, setSelectedTeam] = useState<number | undefined>();
+  const [selectedTeam, setSelectedTeam] = useState<Team | undefined>();
   const { data: session } = useSession();
   const { data: userData } = useQuery([
     "user.get-by-id",
@@ -19,13 +20,12 @@ const PitScout: NextPage = () => {
   ]);
 
   useEffect(() => {
-    if (userData?.teams.length !== 0)
-      setSelectedTeam(userData?.teams[0].teamNumber);
-  }, [userData?.teams]);
+    if (userData?.teams.length !== 0) setSelectedTeam(userData?.teams[0].team);
+  }, [setSelectedTeam, userData?.teams]);
 
   const { data, isLoading } = useQuery([
-    "pit.get-by-number",
-    { team: Number(selectedTeam) },
+    "pit.get-by-team-id",
+    { teamId: selectedTeam?.id as string },
   ]);
 
   const [pitScout, setSelectedPitScout] = useState<string>("");
@@ -70,16 +70,20 @@ const PitScout: NextPage = () => {
             <select
               id="teamNumber"
               className="p-2 text-lg leading-tight border rounded shadow focus:outline-none focus:shadow-outline dark:bg-zinc-900 dark:text-white dark:border-zinc-700"
-              value={selectedTeam}
+              value={selectedTeam?.number}
               onChange={(event: React.SyntheticEvent) => {
                 setSelectedTeam(
-                  Number((event.target as HTMLSelectElement).value)
+                  userData?.teams.filter(
+                    (e) =>
+                      e.team.number ===
+                      Number((event.target as HTMLSelectElement).value)
+                  )[0].team
                 );
               }}
             >
               {userData?.teams.map((team, i) => (
-                <option key={i} value={team.teamNumber}>
-                  {team.teamNumber}
+                <option key={i} value={team.team.number}>
+                  {team.team.number}
                 </option>
               ))}
             </select>
@@ -94,7 +98,11 @@ const PitScout: NextPage = () => {
               }}
             >
               {data?.map((pitscout, i) => (
-                <option key={i} value={pitscout.id} className="text-base md:inline-block md:w-full md:whitespace-pre-line md:break-words md:overflow-hidden">
+                <option
+                  key={i}
+                  value={pitscout.id}
+                  className="text-base md:inline-block md:w-full md:whitespace-pre-line md:break-words md:overflow-hidden"
+                >
                   {pitscout.name}
                 </option>
               ))}

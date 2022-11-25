@@ -33,7 +33,7 @@ export const CreateQuestionModal: React.FC = () => {
     };
 
     await mutatePitScout.mutateAsync({
-      id: router.query.id as string,
+      id: router.query.pit_id as string,
       prompt: target.questionName.value,
       type: target.questionType.value,
       possibleResponses: selectOptions,
