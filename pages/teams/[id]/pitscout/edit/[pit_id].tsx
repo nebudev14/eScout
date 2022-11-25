@@ -10,7 +10,7 @@ const EditPitScout: React.FC = () => {
   const router = useRouter();
   const { data, isLoading } = useQuery([
     "pit.get-by-id",
-    { id: router.query.id as string },
+    { id: router.query.pit_id as string },
   ]);
 
   const [, setIsOpen] = useAtom(createQuestionModalAtom);

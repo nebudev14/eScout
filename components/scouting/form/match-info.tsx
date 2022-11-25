@@ -1,4 +1,4 @@
-  import { Container } from "../../ui/container";
+import { Container } from "../../ui/container";
 import { Input } from "../../ui/input";
 import { Competition, MatchType } from "@prisma/client";
 import { useQuery } from "../../../hooks/trpc";
@@ -8,9 +8,10 @@ import { Combobox } from "@headlessui/react";
 import { HiSelector } from "react-icons/hi";
 import { useAtom } from "jotai";
 import { setPreScoutAtom, setSelectedCompAtom } from "../../../server/atoms";
+import { Team } from "@prisma/client";
 
 export const MatchInfo: React.FC = () => {
-  const [selectedTeam, setSelectedTeam] = useState<number>();
+  const [selectedTeam, setSelectedTeam] = useState<Team | undefined>();
   const [selectedComp, setSelectedComp] = useAtom(setSelectedCompAtom);
   const [prescout] = useAtom(setPreScoutAtom);
   const { data: session } = useSession();
@@ -21,14 +22,14 @@ export const MatchInfo: React.FC = () => {
 
   useEffect(() => {
     if (userData?.teams.length !== 0) {
-      setSelectedTeam(userData?.teams[0].team.number);
+      setSelectedTeam(userData?.teams[0].team);
       setSelectedComp(userData?.teams[0].team.comps[0]);
     }
   }, [userData?.teams, setSelectedComp]);
 
   const { data: compData, isLoading } = useQuery([
     "comp.get-by-team-id",
-    { team: Number(selectedTeam) },
+    { teamId: selectedTeam?.id as string },
   ]);
 
   const [compQuery, setCompQuery] = useState("");
@@ -48,14 +49,20 @@ export const MatchInfo: React.FC = () => {
         <select
           id="teamNumber"
           className="p-2 text-lg leading-tight border rounded shadow focus:outline-none focus:shadow-outline dark:bg-zinc-900 dark:text-white dark:border-zinc-700"
-          value={selectedTeam}
+          value={selectedTeam?.number}
           onChange={(event: React.SyntheticEvent) => {
-            setSelectedTeam(Number((event.target as HTMLSelectElement).value));
+            setSelectedTeam(
+              userData?.teams.filter(
+                (e) =>
+                  e.team.number ===
+                  Number((event.target as HTMLSelectElement).value)
+              )[0].team
+            );
           }}
         >
           {userData?.teams.map((team, i) => (
-            <option key={i} value={team.teamNumber}>
-              {team.teamNumber}
+            <option key={i} value={team.team.number}>
+              {team.team.number}
             </option>
           ))}
         </select>
