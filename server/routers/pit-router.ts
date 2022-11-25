@@ -98,6 +98,11 @@ export const pitRouter = createRouter()
               PitResponse: true
             }
           },
+          team: {
+            select: {
+              number: true
+            }
+          }
         },
       });
     },

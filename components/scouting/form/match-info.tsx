@@ -1,7 +1,7 @@
 import { Container } from "../../ui/container";
 import { Input } from "../../ui/input";
 import { Competition, MatchType } from "@prisma/client";
-import { useQuery } from "../../../hooks/trpc";
+import { useQuery, trpc } from "../../../hooks/trpc";
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { Combobox } from "@headlessui/react";
@@ -20,12 +20,15 @@ export const MatchInfo: React.FC = () => {
     { userId: session?.user.id as string },
   ]);
 
+  const { invalidateQueries } = trpc.useContext();
+
   useEffect(() => {
     if (userData?.teams.length !== 0) {
       setSelectedTeam(userData?.teams[0].team);
       setSelectedComp(userData?.teams[0].team.comps[0]);
     }
-  }, [userData?.teams, setSelectedComp]);
+  }, [userData?.teams, setSelectedTeam, setSelectedComp]);
+
 
   const { data: compData, isLoading } = useQuery([
     "comp.get-by-team-id",
@@ -47,21 +50,21 @@ export const MatchInfo: React.FC = () => {
           Submit data to
         </label>
         <select
-          id="teamNumber"
+          id="teamId"
           className="p-2 text-lg leading-tight border rounded shadow focus:outline-none focus:shadow-outline dark:bg-zinc-900 dark:text-white dark:border-zinc-700"
-          value={selectedTeam?.number}
+          value={selectedTeam?.id}
           onChange={(event: React.SyntheticEvent) => {
-            setSelectedTeam(
-              userData?.teams.filter(
-                (e) =>
-                  e.team.number ===
-                  Number((event.target as HTMLSelectElement).value)
-              )[0].team
-            );
+            const team = userData?.teams.filter(
+              (e) =>
+                e.team.number ===
+                Number((event.target as HTMLSelectElement).value)
+            )![0]?.team
+            setSelectedTeam(team);
+            invalidateQueries("comp.get-by-team-id");
           }}
         >
           {userData?.teams.map((team, i) => (
-            <option key={i} value={team.team.number}>
+            <option key={i} value={team.team.id}>
               {team.team.number}
             </option>
           ))}

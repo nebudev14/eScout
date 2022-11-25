@@ -21,7 +21,7 @@ const ViewPitScout: React.FC = () => {
         onClick={() => router.back()}
       />
       <h1 className="mb-2 text-3xl">Pit Scouts</h1>
-      <h1 className="text-xl">Team {data?.teamNumber}</h1>
+      <h1 className="text-xl">Team {data?.team.number}</h1>
       <h1 className="mb-6 text-xl">{data?.name}</h1>
 
       <div className="grid grid-cols-3 gap-6 md:grid-cols-1">

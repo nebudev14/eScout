@@ -36,7 +36,7 @@ const Scout: NextPage = () => {
       // Match Info
       matchType: { value: MatchType };
       matchNumber: { value: string };
-      teamNumber: { value: string };
+      teamId: { value: string };
       videoLink: { value: string };
       // Entry team
       entryTeamNumber: { value: string };
@@ -52,8 +52,10 @@ const Scout: NextPage = () => {
       comments: { value: string };
     };
 
+    console.log(target.teamId.value)
+
     const data = {
-      teamNumber: Number(target.teamNumber.value),
+      teamId: target.teamId.value as string,
       userId: session?.user.id as string,
       competitionId: selectedComp?.id as string,
       compName: selectedComp?.name as string,
@@ -86,7 +88,7 @@ const Scout: NextPage = () => {
     };
 
     // weee data submit
-    await submitEntry.mutateAsync(data);
+    // await submitEntry.mutateAsync(data);
     router.push("/teams");
   };
 
