@@ -82,6 +82,19 @@ export const teamRouter = createRouter()
       });
     },
   })
+  .mutation("regen-id", {
+    input: z.object({
+      team: z.number()
+    }),
+    async resolve({ input, ctx }) {
+      return await ctx.prisma.team.update({
+        where: { number: input.team },
+        data: {
+          inviteId: nanoid(6),
+        }
+      })
+    }
+  })
   .query("get-by-number", {
     input: getTeamSchema,
     async resolve({ input, ctx }) {
