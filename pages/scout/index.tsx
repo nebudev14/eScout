@@ -88,7 +88,7 @@ const Scout: NextPage = () => {
     };
 
     // weee data submit
-    // await submitEntry.mutateAsync(data);
+    await submitEntry.mutateAsync(data);
     router.push("/teams");
   };
 

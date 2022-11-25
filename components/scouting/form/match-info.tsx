@@ -27,8 +27,7 @@ export const MatchInfo: React.FC = () => {
       setSelectedTeam(userData?.teams[0].team);
       setSelectedComp(userData?.teams[0].team.comps[0]);
     }
-  }, [userData?.teams, setSelectedTeam, setSelectedComp]);
-
+  }, [userData?.teams, setSelectedComp]);
 
   const { data: compData, isLoading } = useQuery([
     "comp.get-by-team-id",
@@ -55,12 +54,9 @@ export const MatchInfo: React.FC = () => {
           value={selectedTeam?.id}
           onChange={(event: React.SyntheticEvent) => {
             const team = userData?.teams.filter(
-              (e) =>
-                e.team.number ===
-                Number((event.target as HTMLSelectElement).value)
-            )![0]?.team
+              (e) => e.team.id === (event.target as HTMLSelectElement).value
+            )[0]?.team;
             setSelectedTeam(team);
-            invalidateQueries("comp.get-by-team-id");
           }}
         >
           {userData?.teams.map((team, i) => (
