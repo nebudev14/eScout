@@ -1,28 +1,21 @@
-# Setting up the project
+# eScout
 
-## Prerequesites:
-- node.js
-- npm (comes with node.js installer)
-- yarn
-- docker
-- the will to live
+eScout is a web app designed for FRC scouting and strategy, and is available to all FRC teams to use.
 
-## Steps
+*eScout is currently under active development, and is projected to be fully ready for release by the beginning of the 2023 season.*
 
-1. Clone the repository
-2. Ask Warren for the .env file, which contains all the credentials.
-3. Run "yarn" in terminal to install dependencies 
-4. Run "docker-compose up" in terminal
-5. Run "yarn prisma db push"
-6. Run "yarn prisma generate"
-7. Run "yarn dev" to run dev server and go to localhost:3000 to look at website
+## Why eScout?
 
-## Important!!!
-Everytime you want to startup the server, you have to start up the db with "docker-compose up", then start the server with "yarn dev"
+Strategy is a major part of FRC, and has the potential to strongly alter the outcome of your team's matches depending on its effectiveness. 
 
-If you make changes to the prisma.schema file, you have to sync changes with 3 commands
-- yarn prisma migrate reset
-- yarn prisma generate
-- yarn prisma db push
+However, strategy is not a thing that is easily jumped into. Scouting matches on paper can be tedious, and identifying statistics and trends within your data is easier said than done.
 
-Have fun!
+eScout aims to provide all these features right out of the box for all FRC teams. With intuitive scouting UIs, pre-made graphs, built-in pit scouting functionality, and many more, eScout provides your team with the tools necessary to kickstart and maximize your team's strategy experience.
+
+## Contributing
+
+Unfortunately, contributions to eScout are not being accepted until it is out of its testing phase. However, please feel free to request features/report bugs by leaving an issue on this repository!
+
+## Additional implementation details
+
+Behind the scenes, eScout runs using [Next.Js](https://nextjs.org/) and [tRPC](https://trpc.io/), and is hosted on [Vercel](https://vercel.com/). Scouting data is stored in a PostgreSQL database, fetched using [Prisma](https://www.prisma.io/).
