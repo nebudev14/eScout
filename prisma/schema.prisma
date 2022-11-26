@@ -56,32 +56,33 @@ model User {
 }
 
 model TeamUser {
-  userId     String       
-  teamId     String
-  user       User         @relation(fields: [userId], references: [id])
-  team       Team         @relation(fields: [teamId], references: [id])
-  status     MemberStatus
+  userId String
+  teamId String
+  user   User         @relation(fields: [userId], references: [id])
+  team   Team         @relation(fields: [teamId], references: [id])
+  status MemberStatus
 
   @@id([userId, teamId])
 }
 
 model Team {
-  id        String      @id @default(cuid())
-  name      String
-  number    Int           
-  comps     Competition[]
-  entries   Entry[]
-  members   TeamUser[]
-  pitScouts PitForm[]
-  inviteId  String        @unique
+  id          String        @id @default(cuid())
+  name        String
+  number      Int
+  comps       Competition[]
+  entries     Entry[]
+  members     TeamUser[]
+  matchScouts MatchForm[]
+  pitScouts   PitForm[]
+  inviteId    String        @unique
 }
 
 model Competition {
-  id         String  @id @default(cuid())
-  name       String
-  team       Team    @relation(fields: [teamId], references: [id])
-  teamId     String
-  entries    Entry[]
+  id      String  @id @default(cuid())
+  name    String
+  team    Team    @relation(fields: [teamId], references: [id])
+  teamId  String
+  entries Entry[]
 }
 
 model Entry {
@@ -142,14 +143,39 @@ enum RungLevel {
   TRAVERSAL
 }
 
+// Match scout
+
+model MatchForm {
+  id         String              @id @default(cuid())
+  name       String
+  teamId     String
+  team       Team                @relation(fields: [teamId], references: [id])
+  categories MatchFormCategory[]
+}
+
+model MatchFormCategory {
+  id          String              @id @default(cuid())
+  name        String
+  matchFormId String
+  matchForm   MatchForm           @relation(fields: [matchFormId], references: [id])
+  questions   MatchFormQuestion[]
+}
+
+model MatchFormQuestion {
+  id              String            @id @default(cuid())
+  prompt          String
+  matchCategoryId String
+  matchForm       MatchFormCategory @relation(fields: [matchCategoryId], references: [id])
+}
+
 // Pit Scout
 
 model PitForm {
-  id         String        @id @default(cuid())
-  name       String        @unique
-  teamId      String
-  team       Team          @relation(fields: [teamId], references: [id])
-  questions  PitQuestion[]
+  id        String        @id @default(cuid())
+  name      String        @unique
+  teamId    String
+  team      Team          @relation(fields: [teamId], references: [id])
+  questions PitQuestion[]
 }
 
 model PitQuestion {
