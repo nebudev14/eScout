@@ -14,6 +14,7 @@ import {
 import { Line, Pie } from "react-chartjs-2";
 import { Entry, RungLevel } from "@prisma/client";
 import { Statistics } from "../../../../util/calculate-stats";
+import { useQuery } from "../../../../hooks/trpc";
 
 export const ClimbGraph: React.FC<{ entries: Entry[]; stats: Statistics }> = ({
   entries,
@@ -30,6 +31,11 @@ export const ClimbGraph: React.FC<{ entries: Entry[]; stats: Statistics }> = ({
     ArcElement
   );
   const climbStats = stats.climbStats;
+  
+  // const { data, isLoading } = useQuery([
+  //   "zebra.get-match-data",
+  //   { matchId: "asdfasd", teamNumber: "1155", color: "red" }
+  // ])
 
   entries!?.sort((a, b) => a.matchNumber - b.matchNumber);
   const matchNumbers: string[] = entries!?.map((e) => e.matchNumber.toString());
@@ -120,6 +126,7 @@ export const ClimbGraph: React.FC<{ entries: Entry[]; stats: Statistics }> = ({
         <div className="text-center w-[30rem]">
           <Pie options={rungOptions} data={rungData} />
         </div>
+      
       </div>
     </>
   );
