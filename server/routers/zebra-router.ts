@@ -1,5 +1,20 @@
 import { createRouter } from "../create-router";
-import { z } from "zod";
+import { string, z } from "zod";
+
+interface ResponeData {
+  alliances: Alliances;
+}
+
+interface Alliances {
+  red: Team;
+  blue: Team;
+}
+
+interface Team {
+  team_key: string;
+  xs: number[];
+  ys: number[];
+}
 
 export const zebraRouter = createRouter()
   .query("get-match-data", {
@@ -7,8 +22,20 @@ export const zebraRouter = createRouter()
       matchId: z.string(),
       teamNumber: z.string(),
       color: z.string()
+
     }),
     async resolve({ input, ctx }) {
-      // await fetch ()
+      var url = 'https://www.thebluealliance.com/api/v3/match/' + input.matchId + '/zebra_motionworks';
+      return await fetch(
+        url,
+        {
+          method: 'GET',
+          headers: {
+            'X-TBA-Auth-Key':'CImPe9Of5uiA6w9f7LlmC9EFBXwKj9J1HDHTSmVuQvUk4zidQBdlZRuOe2VAKkCE',
+            'Content-Type': 'application/json'
+          }
+        }
+      ).then((response) => response.json())
+      .then((data: any) => data.alliances[input.color].filter((e: any) => e.team_key === "frc" + input.teamNumber))
     }
   })
