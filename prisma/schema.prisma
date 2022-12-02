@@ -207,7 +207,8 @@ enum MatchQuestionType {
   SCORE
   COUNTER
   INPUT
-  MULTIPLE
+  SELECT
+  BOOL
 }
 
 enum MatchPromptType {
