@@ -1,6 +1,6 @@
 import { useAtom } from "jotai";
 import { createPitModalAtom } from "../../server/atoms";
-import React, { Fragment, useState } from "react";
+import React, { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { trpc, useMutation } from "../../hooks/trpc";
 import { useRouter } from "next/router";

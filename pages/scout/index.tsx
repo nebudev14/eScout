@@ -52,8 +52,6 @@ const Scout: NextPage = () => {
       comments: { value: string };
     };
 
-    console.log(target.teamId.value)
-
     const data = {
       teamId: target.teamId.value as string,
       userId: session?.user.id as string,
