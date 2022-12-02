@@ -1,5 +1,5 @@
-import { Container } from "../../ui/container";
-import { Input } from "../../ui/input";
+import { Container } from "../container";
+import { Input } from "../input";
 import { Competition, MatchType } from "@prisma/client";
 import { useQuery, trpc } from "../../../hooks/trpc";
 import { useState, useEffect } from "react";
