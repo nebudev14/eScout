@@ -9,7 +9,7 @@ export const ScoreBoard: React.FC<{ label: string; id: string }> = ({
   const [total, setTotal] = useState(0);
 
   return (
-    <div className="mt-2">
+    <div className="my-2">
       <Container>
         <label className="p-2 text-lg font-semibold leading-tight border rounded shadow bg-slate-200 dark:bg-zinc-900 dark:border-none focus:outline-none focus:shadow-outline">
           {label}
@@ -25,7 +25,7 @@ export const ScoreBoard: React.FC<{ label: string; id: string }> = ({
       <Container>
         <Container>
           <button
-            className="p-2 text-lg font-semibold text-white bg-green-500 rounded-tl rounded-bl shadow dark:bg-green-600 focus:outline-none focus:shadow-outline"
+            className="p-2 text-lg font-semibold text-white bg-green-500 rounded-tl rounded-bl shadow dark:bg-green-500 focus:outline-none focus:shadow-outline"
             type="button"
             onClick={() => {
               setShot(shot + 1);
@@ -35,7 +35,7 @@ export const ScoreBoard: React.FC<{ label: string; id: string }> = ({
             Score
           </button>
           <button
-            className="p-2 text-lg font-semibold text-white bg-red-500 shadow dark:bg-rose-600 focus:outline-none focus:shadow-outline"
+            className="p-2 text-lg font-semibold text-white bg-red-500 shadow dark:bg-rose-500 focus:outline-none focus:shadow-outline"
             type="button"
             onClick={() => setTotal(total + 1)}
           >

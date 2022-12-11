@@ -165,7 +165,8 @@ model MatchFormCategory {
 
 model MatchFormQuestion {
   id              String              @id @default(cuid())
-  prompt          String
+  prompt          String?
+  prompts         String[]
   questionType    MatchQuestionType
   promptType      MatchPromptType
   scoreMultiplier Int

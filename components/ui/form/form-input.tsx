@@ -1,4 +1,3 @@
-import { ReactDOM } from "react";
 import { Container } from "../container";
 
 export const FormInput: React.FC<{ label: string; id: string }> = ({
@@ -6,18 +5,12 @@ export const FormInput: React.FC<{ label: string; id: string }> = ({
   id,
 }) => {
   return (
-    <div id={id}>
+    <div id={id} className="my-2">
       <Container>
         <label className="p-2 text-lg font-semibold leading-tight border rounded shadow bg-slate-200 dark:bg-zinc-900 dark:border-zinc-600 focus:outline-none focus:shadow-outline">
-          Mobility
+          {label}
         </label>
-        <select
-          id="mobility"
-          className="p-2 text-lg leading-tight border rounded shadow dark:bg-zinc-900 dark:border-zinc-600 focus:outline-none focus:shadow-outline"
-        >
-          <option value="no">No</option>
-          <option value="yes">Yes</option>
-        </select>
+        <input className="p-2 text-lg leading-tight border rounded shadow focus:outline-none focus:shadow-outline dark:text-white dark:bg-zinc-900 dark:border-zinc-700" />
       </Container>
     </div>
   );
