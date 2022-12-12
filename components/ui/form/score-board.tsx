@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { Answer } from "../../../types/form-types";
 import { Container } from "../container";
 
-export const ScoreBoard: React.FC<{ label: string; id: string }> = ({
-  label,
-  id,
-}) => {
+export const ScoreBoard: React.FC<{
+  label: string;
+  id: string;
+  updateState: (answer: Answer) => void;
+}> = ({ label, id, updateState }) => {
   const [shot, setShot] = useState(0);
   const [total, setTotal] = useState(0);
 
@@ -30,6 +32,11 @@ export const ScoreBoard: React.FC<{ label: string; id: string }> = ({
             onClick={() => {
               setShot(shot + 1);
               setTotal(total + 1);
+              updateState({
+                questionId: id,
+                slot1: shot.toString(),
+                slot2: total.toString(),
+              });
             }}
           >
             Score
@@ -37,7 +44,14 @@ export const ScoreBoard: React.FC<{ label: string; id: string }> = ({
           <button
             className="p-2 text-lg font-semibold text-white bg-red-500 shadow dark:bg-rose-500 focus:outline-none focus:shadow-outline"
             type="button"
-            onClick={() => setTotal(total + 1)}
+            onClick={() => {
+              setTotal(total + 1);
+              updateState({
+                questionId: id,
+                slot1: shot.toString(),
+                slot2: total.toString(),
+              });
+            }}
           >
             Miss
           </button>
