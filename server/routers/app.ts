@@ -6,6 +6,7 @@ import { compRouter } from "./comp-router";
 import { pitRouter } from "./pit-router";
 import { metaware } from "../middleware/metaware";
 import { zebraRouter } from "./zebra-router";
+import { matchRouter } from "./match-router";
 
 export const appRouter = createRouter()
     .middleware(metaware)
@@ -14,6 +15,7 @@ export const appRouter = createRouter()
     .merge("entry.", entryRouter)
     .merge("comp.", compRouter)
     .merge("pit.", pitRouter)
-    .merge("zebra.", zebraRouter);
+    .merge("zebra.", zebraRouter)
+    .merge("match.", matchRouter);
 
 export type AppRouter = typeof appRouter;

@@ -1,7 +1,7 @@
 import { Container } from "../container";
 
-export const BoolInput: React.FC<{ label: string;  }> = ({
-  label
+export const BoolInput: React.FC<{ label: string; id: string; }> = ({
+  label, id
 }) => {
   return (
     <div className="my-4">

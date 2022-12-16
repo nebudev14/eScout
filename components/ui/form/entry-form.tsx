@@ -21,6 +21,8 @@ export default class EntryForm extends React.Component<Props, State> {
     this.state = {
       answers: answers,
     };
+
+    console.log(answers)
   }
 
   setAnswer(answers: Answer[], newAnswer: Answer): Answer[] {
@@ -42,9 +44,9 @@ export default class EntryForm extends React.Component<Props, State> {
     return (
       <div className="min-h-screen dark:text-white">
         <ScoreBoard label="ya" id="yea" updateState={this.updateState} />
-        {this.props.questions.map((question, i) => (
+        {/* {this.props.questions.map((question, i) => (
           <div></div>
-        ))}
+        ))} */}
       </div>
     );
   }

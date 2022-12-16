@@ -50,5 +50,16 @@ export const matchRouter = createRouter()
         }
       })
     }
+  }).query("get-forms", {
+    input: z.object({
+      teamId: z.string()
+    }),
+    async resolve({ input, ctx }) {
+      return await ctx.prisma.matchForm.findMany({
+        where: {
+          teamId: input.teamId
+        }
+      })
+    }
   })
-  
+
