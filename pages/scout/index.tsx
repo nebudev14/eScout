@@ -31,9 +31,9 @@ const Scout: NextPage = () => {
   }, [setSelectedTeam]);
 
   console.log(selectedTeam)
-  
+
   const { data: matchForms } = useQuery([
-    "match.get-forms",
+    "match.get-by-team-id",
     { teamId: selectedTeam?.id as string },
   ]);
 

@@ -10,22 +10,36 @@ export const CreateScoutFormModal: React.FC = () => {
   const router = useRouter();
   const { invalidateQueries } = trpc.useContext();
 
+  const mutateMatchScout = useMutation("match.create-form", {
+    onSuccess() {
+      invalidateQueries("match.get-by-team-id");
+    },
+  });
+
   const mutatePitScout = useMutation("pit.create", {
     onSuccess() {
       invalidateQueries("pit.get-by-team-id");
-    }
+    },
   });
 
-  const createPit = async (event: React.SyntheticEvent) => {
+  const createForm = async (event: React.SyntheticEvent) => {
     event.preventDefault();
     const target = event.target as typeof event.target & {
-      pitScoutName: { value: string };
+      formName: { value: string };
+      formType: { value: string };
     };
 
-    await mutatePitScout.mutateAsync({
-      name: target.pitScoutName.value,
-      teamId: router.query.id as string,
-    });
+    if (target.formType.value === "match") {
+      await mutateMatchScout.mutateAsync({
+        name: target.formName.value,
+        teamId: router.query.id as string,
+      });
+    } else {
+      await mutatePitScout.mutateAsync({
+        name: target.formName.value,
+        teamId: router.query.id as string,
+      });
+    }
   };
 
   return (
@@ -62,23 +76,33 @@ export const CreateScoutFormModal: React.FC = () => {
                   as="h3"
                   className="text-lg font-medium leading-6 text-center text-gray-900"
                 >
-                  Create a pit scout form
+                  Create a Scout Form
                 </Dialog.Title>
                 <div className="mt-2">
                   <p className="text-sm text-gray-500"></p>
                 </div>
 
-                <form onSubmit={createPit}>
+                <form onSubmit={createForm}>
                   <div className="mt-4 ">
-                    <h1 className="mr-2 font-semibold">Pit scout name</h1>
+                    <h1 className="mr-2 font-semibold">Form Name</h1>
                     <input
-                      id="pitScoutName"
+                      id="formName"
                       className="w-full p-2 border-2 rounded-lg outline-none"
                       required
                       autoComplete="off"
                     />
                   </div>
 
+                  <div className="mt-4">
+                    <h1 className="mr-2 text-base font-semibold">Form Type</h1>
+                    <select
+                      id="formType"
+                      className="p-2 mt-2 text-sm border-2 rounded-lg outline-none "
+                    >
+                      <option value="match">Match Scout</option>
+                      <option value="pit">Pit Scout</option>
+                    </select>
+                  </div>
                   <div className="mt-4">
                     <button
                       type="submit"

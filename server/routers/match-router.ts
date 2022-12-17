@@ -50,7 +50,7 @@ export const matchRouter = createRouter()
         }
       })
     }
-  }).query("get-forms", {
+  }).query("get-by-team-id", {
     input: z.object({
       teamId: z.string()
     }),
