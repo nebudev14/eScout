@@ -58,6 +58,27 @@ export const matchRouter = createRouter()
       return await ctx.prisma.matchForm.findMany({
         where: {
           teamId: input.teamId
+        },
+        include: {
+          categories: {
+            include: {
+              questions: true
+            }
+          }
+        }
+      })
+    }
+  }).query("get-by-id", {
+    input: z.object({
+      id: z.string()
+    }),
+    async resolve({ input, ctx }) {
+      return await ctx.prisma.matchForm.findUnique({
+        where: { id: input.id },
+        include: {
+          categories: {
+            include: { questions: true }
+          }
         }
       })
     }

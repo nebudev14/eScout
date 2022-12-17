@@ -1,9 +1,9 @@
 import { useAtom } from "jotai";
 import { useRouter } from "next/router";
-import { CreateQuestionModal } from "../../../../../components/modals/create-question";
+import { CreatePitQuestionModal } from "../../../../../components/modals/create-pit-question";
 import QuestionCard from "../../../../../components/ui/question-card";
 import { useQuery } from "../../../../../hooks/trpc";
-import { createQuestionModalAtom } from "../../../../../server/atoms";
+import { createPitQuestionModalAtom } from "../../../../../server/atoms";
 import { BiArrowBack } from "react-icons/bi";
 
 const EditPitScout: React.FC = () => {
@@ -13,7 +13,7 @@ const EditPitScout: React.FC = () => {
     { id: router.query.pit_id as string },
   ]);
 
-  const [, setIsOpen] = useAtom(createQuestionModalAtom);
+  const [, setIsOpen] = useAtom(createPitQuestionModalAtom);
 
   return (
     <div className="min-h-screen px-48 py-12 dark:text-white md:px-4">
@@ -41,7 +41,7 @@ const EditPitScout: React.FC = () => {
         </div>
       </div>
 
-      <CreateQuestionModal />
+      <CreatePitQuestionModal />
     </div>
   );
 };

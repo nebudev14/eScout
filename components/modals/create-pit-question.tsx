@@ -1,5 +1,5 @@
 import { useAtom } from "jotai";
-import { createQuestionModalAtom } from "../../server/atoms";
+import { createPitQuestionModalAtom } from "../../server/atoms";
 import React, { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { trpc, useMutation } from "../../hooks/trpc";
@@ -7,11 +7,11 @@ import { useRouter } from "next/router";
 import { PitQuestionType } from "@prisma/client";
 import { BsFillTrashFill } from "react-icons/bs";
 
-export const CreateQuestionModal: React.FC = () => {
+export const CreatePitQuestionModal: React.FC = () => {
   const router = useRouter();
   const { invalidateQueries } = trpc.useContext();
 
-  const [isOpen, setIsOpen] = useAtom(createQuestionModalAtom);
+  const [isOpen, setIsOpen] = useAtom(createPitQuestionModalAtom);
   const [questionType, setQuestionType] = useState<PitQuestionType>(
     PitQuestionType.TEXT
   );
