@@ -20,16 +20,18 @@ const Scout: NextPage = () => {
   const { data: session } = useSession();
   const router = useRouter();
 
-  const [selectedTeam, setSelectedTeam] = useState<Team | undefined>(undefined);
+  const [selectedTeam, setSelectedTeam] = useState<Team | undefined>();
   const { data: user } = useQuery([
     "user.get-by-id",
     { userId: session?.user.id as string },
   ]);
 
   useEffect(() => {
-    setSelectedTeam(user?.teams[0].team);
+    if(user?.teams.length !== 0) setSelectedTeam(user?.teams[0].team);
   }, [setSelectedTeam]);
 
+  console.log(selectedTeam)
+  
   const { data: matchForms } = useQuery([
     "match.get-forms",
     { teamId: selectedTeam?.id as string },
@@ -50,7 +52,7 @@ const Scout: NextPage = () => {
     <Protected>
       <div className="min-h-screen py-16 px-36 dark:text-white">
         <div className="flex items-center justify-start ">
-          {matchForms?.length !== 0 ? (
+          {matchForms?.length !== 0 || selectedTeam !== undefined ? (
             <select className="h-full p-2 border-r-4 rounded-lg shadow-md outline-none dark:text-white dark:bg-zinc-900 dark:border-zinc-700"></select>
           ) : null}
         </div>

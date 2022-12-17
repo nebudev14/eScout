@@ -5,7 +5,7 @@ import { Filter } from "../../../components/scouting/filter/filter";
 import { ManageCompetitions } from "../../../components/ui/misc/competitions";
 import { useQuery } from "../../../hooks/trpc";
 import { Tab } from "@headlessui/react";
-import { ManagePitScout } from "../../../components/ui/misc/pit-scout";
+import { ManageScoutForm } from "../../../components/ui/misc/scout-forms";
 import Members from "../../../components/ui/misc/members";
 import { useSession } from "next-auth/react";
 import { MemberStatus } from "@prisma/client";
@@ -75,7 +75,7 @@ const TeamContent: NextPage = () => {
                               : "px-6 py-2 md:px-2 md:text-sm"
                           }
                         >
-                          Pit Scout
+                          Scout Forms
                         </Tab>
                         <Tab
                           className={({ selected }) =>
@@ -96,7 +96,7 @@ const TeamContent: NextPage = () => {
                         />
                       </Tab.Panel>
                       <Tab.Panel>
-                        <ManagePitScout
+                        <ManageScoutForm
                           teamId={data?.id as string}
                           isAdmin={isAdmin}
                         />

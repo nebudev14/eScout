@@ -5,7 +5,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { trpc, useMutation } from "../../hooks/trpc";
 import { useRouter } from "next/router";
 
-export const CreatePitModal: React.FC = () => {
+export const CreateScoutFormModal: React.FC = () => {
   const [isOpen, setIsOpen] = useAtom(createPitModalAtom);
   const router = useRouter();
   const { invalidateQueries } = trpc.useContext();
