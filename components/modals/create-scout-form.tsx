@@ -1,12 +1,12 @@
 import { useAtom } from "jotai";
-import { createPitModalAtom } from "../../server/atoms";
+import { createFormModalAtom } from "../../server/atoms";
 import React, { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { trpc, useMutation } from "../../hooks/trpc";
 import { useRouter } from "next/router";
 
 export const CreateScoutFormModal: React.FC = () => {
-  const [isOpen, setIsOpen] = useAtom(createPitModalAtom);
+  const [isOpen, setIsOpen] = useAtom(createFormModalAtom);
   const router = useRouter();
   const { invalidateQueries } = trpc.useContext();
 
