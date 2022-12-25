@@ -32,6 +32,15 @@ const EditMatchScout: React.FC = () => {
           +
         </button>
       </div>
+      <div className="mx-12 mt-8">
+        {data?.categories.map((category, i) => (
+          <div key={i}>
+            <h1 className="mb-4 text-3xl font-semibold">{category?.name}</h1>
+          </div>
+        ))}
+
+
+      </div>
       <CreateMatchQuestionModal />
     </div>
   );

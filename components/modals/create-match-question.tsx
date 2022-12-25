@@ -21,33 +21,28 @@ export const CreateMatchQuestionModal: React.FC = () => {
 
   const createCategoryQuery = useMutation("match.create-category", {
     onSuccess() {
-      invalidateQueries("match.get-by-team-id");
+      invalidateQueries("match.get-by-id");
     },
   });
 
   const createCategory = async (event: React.SyntheticEvent) => {
     event.preventDefault();
     const target = event.target as typeof event.target & {
-      
-    }
-  }
+      categoryName: { value: string };
+    };
 
-  
+    await createCategoryQuery.mutateAsync({
+      name: target.categoryName.value,
+      matchFormId: router.query.match_id as string
+    })
+  };
+
   const createQuestion = async (event: React.SyntheticEvent) => {
     event.preventDefault();
     const target = event.target as typeof event.target & {
-      questionName: { value: string };
-      questionType: { value: PitQuestionType };
+
     };
 
-    // await mutatePitScout.mutateAsync({
-    //   id: router.query.pit_id as string,
-    //   prompt: target.questionName.value,
-    //   type: target.questionType.value,
-    //   possibleResponses: selectOptions,
-    // });
-
-    setSelectOptions([]);
   };
 
   return (
@@ -112,14 +107,30 @@ export const CreateMatchQuestionModal: React.FC = () => {
                     </div>
                     <Tab.Panels className="mt-4">
                       <Tab.Panel>
+                        {/* Create Category Form */}
                         <form onSubmit={createCategory}>
                           <div className="my-2">
-                            
+                            <h1 className="mr-2 font-semibold">Name</h1>
+                            <input
+                              id="categoryName"
+                              className="w-full p-2 border-2 rounded-lg outline-none"
+                              required
+                              autoComplete="off"
+                            />
+                          </div>
+                          <div className="mt-4">
+                            <button
+                              type="submit"
+                              className="inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-pink-600 border border-transparent rounded-md hover:bg-pink-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+                              onClick={() => setIsOpen(false)}
+                            >
+                              Create
+                            </button>
                           </div>
                         </form>
                       </Tab.Panel>
                       <Tab.Panel>
-                        asdf
+                        {/* Create Question Form */}
                       </Tab.Panel>
                     </Tab.Panels>
                   </Tab.Group>
@@ -142,7 +153,7 @@ export const CreateMatchQuestionModal: React.FC = () => {
                       className="p-2 text-lg leading-tight border rounded shadow focus:outline-none focus:shadow-outline dark:bg-zinc-900 dark:text-white dark:border-zinc-700"
                       value={questionType}
                       onChange={(event: React.SyntheticEvent) => {
-                        
+
                       }}
                     >
                       <option value={PitQuestionType.TEXT}>Text input</option>
