@@ -3,7 +3,9 @@ import { useRouter } from "next/router";
 import { BiArrowBack } from "react-icons/bi";
 import { useQuery } from "../../../../../hooks/trpc";
 import { createMatchQuestionModalAtom } from "../../../../../server/atoms";
-import { CreateMatchQuestionModal } from "../../../../../components/modals/create-match-question";
+import { CreateMatchQuestionModal } from "../../../../../components/modals/create-match-category";
+import { BsPencil, BsPencilFill } from "react-icons/bs";
+
 
 const EditMatchScout: React.FC = () => {
   const router = useRouter();
@@ -34,12 +36,11 @@ const EditMatchScout: React.FC = () => {
       </div>
       <div className="mx-12 mt-8">
         {data?.categories.map((category, i) => (
-          <div key={i}>
-            <h1 className="mb-4 text-3xl font-semibold">{category?.name}</h1>
+          <div className="flex flex-row items-center mb-4" key={i}>
+            <h1 className="mr-4 text-3xl font-semibold">{category?.name}</h1>
+            <BsPencilFill size={20} />
           </div>
         ))}
-
-
       </div>
       <CreateMatchQuestionModal />
     </div>

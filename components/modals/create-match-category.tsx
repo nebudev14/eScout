@@ -79,36 +79,10 @@ export const CreateMatchQuestionModal: React.FC = () => {
                   as="h3"
                   className="text-lg font-medium leading-6 text-center text-gray-900"
                 >
-                  Add a question
+                  Add category
                 </Dialog.Title>
                 <div className="mt-2">
-                  <Tab.Group>
-                    <div className="flex flex-col items-start text-2xl md:text-lg md:items-center">
-                      <Tab.List className="grid grid-cols-2">
-                        <Tab
-                          className={({ selected }) =>
-                            selected
-                              ? "px-6 text-base py-2 outline-none border-b-2 border-pink-600"
-                              : "px-6 text-base py-2"
-                          }
-                        >
-                          Category
-                        </Tab>
-                        <Tab
-                          className={({ selected }) =>
-                            selected
-                              ? "px-6 text-base py-2 outline-none border-b-2 border-cyan-500"
-                              : "px-6 text-base py-2"
-                          }
-                        >
-                          Question
-                        </Tab>
-                      </Tab.List>
-                    </div>
-                    <Tab.Panels className="mt-4">
-                      <Tab.Panel>
-                        {/* Create Category Form */}
-                        <form onSubmit={createCategory}>
+                  <form onSubmit={createCategory}>
                           <div className="my-2">
                             <h1 className="mr-2 font-semibold">Name</h1>
                             <input
@@ -128,12 +102,6 @@ export const CreateMatchQuestionModal: React.FC = () => {
                             </button>
                           </div>
                         </form>
-                      </Tab.Panel>
-                      <Tab.Panel>
-                        {/* Create Question Form */}
-                      </Tab.Panel>
-                    </Tab.Panels>
-                  </Tab.Group>
                 </div>
 
                 {/* <form onSubmit={createQuestion}>
