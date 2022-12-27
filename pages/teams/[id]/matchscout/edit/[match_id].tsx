@@ -1,13 +1,12 @@
 import { useAtom } from "jotai";
 import { useRouter } from "next/router";
 import { BiArrowBack } from "react-icons/bi";
-import { useMutation, useQuery } from "../../../../../hooks/trpc";
+import { trpc, useMutation, useQuery } from "../../../../../hooks/trpc";
 import { createMatchQuestionModalAtom } from "../../../../../server/atoms";
 import { CreateMatchQuestionModal } from "../../../../../components/modals/create-match-category";
 import { BsFillTrashFill, BsPencilFill } from "react-icons/bs";
 import { useState } from "react";
 import { ConfirmationModal } from "../../../../../components/modals/confirmation-modal";
-
 
 const EditMatchScout: React.FC = () => {
   const router = useRouter();
@@ -16,9 +15,13 @@ const EditMatchScout: React.FC = () => {
     { id: router.query.match_id as string },
   ]);
 
+  const { invalidateQueries } = trpc.useContext();
+
   const [, setIsOpen] = useAtom(createMatchQuestionModalAtom);
 
+  // Category deletion
   const [isDeleteOpen, setIsDeleteOpen] = useState(false); // Delete confirmation modal
+  const [currentCategory, setCurrentCategory] = useState(""); //
 
   return (
     <div className="min-h-screen px-48 py-12 dark:text-white md:px-4">
@@ -46,6 +49,10 @@ const EditMatchScout: React.FC = () => {
             <BsFillTrashFill
               size={20}
               className="ml-4 text-red-400 duration-200 hover:text-red-500 hover:cursor-pointer"
+              onClick={() => {
+                setCurrentCategory(category.id);
+                setIsDeleteOpen(true);
+              }}
             />
           </div>
         ))}
@@ -57,7 +64,11 @@ const EditMatchScout: React.FC = () => {
         isOpen={isDeleteOpen}
         setIsOpen={setIsDeleteOpen}
         func={() => {
-          useMutation("match.")
+          useMutation("match.delete-category", {
+            onSuccess() {
+              invalidateQueries("match.get-by-id");
+            },
+          }).mutateAsync({ id: currentCategory });
         }}
       />
     </div>
