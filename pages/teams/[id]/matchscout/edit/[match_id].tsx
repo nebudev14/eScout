@@ -1,10 +1,12 @@
 import { useAtom } from "jotai";
 import { useRouter } from "next/router";
 import { BiArrowBack } from "react-icons/bi";
-import { useQuery } from "../../../../../hooks/trpc";
+import { useMutation, useQuery } from "../../../../../hooks/trpc";
 import { createMatchQuestionModalAtom } from "../../../../../server/atoms";
 import { CreateMatchQuestionModal } from "../../../../../components/modals/create-match-category";
-import { BsPencil, BsPencilFill } from "react-icons/bs";
+import { BsFillTrashFill, BsPencilFill } from "react-icons/bs";
+import { useState } from "react";
+import { ConfirmationModal } from "../../../../../components/modals/confirmation-modal";
 
 
 const EditMatchScout: React.FC = () => {
@@ -15,6 +17,8 @@ const EditMatchScout: React.FC = () => {
   ]);
 
   const [, setIsOpen] = useAtom(createMatchQuestionModalAtom);
+
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false); // Delete confirmation modal
 
   return (
     <div className="min-h-screen px-48 py-12 dark:text-white md:px-4">
@@ -39,10 +43,23 @@ const EditMatchScout: React.FC = () => {
           <div className="flex flex-row items-center mb-4" key={i}>
             <h1 className="mr-4 text-3xl font-semibold">{category?.name}</h1>
             <BsPencilFill size={20} />
+            <BsFillTrashFill
+              size={20}
+              className="ml-4 text-red-400 duration-200 hover:text-red-500 hover:cursor-pointer"
+            />
           </div>
         ))}
       </div>
       <CreateMatchQuestionModal />
+      <ConfirmationModal
+        action="Are you sure you want to delete this category?"
+        description="All other questions under this category will also be wiped!"
+        isOpen={isDeleteOpen}
+        setIsOpen={setIsDeleteOpen}
+        func={() => {
+          useMutation("match.")
+        }}
+      />
     </div>
   );
 };

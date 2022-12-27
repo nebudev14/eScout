@@ -1,4 +1,13 @@
-export const ConfirmationModal: React.FC = () => {
+import React, { Fragment, SetStateAction, useState } from "react";
+import { Dialog, Transition } from "@headlessui/react";
+
+export const ConfirmationModal: React.FC<{
+  action: string;
+  description: string;
+  func: () => void;
+  isOpen: boolean;
+  setIsOpen:(update: SetStateAction<boolean>) => void;
+}> = ({ action, description, func, isOpen, setIsOpen }) => {
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
@@ -33,13 +42,13 @@ export const ConfirmationModal: React.FC = () => {
                   as="h3"
                   className="text-lg font-medium leading-6 text-center text-gray-900"
                 >
-                  Create a competition
+                  Are you sure you want to {action}
                 </Dialog.Title>
                 <div className="mt-2">
                   <p className="text-sm text-gray-500"></p>
                 </div>
 
-                <form onSubmit={createComp}>
+                <form onSubmit={func}>
                   <div className="mt-4 ">
                     <h1 className="mr-2 font-semibold">Competition name</h1>
                     <input
@@ -67,4 +76,4 @@ export const ConfirmationModal: React.FC = () => {
       </Dialog>
     </Transition>
   );
-}
+};
