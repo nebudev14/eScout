@@ -22,6 +22,11 @@ const EditMatchScout: React.FC = () => {
   // Category deletion
   const [isDeleteOpen, setIsDeleteOpen] = useState(false); // Delete confirmation modal
   const [currentCategory, setCurrentCategory] = useState(""); //
+  const deleteCategoryQuery = useMutation("match.delete-category", {
+    onSuccess() {
+      invalidateQueries("match.get-by-id");
+    },
+  })
 
   return (
     <div className="min-h-screen px-48 py-12 dark:text-white md:px-4">
@@ -64,11 +69,8 @@ const EditMatchScout: React.FC = () => {
         isOpen={isDeleteOpen}
         setIsOpen={setIsDeleteOpen}
         func={() => {
-          useMutation("match.delete-category", {
-            onSuccess() {
-              invalidateQueries("match.get-by-id");
-            },
-          }).mutateAsync({ id: currentCategory });
+          deleteCategoryQuery.mutateAsync({ id: currentCategory });
+          setIsDeleteOpen(false);
         }}
       />
     </div>

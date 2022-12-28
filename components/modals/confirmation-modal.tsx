@@ -38,37 +38,21 @@ export const ConfirmationModal: React.FC<{
               leaveTo="opacity-0 scale-95"
             >
               <Dialog.Panel className="w-full max-w-md p-6 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+                <div onClick={() => setIsOpen(false)} className="inline font-bold text-red-500 hover:cursor-pointer text-large">X</div>
                 <Dialog.Title
                   as="h3"
-                  className="text-lg font-medium leading-6 text-center text-gray-900"
+                  className="mt-2 text-base font-medium leading-6 text-center text-gray-900"
                 >
-                  Are you sure you want to {action}
+                  {action}
                 </Dialog.Title>
                 <div className="mt-2">
                   <p className="text-sm text-gray-500"></p>
                 </div>
-
-                <form onSubmit={func}>
-                  <div className="mt-4 ">
-                    <h1 className="mr-2 font-semibold">Competition name</h1>
-                    <input
-                      id="compName"
-                      className="w-full p-2 border-2 rounded-lg outline-none"
-                      required
-                      autoComplete="off"
-                    />
-                  </div>
-
-                  <div className="mt-4">
-                    <button
-                      type="submit"
-                      className="inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-pink-600 border border-transparent rounded-md hover:bg-purple-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      Create
-                    </button>
-                  </div>
-                </form>
+              <Dialog.Description className="mb-5 text-sm text-center">{description}</Dialog.Description>
+              <div className="flex items-center justify-center text-white">
+                <button onClick={() => setIsOpen(false)} className="px-6 py-1 mx-4 bg-red-500 rounded-lg">No</button>
+                <button onClick={func} className="px-6 py-1 mx-4 bg-green-500 rounded-lg">Yes</button>
+              </div>
               </Dialog.Panel>
             </Transition.Child>
           </div>
