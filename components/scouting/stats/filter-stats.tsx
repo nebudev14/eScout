@@ -1,4 +1,4 @@
-import { percentageFormat, Statistics } from "../../../util/calculate-stats";
+import { Statistics } from "../../../util/calculate-stats";
 import { NumberStats } from "./number-stats";
 import { Tab } from "@headlessui/react";
 import { BallGraph } from "./graphs/ball-graph";

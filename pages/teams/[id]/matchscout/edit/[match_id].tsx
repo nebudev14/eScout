@@ -5,6 +5,8 @@ import { CreateMatchCategoryModal } from "../../../../../components/modals/creat
 import { BsFillTrashFill, BsPencilFill } from "react-icons/bs";
 import { useState } from "react";
 import { ConfirmationModal } from "../../../../../components/modals/confirmation-modal";
+import EditMatchModal from "../../../../../components/modals/edit-match-modal";
+import { MatchFormCategory } from "@prisma/client";
 
 const EditMatchScout: React.FC = () => {
   const router = useRouter();
@@ -14,16 +16,18 @@ const EditMatchScout: React.FC = () => {
   ]);
 
   const { invalidateQueries } = trpc.useContext();
-  const [isCategoryOpen, setIsCategoryOpen] = useState(false);
-
-  // Category deletion
+  const [currentCategory, setCurrentCategory] = useState<MatchFormCategory | null>(null); // Category selected for action
+  
+  // Modals
+  const [isCategoryOpen, setIsCategoryOpen] = useState(false); // Creating category modal
+  const [isEditOpen, setIsEditOpen] = useState(false); // Editing categories
   const [isDeleteOpen, setIsDeleteOpen] = useState(false); // Delete confirmation modal
-  const [currentCategory, setCurrentCategory] = useState(""); //
+
   const deleteCategoryQuery = useMutation("match.delete-category", {
     onSuccess() {
       invalidateQueries("match.get-by-id");
     },
-  })
+  });
 
   return (
     <div className="min-h-screen px-48 py-12 dark:text-white md:px-4">
@@ -47,26 +51,38 @@ const EditMatchScout: React.FC = () => {
         {data?.categories.map((category, i) => (
           <div className="flex flex-row items-center mb-4" key={i}>
             <h1 className="mr-4 text-3xl font-semibold">{category?.name}</h1>
-            <BsPencilFill size={20} />
+            <BsPencilFill
+              size={20}
+              className="hover:cursor-pointer"
+              onClick={() => {
+                setCurrentCategory(category);
+                setIsEditOpen(true);
+              }}
+            />
             <BsFillTrashFill
               size={20}
               className="ml-4 text-red-400 duration-200 hover:text-red-500 hover:cursor-pointer"
               onClick={() => {
-                setCurrentCategory(category.id);
+                setCurrentCategory(category);
                 setIsDeleteOpen(true);
               }}
             />
           </div>
         ))}
       </div>
-      <CreateMatchCategoryModal isOpen={isCategoryOpen} setIsOpen={setIsCategoryOpen} />
+      <CreateMatchCategoryModal
+        isOpen={isCategoryOpen}
+        setIsOpen={setIsCategoryOpen}
+      />
+      <EditMatchModal isOpen={isEditOpen} setIsOpen={setIsEditOpen} category={currentCategory!} />
+
       <ConfirmationModal
         action="Are you sure you want to delete this category?"
         description="All other questions under this category will also be wiped!"
         isOpen={isDeleteOpen}
         setIsOpen={setIsDeleteOpen}
         func={() => {
-          deleteCategoryQuery.mutateAsync({ id: currentCategory });
+          deleteCategoryQuery.mutateAsync({ id: currentCategory!.id });
           setIsDeleteOpen(false);
         }}
       />
