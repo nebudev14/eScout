@@ -4,12 +4,14 @@ import { CreateCompModal } from "../../modals/create-comp";
 import { useQuery } from "../../../hooks/trpc";
 import { calculateStats, sum } from "../../../util/calculate-stats";
 import { BsFillTrashFill } from "react-icons/bs";
+import { useState } from "react";
 
 export const ManageCompetitions: React.FC<{
   teamId: string;
   isAdmin: boolean;
 }> = ({ teamId, isAdmin }) => {
-  const [, setIsOpen] = useAtom(createCompModalAtom);
+  const [isOpen, setIsOpen] = useState(false);
+
   const { data: allComps } = useQuery([
     "comp.get-by-team-id",
     { teamId: teamId },
@@ -74,7 +76,7 @@ export const ManageCompetitions: React.FC<{
           </div>
         ))}
       </div>
-      <CreateCompModal />
+      <CreateCompModal isOpen={isOpen} setIsOpen={setIsOpen} />
     </div>
   );
 };

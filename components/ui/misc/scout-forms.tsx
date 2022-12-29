@@ -1,15 +1,16 @@
-import { useAtom } from "jotai";
 import { useQuery } from "../../../hooks/trpc";
-import { createFormModalAtom } from "../../../server/atoms";
 import { CreateScoutFormModal } from "../../modals/create-scout-form";
 import { BsPencilFill, BsFillTrashFill } from "react-icons/bs";
 import Link from "next/link";
+import { useState } from "react";
 
 export const ManageScoutForm: React.FC<{
   teamId: string;
   isAdmin: boolean;
 }> = ({ teamId, isAdmin }) => {
-  const [, setPitIsOpen] = useAtom(createFormModalAtom);
+
+  const [isOpen, setIsOpen] = useState(false);
+
   const { data: allMatchScouts } = useQuery([
     "match.get-by-team-id",
     { teamId: teamId },
@@ -26,7 +27,7 @@ export const ManageScoutForm: React.FC<{
         {isAdmin ? (
           <button
             className="px-6 py-2 mt-3 mb-6 text-sm text-white duration-200 rounded-md bg-cyan-500 hover:bg-cyan-600"
-            onClick={() => setPitIsOpen(true)}
+            onClick={() => setIsOpen(true)}
           >
             Create
           </button>
@@ -122,7 +123,7 @@ export const ManageScoutForm: React.FC<{
           ))}
         </div>
 
-        <CreateScoutFormModal />
+        <CreateScoutFormModal isOpen={isOpen} setIsOpen={setIsOpen} />
       </div>
     </div>
   );

@@ -4,9 +4,8 @@ import Protected from "../../components/auth/protected";
 import { useQuery } from "../../hooks/trpc";
 import { FaUserFriends } from "react-icons/fa";
 import { CgNotes } from "react-icons/cg";
-import { useAtom } from "jotai";
-import { createTeamModalAtom } from "../../server/atoms";
 import { CreateTeamModal } from "../../components/modals/create-team";
+import { useState } from "react";
 
 const ManageTeams: NextPage = () => {
   const { data: session } = useSession();
@@ -16,7 +15,7 @@ const ManageTeams: NextPage = () => {
     { userId: session?.user?.id as string },
   ]);
 
-  const [, setIsOpen] = useAtom(createTeamModalAtom);
+  const [isOpen, setIsOpen] = useState(false);
 
   if (isLoading || !userData)
     return (
@@ -55,7 +54,8 @@ const ManageTeams: NextPage = () => {
                   </div>
                   <h1 className="flex items-center mb-2 text-xl">
                     <CgNotes className="mr-2 text-pink-500" />{" "}
-                    {data.team.entries.filter(e => !e.prescout).length} scout entries
+                    {data.team.entries.filter((e) => !e.prescout).length} scout
+                    entries
                   </h1>
                   <h1 className="flex items-center mb-2 text-xl ">
                     <FaUserFriends className="mr-2 text-cyan-500" />{" "}
@@ -68,7 +68,7 @@ const ManageTeams: NextPage = () => {
         )}
       </div>
 
-      <CreateTeamModal />
+      <CreateTeamModal isOpen={isOpen} setIsOpen={setIsOpen} />
     </Protected>
   );
 };

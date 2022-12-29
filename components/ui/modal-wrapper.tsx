@@ -1,11 +1,9 @@
-import React, { Fragment, SetStateAction } from "react";
+import React, { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import { Modal } from "../../types/misc-types";
 
 const ModalWrapper: React.FC<
-  React.PropsWithChildren<{
-    isOpen: boolean;
-    setIsOpen: (update: SetStateAction<boolean>) => void;
-  }>
+  React.PropsWithChildren<Modal>
 > = ({ isOpen, setIsOpen, children }) => {
   return (
     <Transition appear show={isOpen} as={Fragment}>

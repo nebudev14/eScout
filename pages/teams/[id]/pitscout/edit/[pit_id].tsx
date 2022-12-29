@@ -1,10 +1,9 @@
-import { useAtom } from "jotai";
 import { useRouter } from "next/router";
 import { CreatePitQuestionModal } from "../../../../../components/modals/create-pit-question";
 import QuestionCard from "../../../../../components/ui/question-card";
 import { useQuery } from "../../../../../hooks/trpc";
-import { createPitQuestionModalAtom } from "../../../../../server/atoms";
 import { BiArrowBack } from "react-icons/bi";
+import { useState } from "react";
 
 const EditPitScout: React.FC = () => {
   const router = useRouter();
@@ -13,7 +12,7 @@ const EditPitScout: React.FC = () => {
     { id: router.query.pit_id as string },
   ]);
 
-  const [, setIsOpen] = useAtom(createPitQuestionModalAtom);
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className="min-h-screen px-48 py-12 dark:text-white md:px-4">
@@ -41,7 +40,7 @@ const EditPitScout: React.FC = () => {
         </div>
       </div>
 
-      <CreatePitQuestionModal />
+      <CreatePitQuestionModal isOpen={isOpen} setIsOpen={setIsOpen} />
     </div>
   );
 };

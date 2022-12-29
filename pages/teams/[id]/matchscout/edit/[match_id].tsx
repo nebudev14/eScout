@@ -1,9 +1,7 @@
-import { useAtom } from "jotai";
 import { useRouter } from "next/router";
 import { BiArrowBack } from "react-icons/bi";
 import { trpc, useMutation, useQuery } from "../../../../../hooks/trpc";
-import { createMatchQuestionModalAtom } from "../../../../../server/atoms";
-import { CreateMatchQuestionModal } from "../../../../../components/modals/create-match-category";
+import { CreateMatchCategoryModal } from "../../../../../components/modals/create-match-category";
 import { BsFillTrashFill, BsPencilFill } from "react-icons/bs";
 import { useState } from "react";
 import { ConfirmationModal } from "../../../../../components/modals/confirmation-modal";
@@ -16,8 +14,7 @@ const EditMatchScout: React.FC = () => {
   ]);
 
   const { invalidateQueries } = trpc.useContext();
-
-  const [, setIsOpen] = useAtom(createMatchQuestionModalAtom);
+  const [isCategoryOpen, setIsCategoryOpen] = useState(false);
 
   // Category deletion
   const [isDeleteOpen, setIsDeleteOpen] = useState(false); // Delete confirmation modal
@@ -41,7 +38,7 @@ const EditMatchScout: React.FC = () => {
         </h1>
         <button
           className="px-4 py-2 text-white bg-pink-600 rounded-lg hover:bg-pink-700"
-          onClick={() => setIsOpen(true)}
+          onClick={() => setIsCategoryOpen(true)}
         >
           +
         </button>
@@ -62,7 +59,7 @@ const EditMatchScout: React.FC = () => {
           </div>
         ))}
       </div>
-      <CreateMatchQuestionModal />
+      <CreateMatchCategoryModal isOpen={isCategoryOpen} setIsOpen={setIsCategoryOpen} />
       <ConfirmationModal
         action="Are you sure you want to delete this category?"
         description="All other questions under this category will also be wiped!"
