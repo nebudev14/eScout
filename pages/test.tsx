@@ -9,7 +9,7 @@ import { MatchFormQuestion } from "@prisma/client";
 
 const Test: NextPage = () => {
   const questions: MatchFormQuestion[] = [
-    
+
   ];
   return (
     <div className="flex flex-col min-h-screen py-4 dark:text-white px-96 lg:px-4">
@@ -21,7 +21,7 @@ const Test: NextPage = () => {
         <ScoreBoard id="lmao" label="Low Goal" />
       </div>
       <BoolInput label="Mobility" />
-      <FormInput label="yis aaron clinically insane" id="test" />
+
       <CounterInput label="fsdafda"/> */}
       {/* <ScoreBoard id="lmao" label="High Goal" />
           <ScoreBoard id="lmao" label="High Goal" /> */}

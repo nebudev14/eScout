@@ -42,7 +42,7 @@ const PitScout: NextPage = () => {
     event.preventDefault();
 
     const target = event.target as any; // i am sorry
-    let results: any = []; // i am sorry squared
+    let results: any = []; // i am sorry^2
     data!
       ?.filter((e) => e.id === pitScout)[0]!
       ?.questions.forEach((e) => {

@@ -3,7 +3,7 @@ import { useSession } from "next-auth/react";
 import { Answer } from "../../../types/form-types";
 import React from "react";
 import { ScoreBoard } from "./score-board";
-
+import { FormInput } from "./form-input";
 interface Props {
   questions: MatchFormQuestion[];
 }
@@ -30,7 +30,7 @@ export default class EntryForm extends React.Component<Props, State> {
     currentAnswer.slot1 = newAnswer.slot1; // gross
     currentAnswer.slot2 = newAnswer.slot2;
     currentAnswer.slot3 = newAnswer.slot3;
-    
+
     return answers;
   }
 
@@ -44,6 +44,7 @@ export default class EntryForm extends React.Component<Props, State> {
     return (
       <div className="min-h-screen dark:text-white">
         <ScoreBoard label="ya" id="yea" updateState={this.updateState} />
+        <FormInput label="yis aaron clinically insane" id="test" />
         {/* {this.props.questions.map((question, i) => (
           <div></div>
         ))} */}
