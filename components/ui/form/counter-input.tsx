@@ -5,7 +5,7 @@ import { useState } from "react";
 const CounterInput: React.FC<{
   label: string;
   id: string;
-  updateState: (answer: Answer) => void;
+  updateState?: (answer: Answer) => void;
 }> = ({ label, id, updateState }) => {
   const [counter, setCounter] = useState(0);
 
@@ -20,7 +20,7 @@ const CounterInput: React.FC<{
             className="flex items-center justify-center w-full h-full px-4 text-center bg-red-400 hover:cursor-pointer border-slate-300 dark:border-zinc-600"
             onClick={() => {
               setCounter(counter - 1);
-              
+
             }}
           >
             -

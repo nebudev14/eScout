@@ -1,7 +1,8 @@
 import { Container } from "../container";
+import { Answer } from "../../../types/form-types";
 
-export const BoolInput: React.FC<{ label: string; id: string; }> = ({
-  label, id
+export const BoolInput: React.FC<{ label: string; id: string; updateState?: (answer: Answer) => void; }> = ({
+  label, id, updateState
 }) => {
   return (
     <div className="my-4">

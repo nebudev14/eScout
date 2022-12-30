@@ -2,15 +2,23 @@ import React, { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Modal } from "../../types/misc-types";
 
-const ModalWrapper: React.FC<
-  React.PropsWithChildren<Modal>
-> = ({ isOpen, setIsOpen, children }) => {
+const ModalWrapper: React.FC<React.PropsWithChildren<Modal>> = ({
+  isOpen,
+  setIsOpen,
+  onClose,
+  children,
+}) => {
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
         as="div"
         className="relative z-10"
-        onClose={() => setIsOpen(false)}
+        onClose={() => {
+          setIsOpen(false);
+          {
+            onClose ? onClose() : null;
+          }
+        }}
       >
         <Transition.Child
           as={Fragment}

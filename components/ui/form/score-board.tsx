@@ -5,7 +5,7 @@ import { Container } from "../container";
 export const ScoreBoard: React.FC<{
   label: string;
   id: string;
-  updateState: (answer: Answer) => void;
+  updateState?: (answer: Answer) => void;
 }> = ({ label, id, updateState }) => {
   const [shot, setShot] = useState(0);
   const [total, setTotal] = useState(0);
@@ -32,11 +32,15 @@ export const ScoreBoard: React.FC<{
             onClick={() => {
               setShot(shot + 1);
               setTotal(total + 1);
-              updateState({
-                questionId: id,
-                slot1: shot.toString(),
-                slot2: total.toString(),
-              });
+              {
+                updateState
+                  ? updateState({
+                      questionId: id,
+                      slot1: shot.toString(),
+                      slot2: total.toString(),
+                    })
+                  : null;
+              }
             }}
           >
             Score
@@ -46,11 +50,15 @@ export const ScoreBoard: React.FC<{
             type="button"
             onClick={() => {
               setTotal(total + 1);
-              updateState({
-                questionId: id,
-                slot1: shot.toString(),
-                slot2: total.toString(),
-              });
+              {
+                updateState
+                  ? updateState({
+                      questionId: id,
+                      slot1: shot.toString(),
+                      slot2: total.toString(),
+                    })
+                  : null;
+              }
             }}
           >
             Miss

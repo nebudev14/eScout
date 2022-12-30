@@ -4,6 +4,10 @@ import ModalWrapper from "../ui/modal-wrapper";
 import { MatchFormCategory } from "@prisma/client";
 import React, { useState } from "react";
 import { ScoreBoard } from "../ui/form/score-board";
+import { MatchQuestionType } from "@prisma/client";
+import { BoolInput } from "../ui/form/bool-input";
+import CounterInput from "../ui/form/counter-input";
+import { FormInput } from "../ui/form/form-input";
 
 const EditMatchModal: React.FC<{
   isOpen: boolean;
@@ -11,17 +15,33 @@ const EditMatchModal: React.FC<{
   category: MatchFormCategory;
 }> = ({ isOpen, setIsOpen, category }) => {
   const [desiredPrompt, setDesiredPrompt] = useState("");
-  const [desiredType, setDesiredType] = useState("");
+  const [desiredType, setDesiredType] = useState<MatchQuestionType>("SCORE");
 
-  function renderDesiredQuestion(questionType: string): React.FunctionComponent | undefined {
-    switch(questionType) {
-      case "scoreboard":
-        return <ScoreBoard  />
+  function renderDesiredQuestion(
+    questionType: MatchQuestionType,
+    label: string
+  ) {
+    switch (questionType) {
+      case "SCORE":
+        return <ScoreBoard label={label} id="" />;
+      case "BOOL":
+        return <BoolInput label={label} id="" />;
+      case "COUNTER":
+        return <CounterInput label={label} id="" />;
+      case "INPUT":
+        return <FormInput label={label} id="" />;
     }
   }
 
   return (
-    <ModalWrapper isOpen={isOpen} setIsOpen={setIsOpen}>
+    <ModalWrapper
+      isOpen={isOpen}
+      setIsOpen={setIsOpen}
+      onClose={() => {
+        setDesiredPrompt("");
+        setDesiredType("SCORE");
+      }}
+    >
       <Dialog.Title className="mb-4 text-2xl">
         Editing <b>{category === null ? null : category.name}</b>
       </Dialog.Title>
@@ -46,18 +66,20 @@ const EditMatchModal: React.FC<{
           id="questionType"
           className="p-2 text-lg leading-tight border rounded shadow focus:outline-none focus:shadow-outline dark:bg-zinc-900 dark:text-white dark:border-zinc-700"
           onChange={(e: React.SyntheticEvent) =>
-            setDesiredType((e.target as HTMLSelectElement).value)
+            setDesiredType(
+              (e.target as HTMLSelectElement).value as MatchQuestionType
+            )
           }
         >
-          <option value="scoreboard">Scoreboard</option>
-          <option value="bool">Yes/No</option>
-          <option value="counter">Counter</option>
-          <option value="input">Text Input</option>
+          <option value={MatchQuestionType.SCORE}>Scoreboard</option>
+          <option value={MatchQuestionType.BOOL}>Yes/No</option>
+          <option value={MatchQuestionType.COUNTER}>Counter</option>
+          <option value={MatchQuestionType.INPUT}>Text Input</option>
         </select>
         <Dialog.Title className="my-3 font-semibold">
           Question Preview
         </Dialog.Title>
-        {}
+        {renderDesiredQuestion(desiredType, desiredPrompt)}
       </form>
     </ModalWrapper>
   );
