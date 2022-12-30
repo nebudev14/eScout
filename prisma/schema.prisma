@@ -166,10 +166,9 @@ model MatchFormCategory {
 model MatchFormQuestion {
   id              String              @id @default(cuid())
   prompt          String
-  options         PromptSelection[] // For select options
+  options         String[]
   questionType    MatchQuestionType
   promptType      MatchPromptType
-  scoreMultiplier Int
   matchCategoryId String
   matchCategory   MatchFormCategory   @relation(fields: [matchCategoryId], references: [id], onDelete: Cascade)
   responses       MatchFormResponse[]
@@ -201,17 +200,7 @@ model MatchFormAnswers {
   // Data Fields
   slot1 String?
   slot2 String?
-  slot3 PromptSelection[]
-}
-
-model PromptSelection {
-  id                  String             @id @default(cuid())
-  name                String
-  scoreMultiplier     Int
-  matchFormAnswersId  String?
-  matchFormQuestionId String?
-  MatchFormAnswers    MatchFormAnswers?  @relation(fields: [matchFormAnswersId], references: [id])
-  MatchFormQuestion   MatchFormQuestion? @relation(fields: [matchFormQuestionId], references: [id])
+  slot3 String[]
 }
 
 enum MatchQuestionType {

@@ -24,7 +24,7 @@ const EditMatchModal: React.FC<{
       invalidateQueries("match.get-by-id");
     }
   })
-  
+
   const createQuestion = async (event: React.SyntheticEvent) => {
     event.preventDefault();
     const target = event.target as typeof event.target & {
@@ -38,7 +38,6 @@ const EditMatchModal: React.FC<{
     await createQuestionQuery.mutateAsync({
       prompt: target.questionPrompt.value,
       questionType: target.questionType.value,
-      scoreMultiplier: (isNumerical ? Number(target.scoreValue.value) : 0),
       promptType: (isNumerical ? MatchPromptType.NUMBER : MatchPromptType.TEXT),
       categoryId: category.id
     })
@@ -90,23 +89,6 @@ const EditMatchModal: React.FC<{
           <option value={MatchQuestionType.SELECT}>Select</option>
           <option value={MatchQuestionType.INPUT}>Text Input</option>
         </select>
-
-        {desiredType === MatchQuestionType.SCORE ||
-        desiredType === MatchQuestionType.COUNTER ? (
-          <div className="grid grid-cols-2 my-2">
-            <Container>
-              <label className="p-2 text-lg leading-tight border rounded shadow bg-slate-200 dark:bg-zinc-900 dark:border-zinc-600 focus:outline-none focus:shadow-outline">
-                Score
-              </label>
-              <input
-                required
-                id="scoreValue"
-                type="number"
-                className="p-2 text-lg leading-tight border rounded shadow focus:outline-none focus:shadow-outline dark:text-white dark:bg-zinc-900 dark:border-zinc-700"
-              />
-            </Container>
-          </div>
-        ) : null}
 
         <Dialog.Title className="my-3 font-semibold">
           Question Preview

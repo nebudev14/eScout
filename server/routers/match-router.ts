@@ -47,8 +47,7 @@ export const matchRouter = createRouter()
       categoryId: z.string(),
       prompt: z.string(),
       questionType: z.nativeEnum(MatchQuestionType),
-      promptType: z.nativeEnum(MatchPromptType),
-      scoreMultiplier: z.number(),
+      promptType: z.nativeEnum(MatchPromptType)
     }),
     async resolve({ input, ctx }) {
       return await ctx.prisma.matchFormQuestion.create({
@@ -57,7 +56,6 @@ export const matchRouter = createRouter()
           prompt: input.prompt,
           questionType: input.questionType,
           promptType: input.promptType,
-          scoreMultiplier: input.scoreMultiplier,
         },
       });
     },
