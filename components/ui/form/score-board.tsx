@@ -1,12 +1,9 @@
 import React, { useState } from "react";
 import { Answer } from "../../../types/form-types";
+import { MatchFormInput } from "../../../types/misc-types";
 import { Container } from "../container";
 
-export const ScoreBoard: React.FC<{
-  label: string;
-  id: string;
-  updateState?: (answer: Answer) => void;
-}> = ({ label, id, updateState }) => {
+export const ScoreBoard: React.FC<MatchFormInput> = ({ label, id, updateState }) => {
   const [shot, setShot] = useState(0);
   const [total, setTotal] = useState(0);
 

@@ -13,7 +13,6 @@ const EditMatchModal: React.FC<{
   setIsOpen: (update: SetStateAction<boolean>) => void;
   category: MatchFormCategory;
 }> = ({ isOpen, setIsOpen, category }) => {
-
   const [desiredPrompt, setDesiredPrompt] = useState("");
   const [desiredType, setDesiredType] = useState<MatchQuestionType>("SCORE");
 
@@ -22,8 +21,8 @@ const EditMatchModal: React.FC<{
   const createQuestionQuery = useMutation("match.add-question", {
     onSuccess() {
       invalidateQueries("match.get-by-id");
-    }
-  })
+    },
+  });
 
   const createQuestion = async (event: React.SyntheticEvent) => {
     event.preventDefault();
@@ -33,16 +32,18 @@ const EditMatchModal: React.FC<{
       scoreValue: { value: string };
     };
 
-    const isNumerical = target.questionType.value === "SCORE" || target.questionType.value === "COUNTER";
+    const isNumerical =
+      target.questionType.value === "SCORE" ||
+      target.questionType.value === "COUNTER";
 
     await createQuestionQuery.mutateAsync({
       prompt: target.questionPrompt.value,
       questionType: target.questionType.value,
-      promptType: (isNumerical ? MatchPromptType.NUMBER : MatchPromptType.TEXT),
-      categoryId: category.id
-    })
+      promptType: isNumerical ? MatchPromptType.NUMBER : MatchPromptType.TEXT,
+      categoryId: category.id,
+    });
 
-    setIsOpen(false)
+    setIsOpen(false);
   };
 
   return (

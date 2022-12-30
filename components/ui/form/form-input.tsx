@@ -1,6 +1,7 @@
+import { MatchFormInput } from "../../../types/misc-types";
 import { Container } from "../container";
 
-export const FormInput: React.FC<{ label: string; id: string }> = ({
+export const FormInput: React.FC<MatchFormInput> = ({
   label,
   id,
 }) => {

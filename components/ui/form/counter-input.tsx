@@ -1,12 +1,9 @@
 import { Container } from "../container";
 import { Answer } from "../../../types/form-types";
 import { useState } from "react";
+import { MatchFormInput } from "../../../types/misc-types";
 
-export const CounterInput: React.FC<{
-  label: string;
-  id: string;
-  updateState?: (answer: Answer) => void;
-}> = ({ label, id, updateState }) => {
+export const CounterInput: React.FC<MatchFormInput> = ({ label, id, updateState }) => {
   const [counter, setCounter] = useState(0);
 
   return (

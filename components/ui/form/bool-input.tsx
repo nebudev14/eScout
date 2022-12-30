@@ -1,7 +1,8 @@
 import { Container } from "../container";
 import { Answer } from "../../../types/form-types";
+import { MatchFormInput } from "../../../types/misc-types";
 
-export const BoolInput: React.FC<{ label: string; id: string; updateState?: (answer: Answer) => void; }> = ({
+export const BoolInput: React.FC<MatchFormInput> = ({
   label, id, updateState
 }) => {
   return (
