@@ -7,7 +7,7 @@ import { useState } from "react";
 import { ConfirmationModal } from "../../../../../components/modals/confirmation-modal";
 import EditMatchModal from "../../../../../components/modals/edit-match-modal";
 import { MatchFormCategory } from "@prisma/client";
-import { renderDesiredQuestion } from "../../../../../util/render-question-model";
+import { renderDesiredQuestionDisplay } from "../../../../../util/render-question-model";
 
 const EditMatchScout: React.FC = () => {
   const router = useRouter();
@@ -76,7 +76,7 @@ const EditMatchScout: React.FC = () => {
             <div>
               {category.questions.map((question, j) => (
                 <div key={j} className="my-8">
-                  {renderDesiredQuestion(question.questionType, question.prompt as string)}
+                  {renderDesiredQuestionDisplay(question.questionType, question.prompt as string)}
                 </div>
               ))}
             </div>

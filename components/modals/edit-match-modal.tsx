@@ -3,14 +3,10 @@ import { SetStateAction } from "jotai";
 import ModalWrapper from "../ui/modal-wrapper";
 import { MatchFormCategory } from "@prisma/client";
 import React, { useState } from "react";
-import { ScoreBoard } from "../ui/form/score-board";
 import { MatchQuestionType, MatchPromptType } from "@prisma/client";
-import { BoolInput } from "../ui/form/bool-input";
-import { CounterInput } from "../ui/form/counter-input";
-import { FormInput } from "../ui/form/form-input";
 import { Container } from "../ui/container";
 import { trpc, useMutation } from "../../hooks/trpc";
-import { renderDesiredQuestion } from "../../util/render-question-model";
+import { renderDesiredQuestionDisplay } from "../../util/render-question-model";
 
 const EditMatchModal: React.FC<{
   isOpen: boolean;
@@ -37,11 +33,13 @@ const EditMatchModal: React.FC<{
       scoreValue: { value: string };
     };
 
+    const isNumerical = target.questionType.value === "SCORE" || target.questionType.value === "COUNTER";
+
     await createQuestionQuery.mutateAsync({
       prompt: target.questionPrompt.value,
       questionType: target.questionType.value,
-      scoreMultiplier: Number(target.scoreValue.value),
-      promptType: (target.questionType.value === "SCORE" || target.questionType.value === "COUNTER" ? MatchPromptType.NUMBER : MatchPromptType.TEXT),
+      scoreMultiplier: (isNumerical ? Number(target.scoreValue.value) : 0),
+      promptType: (isNumerical ? MatchPromptType.NUMBER : MatchPromptType.TEXT),
       categoryId: category.id
     })
 
@@ -89,6 +87,7 @@ const EditMatchModal: React.FC<{
           <option value={MatchQuestionType.SCORE}>Scoreboard</option>
           <option value={MatchQuestionType.BOOL}>Yes/No</option>
           <option value={MatchQuestionType.COUNTER}>Counter</option>
+          <option value={MatchQuestionType.SELECT}>Select</option>
           <option value={MatchQuestionType.INPUT}>Text Input</option>
         </select>
 
@@ -112,7 +111,7 @@ const EditMatchModal: React.FC<{
         <Dialog.Title className="my-3 font-semibold">
           Question Preview
         </Dialog.Title>
-        {renderDesiredQuestion(desiredType, desiredPrompt)}
+        {renderDesiredQuestionDisplay(desiredType, desiredPrompt)}
         <button
           type="submit"
           className="inline-flex justify-center px-4 py-2 mt-4 text-sm font-medium text-white bg-pink-600 border border-transparent rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"

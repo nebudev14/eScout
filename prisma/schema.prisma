@@ -159,19 +159,19 @@ model MatchFormCategory {
   id          String              @id @default(cuid())
   name        String
   matchFormId String
-  matchForm   MatchForm           @relation(fields: [matchFormId], references: [id])
+  matchForm   MatchForm           @relation(fields: [matchFormId], references: [id], onDelete: Cascade)
   questions   MatchFormQuestion[]
 }
 
 model MatchFormQuestion {
   id              String              @id @default(cuid())
-  prompt          String?
-  prompts         String[]
+  prompt          String
+  options         PromptSelection[] // For select options
   questionType    MatchQuestionType
   promptType      MatchPromptType
   scoreMultiplier Int
   matchCategoryId String
-  matchCategory   MatchFormCategory   @relation(fields: [matchCategoryId], references: [id])
+  matchCategory   MatchFormCategory   @relation(fields: [matchCategoryId], references: [id], onDelete: Cascade)
   responses       MatchFormResponse[]
   answers         MatchFormAnswers[]
 }
@@ -201,7 +201,17 @@ model MatchFormAnswers {
   // Data Fields
   slot1 String?
   slot2 String?
-  slot3 String[]
+  slot3 PromptSelection[]
+}
+
+model PromptSelection {
+  id                  String             @id @default(cuid())
+  name                String
+  scoreMultiplier     Int
+  matchFormAnswersId  String?
+  matchFormQuestionId String?
+  MatchFormAnswers    MatchFormAnswers?  @relation(fields: [matchFormAnswersId], references: [id])
+  MatchFormQuestion   MatchFormQuestion? @relation(fields: [matchFormQuestionId], references: [id])
 }
 
 enum MatchQuestionType {

@@ -8,7 +8,6 @@ export const ManageScoutForm: React.FC<{
   teamId: string;
   isAdmin: boolean;
 }> = ({ teamId, isAdmin }) => {
-
   const [isOpen, setIsOpen] = useState(false);
 
   const { data: allMatchScouts } = useQuery([
@@ -37,45 +36,39 @@ export const ManageScoutForm: React.FC<{
         </h1>
         <div className="grid w-full grid-cols-3 gap-6 md:grid-cols-1 md:gap-2">
           {allMatchScouts?.map((matchScout, i) => (
-            <Link
-              key={i}
-              href={`/teams/${teamId}/pitscout/${matchScout.id}`}
-              passHref
-            >
-              <div className="py-2 mb-6 border shadow-lg hover:cursor-pointer rounded-xl bg-slate-50 dark:bg-zinc-900 dark:border-zinc-700">
-                <div className="px-5 py-4">
-                  <div className="flex items-center justify-start mb-2">
-                    <h1 className="mr-auto text-xl">
-                      <b>{matchScout.name}</b>
-                    </h1>
-                    {isAdmin ? (
-                      <Link
-                        href={`/teams/${teamId}/matchscout/edit/${matchScout.id}`}
-                        passHref
-                      >
-                        <BsPencilFill
-                          size={25}
-                          className="duration-150 hover:cursor-pointer hover:text-pink-600"
-                        />
-                      </Link>
-                    ) : null}
-                  </div>
-                  <div className="flex items-center justify-center">  
-                    <h1 className="mr-auto text-lg">
-                      {matchScout?.categories.reduce(
-                        (x, y) => x + y.questions.length,
-                        0
-                      )}{" "}
-                      Questions
-                    </h1>
-                    <BsFillTrashFill
-                      size={20}
-                      className="ml-2 text-red-500 duration-150 hover:cursor-pointer hover:text-red-600"
-                    />
-                  </div>
+            <div className="py-2 mb-6 border shadow-lg rounded-xl bg-slate-50 dark:bg-zinc-900 dark:border-zinc-700">
+              <div className="px-5 py-4">
+                <div className="flex items-center justify-start mb-2">
+                  <h1 className="mr-auto text-xl">
+                    <b>{matchScout.name}</b>
+                  </h1>
+                  {isAdmin ? (
+                    <Link
+                      href={`/teams/${teamId}/matchscout/edit/${matchScout.id}`}
+                      passHref
+                    >
+                      <BsPencilFill
+                        size={25}
+                        className="duration-150 hover:cursor-pointer hover:text-pink-600"
+                      />
+                    </Link>
+                  ) : null}
+                </div>
+                <div className="flex items-center justify-center">
+                  <h1 className="mr-auto text-lg">
+                    {matchScout?.categories.reduce(
+                      (x, y) => x + y.questions.length,
+                      0
+                    )}{" "}
+                    Questions
+                  </h1>
+                  <BsFillTrashFill
+                    size={20}
+                    className="ml-2 text-red-500 duration-150 hover:cursor-pointer hover:text-red-600"
+                  />
                 </div>
               </div>
-            </Link>
+            </div>
           ))}
         </div>
       </div>
