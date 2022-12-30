@@ -3,10 +3,12 @@ import { ScoreBoard } from "../components/ui/form/score-board";
 import { BoolInput } from "../components/ui/form/bool-input";
 import { CounterInput } from "../components/ui/form/counter-input";
 import { FormInput } from "../components/ui/form/form-input";
+import { SelectInput } from "../components/ui/form/select-input";
 
 export function renderDesiredQuestionDisplay(
   questionType: MatchQuestionType,
-  label: string
+  label: string,
+  options?: string[]
 ) {
   switch (questionType) {
     case "SCORE":
@@ -17,5 +19,7 @@ export function renderDesiredQuestionDisplay(
       return <CounterInput label={label} id="" />;
     case "INPUT":
       return <FormInput label={label} id="" />;
+    case "SELECT":
+      return <SelectInput label={label} id="" options={options} />;
   }
 }

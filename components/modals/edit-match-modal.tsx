@@ -16,6 +16,10 @@ const EditMatchModal: React.FC<{
   const [desiredPrompt, setDesiredPrompt] = useState("");
   const [desiredType, setDesiredType] = useState<MatchQuestionType>("SCORE");
 
+  const [selectOptions, setSelectOptions] = useState<string[]>([]); // If the user wants to add a select input
+
+  const [optionInput, setOptionInput] = useState<string>("");
+
   const { invalidateQueries } = trpc.useContext();
 
   const createQuestionQuery = useMutation("match.add-question", {
@@ -42,6 +46,10 @@ const EditMatchModal: React.FC<{
       promptType: isNumerical ? MatchPromptType.NUMBER : MatchPromptType.TEXT,
       categoryId: category.id,
     });
+    setDesiredPrompt("");
+    setSelectOptions([]);
+    setOptionInput("");
+    setDesiredType("SCORE");
 
     setIsOpen(false);
   };
@@ -52,6 +60,8 @@ const EditMatchModal: React.FC<{
       setIsOpen={setIsOpen}
       onClose={() => {
         setDesiredPrompt("");
+        setSelectOptions([]);
+        setOptionInput("");
         setDesiredType("SCORE");
       }}
     >
@@ -91,10 +101,40 @@ const EditMatchModal: React.FC<{
           <option value={MatchQuestionType.INPUT}>Text Input</option>
         </select>
 
+        {desiredType === MatchQuestionType.SELECT ? (
+          <div className="mb-3">
+            <Dialog.Title>Add Option</Dialog.Title>
+            <input
+              className="p-1 mb-2 border-2 rounded-l-lg outline-none"
+              value={optionInput}
+              onChange={async (event: React.SyntheticEvent) =>
+                setOptionInput((event.target as HTMLInputElement).value)
+              }
+            />
+            <button
+              formNoValidate
+              type="button"
+              className="px-3 py-1 text-lg text-white rounded-r-lg bg-cyan-500"
+              onClick={() => {
+                setSelectOptions([...selectOptions, optionInput]);
+                setOptionInput("");
+              }}
+            >
+              +
+            </button>
+            {selectOptions.map((option, i) => (
+              <div className="flex items-center my-2">
+                <input type="radio" key={i} name={option} />
+                  <label className="ml-2">{option}</label>
+                </div>
+            ))}
+          </div>
+        ) : null}
+
         <Dialog.Title className="my-3 font-semibold">
           Question Preview
         </Dialog.Title>
-        {renderDesiredQuestionDisplay(desiredType, desiredPrompt)}
+        {renderDesiredQuestionDisplay(desiredType, desiredPrompt, selectOptions)}
         <button
           type="submit"
           className="inline-flex justify-center px-4 py-2 mt-4 text-sm font-medium text-white bg-pink-600 border border-transparent rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
