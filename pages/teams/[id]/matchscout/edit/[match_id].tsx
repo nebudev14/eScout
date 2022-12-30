@@ -7,6 +7,7 @@ import { useState } from "react";
 import { ConfirmationModal } from "../../../../../components/modals/confirmation-modal";
 import EditMatchModal from "../../../../../components/modals/edit-match-modal";
 import { MatchFormCategory } from "@prisma/client";
+import { renderDesiredQuestion } from "../../../../../util/render-question-model";
 
 const EditMatchScout: React.FC = () => {
   const router = useRouter();
@@ -16,8 +17,9 @@ const EditMatchScout: React.FC = () => {
   ]);
 
   const { invalidateQueries } = trpc.useContext();
-  const [currentCategory, setCurrentCategory] = useState<MatchFormCategory | null>(null); // Category selected for action
-  
+  const [currentCategory, setCurrentCategory] =
+    useState<MatchFormCategory | null>(null); // Category selected for action
+
   // Modals
   const [isCategoryOpen, setIsCategoryOpen] = useState(false); // Creating category modal
   const [isEditOpen, setIsEditOpen] = useState(false); // Editing categories
@@ -47,26 +49,37 @@ const EditMatchScout: React.FC = () => {
           +
         </button>
       </div>
-      <div className="mx-12 mt-8">
+      <div className="px-12 mx-12 mt-8">
         {data?.categories.map((category, i) => (
-          <div className="flex flex-row items-center mb-4" key={i}>
-            <h1 className="mr-4 text-3xl font-semibold">{category?.name}</h1>
-            <BsPencilFill
-              size={20}
-              className="hover:cursor-pointer"
-              onClick={() => {
-                setCurrentCategory(category);
-                setIsEditOpen(true);
-              }}
-            />
-            <BsFillTrashFill
-              size={20}
-              className="ml-4 text-red-400 duration-200 hover:text-red-500 hover:cursor-pointer"
-              onClick={() => {
-                setCurrentCategory(category);
-                setIsDeleteOpen(true);
-              }}
-            />
+          <div key={i} className="my-4">
+            <div className="flex flex-row items-center mb-4 border-b-2 dark:border-zinc-700">
+              <h1 className="py-2 mr-4 text-3xl font-semibold">
+                {category?.name}
+              </h1>
+              <BsPencilFill
+                size={20}
+                className="hover:cursor-pointer"
+                onClick={() => {
+                  setCurrentCategory(category);
+                  setIsEditOpen(true);
+                }}
+              />
+              <BsFillTrashFill
+                size={20}
+                className="ml-4 text-red-400 duration-200 hover:text-red-500 hover:cursor-pointer"
+                onClick={() => {
+                  setCurrentCategory(category);
+                  setIsDeleteOpen(true);
+                }}
+              />
+            </div>
+            <div>
+              {category.questions.map((question, j) => (
+                <div key={j} className="my-8">
+                  {renderDesiredQuestion(question.questionType, question.prompt as string)}
+                </div>
+              ))}
+            </div>
           </div>
         ))}
       </div>
@@ -74,7 +87,11 @@ const EditMatchScout: React.FC = () => {
         isOpen={isCategoryOpen}
         setIsOpen={setIsCategoryOpen}
       />
-      <EditMatchModal isOpen={isEditOpen} setIsOpen={setIsEditOpen} category={currentCategory!} />
+      <EditMatchModal
+        isOpen={isEditOpen}
+        setIsOpen={setIsEditOpen}
+        category={currentCategory!}
+      />
 
       <ConfirmationModal
         action="Are you sure you want to delete this category?"

@@ -6,10 +6,11 @@ import React, { useState } from "react";
 import { ScoreBoard } from "../ui/form/score-board";
 import { MatchQuestionType, MatchPromptType } from "@prisma/client";
 import { BoolInput } from "../ui/form/bool-input";
-import CounterInput from "../ui/form/counter-input";
+import { CounterInput } from "../ui/form/counter-input";
 import { FormInput } from "../ui/form/form-input";
 import { Container } from "../ui/container";
 import { trpc, useMutation } from "../../hooks/trpc";
+import { renderDesiredQuestion } from "../../util/render-question-model";
 
 const EditMatchModal: React.FC<{
   isOpen: boolean;
@@ -21,22 +22,6 @@ const EditMatchModal: React.FC<{
   const [desiredType, setDesiredType] = useState<MatchQuestionType>("SCORE");
 
   const { invalidateQueries } = trpc.useContext();
-
-  function renderDesiredQuestion(
-    questionType: MatchQuestionType,
-    label: string
-  ) {
-    switch (questionType) {
-      case "SCORE":
-        return <ScoreBoard label={label} id="" />;
-      case "BOOL":
-        return <BoolInput label={label} id="" />;
-      case "COUNTER":
-        return <CounterInput label={label} id="" />;
-      case "INPUT":
-        return <FormInput label={label} id="" />;
-    }
-  }
 
   const createQuestionQuery = useMutation("match.add-question", {
     onSuccess() {

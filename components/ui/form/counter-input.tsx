@@ -2,7 +2,7 @@ import { Container } from "../container";
 import { Answer } from "../../../types/form-types";
 import { useState } from "react";
 
-const CounterInput: React.FC<{
+export const CounterInput: React.FC<{
   label: string;
   id: string;
   updateState?: (answer: Answer) => void;
@@ -15,7 +15,7 @@ const CounterInput: React.FC<{
         <label className="p-2 text-lg font-semibold leading-tight border rounded shadow bg-slate-200 dark:bg-zinc-900 dark:border-zinc-600 focus:outline-none focus:shadow-outline">
           {label}
         </label>
-        <div className="flex items-center text-lg font-medium leading-tight text-white border rounded shadow  dark:bg-zinc-700 dark:border-zinc-800 focus:outline-none focus:shadow-outline justify-evenly">
+        <div className="flex items-center text-lg font-medium leading-tight text-white border rounded shadow dark:bg-zinc-700 dark:border-zinc-800 focus:outline-none focus:shadow-outline justify-evenly">
           <h1
             className="flex items-center justify-center w-full h-full px-4 text-center bg-red-400 hover:cursor-pointer border-slate-300 dark:border-zinc-600"
             onClick={() => {
@@ -41,4 +41,3 @@ const CounterInput: React.FC<{
   );
 };
 
-export default CounterInput;
