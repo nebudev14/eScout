@@ -11,4 +11,5 @@ export interface MatchFormInput {
   label: string;
   id: string;
   updateState?: (answer: Answer) => void;
+  options?: string[]
 }
