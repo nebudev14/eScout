@@ -4,19 +4,23 @@ import ModalWrapper from "../ui/modal-wrapper";
 import { MatchFormCategory } from "@prisma/client";
 import React, { useState } from "react";
 import { ScoreBoard } from "../ui/form/score-board";
-import { MatchQuestionType } from "@prisma/client";
+import { MatchQuestionType, MatchPromptType } from "@prisma/client";
 import { BoolInput } from "../ui/form/bool-input";
 import CounterInput from "../ui/form/counter-input";
 import { FormInput } from "../ui/form/form-input";
 import { Container } from "../ui/container";
+import { trpc, useMutation } from "../../hooks/trpc";
 
 const EditMatchModal: React.FC<{
   isOpen: boolean;
   setIsOpen: (update: SetStateAction<boolean>) => void;
   category: MatchFormCategory;
 }> = ({ isOpen, setIsOpen, category }) => {
+
   const [desiredPrompt, setDesiredPrompt] = useState("");
   const [desiredType, setDesiredType] = useState<MatchQuestionType>("SCORE");
+
+  const { invalidateQueries } = trpc.useContext();
 
   function renderDesiredQuestion(
     questionType: MatchQuestionType,
@@ -34,13 +38,30 @@ const EditMatchModal: React.FC<{
     }
   }
 
+  const createQuestionQuery = useMutation("match.add-question", {
+    onSuccess() {
+      invalidateQueries("match.get-by-id");
+    }
+  })
+  
   const createQuestion = async (event: React.SyntheticEvent) => {
     event.preventDefault();
     const target = event.target as typeof event.target & {
-      questionType: { value: string };
-      scoreValue: { value: number };
-    }
-  }
+      questionPrompt: { value: string };
+      questionType: { value: MatchQuestionType };
+      scoreValue: { value: string };
+    };
+
+    await createQuestionQuery.mutateAsync({
+      prompt: target.questionPrompt.value,
+      questionType: target.questionType.value,
+      scoreMultiplier: Number(target.scoreValue.value),
+      promptType: (target.questionType.value === "SCORE" || target.questionType.value === "COUNTER" ? MatchPromptType.NUMBER : MatchPromptType.TEXT),
+      categoryId: category.id
+    })
+
+    setIsOpen(false)
+  };
 
   return (
     <ModalWrapper
@@ -56,7 +77,7 @@ const EditMatchModal: React.FC<{
       </Dialog.Title>
 
       {/* Add Question */}
-      <form>
+      <form onSubmit={createQuestion}>
         <Dialog.Title className="mb-3 text-lg font-semibold">
           Add question
         </Dialog.Title>
@@ -108,12 +129,11 @@ const EditMatchModal: React.FC<{
         </Dialog.Title>
         {renderDesiredQuestion(desiredType, desiredPrompt)}
         <button
-            type="submit"
-            className="inline-flex justify-center px-4 py-2 mt-4 text-sm font-medium text-white bg-pink-600 border border-transparent rounded-md hover:bg-purple-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
-            onClick={() => setIsOpen(false)}
-          >
-            Create
-          </button>
+          type="submit"
+          className="inline-flex justify-center px-4 py-2 mt-4 text-sm font-medium text-white bg-pink-600 border border-transparent rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+        >
+          Create
+        </button>
       </form>
     </ModalWrapper>
   );
