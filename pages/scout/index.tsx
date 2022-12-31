@@ -22,7 +22,7 @@ const Scout: NextPage = () => {
   const { data: session } = useSession();
   const router = useRouter();
 
-  const [selectedTeam, setSelectedTeam] = useState<string>("");
+  const [selectedTeam, setSelectedTeam] = useState<string>("1");
   const { data: user } = useQuery([
     "user.get-by-id",
     { userId: session?.user.id as string },
@@ -34,7 +34,7 @@ const Scout: NextPage = () => {
     }
   }, [user?.teams, setSelectedTeam]);
 
-  const { data: matchForms } = useQuery([
+  const { data: matchForms, isLoading } = useQuery([
     "match.get-by-team-id",
     { teamId: selectedTeam },
   ]);
@@ -66,7 +66,7 @@ const Scout: NextPage = () => {
         <div className="xl:px-4 2xl:px-12">
           <MatchInfo />
           <div className="flex flex-col">
-            <EntryForm form={matchForms?.[0]} />
+            {!isLoading ? <EntryForm form={matchForms?.[0]} /> : null}
           </div>
         </div>
       </div>

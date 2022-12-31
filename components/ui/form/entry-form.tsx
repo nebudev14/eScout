@@ -21,7 +21,7 @@ export default class EntryForm extends React.Component<Props, State> {
     const answers: Answer[] = [];
     props.form?.categories.forEach((c) =>
       c.questions.forEach((q) =>
-        answers.push({ questionId: q.id, slot1: "", slot2: "", slot3: []})
+        answers.push({ questionId: q.id, slot1: "", slot2: "", slot3: [] })
       )
     );
     this.state = {
@@ -33,9 +33,7 @@ export default class EntryForm extends React.Component<Props, State> {
     const currentAnswer = answers.filter(
       (e) => e.questionId === newAnswer.questionId
     )?.[0];
-    
 
-    // // gross
     currentAnswer.slot1 = newAnswer.slot1;
     currentAnswer.slot2 = newAnswer.slot2;
     currentAnswer.slot3 = newAnswer.slot3;
