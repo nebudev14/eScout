@@ -45,6 +45,10 @@ const EditMatchModal: React.FC<{
       questionType: target.questionType.value,
       promptType: isNumerical ? MatchPromptType.NUMBER : MatchPromptType.TEXT,
       categoryId: category.id,
+      options:
+        target.questionType.value === MatchQuestionType.SELECT
+          ? selectOptions
+          : [],
     });
     setDesiredPrompt("");
     setSelectOptions([]);
@@ -125,8 +129,8 @@ const EditMatchModal: React.FC<{
             {selectOptions.map((option, i) => (
               <div className="flex items-center my-2">
                 <input type="radio" key={i} name={option} />
-                  <label className="ml-2">{option}</label>
-                </div>
+                <label className="ml-2">{option}</label>
+              </div>
             ))}
           </div>
         ) : null}
@@ -134,7 +138,11 @@ const EditMatchModal: React.FC<{
         <Dialog.Title className="my-3 font-semibold">
           Question Preview
         </Dialog.Title>
-        {renderDesiredQuestionDisplay(desiredType, desiredPrompt, selectOptions)}
+        {renderDesiredQuestionDisplay(
+          desiredType,
+          desiredPrompt,
+          selectOptions
+        )}
         <button
           type="submit"
           className="inline-flex justify-center px-4 py-2 mt-4 text-sm font-medium text-white bg-pink-600 border border-transparent rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"

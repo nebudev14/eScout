@@ -39,7 +39,7 @@ const EditMatchScout: React.FC = () => {
         onClick={() => router.back()}
       />
       <div className="flex items-center justify-start mb-4">
-        <h1 className="mr-auto text-3xl">
+        <h1 className="mr-auto text-3xl ">
           Editing <b>{data?.name}</b>
         </h1>
         <button
@@ -76,7 +76,7 @@ const EditMatchScout: React.FC = () => {
             <div>
               {category.questions.map((question, j) => (
                 <div key={j} className="my-8">
-                  {renderDesiredQuestionDisplay(question.questionType, question.prompt as string)}
+                  {renderDesiredQuestionDisplay(question.questionType, question.prompt as string, question.options)}
                 </div>
               ))}
             </div>
