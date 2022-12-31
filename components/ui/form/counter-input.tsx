@@ -17,6 +17,7 @@ export const CounterInput: React.FC<MatchFormInput> = ({ label, id, updateState 
             className="flex items-center justify-center w-full h-full px-4 text-center bg-red-400 hover:cursor-pointer border-slate-300 dark:border-zinc-600"
             onClick={() => {
               setCounter(counter - 1);
+
             }}
           >
             -

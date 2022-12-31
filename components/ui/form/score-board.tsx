@@ -3,11 +3,22 @@ import { Answer } from "../../../types/form-types";
 import { MatchFormInput } from "../../../types/misc-types";
 import { Container } from "../container";
 
-export const ScoreBoard: React.FC<MatchFormInput> = ({ label, id, updateState }) => {
+export const ScoreBoard: React.FC<MatchFormInput> = ({
+  label,
+  id,
+  updateState,
+}) => {
   const [shot, setShot] = useState(0);
   const [total, setTotal] = useState(0);
 
-
+  const updateFormState = () => {
+    if (updateState)
+      updateState({
+        questionId: id,
+        slot1: shot.toString(),
+        slot2: total.toString(),
+      });
+  };
 
   return (
     <div className="my-2">
@@ -31,15 +42,7 @@ export const ScoreBoard: React.FC<MatchFormInput> = ({ label, id, updateState })
             onClick={() => {
               setShot(shot + 1);
               setTotal(total + 1);
-              {
-                updateState
-                  ? updateState({
-                      questionId: id,
-                      slot1: shot.toString(),
-                      slot2: total.toString(),
-                    })
-                  : null;
-              }
+              updateFormState();
             }}
           >
             Score
@@ -49,15 +52,7 @@ export const ScoreBoard: React.FC<MatchFormInput> = ({ label, id, updateState })
             type="button"
             onClick={() => {
               setTotal(total + 1);
-              {
-                updateState
-                  ? updateState({
-                      questionId: id,
-                      slot1: shot.toString(),
-                      slot2: total.toString(),
-                    })
-                  : null;
-              }
+              updateFormState();
             }}
           >
             Miss
