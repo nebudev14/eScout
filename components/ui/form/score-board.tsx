@@ -7,6 +7,8 @@ export const ScoreBoard: React.FC<MatchFormInput> = ({ label, id, updateState })
   const [shot, setShot] = useState(0);
   const [total, setTotal] = useState(0);
 
+
+
   return (
     <div className="my-2">
       <Container>
