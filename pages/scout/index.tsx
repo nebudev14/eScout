@@ -20,21 +20,21 @@ const Scout: NextPage = () => {
   const { data: session } = useSession();
   const router = useRouter();
 
-  const [selectedTeam, setSelectedTeam] = useState<Team | undefined>();
+  const [selectedTeam, setSelectedTeam] = useState<string>("");
   const { data: user } = useQuery([
     "user.get-by-id",
     { userId: session?.user.id as string },
   ]);
 
   useEffect(() => {
-    if(user?.teams.length !== 0) setSelectedTeam(user?.teams[0].team);
-  }, [setSelectedTeam]);
-
-  console.log(selectedTeam)
+    if (user?.teams.length !== 0) {
+      setSelectedTeam(user?.teams[0].teamId as string);
+    }
+  });
 
   const { data: matchForms } = useQuery([
     "match.get-by-team-id",
-    { teamId: selectedTeam?.id as string },
+    { teamId: selectedTeam },
   ]);
 
   const submitEntry = useMutation("entry.create");
@@ -50,11 +50,19 @@ const Scout: NextPage = () => {
 
   return (
     <Protected>
-      <div className="min-h-screen py-16 px-36 dark:text-white">
-        <div className="flex items-center justify-start ">
+      <div className="min-h-screen py-16 md:px-4 xl:px-36 2xl:px-52 dark:text-white">
+        <h1 className="2xl:text-red-600 xl:text-cyan-400">weee</h1>
+        <div className="flex items-center justify-start xl:px-4 2xl:px-12">
           {matchForms?.length !== 0 || selectedTeam !== undefined ? (
-            <select className="h-full p-2 border-r-4 rounded-lg shadow-md outline-none dark:text-white dark:bg-zinc-900 dark:border-zinc-700"></select>
+            <select className="h-full p-2 mb-4 border-r-4 rounded-lg shadow-md outline-none dark:text-white dark:bg-zinc-900 dark:border-zinc-700">
+              {matchForms?.map((matchForm, i) => (
+                <option key={i}>{matchForm.name}</option>
+              ))}
+            </select>
           ) : null}
+        </div>
+        <div className="xl:px-4 2xl:px-12">
+          <MatchInfo />
         </div>
       </div>
     </Protected>

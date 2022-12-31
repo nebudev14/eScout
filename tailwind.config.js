@@ -7,8 +7,8 @@ module.exports = {
   darkMode: "class",
   theme: {
     screens: {
-      '2xl': { max: '1535px' },
-      xl: { max: '1279px' },
+      '2xl': { max: '2000px' },
+      xl: { max: '1500px' },
       lg: { max: '985px' },
       md: { max: '889px' },
       sm: { max: '519px' },

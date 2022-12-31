@@ -32,7 +32,7 @@ const EditMatchScout: React.FC = () => {
   });
 
   return (
-    <div className="min-h-screen px-48 py-12 dark:text-white md:px-4">
+    <div className="min-h-screen py-1 2xl:px-52 xl:px-48 dark:text-white md:px-4">
       <BiArrowBack
         size={30}
         className="mb-4 duration-150 hover:text-pink-600 hover:cursor-pointer"
@@ -49,7 +49,7 @@ const EditMatchScout: React.FC = () => {
           +
         </button>
       </div>
-      <div className="px-12 mx-12 mt-8">
+      <div className="mx-12 mt-8 2xl:px-24 xl:px-12">
         {data?.categories.map((category, i) => (
           <div key={i} className="my-4">
             <div className="flex flex-row items-center mb-4 border-b-2 dark:border-zinc-700">
