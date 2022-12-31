@@ -3,8 +3,21 @@ import { Answer } from "../../../types/form-types";
 import { useState } from "react";
 import { MatchFormInput } from "../../../types/misc-types";
 
-export const CounterInput: React.FC<MatchFormInput> = ({ label, id, updateState }) => {
+export const CounterInput: React.FC<MatchFormInput> = ({
+  label,
+  id,
+  updateState,
+}) => {
   const [counter, setCounter] = useState(0);
+
+  const updateFormState = () => {
+    if (updateState) {
+      updateState({
+        questionId: id,
+        slot1: counter.toString(),
+      });
+    }
+  };
 
   return (
     <div className="my-2">
@@ -17,7 +30,7 @@ export const CounterInput: React.FC<MatchFormInput> = ({ label, id, updateState 
             className="flex items-center justify-center w-full h-full px-4 text-center bg-red-400 hover:cursor-pointer border-slate-300 dark:border-zinc-600"
             onClick={() => {
               setCounter(counter - 1);
-
+              updateFormState();
             }}
           >
             -
@@ -29,6 +42,7 @@ export const CounterInput: React.FC<MatchFormInput> = ({ label, id, updateState 
             className="flex items-center justify-center w-full h-full px-4 text-center bg-green-400 rounded-r-lg hover:cursor-pointer border-slate-600 dark:border-zinc-600"
             onClick={() => {
               setCounter(counter + 1);
+              updateFormState();
             }}
           >
             +
@@ -38,4 +52,3 @@ export const CounterInput: React.FC<MatchFormInput> = ({ label, id, updateState 
     </div>
   );
 };
-
