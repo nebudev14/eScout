@@ -15,6 +15,8 @@ import { useAtom } from "jotai";
 import { setPreScoutAtom, setSelectedCompAtom } from "../../server/atoms";
 import { Switch } from "@headlessui/react";
 import { Team } from "@prisma/client";
+import EntryForm from "../../components/ui/form/entry-form";
+import { EntryFormType } from "../../types/misc-types";
 
 const Scout: NextPage = () => {
   const { data: session } = useSession();
@@ -30,7 +32,7 @@ const Scout: NextPage = () => {
     if (user?.teams.length !== 0) {
       setSelectedTeam(user?.teams[0].teamId as string);
     }
-  });
+  }, [user?.teams, setSelectedTeam]);
 
   const { data: matchForms } = useQuery([
     "match.get-by-team-id",
@@ -63,6 +65,9 @@ const Scout: NextPage = () => {
         </div>
         <div className="xl:px-4 2xl:px-12">
           <MatchInfo />
+          <div className="flex flex-col">
+            <EntryForm form={matchForms?.[0]}/>
+          </div>
         </div>
       </div>
     </Protected>

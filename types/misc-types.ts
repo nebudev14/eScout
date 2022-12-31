@@ -1,5 +1,6 @@
 import { SetStateAction } from "react";
 import { Answer } from "./form-types";
+import { MatchForm, MatchFormCategory, MatchFormQuestion } from "@prisma/client";
 
 export interface Modal {
   isOpen: boolean;
@@ -13,3 +14,5 @@ export interface MatchFormInput {
   updateState?: (answer: Answer) => void;
   options?: string[]
 }
+
+export type EntryFormType = (MatchForm & { categories: (MatchFormCategory & { questions: MatchFormQuestion[]; })[]; })
