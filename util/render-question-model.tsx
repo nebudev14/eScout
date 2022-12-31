@@ -27,9 +27,9 @@ export function renderDesiredQuestionDisplay(
 
 export function renderFormQuestion(
   questionType: MatchQuestionType,
-  updateState: (answer: Answer) => void,
   label: string,
   id: string,
+  updateState: (answer: Answer) => void,
   options?: string[]
 ) {
   switch (questionType) {

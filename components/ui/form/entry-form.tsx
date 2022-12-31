@@ -1,13 +1,6 @@
-import {
-  MatchForm,
-  MatchFormQuestion,
-  MatchFormCategory,
-} from "@prisma/client";
-import { useSession } from "next-auth/react";
+import { renderFormQuestion } from "../../../util/render-question-model";
 import { Answer } from "../../../types/form-types";
 import React from "react";
-import { ScoreBoard } from "./score-board";
-import { FormInput } from "./form-input";
 import { EntryFormType } from "../../../types/misc-types";
 
 interface Props {
@@ -29,8 +22,6 @@ export default class EntryForm extends React.Component<Props, State> {
     this.state = {
       answers: answers,
     };
-
-    console.log(answers);
   }
 
   setAnswer(answers: Answer[], newAnswer: Answer): Answer[] {
@@ -38,7 +29,7 @@ export default class EntryForm extends React.Component<Props, State> {
       (e) => e.questionId === newAnswer.questionId
     )[0];
     // gross
-    currentAnswer.slot1 = newAnswer.slot1; 
+    currentAnswer.slot1 = newAnswer.slot1;
     currentAnswer.slot2 = newAnswer.slot2;
     currentAnswer.slot3 = newAnswer.slot3;
 
@@ -47,6 +38,7 @@ export default class EntryForm extends React.Component<Props, State> {
 
   updateState(answer: Answer) {
     const answers: Answer[] = this.setAnswer(this.state.answers, answer);
+    
 
     this.setState({ answers: answers });
   }
@@ -54,7 +46,28 @@ export default class EntryForm extends React.Component<Props, State> {
   render(): React.ReactNode {
     return (
       <div className="min-h-screen dark:text-white">
-        
+        {this.props.form?.categories.map((category, i) => (
+          <>
+            <div className="flex flex-col mb-4 border-b-2 dark:border-zinc-700">
+              <h1 className="py-2 mb-2 mr-4 text-3xl font-semibold">
+                {category?.name}
+              </h1>
+            </div>
+            <div>
+              {category.questions.map((question, j) => (
+                <div key={j} className="my-8">
+                  {renderFormQuestion(
+                    question.questionType,
+                    question.prompt as string,
+                    question.id,
+                    this.updateState,
+                    question.options
+                  )}
+                </div>
+              ))}
+            </div>
+          </>
+        ))}
       </div>
     );
   }

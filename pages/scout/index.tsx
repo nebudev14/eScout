@@ -66,7 +66,7 @@ const Scout: NextPage = () => {
         <div className="xl:px-4 2xl:px-12">
           <MatchInfo />
           <div className="flex flex-col">
-            <EntryForm form={matchForms?.[0]}/>
+            <EntryForm form={matchForms?.[0]} />
           </div>
         </div>
       </div>
