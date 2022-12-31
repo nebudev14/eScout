@@ -27,6 +27,8 @@ export default class EntryForm extends React.Component<Props, State> {
     this.state = {
       answers: answers,
     };
+
+    console.log(this.state.answers)
   }
 
   setAnswer(answers: Answer[], newAnswer: Answer): Answer[] {
@@ -37,6 +39,8 @@ export default class EntryForm extends React.Component<Props, State> {
     currentAnswer.slot1 = newAnswer.slot1;
     currentAnswer.slot2 = newAnswer.slot2;
     currentAnswer.slot3 = newAnswer.slot3;
+
+    console.log(this.state.answers)
 
     return answers;
   }

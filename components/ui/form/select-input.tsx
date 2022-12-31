@@ -17,9 +17,6 @@ export const SelectInput: React.FC<MatchFormInput> = ({
     }
   };
 
-  useEffect(() => {
-    updateFormState(options?.[0] as string);
-  }, [updateFormState]);
 
   return (
     <div className="my-4">

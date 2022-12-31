@@ -16,10 +16,6 @@ export const BoolInput: React.FC<MatchFormInput> = ({
     }
   };
 
-  useEffect(() => {
-    updateFormState("No");
-  }, [updateFormState]);
-
   return (
     <div className="my-4">
       <Container>
