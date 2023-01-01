@@ -1,15 +1,17 @@
 import { renderFormQuestion } from "../../../util/render-question-model";
 import { Answer } from "../../../types/form-types";
 import React from "react";
+import { useQuery } from "../../../hooks/trpc";
 import { EntryFormType } from "../../../types/misc-types";
+import { useSession } from "next-auth/react";
 
 interface Props {
   form: EntryFormType | undefined;
 }
 
 interface State {
-  // matchFormId: string;
   answers: Answer[];
+  // selectedTeam: string;
 }
 
 export default class EntryForm extends React.Component<Props, State> {
@@ -17,18 +19,24 @@ export default class EntryForm extends React.Component<Props, State> {
     super(props);
     this.setAnswer = this.setAnswer.bind(this);
     this.updateState = this.updateState.bind(this);
+  }
 
+  componentDidMount() {
     const answers: Answer[] = [];
-    props.form?.categories.forEach((c) =>
+
+    this.props.form?.categories.forEach((c) =>
       c.questions.forEach((q) =>
         answers.push({ questionId: q.id, slot1: "", slot2: "", slot3: [] })
       )
     );
+
     this.state = {
       answers: answers,
+      // selectedTeam:
+      //   user?.teams.length !== 0 ? (user?.teams[0].teamId as string) : "",
     };
 
-    console.log(this.state.answers)
+    console.log(this.state.answers);
   }
 
   setAnswer(answers: Answer[], newAnswer: Answer): Answer[] {
@@ -40,7 +48,7 @@ export default class EntryForm extends React.Component<Props, State> {
     currentAnswer.slot2 = newAnswer.slot2;
     currentAnswer.slot3 = newAnswer.slot3;
 
-    console.log(this.state.answers)
+    console.log(this.state.answers);
 
     return answers;
   }

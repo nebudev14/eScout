@@ -28,11 +28,40 @@ export const userRouter = createRouter()
                   entries: true,
                   members: true,
                   comps: true,
-                  pitScouts: true
-                }
-              }
-            }
-          }
+                  pitScouts: true,
+                  matchScouts: true,
+                },
+              },
+            },
+          },
+        },
+      });
+    },
+  })
+  .query("get-forms-by-id", {
+    input: getUserSchema,
+    async resolve({ ctx, input }) {
+      return await ctx.prisma.user.findUnique({
+        where: { id: input.userId },
+        // i hate this so much
+        include: {
+          teams: {
+            include: {
+              team: {
+                include: {
+                  matchScouts: {
+                    include: {
+                      categories: {
+                        include: {
+                          questions: true,
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
         },
       });
     },

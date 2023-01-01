@@ -1,36 +1,32 @@
 import type { NextPage } from "next";
 import React, { useEffect } from "react";
 import Protected from "../../components/auth/protected";
-import { Container } from "../../components/ui/container";
 import { MatchInfo } from "../../components/ui/form/match-info";
-import { ScoreBoard } from "../../components/ui/form/score-board";
-import { Input } from "../../components/ui/input";
-import { MatchType, RungLevel } from "@prisma/client";
-import { getNumberById } from "../../util/get-number-by-id";
 import { useState, useRef } from "react";
 import { useSession } from "next-auth/react";
 import { useMutation, useQuery } from "../../hooks/trpc";
 import { useRouter } from "next/router";
 import { useAtom } from "jotai";
 import { setPreScoutAtom, setSelectedCompAtom } from "../../server/atoms";
-import { Switch } from "@headlessui/react";
-import { Team } from "@prisma/client";
 import EntryForm from "../../components/ui/form/entry-form";
-import { EntryFormType } from "../../types/misc-types";
+import { MatchForm } from "@prisma/client";
 
 const Scout: NextPage = () => {
   const { data: session } = useSession();
   const router = useRouter();
 
-  const [selectedTeam, setSelectedTeam] = useState<string>("1");
+  const [selectedTeam, setSelectedTeam] = useState<string>("");
+  const [selectedForm, setSelectedForm] = useState<MatchForm | undefined>(undefined);
+
   const { data: user } = useQuery([
-    "user.get-by-id",
+    "user.get-forms-by-id",
     { userId: session?.user.id as string },
   ]);
 
   useEffect(() => {
     if (user?.teams.length !== 0) {
       setSelectedTeam(user?.teams[0].teamId as string);
+      setSelectedForm(user?.teams[0].team.matchScouts[0])
     }
   }, [user?.teams, setSelectedTeam]);
 

@@ -116,6 +116,15 @@ export const teamRouter = createRouter()
               user: true,
             },
           },
+          matchScouts: {
+            include: {
+              categories: {
+                include: {
+                  questions: true
+                }
+              }
+            }
+          }
         },
       });
     },
