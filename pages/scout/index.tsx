@@ -10,13 +10,14 @@ import { useAtom } from "jotai";
 import { setPreScoutAtom, setSelectedCompAtom } from "../../server/atoms";
 import EntryForm from "../../components/ui/form/entry-form";
 import { MatchForm } from "@prisma/client";
+import { EntryFormType } from "../../types/misc-types";
 
 const Scout: NextPage = () => {
   const { data: session } = useSession();
   const router = useRouter();
 
   const [selectedTeam, setSelectedTeam] = useState<string>("");
-  const [selectedForm, setSelectedForm] = useState<MatchForm | undefined>(undefined);
+  const [selectedForm, setSelectedForm] = useState<EntryFormType | undefined>(undefined);
 
   const { data: user } = useQuery([
     "user.get-forms-by-id",
@@ -35,7 +36,7 @@ const Scout: NextPage = () => {
     { teamId: selectedTeam },
   ]);
 
-  const submitEntry = useMutation("entry.create");
+  const submitEntry = useMutation("entry.create");``
 
   const [selectedComp] = useAtom(setSelectedCompAtom);
 
@@ -62,7 +63,7 @@ const Scout: NextPage = () => {
         <div className="xl:px-4 2xl:px-12">
           <MatchInfo />
           <div className="flex flex-col">
-            {!isLoading ? <EntryForm form={matchForms?.[0]} /> : null}
+            {!isLoading ? <EntryForm form={user?.teams?.[0].team.matchScouts?.[0]} /> : null}
           </div>
         </div>
       </div>

@@ -25,6 +25,7 @@ const EditMatchModal: React.FC<{
   const createQuestionQuery = useMutation("match.add-question", {
     onSuccess() {
       invalidateQueries("match.get-by-id");
+      invalidateQueries("match.get-by-team-id");
     },
   });
 
