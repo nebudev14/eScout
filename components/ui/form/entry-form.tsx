@@ -25,19 +25,57 @@ export default class EntryForm extends React.Component<Props, State> {
     let answers: Answer[] = [];
 
     this.props.form?.categories.forEach((c) =>
-      c.questions.forEach((q) =>
-        answers.push({ questionId: q.id, slot1: "", slot2: "", slot3: [] })
-      )
+      c.questions.forEach((q) => {
+        switch (q.questionType) {
+          // Initializing state
+          case "SCORE":
+            answers.push({
+              questionId: q.id,
+              slot1: "0",
+              slot2: "0",
+              slot3: [],
+            });
+            break;
+          case "COUNTER":
+            answers.push({
+              questionId: q.id,
+              slot1: "0",
+              slot2: "",
+              slot3: [],
+            });
+            break;
+          case "INPUT":
+            answers.push({ questionId: q.id, slot1: "", slot2: "", slot3: [] });
+            break;
+          case "BOOL":
+            answers.push({
+              questionId: q.id,
+              slot1: "No",
+              slot2: "",
+              slot3: [],
+            });
+            break;
+          case "SELECT":
+            answers.push({
+              questionId: q.id,
+              slot1: q.options[0],
+              slot2: "",
+              slot3: [],
+            });
+            break;
+        }
+      })
     );
-    
-    this.setState({ answers: answers })
+
+    this.setState({ answers: answers });
+
+    console.log(answers);
   }
 
   setAnswer(answers: Answer[], newAnswer: Answer): Answer[] {
     const currentAnswer = answers.filter(
       (e) => e.questionId === newAnswer.questionId
     )?.[0];
-
 
     currentAnswer.slot1 = newAnswer.slot1;
     currentAnswer.slot2 = newAnswer.slot2;

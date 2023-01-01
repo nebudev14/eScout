@@ -17,7 +17,8 @@ const Scout: NextPage = () => {
   const router = useRouter();
 
   const [selectedTeam, setSelectedTeam] = useState<string>("");
-  const [selectedForm, setSelectedForm] = useState<EntryFormType | undefined>(undefined);
+
+
 
   const { data: user } = useQuery([
     "user.get-forms-by-id",
@@ -27,8 +28,7 @@ const Scout: NextPage = () => {
   useEffect(() => {
     if (user?.teams.length !== 0) {
       setSelectedTeam(user?.teams[0].teamId as string);
-      setSelectedForm(user?.teams[0].team.matchScouts[0])
-    }
+    }1
   }, [user?.teams, setSelectedTeam]);
 
   const { data: matchForms, isLoading } = useQuery([
