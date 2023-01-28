@@ -32,7 +32,7 @@ model Session {
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
-
+//angy
 model VerificationToken {
   identifier String
   token      String   @unique
@@ -245,8 +245,9 @@ model PitResponse {
   entryTeamNumber Int
   userId          String
 }
-
+//amongOS
 enum PitQuestionType {
   TEXT
   SELECT
 }
+//angery
