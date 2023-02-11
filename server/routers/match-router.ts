@@ -5,7 +5,6 @@ import { MatchPromptType } from "@prisma/client";
 import { inputs } from "../../components/scouting/filter/dynamic-input";
 import { Answer } from "../../types/form-types";
 
-
 export const matchRouter = createRouter()
   .mutation("create-form", {
     input: z.object({
@@ -51,7 +50,7 @@ export const matchRouter = createRouter()
       prompt: z.string(),
       questionType: z.nativeEnum(MatchQuestionType),
       promptType: z.nativeEnum(MatchPromptType),
-      options: z.array(z.string())
+      options: z.array(z.string()),
     }),
     async resolve({ input, ctx }) {
       return await ctx.prisma.matchFormQuestion.create({
@@ -60,7 +59,7 @@ export const matchRouter = createRouter()
           prompt: input.prompt,
           questionType: input.questionType,
           promptType: input.promptType,
-          options: input.options
+          options: input.options,
         },
       });
     },
@@ -72,12 +71,14 @@ export const matchRouter = createRouter()
       compId: z.string(),
       prescout: z.boolean(),
       video: z.string(),
-      answers: z.object({
-        questionId: z.string(),
-        slot1: z.string().optional(),
-        slot2: z.string().optional(),
-        slot3: z.string().array().optional(),
-      }).array()
+      answers: z
+        .object({
+          questionId: z.string(),
+          slot1: z.string().optional(),
+          slot2: z.string().optional(),
+          slot3: z.string().array().optional(),
+        })
+        .array(),
     }),
     async resolve({ input, ctx }) {
       return await ctx.prisma.matchFormResponse.create({
@@ -88,11 +89,21 @@ export const matchRouter = createRouter()
           prescout: input.prescout,
           video: input.video,
           answers: {
-            create: input.answers
-          }
-        }
-      })
-    }
+            create: input.answers,
+          },
+        },
+      });
+    },
+  })
+  .mutation("delete-form", {
+    input: z.object({
+      id: z.string(),
+    }),
+    async resolve({ input, ctx }) {
+      return await ctx.prisma.matchForm.delete({
+        where: { id: input.id },
+      });
+    },
   })
   .query("get-by-team-id", {
     input: z.object({

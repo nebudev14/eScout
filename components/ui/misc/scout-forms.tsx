@@ -3,12 +3,15 @@ import { CreateScoutFormModal } from "../../modals/create-scout-form";
 import { BsPencilFill, BsFillTrashFill } from "react-icons/bs";
 import Link from "next/link";
 import { useState } from "react";
+import { useMutation } from "../../../hooks/trpc";
+import { trpc } from "../../../hooks/trpc";
 
 export const ManageScoutForm: React.FC<{
   teamId: string;
   isAdmin: boolean;
 }> = ({ teamId, isAdmin }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const { invalidateQueries } = trpc.useContext();
 
   const { data: allMatchScouts } = useQuery([
     "match.get-by-team-id",
@@ -19,6 +22,13 @@ export const ManageScoutForm: React.FC<{
     "pit.get-by-team-id",
     { teamId: teamId },
   ]);
+
+  const deleteForm = useMutation("match.delete-form", {
+    onSuccess() {
+      invalidateQueries("match.get-by-team-id")
+    }
+  });
+
 
   return (
     <div className="min-h-screen">
@@ -62,10 +72,15 @@ export const ManageScoutForm: React.FC<{
                     )}{" "}
                     Questions
                   </h1>
-                  <BsFillTrashFill
-                    size={20}
-                    className="ml-2 text-red-500 duration-150 hover:cursor-pointer hover:text-red-600"
-                  />
+                  {isAdmin ? (
+                    <BsFillTrashFill
+                      size={20}
+                      onClick={async () => {
+                        deleteForm.mutateAsync({ id: matchScout.id })
+                      }}
+                      className="ml-2 text-red-500 duration-150 hover:cursor-pointer hover:text-red-600"
+                    />
+                  ) : null}
                 </div>
               </div>
             </div>
