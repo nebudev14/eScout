@@ -46,7 +46,14 @@ const Scout: NextPage = () => {
 
   // make submit method and pass into entry form component
   const submitForm = async (answers: Answer[]) => {
-    // await submitEntry.mutateAsync({})
+    await submitResponse.mutateAsync({
+      userId: session?.user.id as string,
+      teamId: selectedTeam,
+      compId: selectedComp?.id as string,
+      prescout: prescout,
+      video: "yea",
+      answers: answers      
+    })
   }
 
   return (

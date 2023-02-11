@@ -94,9 +94,7 @@ export default class EntryForm extends React.Component<Props, State> {
   }
 
   submit() {
-    // this.props.submitResponse(an);
-    // angery
-    //ong frfr so based oomfie 
+    this.props.submitResponse(this.state.answers);
   }
 
   render(): React.ReactNode {
@@ -124,7 +122,7 @@ export default class EntryForm extends React.Component<Props, State> {
             </div>
           </div>
         ))}
-        <button type="submit">Submit</button>
+        <button type="submit" onClick={() => this.submit()}>Submit</button>
       </div>
     );
   }

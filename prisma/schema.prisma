@@ -171,7 +171,6 @@ model MatchFormQuestion {
   promptType      MatchPromptType
   matchCategoryId String
   matchCategory   MatchFormCategory   @relation(fields: [matchCategoryId], references: [id], onDelete: Cascade)
-  responses       MatchFormResponse[]
   answers         MatchFormAnswers[]
 }
 
@@ -182,8 +181,6 @@ model MatchFormResponse {
   compId      String
   prescout    Boolean
   video       String?
-  questionId  String
-  question    MatchFormQuestion  @relation(fields: [questionId], references: [id])
   user        TeamUser           @relation(fields: [userId, teamId], references: [userId, teamId])
   competition Competition        @relation(fields: [compId], references: [id])
   answers     MatchFormAnswers[]
@@ -244,9 +241,8 @@ model PitResponse {
   entryTeamNumber Int
   userId          String
 }
-//amongOS
+
 enum PitQuestionType {
   TEXT
   SELECT
 }
-//angery

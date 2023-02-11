@@ -72,7 +72,6 @@ export const matchRouter = createRouter()
       compId: z.string(),
       prescout: z.boolean(),
       video: z.string(),
-      questionId: z.string(),
       answers: z.object({
         questionId: z.string(),
         slot1: z.string().optional(),
@@ -88,7 +87,6 @@ export const matchRouter = createRouter()
           compId: input.compId,
           prescout: input.prescout,
           video: input.video,
-          questionId: input.questionId,
           answers: {
             create: input.answers
           }
