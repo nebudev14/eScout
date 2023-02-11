@@ -9,8 +9,6 @@ import { useRouter } from "next/router";
 import { useAtom } from "jotai";
 import { setPreScoutAtom, setSelectedCompAtom } from "../../server/atoms";
 import EntryForm from "../../components/ui/form/entry-form";
-import { MatchForm } from "@prisma/client";
-import { EntryFormType } from "../../types/misc-types";
 
 const Scout: NextPage = () => {
   const { data: session } = useSession();
@@ -47,6 +45,11 @@ const Scout: NextPage = () => {
   const [defendedBy, setDefendedBy] = useState<number[]>([]);
   const [prescout, setPrescout] = useAtom(setPreScoutAtom);
 
+  // make submit method and pass into entry form component
+  const submitForm = async () => {
+    // await submitEntry.mutateAsync({})
+  }
+
   return (
     <Protected>
       <div className="min-h-screen py-16 md:px-4 xl:px-36 2xl:px-52 dark:text-white">
@@ -63,7 +66,7 @@ const Scout: NextPage = () => {
         <div className="xl:px-4 2xl:px-12">
           <MatchInfo />
           <div className="flex flex-col">
-            {!isLoading ? <EntryForm form={user?.teams?.[0].team.matchScouts?.[0]} /> : null}
+            {!isLoading ? <EntryForm form={user?.teams?.[0].team.matchScouts?.[0]} submit={submitForm} /> : null}
           </div>
         </div>
       </div>

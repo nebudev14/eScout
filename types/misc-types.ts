@@ -16,3 +16,4 @@ export interface MatchFormInput {
 }
 
 export type EntryFormType = (MatchForm & { categories: (MatchFormCategory & { questions: MatchFormQuestion[]; })[]; })
+

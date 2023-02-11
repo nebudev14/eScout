@@ -2,11 +2,12 @@ import { renderFormQuestion } from "../../../util/render-question-model";
 import { Answer } from "../../../types/form-types";
 import React from "react";
 import { useQuery } from "../../../hooks/trpc";
-import { EntryFormType } from "../../../types/misc-types";
 import { useSession } from "next-auth/react";
+import { EntryFormType } from "../../../types/misc-types";
 
 interface Props {
   form: EntryFormType | undefined;
+  submit: () => void;
 }
 
 interface State {
@@ -85,7 +86,7 @@ export default class EntryForm extends React.Component<Props, State> {
 
     return answers;
   }
-
+  
   updateState(answer: Answer) {
     const answers: Answer[] = this.setAnswer(this.state.answers, answer);
 
@@ -117,6 +118,7 @@ export default class EntryForm extends React.Component<Props, State> {
             </div>
           </div>
         ))}
+        <button type="submit">Submit</button>
       </div>
     );
   }

@@ -182,7 +182,6 @@ model MatchFormResponse {
   compId      String
   prescout    Boolean
   video       String?
-  matchScore  Int
   questionId  String
   question    MatchFormQuestion  @relation(fields: [questionId], references: [id])
   user        TeamUser           @relation(fields: [userId, teamId], references: [userId, teamId])

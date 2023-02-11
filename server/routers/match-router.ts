@@ -2,6 +2,7 @@ import { z } from "zod";
 import { createRouter } from "../create-router";
 import { MatchQuestionType } from "@prisma/client";
 import { MatchPromptType } from "@prisma/client";
+import { inputs } from "../../components/scouting/filter/dynamic-input";
 
 export const matchRouter = createRouter()
   .mutation("create-form", {
@@ -61,6 +62,29 @@ export const matchRouter = createRouter()
         },
       });
     },
+  })
+  .mutation("add-response", {
+    input: z.object({
+      id: z.string(),
+      teamId: z.string(),
+      compId: z.string(),
+      prescout: z.boolean(),
+      video: z.string(),
+      questionId: z.string()
+
+    }),
+    async resolve({ input, ctx }) {
+      return await ctx.prisma.matchFormResponse.create({
+        data: {
+          userId: input.id,
+          teamId: input.teamId,
+          compId: input.compId,
+          prescout: input.prescout,
+          video: input.video,
+          questionId: input.questionId,
+        }
+      })
+    }
   })
   .query("get-by-team-id", {
     input: z.object({
