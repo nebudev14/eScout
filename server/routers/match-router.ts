@@ -3,6 +3,8 @@ import { createRouter } from "../create-router";
 import { MatchQuestionType } from "@prisma/client";
 import { MatchPromptType } from "@prisma/client";
 import { inputs } from "../../components/scouting/filter/dynamic-input";
+import { Answer } from "../../types/form-types";
+
 
 export const matchRouter = createRouter()
   .mutation("create-form", {
@@ -65,23 +67,31 @@ export const matchRouter = createRouter()
   })
   .mutation("add-response", {
     input: z.object({
-      id: z.string(),
+      userId: z.string(),
       teamId: z.string(),
       compId: z.string(),
       prescout: z.boolean(),
       video: z.string(),
-      questionId: z.string()
-
+      questionId: z.string(),
+      answers: z.object({
+        questionId: z.string(),
+        slot1: z.string().optional(),
+        slot2: z.string().optional(),
+        slot3: z.string().array().optional(),
+      }).array()
     }),
     async resolve({ input, ctx }) {
       return await ctx.prisma.matchFormResponse.create({
         data: {
-          userId: input.id,
+          userId: input.userId,
           teamId: input.teamId,
           compId: input.compId,
           prescout: input.prescout,
           video: input.video,
           questionId: input.questionId,
+          answers: {
+            create: input.answers
+          }
         }
       })
     }

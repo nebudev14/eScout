@@ -7,7 +7,7 @@ import { EntryFormType } from "../../../types/misc-types";
 
 interface Props {
   form: EntryFormType | undefined;
-  submit: () => void;
+  submitResponse: (answer: Answer[]) => void;
 }
 
 interface State {
@@ -20,6 +20,7 @@ export default class EntryForm extends React.Component<Props, State> {
     super(props);
     this.setAnswer = this.setAnswer.bind(this);
     this.updateState = this.updateState.bind(this);
+    this.submit = this.submit.bind(this);
   }
 
   componentDidMount() {
@@ -89,8 +90,13 @@ export default class EntryForm extends React.Component<Props, State> {
   
   updateState(answer: Answer) {
     const answers: Answer[] = this.setAnswer(this.state.answers, answer);
-
     this.setState({ answers: answers });
+  }
+
+  submit() {
+    // this.props.submitResponse(an);
+    // angery
+    //ong frfr so based oomfie 
   }
 
   render(): React.ReactNode {

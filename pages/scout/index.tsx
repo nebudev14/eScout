@@ -9,14 +9,13 @@ import { useRouter } from "next/router";
 import { useAtom } from "jotai";
 import { setPreScoutAtom, setSelectedCompAtom } from "../../server/atoms";
 import EntryForm from "../../components/ui/form/entry-form";
+import { Answer } from "../../types/form-types";
 
 const Scout: NextPage = () => {
   const { data: session } = useSession();
   const router = useRouter();
 
   const [selectedTeam, setSelectedTeam] = useState<string>("");
-
-
 
   const { data: user } = useQuery([
     "user.get-forms-by-id",
@@ -34,7 +33,7 @@ const Scout: NextPage = () => {
     { teamId: selectedTeam },
   ]);
 
-  const submitEntry = useMutation("entry.create");``
+  const submitResponse = useMutation("match.add-response");
 
   const [selectedComp] = useAtom(setSelectedCompAtom);
 
@@ -46,7 +45,7 @@ const Scout: NextPage = () => {
   const [prescout, setPrescout] = useAtom(setPreScoutAtom);
 
   // make submit method and pass into entry form component
-  const submitForm = async () => {
+  const submitForm = async (answers: Answer[]) => {
     // await submitEntry.mutateAsync({})
   }
 
@@ -66,7 +65,7 @@ const Scout: NextPage = () => {
         <div className="xl:px-4 2xl:px-12">
           <MatchInfo />
           <div className="flex flex-col">
-            {!isLoading ? <EntryForm form={user?.teams?.[0].team.matchScouts?.[0]} submit={submitForm} /> : null}
+            {!isLoading ? <EntryForm form={user?.teams?.[0].team.matchScouts?.[0]} submitResponse={submitForm} /> : null}
           </div>
         </div>
       </div>
