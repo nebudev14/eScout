@@ -16,6 +16,7 @@ const Scout: NextPage = () => {
   const router = useRouter();
 
   const [selectedTeam, setSelectedTeam] = useState<string>("");
+  const [form, setForm] = useState<string>();
 
   const { data: user } = useQuery([
     "user.get-forms-by-id",
@@ -24,8 +25,12 @@ const Scout: NextPage = () => {
 
   useEffect(() => {
     if (user?.teams.length !== 0) {
-      setSelectedTeam(user?.teams[0].teamId as string);
-    }1
+      const initTeam = user?.teams[0];
+      setSelectedTeam(initTeam?.teamId as string);
+      if (initTeam?.team.matchScouts.length !== 0) {
+        setForm(initTeam?.team.matchScouts[0].id);
+      }
+    }
   }, [user?.teams, setSelectedTeam]);
 
   const { data: matchForms, isLoading } = useQuery([
@@ -34,6 +39,9 @@ const Scout: NextPage = () => {
   ]);
 
   const submitResponse = useMutation("match.add-response");
+
+  // console.log(user?.teams.filter((t) => t.team.id === selectedTeam)?.[0]);
+  // console.log(form)
 
   const [selectedComp] = useAtom(setSelectedCompAtom);
 
@@ -52,9 +60,9 @@ const Scout: NextPage = () => {
       compId: selectedComp?.id as string,
       prescout: prescout,
       video: "yea",
-      answers: answers      
-    })
-  }
+      answers: answers,
+    });
+  };
 
   return (
     <Protected>
@@ -62,9 +70,16 @@ const Scout: NextPage = () => {
         <h1 className="2xl:text-red-600 xl:text-cyan-400">weee</h1>
         <div className="flex items-center justify-start xl:px-4 2xl:px-12">
           {matchForms?.length !== 0 || selectedTeam !== undefined ? (
-            <select className="h-full p-2 mb-4 border-r-4 rounded-lg shadow-md outline-none dark:text-white dark:bg-zinc-900 dark:border-zinc-700">
+            <select
+              className="h-full p-2 mb-4 border-r-4 rounded-lg shadow-md outline-none dark:text-white dark:bg-zinc-900 dark:border-zinc-700"
+              onChange={(e: React.SyntheticEvent) =>
+                setForm((e.target as HTMLSelectElement).value)
+              }
+            >
               {matchForms?.map((matchForm, i) => (
-                <option key={i}>{matchForm.name}</option>
+                <option value={matchForm.id} key={i}>
+                  {matchForm.name}
+                </option>
               ))}
             </select>
           ) : null}
@@ -72,7 +87,16 @@ const Scout: NextPage = () => {
         <div className="xl:px-4 2xl:px-12">
           <MatchInfo />
           <div className="flex flex-col">
-            {!isLoading ? <EntryForm form={user?.teams?.[0].team.matchScouts?.[0]} submitResponse={submitForm} /> : null}
+            {!isLoading ? (
+              <EntryForm
+                form={
+                  user?.teams
+                    .filter((t) => t.team.id === selectedTeam)?.[0]
+                    .team.matchScouts?.filter((f) => f?.id === form)?.[0]
+                }
+                submitResponse={submitForm}
+              />
+            ) : null}
           </div>
         </div>
       </div>
