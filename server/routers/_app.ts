@@ -1,9 +1,5 @@
 import { initTRPC } from "@trpc/server";
-
-const t = initTRPC.create();
-
-const router = t.router;
-const publicProcedure = t.procedure;
+import { router, procedure } from "../trpc";
 
 const appRouter = router({});
 

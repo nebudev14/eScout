@@ -8,6 +8,7 @@ import type { AppRouter } from "../server/routers/app";
 import { useAtom } from "jotai";
 import { darkModeAtom } from "../server/atoms";
 import NextNProgress from 'nextjs-progressbar';
+import { trpc } from "../util/trpc/trpc";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [darkMode, ] = useAtom(darkModeAtom);
@@ -24,28 +25,4 @@ function MyApp({ Component, pageProps }: AppProps) {
     </SessionProvider>
   );
 }
-
-export default withTRPC<AppRouter>({
-  config({ ctx }) {
-    /**
-     * If you want to use SSR, you need to use the server's full URL
-     * @link https://trpc.io/docs/ssr
-     */
-    // const url = process.env.VERCEL_URL
-    //   ? `https://${process.env.VERCEL_URL}/api/trpc`
-    //   : "http://localhost:3000/api/trpc";
-    const url = `${process.env.NEXT_PUBLIC_DOMAIN}/api/trpc`
-
-    return {
-      url,
-      /**
-       * @link https://react-query.tanstack.com/reference/QueryClient
-       */
-      // queryClientConfig: { defaultOptions: { queries: { staleTime: 60 } } },
-    };
-  },
-  /**
-   * @link https://trpc.io/docs/ssr
-   */
-  ssr: true,
-})(MyApp);
+export default trpc.withTRPC(MyApp);
