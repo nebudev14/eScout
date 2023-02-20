@@ -1,5 +1,30 @@
 import { createRouter } from "../create-router";
+import { router } from "../trpc"
 import { createUserSchema, getUserSchema } from "../schemas/user-schemas";
+import { authProcedure } from "../trpc";
+
+export const user = router({
+  getUser: authProcedure.query(async ({ ctx }) => {
+    const result = await prisma.user.findUnique({
+      where: { id: ctx.session.user.id },
+      include: {
+        teams: {
+          include: {
+            team: {
+              include: {
+                entries: true,
+                members: true,
+                comps: true,
+                pitScouts: true,
+                matchScouts: true,
+              }
+            }
+          }
+        }
+      }
+    })
+  })
+})
 
 export const userRouter = createRouter()
   .mutation("create", {

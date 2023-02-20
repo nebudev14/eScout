@@ -19,4 +19,4 @@ const isAuthed = t.middleware(({ next, ctx }) => {
 
 export const router = t.router;
 export const middleware = t.middleware;
-export const procedure = t.procedure.use(isAuthed);
+export const authProcedure = t.procedure.use(isAuthed);

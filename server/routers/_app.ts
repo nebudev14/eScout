@@ -1,5 +1,5 @@
 import { initTRPC } from "@trpc/server";
-import { router, procedure } from "../trpc";
+import { router, authProcedure } from "../trpc";
 import { userRouter } from "./user-router";
 
 export const appRouter = router({
