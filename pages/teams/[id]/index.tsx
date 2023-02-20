@@ -27,6 +27,8 @@ const TeamContent: NextPage = () => {
 
   const tabs = ["Data", "Misc"];
 
+
+
   return (
     <Protected>
       {isMember ? (
