@@ -1,8 +1,17 @@
 import { z } from "zod";
+import { assertTeamAdmin, entityId } from "../middleware/is-admin";
 import { router } from "../trpc"
 
 export const compRouter = router({
-  createComp: 
+  createComp: assertTeamAdmin.input(entityId.extend({ name: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.prisma.competition.create({
+        data: {
+          name: input.name,
+          teamId: input.entityId
+        }
+      })
+    })
 })
 
 export const comp = createRouter()
