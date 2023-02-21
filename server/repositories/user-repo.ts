@@ -1,6 +1,5 @@
 import { Prisma } from "@prisma/client";
 
-
 export const getUserInclude = () =>
   Prisma.validator<Prisma.UserInclude>()({
     teams: {

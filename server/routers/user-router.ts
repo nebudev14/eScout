@@ -1,8 +1,8 @@
 import { router } from "../trpc"
-import { authProcedure } from "../trpc";
+import { authProcedure } from "../middleware/auth";
 import { getFormInclude, getUserInclude } from "../repositories/user-repo";
 
-export const user = router({
+export const userRouter = router({
   getUser: authProcedure.query(async ({ ctx }) => {
     return await prisma.user.findUnique({
       where: { id: ctx.session.user.id },

@@ -4,7 +4,6 @@ import { teamRouter } from "./team-router";
 import { entryRouter } from "./entry-router";
 import { compRouter } from "./comp-router";
 import { pitRouter } from "./pit-router";
-import { metaware } from "../middleware/metaware";
 import { zebraRouter } from "./zebra-router";
 import { matchRouter } from "./match-router";
 

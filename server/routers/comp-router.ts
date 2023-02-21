@@ -1,7 +1,11 @@
 import { z } from "zod";
-import { createRouter } from "../create-router";
+import { router } from "../trpc"
 
-export const compRouter = createRouter()
+export const compRouter = router({
+  createComp: 
+})
+
+export const comp = createRouter()
   .mutation("create", {
     input: z.object({
       name: z.string(),
