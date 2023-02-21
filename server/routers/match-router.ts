@@ -3,7 +3,7 @@ import { MatchQuestionType } from "@prisma/client";
 import { MatchPromptType } from "@prisma/client";
 import { inputs } from "../../components/scouting/filter/dynamic-input";
 import { Answer } from "../../types/form-types";
-import { assertTeamAdmin, entityId } from "../middleware/is-admin";
+import { assertTeamAdmin, assertFormAdmin, entityId } from "../middleware/is-admin";
 import { router } from "../trpc";
 
 export const matchRouter = router({
@@ -17,7 +17,17 @@ export const matchRouter = router({
     })
   }),
   
-  createCategory: assertTeamAdmin.input(entityId)
+  createCategory: assertFormAdmin.input(entityId.extend({ name: z.string() }))
+  .mutation(async ({ ctx, input }) => {
+    return await ctx.prisma.matchFormCategory.create({
+      data: {
+        matchFormId: input.entityId,
+        name: input.name
+      }
+    })
+  }),
+
+  
 })
 
 export const match = createRouter()
