@@ -1,11 +1,26 @@
 import { z } from "zod";
-import { createRouter } from "../create-router";
 import { MatchQuestionType } from "@prisma/client";
 import { MatchPromptType } from "@prisma/client";
 import { inputs } from "../../components/scouting/filter/dynamic-input";
 import { Answer } from "../../types/form-types";
+import { assertTeamAdmin, entityId } from "../middleware/is-admin";
+import { router } from "../trpc";
 
-export const matchRouter = createRouter()
+export const matchRouter = router({
+  createForm: assertTeamAdmin.input(entityId.extend({ name: z.string() }))
+  .mutation(async ({ ctx, input }) => {
+    return await ctx.prisma.matchForm.create({
+      data: {
+        teamId: input.entityId,
+        name: input.name
+      }
+    })
+  }),
+  
+  createCategory: assertTeamAdmin.input(entityId)
+})
+
+export const match = createRouter()
   .mutation("create-form", {
     input: z.object({
       name: z.string(),

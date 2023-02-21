@@ -150,7 +150,7 @@ enum RungLevel {
 model MatchForm {
   id         String              @id @default(cuid())
   name       String
-  teamId     String
+  teamId     String               
   team       Team                @relation(fields: [teamId], references: [id])
   categories MatchFormCategory[]
 }
