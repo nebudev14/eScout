@@ -1,10 +1,10 @@
 import { z } from "zod";
 import { authProcedure } from "../middleware/auth";
-import { assertTeamAdmin, entityId } from "../middleware/is-admin";
+import { assertAdmin, entityId, LEVEL } from "../middleware/is-admin";
 import { router } from "../trpc"
 
 export const compRouter = router({
-  createComp: assertTeamAdmin.input(entityId.extend({ name: z.string() }))
+  createComp: assertAdmin(LEVEL.TEAM).input(entityId.extend({ name: z.string() }))
     .mutation(async ({ ctx, input }) => {
       return await ctx.prisma.competition.create({
         data: {
@@ -14,7 +14,7 @@ export const compRouter = router({
       })
     }),
 
-  deleteComp: assertTeamAdmin.input(entityId.extend({ name: z.string() }))
+  deleteComp: assertAdmin(LEVEL.TEAM).input(entityId.extend({ name: z.string() }))
     .mutation(async ({ ctx, input }) => {
       return await ctx.prisma.competition.delete({
         where: { id: input.entityId }
