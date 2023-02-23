@@ -5,7 +5,7 @@ import { inputs } from "../../components/scouting/filter/dynamic-input";
 import { Answer } from "../../types/form-types";
 import { entityId, assertAdmin } from "../middleware/is-admin";
 import { router } from "../trpc";
-import { LEVEL } from "../middleware/is-admin";
+import { LEVEL } from "../../types/misc-types";
 
 export const matchRouter = router({
   createForm: assertAdmin(LEVEL.TEAM).input(entityId.extend({ name: z.string() }))
@@ -17,8 +17,8 @@ export const matchRouter = router({
       }
     })
   }),
-  
-  createCategory: assertAdmin(LEVEL.FORM).input(entityId.extend({ name: z.string() }))
+
+  createCategory: assertAdmin(LEVEL.MATCH_FORM).input(entityId.extend({ name: z.string() }))
   .mutation(async ({ ctx, input }) => {
     return await ctx.prisma.matchFormCategory.create({
       data: {
@@ -28,7 +28,7 @@ export const matchRouter = router({
     })
   }),
 
-  
+
 })
 
 export const match = createRouter()
