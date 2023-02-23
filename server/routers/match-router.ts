@@ -6,6 +6,7 @@ import { Answer } from "../../types/form-types";
 import { entityId, assertAdmin } from "../middleware/is-admin";
 import { router } from "../trpc";
 import { LEVEL } from "../../types/misc-types";
+import { authProcedure } from "../middleware/auth";
 
 export const matchRouter = router({
   /**
@@ -95,8 +96,38 @@ export const matchRouter = router({
       });
     }),
 
-  addResponse: assertAdmin(LEVEL.MATCH_CATEGORY)
-  
+  addResponse: authProcedure
+    .input(
+      z.object({
+        teamId: z.string(),
+        compId: z.string(),
+        prescout: z.boolean(),
+        video: z.string(),
+        answers: z
+          .object({
+            questionId: z.string(),
+            slot1: z.string().optional(),
+            slot2: z.string().optional(),
+            slot3: z.string().array().optional(),
+          })
+          .array(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.prisma.matchFormResponse.create({
+        data: {
+          userId: ctx.session.user.id,
+          teamId: input.teamId,
+          compId: input.compId,
+          prescout: input.prescout,
+          video: input.video,
+          answers: {
+            create: input.answers,
+          },
+        },
+      });
+    }),
+
 
 });
 

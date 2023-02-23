@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { authProcedure } from "../middleware/auth";
-import { assertAdmin, entityId, LEVEL } from "../middleware/is-admin";
+import { assertAdmin, entityId } from "../middleware/is-admin";
+import { LEVEL } from "../../types/misc-types";
 import { router } from "../trpc"
 
 export const compRouter = router({
