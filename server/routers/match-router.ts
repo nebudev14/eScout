@@ -8,28 +8,97 @@ import { router } from "../trpc";
 import { LEVEL } from "../../types/misc-types";
 
 export const matchRouter = router({
-  createForm: assertAdmin(LEVEL.TEAM).input(entityId.extend({ name: z.string() }))
-  .mutation(async ({ ctx, input }) => {
-    return await ctx.prisma.matchForm.create({
-      data: {
-        teamId: input.entityId,
-        name: input.name
-      }
-    })
-  }),
+  /**
+   * Creates a new Match Form, given the the user is a Team Admin.
+   *
+   * Takes in a team ID.
+   */
+  createForm: assertAdmin(LEVEL.TEAM)
+    .input(entityId.extend({ name: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.prisma.matchForm.create({
+        data: {
+          teamId: input.entityId,
+          name: input.name,
+        },
+      });
+    }),
 
-  createCategory: assertAdmin(LEVEL.MATCH_FORM).input(entityId.extend({ name: z.string() }))
-  .mutation(async ({ ctx, input }) => {
-    return await ctx.prisma.matchFormCategory.create({
-      data: {
-        matchFormId: input.entityId,
-        name: input.name
-      }
-    })
-  }),
+  /**
+   * Deletes a Match Form, given the the user is a Team Admin.
+   *
+   * Takes in a Match Form ID.
+   */
+  deleteForm: assertAdmin(LEVEL.MATCH_FORM)
+    .input(entityId)
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.prisma.matchForm.delete({
+        where: { id: input.entityId },
+      });
+    }),
 
+  /**
+   * Creates a new Match Form Category, given the the user is a Team Admin.
+   *
+   * Takes in a Match Form ID.
+   */
+  createCategory: assertAdmin(LEVEL.MATCH_FORM)
+    .input(entityId.extend({ name: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.prisma.matchFormCategory.create({
+        data: {
+          matchFormId: input.entityId,
+          name: input.name,
+        },
+      });
+    }),
 
-})
+  /**
+   * Deletes a  Match Form Category, given the the user is a Team Admin.
+   *
+   * Takes in a Match Category ID.
+   */
+  deleteCategory: assertAdmin(LEVEL.MATCH_CATEGORY)
+    .input(entityId)
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.prisma.matchFormCategory.delete({
+        where: { id: input.entityId },
+      });
+    }),
+
+  addQuestion: assertAdmin(LEVEL.MATCH_CATEGORY)
+    .input(
+      entityId.extend({
+        prompt: z.string(),
+        questionType: z.nativeEnum(MatchQuestionType),
+        promptType: z.nativeEnum(MatchPromptType),
+        options: z.array(z.string()),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.prisma.matchFormQuestion.create({
+        data: {
+          matchCategoryId: input.entityId,
+          prompt: input.prompt,
+          questionType: input.questionType,
+          promptType: input.promptType,
+          options: input.options,
+        },
+      });
+    }),
+
+  deleteQuestion: assertAdmin(LEVEL.MATCH_QUESTION)
+    .input(entityId)
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.prisma.matchFormQuestion.delete({
+        where: { id: input.entityId },
+      });
+    }),
+
+  addResponse: assertAdmin(LEVEL.MATCH_CATEGORY)
+  
+
+});
 
 export const match = createRouter()
   .mutation("create-form", {
