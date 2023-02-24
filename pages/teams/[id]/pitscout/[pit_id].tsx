@@ -1,7 +1,6 @@
 import { useRouter } from "next/router";
-import { useQuery } from "../../../../hooks/trpc";
 import { BiArrowBack } from "react-icons/bi";
-import { trpc } from "../../../../util/trpc/trpc";
+import { trpc } from "@util/trpc/trpc";
 
 const ViewPitScout: React.FC = () => {
   const router = useRouter();

@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import { BsGoogle } from "react-icons/bs";
-import { UnAuthed } from "../components/auth/unauthed";
+import { UnAuthed } from "@components/auth/unauthed";
 import { signIn } from "next-auth/react";
 
 const SignIn: NextPage = () => {

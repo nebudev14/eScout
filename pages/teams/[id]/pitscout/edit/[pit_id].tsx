@@ -1,9 +1,9 @@
 import { useRouter } from "next/router";
-import { CreatePitQuestionModal } from "../../../../../components/modals/create-pit-question";
-import QuestionCard from "../../../../../components/ui/question-card";
+import { CreatePitQuestionModal } from "@components/modals/create-pit-question";
+import QuestionCard from "@components/ui/question-card";
 import { BiArrowBack } from "react-icons/bi";
 import { useState } from "react";
-import { trpc } from "../../../../../util/trpc/trpc";
+import { trpc } from "@util/trpc/trpc";
 
 const EditPitScout: React.FC = () => {
   const router = useRouter();

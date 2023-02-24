@@ -90,7 +90,7 @@ export const teamRouter = router({
     }),
 
   getById: authProcedure.input(entityId)
-    .mutation(async ({ ctx, input }) => {
+    .query(async ({ ctx, input }) => {
       return await ctx.prisma.team.findUnique({
         where: { id: input.entityId },
         include: {
