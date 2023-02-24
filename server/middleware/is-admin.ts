@@ -1,12 +1,9 @@
 import { MemberStatus } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
-import { z } from "zod";
+import { entityId } from "../../types/misc-types";
 import { authProcedure } from "./auth";
 import { LEVEL } from "../../types/misc-types";
 
-export const entityId = z.object({
-  entityId: z.string().cuid(),
-});
 
 export const assertAdmin = (level: LEVEL) => {
   return authProcedure.use(async ({ ctx, rawInput, next }) => {

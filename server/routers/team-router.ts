@@ -2,9 +2,12 @@ import { createRouter } from "../create-router";
 import { createTeamSchema } from "../schemas/team-schemas";
 import { MemberStatus } from "@prisma/client";
 import { nanoid } from "nanoid";
-import { z } from "zod";1
+import { z } from "zod";
+import { router } from "../trpc";
 
-export const teamRouter = createRouter()
+
+
+export const team = createRouter()
   .mutation("create", {
     input: createTeamSchema,
     async resolve({ input, ctx }) {

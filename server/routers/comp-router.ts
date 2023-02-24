@@ -1,8 +1,9 @@
 import { z } from "zod";
 import { authProcedure } from "../middleware/auth";
-import { assertAdmin, entityId } from "../middleware/is-admin";
+import { assertAdmin } from "../middleware/is-admin";
 import { LEVEL } from "../../types/misc-types";
 import { router } from "../trpc"
+import { entityId } from "../../types/misc-types";
 
 export const compRouter = router({
   createComp: assertAdmin(LEVEL.TEAM).input(entityId.extend({ name: z.string() }))

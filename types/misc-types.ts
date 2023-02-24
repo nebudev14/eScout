@@ -1,6 +1,7 @@
 import { SetStateAction } from "react";
 import { Answer } from "./form-types";
 import { MatchForm, MatchFormCategory, MatchFormQuestion } from "@prisma/client";
+import { z } from "zod";
 
 export interface Modal {
   isOpen: boolean;
@@ -28,3 +29,7 @@ export enum LEVEL {
   PIT_QUESTION,
   PIT_RESPONSE
 }
+
+export const entityId = z.object({
+  entityId: z.string().cuid(),
+});

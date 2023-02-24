@@ -3,10 +3,11 @@ import { MatchQuestionType } from "@prisma/client";
 import { MatchPromptType } from "@prisma/client";
 import { inputs } from "../../components/scouting/filter/dynamic-input";
 import { Answer } from "../../types/form-types";
-import { entityId, assertAdmin } from "../middleware/is-admin";
+import { assertAdmin } from "../middleware/is-admin";
 import { router } from "../trpc";
 import { LEVEL } from "../../types/misc-types";
 import { authProcedure } from "../middleware/auth";
+import { entityId } from "../../types/misc-types";
 
 export const matchRouter = router({
   /**
