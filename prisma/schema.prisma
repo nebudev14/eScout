@@ -32,6 +32,7 @@ model Session {
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
+
 //angy
 model VerificationToken {
   identifier String
@@ -150,9 +151,10 @@ enum RungLevel {
 model MatchForm {
   id         String              @id @default(cuid())
   name       String
-  teamId     String               
+  teamId     String
   team       Team                @relation(fields: [teamId], references: [id])
   categories MatchFormCategory[]
+  responses  MatchFormResponse[]
 }
 
 model MatchFormCategory {
@@ -164,13 +166,13 @@ model MatchFormCategory {
 }
 
 model MatchFormQuestion {
-  id              String              @id @default(cuid())
+  id              String             @id @default(cuid())
   prompt          String
   options         String[]
   questionType    MatchQuestionType
   promptType      MatchPromptType
   matchCategoryId String
-  matchCategory   MatchFormCategory   @relation(fields: [matchCategoryId], references: [id], onDelete: Cascade)
+  matchCategory   MatchFormCategory  @relation(fields: [matchCategoryId], references: [id], onDelete: Cascade)
   answers         MatchFormAnswers[]
 }
 
@@ -179,10 +181,12 @@ model MatchFormResponse {
   userId      String
   teamId      String
   compId      String
+  formId      String
   prescout    Boolean
   video       String?
   user        TeamUser           @relation(fields: [userId, teamId], references: [userId, teamId])
   competition Competition        @relation(fields: [compId], references: [id])
+  form        MatchForm          @relation(fields: [formId], references: [id])
   answers     MatchFormAnswers[]
 }
 
