@@ -57,6 +57,14 @@ export const assertAdmin = (level: LEVEL) => {
         fetchedResult = fetchedResult?.matchCategory?.matchForm?.team;
         break;
 
+      case LEVEL.MATCH_RESPONSE:
+        fetchedResult = await ctx.prisma.matchFormResponse.findUnique({
+          where: { id: result.data.entityId },
+          include: { form: { include: { team: { include: { members: true } } } } }
+        })
+        fetchedResult = fetchedResult?.form.team;
+        break;
+
       case LEVEL.PIT_FORM:
         fetchedResult = await ctx.prisma.pitForm.findUnique({
           where: { id: result.data.entityId },
