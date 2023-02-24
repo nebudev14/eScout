@@ -20,6 +20,34 @@ export const assertMember = (level: LEVEL) => {
           },
         })
         break;
+
+      case LEVEL.PIT_FORM:
+        fetchedResult = await ctx.prisma.pitForm.findFirst({
+          where: {
+            id: result.data.entityId, team: {
+              members: {
+                some: {
+                  userId: ctx.session.user.id
+                }
+              }
+            }
+          }
+        })
+        break;
+
+      case LEVEL.MATCH_FORM:
+        fetchedResult = await ctx.prisma.matchForm.findFirst({
+          where: {
+            id: result.data.entityId, team: {
+              members: {
+                some: {
+                  userId: ctx.session.user.id
+                }
+              }
+            }
+          }
+        })
+        break;
     }
 
     if (!fetchedResult) {
