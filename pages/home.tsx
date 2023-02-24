@@ -1,29 +1,17 @@
 import type { NextPage } from "next";
-import Link from "next/link";
-import Protected  from "../components/auth/protected";
-import { useMutation, useQuery } from "../hooks/trpc";
-import { useSession } from "next-auth/react";
+import Protected from "../components/auth/protected";
 import NoTeams from "../components/ui/no-teams";
+import { trpc } from "../util/trpc/trpc";
 
 const Home: NextPage = () => {
-  const { data: session } = useSession();
-  const { data, isLoading } = useQuery([
-    "user.get-by-id",
-    { userId: session?.user?.id as string },
-  ]);
-
-  const createTeam = useMutation("team.create");
+  const { data, isLoading } = trpc.user.getUser.useQuery();
 
   if (isLoading || !data) return <h1>Loading...</h1>;
 
   return (
     <Protected>
       <div className="flex flex-col items-center justify-center h-screen dark:text-white">
-        {data?.teams.length === 0 ? (
-          <NoTeams />
-        ) : (
-          <h1>yaeh</h1>
-        )}
+        {data?.teams.length === 0 ? <NoTeams /> : <h1>yaeh</h1>}
       </div>
       )
     </Protected>

@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import Protected from "../../../components/auth/protected";
 import { Filter } from "../../../components/scouting/filter/filter";
 import { ManageCompetitions } from "../../../components/ui/misc/competitions";
-import { useQuery } from "../../../hooks/trpc";
+import { trpc, useQuery } from "../../../hooks/trpc";
 import { Tab } from "@headlessui/react";
 import { ManageScoutForm } from "../../../components/ui/misc/scout-forms";
 import Members from "../../../components/ui/misc/members";
@@ -13,10 +13,13 @@ import { MemberStatus } from "@prisma/client";
 const TeamContent: NextPage = () => {
   const router = useRouter();
   const { data: session } = useSession();
+
   const { data, isLoading } = useQuery([
     "team.get-by-id",
     { teamId: router.query.id as string },
   ]);
+
+  const { data, isLoading } = trpc
 
   const memberIndex = data?.members
     .map((e) => e.userId)
