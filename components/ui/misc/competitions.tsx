@@ -1,7 +1,6 @@
-import { createCompModalAtom } from "../../../server/atoms";
 import { useAtom } from "jotai";
 import { CreateCompModal } from "../../modals/create-comp";
-import { useQuery } from "../../../hooks/trpc";
+import { trpc } from "@util/trpc/trpc";
 import { calculateStats, sum } from "../../../util/calculate-stats";
 import { BsFillTrashFill } from "react-icons/bs";
 import { useState } from "react";
@@ -12,10 +11,7 @@ export const ManageCompetitions: React.FC<{
 }> = ({ teamId, isAdmin }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const { data: allComps } = useQuery([
-    "comp.get-by-team-id",
-    { teamId: teamId },
-  ]);
+  const { data: allComps } = trpc.comp.getCompByTeam.useQuery({ entityId: teamId });
 
   return (
     <div className="min-h-screen">
@@ -39,7 +35,7 @@ export const ManageCompetitions: React.FC<{
             <div className="px-5 py-4 ">
               <div>
                 <h1 className="text-2xl">{comp?.name}</h1>
-                <h1 className="mb-1 text-xl">
+                {/* <h1 className="mb-1 text-xl">
                   {comp?.entries.filter((e) => !e.prescout).length} match scout
                   entries
                 </h1>
@@ -70,7 +66,7 @@ export const ManageCompetitions: React.FC<{
                     </b>
                     total seconds of climb
                   </h1>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

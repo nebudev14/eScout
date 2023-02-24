@@ -9,7 +9,7 @@ export const CreateCompModal: React.FC<Modal> = ({ isOpen, setIsOpen }) => {
 
   const mutateComp = trpc.comp.createComp.useMutation({
     onSuccess() {
-      util.comp.getComp.invalidate();
+      util.comp.getCompByTeam.invalidate();
     }
   })
 

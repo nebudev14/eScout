@@ -51,7 +51,7 @@ const TeamContent: NextPage = () => {
               </div>
               <Tab.Panels className="mt-4">
                 <Tab.Panel>
-                  <Filter teamId={data?.id as string} isAdmin={isAdmin} />
+                  {/* <Filter teamId={data?.id as string} isAdmin={isAdmin} /> */}
                 </Tab.Panel>
                 <Tab.Panel>
                   <Tab.Group>
