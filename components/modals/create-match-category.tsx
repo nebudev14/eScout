@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Dialog } from "@headlessui/react";
-import { trpc, useMutation } from "../../hooks/trpc";
+import { trpc } from "@util/trpc/trpc";
 import { useRouter } from "next/router";
 import { MatchQuestionType } from "@prisma/client";
 import { Modal } from "../../types/misc-types";
@@ -11,18 +11,19 @@ export const CreateMatchCategoryModal: React.FC<Modal> = ({
   setIsOpen,
 }) => {
   const router = useRouter();
-  const { invalidateQueries } = trpc.useContext();
+  const util = trpc.useContext();
 
   const [questionType, setQuestionType] = useState<MatchQuestionType>();
   const [selectOptions, setSelectOptions] = useState<string[]>([]);
   // For entering in new options
   const [currentOption, setCurrentOption] = useState<string>("");
 
-  const createCategoryQuery = useMutation("match.create-category", {
+  const createCategoryQuery = trpc.match.createCategory.useMutation({
     onSuccess() {
-      invalidateQueries("match.get-by-id");
-    },
-  });
+      util.match.getById.invalidate();
+    }
+  })
+
 
   const createCategory = async (event: React.SyntheticEvent) => {
     event.preventDefault();
@@ -31,8 +32,8 @@ export const CreateMatchCategoryModal: React.FC<Modal> = ({
     };
 
     await createCategoryQuery.mutateAsync({
+      entityId: router.query.match_id as string,
       name: target.categoryName.value,
-      matchFormId: router.query.match_id as string,
     });
   };
 

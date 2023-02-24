@@ -1,17 +1,17 @@
-import { trpc, useMutation } from "../../hooks/trpc";
+import { trpc } from "@util/trpc/trpc";
 import { useRouter } from "next/router";
 import { Modal } from "../../types/misc-types";
 import ModalWrapper from "../ui/modal-wrapper";
 
 export const CreateCompModal: React.FC<Modal> = ({ isOpen, setIsOpen }) => {
   const router = useRouter();
-  const { invalidateQueries } = trpc.useContext();
+  const util = trpc.useContext();
 
-  const mutateComp = useMutation("comp.create", {
+  const mutateComp = trpc.comp.createComp.useMutation({
     onSuccess() {
-      invalidateQueries("comp.get-by-team-id");
-    },
-  });
+      util.comp.getComp.invalidate();
+    }
+  })
 
   const createComp = async (event: React.SyntheticEvent) => {
     event.preventDefault();
@@ -20,8 +20,8 @@ export const CreateCompModal: React.FC<Modal> = ({ isOpen, setIsOpen }) => {
     };
 
     await mutateComp.mutateAsync({
+      entityId: router.query.id as string,
       name: target.compName.value,
-      teamId: router.query.id as string,
     });
   };
 

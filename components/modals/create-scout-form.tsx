@@ -1,7 +1,7 @@
 import { Dialog } from "@headlessui/react";
-import { trpc, useMutation } from "../../hooks/trpc";
+import { trpc } from "@util/trpc/trpc";
 import { useRouter } from "next/router";
-import { Modal } from "../../types/misc-types";
+import { Modal } from "types/misc-types";
 import ModalWrapper from "../ui/modal-wrapper";
 
 export const CreateScoutFormModal: React.FC<Modal> = ({
@@ -9,17 +9,17 @@ export const CreateScoutFormModal: React.FC<Modal> = ({
   setIsOpen,
 }) => {
   const router = useRouter();
-  const { invalidateQueries } = trpc.useContext();
+  const util = trpc.useContext();
 
-  const mutateMatchScout = useMutation("match.create-form", {
+  const mutateMatchScout = trpc.match.createForm.useMutation({
     onSuccess() {
-      invalidateQueries("match.get-by-team-id");
+      util.match.getByTeam.invalidate();
     },
   });
 
-  const mutatePitScout = useMutation("pit.create", {
+  const mutatePitScout = trpc.pit.createPitForm.useMutation({
     onSuccess() {
-      invalidateQueries("pit.get-by-team-id");
+      util.pit.getByTeamId.invalidate();
     },
   });
 
@@ -33,12 +33,12 @@ export const CreateScoutFormModal: React.FC<Modal> = ({
     if (target.formType.value === "match") {
       await mutateMatchScout.mutateAsync({
         name: target.formName.value,
-        teamId: router.query.id as string,
+        entityId: router.query.id as string,
       });
     } else {
       await mutatePitScout.mutateAsync({
         name: target.formName.value,
-        teamId: router.query.id as string,
+        entityId: router.query.id as string,
       });
     }
   };

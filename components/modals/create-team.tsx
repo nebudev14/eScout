@@ -1,22 +1,23 @@
 import { Dialog, Tab } from "@headlessui/react";
-import { trpc, useMutation } from "../../hooks/trpc";
-import { Modal } from "../../types/misc-types";
+import { trpc } from "@util/trpc/trpc";
+import { Modal } from "types/misc-types";
 import ModalWrapper from "../ui/modal-wrapper";
 
+
 export const CreateTeamModal: React.FC<Modal> = ({ isOpen, setIsOpen }) => {
-  const { invalidateQueries } = trpc.useContext();
+  const util = trpc.useContext();
 
-  const mutateTeam = useMutation("team.create", {
+  const mutateTeam = trpc.team.createTeam.useMutation({
     onSuccess() {
-      invalidateQueries("user.get-by-id");
-    },
-  });
+      util.user.getUser.invalidate();
+    }
+  })
 
-  const mutateJoinTeam = useMutation("team.accept-invite", {
+  const mutateJoinTeam = trpc.team.acceptInvite.useMutation({
     onSuccess() {
-      invalidateQueries("user.get-by-id");
-    },
-  });
+      util.user.getUser.invalidate();
+    }
+  })
 
   const createTeam = async (event: React.SyntheticEvent) => {
     event.preventDefault();

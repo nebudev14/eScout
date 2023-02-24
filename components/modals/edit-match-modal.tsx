@@ -5,7 +5,7 @@ import { MatchFormCategory } from "@prisma/client";
 import React, { useState } from "react";
 import { MatchQuestionType, MatchPromptType } from "@prisma/client";
 import { Container } from "../ui/container";
-import { trpc, useMutation } from "../../hooks/trpc";
+import { trpc } from "@util/trpc/trpc";
 import { renderDesiredQuestionDisplay } from "../../util/render-question-model";
 
 const EditMatchModal: React.FC<{
@@ -20,13 +20,12 @@ const EditMatchModal: React.FC<{
 
   const [optionInput, setOptionInput] = useState<string>("");
 
-  const { invalidateQueries } = trpc.useContext();
+  const util = trpc.useContext();
 
-  const createQuestionQuery = useMutation("match.add-question", {
+  const createQuestionQuery = trpc.match.addQuestion.useMutation({
     onSuccess() {
-      invalidateQueries("match.get-by-id");
-      invalidateQueries("match.get-by-team-id");
-    },
+      util.match.invalidate();
+    }
   });
 
   const createQuestion = async (event: React.SyntheticEvent) => {
@@ -42,10 +41,10 @@ const EditMatchModal: React.FC<{
       target.questionType.value === "COUNTER";
 
     await createQuestionQuery.mutateAsync({
+      entityId: category.id,
       prompt: target.questionPrompt.value,
       questionType: target.questionType.value,
       promptType: isNumerical ? MatchPromptType.NUMBER : MatchPromptType.TEXT,
-      categoryId: category.id,
       options:
         target.questionType.value === MatchQuestionType.SELECT
           ? selectOptions

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Dialog } from "@headlessui/react";
-import { trpc, useMutation } from "../../hooks/trpc";
+import { trpc } from "@util/trpc/trpc";
 import { useRouter } from "next/router";
 import { PitQuestionType } from "@prisma/client";
 import { BsFillTrashFill } from "react-icons/bs";
@@ -12,7 +12,7 @@ export const CreatePitQuestionModal: React.FC<Modal> = ({
   setIsOpen,
 }) => {
   const router = useRouter();
-  const { invalidateQueries } = trpc.useContext();
+  const util = trpc.useContext();
 
   const [questionType, setQuestionType] = useState<PitQuestionType>(
     PitQuestionType.TEXT
@@ -21,9 +21,9 @@ export const CreatePitQuestionModal: React.FC<Modal> = ({
   // For entering in new options
   const [currentOption, setCurrentOption] = useState<string>("");
 
-  const mutatePitScout = useMutation("pit.add-question", {
+  const mutatePitScout = trpc.pit.addPitQuestion.useMutation({
     onSuccess() {
-      invalidateQueries("pit.get-by-id");
+      util.pit.getById.invalidate();
     },
   });
 
@@ -35,7 +35,7 @@ export const CreatePitQuestionModal: React.FC<Modal> = ({
     };
 
     await mutatePitScout.mutateAsync({
-      id: router.query.pit_id as string,
+      entityId: router.query.pit_id as string,
       prompt: target.questionName.value,
       type: target.questionType.value,
       possibleResponses: selectOptions,
