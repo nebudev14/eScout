@@ -1,14 +1,12 @@
 import { PitQuestion, PitQuestionType } from "@prisma/client";
-import { useRouter } from "next/router";
 import { BsFillTrashFill } from "react-icons/bs";
-import { trpc, useMutation } from "../../hooks/trpc";
+import { trpc } from "@util/trpc/trpc";
 
 const QuestionCard: React.FC<{ question: PitQuestion }> = ({ question }) => {
-  const { invalidateQueries } = trpc.useContext();
-  const router = useRouter();
-  const mutatePitScout = useMutation("pit.delete-question", {
+  const util = trpc.useContext();
+  const mutatePitScout = trpc.pit.deletePitQuestion.useMutation({
     onSuccess() {
-      invalidateQueries("pit.get-by-id");
+      util.pit.getById.invalidate();
     }
   })
 
@@ -20,8 +18,7 @@ const QuestionCard: React.FC<{ question: PitQuestion }> = ({ question }) => {
         </h1>
         <BsFillTrashFill className="duration-150 hover:cursor-pointer hover:text-red-400" onClick={async () => {
           await mutatePitScout.mutateAsync({
-            id: router.query.pit_id as string,
-            questionId: question.id
+            entityId: question.id
           })
         }} />
       </div>

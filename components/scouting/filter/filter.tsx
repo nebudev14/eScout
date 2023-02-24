@@ -11,6 +11,7 @@ import { Switch } from "@headlessui/react";
 import { Entry } from "@prisma/client";
 import { SingleStats } from "../stats/single-stats";
 
+/** DEPRECATED */
 export const Filter: React.FC<{ teamId: string, isAdmin: boolean }> = ({ teamId, isAdmin }) => {
   const [queryAttribute, setQueryAttribute] =
     useState<string>("entryTeamNumber");

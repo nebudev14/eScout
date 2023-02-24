@@ -1,24 +1,25 @@
 import { Entry, User } from "@prisma/client";
-import { percentageFormat } from "../../util/calculate-stats";
+import { percentageFormat } from "@util/calculate-stats";
 import { useAtom } from "jotai";
-import { selectEntryAtom } from "../../server/atoms";
+import { selectEntryAtom } from "@server/atoms";
 import Image from "next/image";
 import { BsFillTrashFill } from "react-icons/bs";
 import { AiOutlineSwap } from "react-icons/ai";
 import { trpc, useMutation } from "../../hooks/trpc";
 
+/** DEPRECATED */
 export const FilterCard: React.FC<{
   entry: Entry;
   user: User;
   isAdmin: boolean;
-}> = ({ entry, user, isAdmin }) => { 
+}> = ({ entry, user, isAdmin }) => {
   const totalAuto = entry.autoHighShotsMade + entry.autoLowShotsMade;
   const totalTeleop = entry.teleopHighShotsMade + entry.teleopLowShotsMade;
   const totalShots =
     entry.autoHighShotsTotal +
     entry.autoLowShotsTotal +
     entry.teleopHighShotsTotal +
-    entry.teleopLowShotsTotal; 
+    entry.teleopLowShotsTotal;
 
   const [currentEntry] = useAtom(selectEntryAtom);
 

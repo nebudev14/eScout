@@ -1,5 +1,5 @@
 import { useAtom } from "jotai";
-import { setSearchQueryAtom } from "../../../server/atoms";
+import { setSearchQueryAtom } from "@server/atoms";
 
 export const inputs = {
   entryTeamNumber: {
@@ -44,7 +44,7 @@ export const DynamicInput: React.FC<{ attribute: string }> = ({
     } else {
       return (
         <select>
-          
+
         </select>
       );
     }

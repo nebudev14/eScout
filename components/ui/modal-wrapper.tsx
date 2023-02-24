@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { Modal } from "../../types/misc-types";
+import { Modal } from "types/misc-types";
 
 const ModalWrapper: React.FC<React.PropsWithChildren<Modal>> = ({
   isOpen,
