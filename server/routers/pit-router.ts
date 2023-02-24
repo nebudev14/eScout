@@ -1,32 +1,29 @@
 import { PitQuestionType } from "@prisma/client";
 import { z } from "zod";
+import { entityId, LEVEL } from "../../types/misc-types";
 import { createRouter } from "../create-router";
+import { authProcedure } from "../middleware/auth";
+import { assertAdmin } from "../middleware/is-admin";
+import { assertMember } from "../middleware/is-member";
+import { router } from "../trpc";
 
-export const pitRouter = createRouter()
-  .mutation("create", {
-    input: z.object({
-      name: z.string(),
-      teamId: z.string(),
-    }),
-    async resolve({ input, ctx }) {
+export const pitRouter = router({
+  createPitForm: assertAdmin(LEVEL.TEAM)
+    .input(entityId.extend({ name: z.string() }))
+    .mutation(async ({ ctx, input }) => {
       return await ctx.prisma.pitForm.create({
         data: {
           name: input.name,
-          teamId: input.teamId,
-        },
-      });
-    },
-  })
-  .mutation("add-question", {
-    input: z.object({
-      id: z.string(),
-      prompt: z.string(),
-      type: z.nativeEnum(PitQuestionType),
-      possibleResponses: z.string().array(),
+          teamId: input.entityId
+        }
+      })
     }),
-    async resolve({ input, ctx }) {
+
+  addPitQuestion: assertAdmin(LEVEL.PIT_FORM)
+    .input(entityId.extend({ prompt: z.string(), type: z.nativeEnum(PitQuestionType), possibleResponses: z.string().array() }))
+    .mutation(async ({ ctx, input }) => {
       return await ctx.prisma.pitForm.update({
-        where: { id: input.id },
+        where: { id: input.entityId },
         data: {
           questions: {
             create: {
@@ -36,62 +33,44 @@ export const pitRouter = createRouter()
             },
           },
         },
-      });
-    },
-  })
-  .mutation("delete-question", {
-    input: z.object({
-      id: z.string(),
-      questionId: z.string()
-    }),
-    async resolve({ input, ctx }) {
-      return await ctx.prisma.pitForm.update({
-        where: { id: input.id },
-        data: {
-          questions: {
-            delete: {
-              id: input.questionId
-            }
-          }
-        }
       })
-    }
-  })
-  .mutation("submit-scout", {
-    input: z.object({
-      data: z.object({
-        pitQuestionId: z.string(),
-        response: z.string(),
-        userId: z.string(),
-        entryTeamNumber: z.number(),
-      }).array()
     }),
-    async resolve({ input, ctx }) {
+
+  deletePitQuestion: assertAdmin(LEVEL.PIT_QUESTION).input(entityId)
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.prisma.pitQuestion.delete({
+        where: { id: input.entityId }
+      })
+    }),
+
+  submitPitScout: assertMember(LEVEL.PIT_FORM).input(entityId.extend({
+    data: z.object({
+      pitQuestionId: z.string(),
+      response: z.string(),
+      userId: z.string(),
+      entryTeamNumber: z.number(),
+    }).array()
+  }))
+    .mutation(async ({ ctx, input }) => {
       return await ctx.prisma.pitResponse.createMany({
         data: input.data
       })
-    }
-  })
-  .query("get-by-team-id", {
-    input: z.object({
-      teamId: z.string(),
     }),
-    async resolve({ input, ctx }) {
+
+  getByTeamId: assertMember(LEVEL.TEAM).input(entityId)
+    .query(async ({ ctx, input }) => {
       return await ctx.prisma.pitForm.findMany({
-        where: { teamId: input.teamId },
+        where: { teamId: input.entityId },
         include: {
           questions: true,
         },
-      });
-    },
-  })
-  .query("get-by-id", {
-    input: z.object({
-      id: z.string(),
+      })
     }),
-    async resolve({ input, ctx }) {
+
+  getById: authProcedure.input(entityId)
+    .query(async ({ ctx, input }) => {
       return await ctx.prisma.pitForm.findUnique({
-        where: { id: input.id },
+        where: { id: input.entityId },
         include: {
           questions: {
             include: {
@@ -104,6 +83,6 @@ export const pitRouter = createRouter()
             }
           }
         },
-      });
-    },
-  });
+      })
+    })
+})
