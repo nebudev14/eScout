@@ -24,7 +24,7 @@ export const compRouter = router({
     }),
 
   getComp: authProcedure.input(entityId)
-    .mutation(async ({ ctx, input }) => {
+    .query(async ({ ctx, input }) => {
       return await ctx.prisma.competition.findUnique({
         where: { id: input.entityId }
       })
