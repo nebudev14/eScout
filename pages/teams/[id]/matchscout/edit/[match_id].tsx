@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { BiArrowBack } from "react-icons/bi";
-import { trpc, useMutation, useQuery } from "../../../../../hooks/trpc";
+import { useMutation, useQuery } from "../../../../../hooks/trpc";
 import { CreateMatchCategoryModal } from "../../../../../components/modals/create-match-category";
 import { BsFillTrashFill, BsPencilFill } from "react-icons/bs";
 import { useState } from "react";
@@ -8,6 +8,8 @@ import { ConfirmationModal } from "../../../../../components/modals/confirmation
 import EditMatchModal from "../../../../../components/modals/edit-match-modal";
 import { MatchFormCategory } from "@prisma/client";
 import { renderDesiredQuestionDisplay } from "../../../../../util/render-question-model";
+import { trpc } from "@util/trpc/trpc"; 
+
 
 const EditMatchScout: React.FC = () => {
   const router = useRouter();
@@ -16,7 +18,9 @@ const EditMatchScout: React.FC = () => {
     { id: router.query.match_id as string },
   ]);
 
-  const { invalidateQueries } = trpc.useContext();
+  // const { data, isLoading } = trpc
+
+  const { invalidate } = trpc.useContext();
   const [currentCategory, setCurrentCategory] =
     useState<MatchFormCategory | null>(null); // Category selected for action
 
@@ -27,7 +31,7 @@ const EditMatchScout: React.FC = () => {
 
   const deleteCategoryQuery = useMutation("match.delete-category", {
     onSuccess() {
-      invalidateQueries("match.get-by-id");
+      invalidate("match.getById");
     },
   });
 
