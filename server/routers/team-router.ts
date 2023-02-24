@@ -1,16 +1,15 @@
 import { createRouter } from "../create-router";
-import { createTeamSchema } from "../schemas/team-schemas";
 import { MemberStatus } from "@prisma/client";
 import { nanoid } from "nanoid";
 import { z } from "zod";
 import { router } from "../trpc";
+import { authProcedure } from "../middleware/auth";
+import { assertAdmin } from "../middleware/is-admin";
+import { entityId, LEVEL } from "../../types/misc-types";
 
-
-
-export const team = createRouter()
-  .mutation("create", {
-    input: createTeamSchema,
-    async resolve({ input, ctx }) {
+export const teamRouter = router({
+  createTeam: authProcedure.input(z.object({ name: z.string(), number: z.number() }))
+    .mutation(async ({ ctx, input }) => {
       return await ctx.prisma.team.create({
         data: {
           name: input.name,
@@ -19,22 +18,17 @@ export const team = createRouter()
           members: {
             create: {
               userId: ctx.session!.user.id,
-              status: MemberStatus.CREATOR,
-            },
-          },
-        },
-      });
-    },
-  })
-  .mutation("accept-invite", {
-    input: z.object({
-      inviteId: z.string(),
+              status: MemberStatus.CREATOR
+            }
+          }
+        }
+      })
     }),
-    async resolve({ input, ctx }) {
+
+  acceptInvite: authProcedure.input(z.object({ inviteId: z.string() }))
+    .mutation(async ({ ctx, input }) => {
       return await ctx.prisma.team.update({
-        where: {
-          inviteId: input.inviteId,
-        },
+        where: { inviteId: input.inviteId },
         data: {
           members: {
             create: {
@@ -43,45 +37,37 @@ export const team = createRouter()
             },
           },
         },
-      });
-    },
-  })
-  .mutation("remove-member", {
-    input: z.object({
-      teamId: z.string(),
-      userId: z.string(),
+      })
     }),
-    async resolve({ input, ctx }) {
+
+  removeMember: assertAdmin(LEVEL.TEAM).input(entityId.extend({ userId: z.string() }))
+    .mutation(async ({ ctx, input }) => {
       return await ctx.prisma.team.update({
-        where: { id: input.teamId },
+        where: { id: input.entityId },
         data: {
           members: {
             delete: {
               userId_teamId: {
                 userId: input.userId,
-                teamId: input.teamId
+                teamId: input.entityId
               }
             },
           },
         },
-      });
-    },
-  })
-  .mutation("promote-member", {
-    input: z.object({
-      teamId: z.string(),
-      userId: z.string(),
+      })
     }),
-    async resolve({ input, ctx }) {
+
+  promoteMember: assertAdmin(LEVEL.TEAM).input(entityId.extend({ userId: z.string() }))
+    .mutation(async ({ ctx, input }) => {
       return await ctx.prisma.team.update({
-        where: { id: input.teamId },
+        where: { id: input.entityId },
         data: {
           members: {
             update: {
               where: {
                 userId_teamId: {
                   userId: input.userId,
-                  teamId: input.teamId
+                  teamId: input.entityId
                 }
               },
               data: {
@@ -90,29 +76,23 @@ export const team = createRouter()
             },
           },
         },
-      });
-    },
-  })
-  .mutation("regen-id", {
-    input: z.object({
-      teamId: z.string()
+      })
     }),
-    async resolve({ input, ctx }) {
+
+  regenId: assertAdmin(LEVEL.TEAM).input(entityId)
+    .mutation(async ({ ctx, input }) => {
       return await ctx.prisma.team.update({
-        where: { id: input.teamId },
+        where: { id: input.entityId },
         data: {
-          inviteId: nanoid(6),
+          inviteId: nanoid(6)
         }
       })
-    }
-  })
-  .query("get-by-id", {
-    input: z.object({
-      teamId: z.string()
     }),
-    async resolve({ input, ctx }) {
+
+  getById: authProcedure.input(entityId)
+    .mutation(async ({ ctx, input }) => {
       return await ctx.prisma.team.findUnique({
-        where: { id: input.teamId },
+        where: { id: input.entityId },
         include: {
           members: {
             include: {
@@ -129,6 +109,7 @@ export const team = createRouter()
             }
           }
         },
-      });
-    },
-  });
+      })
+    })
+
+})
