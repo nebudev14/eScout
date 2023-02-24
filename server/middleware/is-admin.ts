@@ -92,6 +92,6 @@ export const assertAdmin = (level: LEVEL) => {
       });
     }
 
-    return next({ ctx: { team: fetchedResult } });
+    return next({ ctx: { result: fetchedResult } });
   });
 };
