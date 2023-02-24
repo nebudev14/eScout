@@ -8,7 +8,7 @@ import { Menu } from "@headlessui/react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { useAtom } from "jotai";
-import { darkModeAtom } from "../../server/atoms";
+import { darkModeAtom } from "@server/atoms";
 
 export const Nav: React.FC = () => {
   const { data: session } = useSession();

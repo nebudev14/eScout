@@ -1,40 +1,33 @@
 import { z } from "zod";
-import { createRouter } from "../create-router";
+import { authProcedure } from "../middleware/auth";
+import { assertAdmin } from "../middleware/is-admin";
+import { LEVEL } from "../../types/misc-types";
+import { router } from "../trpc"
+import { entityId } from "../../types/misc-types";
 
-export const compRouter = createRouter()
-  .mutation("create", {
-    input: z.object({
-      name: z.string(),
-      teamId: z.string()
-    }),
-    async resolve({ input, ctx }) {
+export const compRouter = router({
+  createComp: assertAdmin(LEVEL.TEAM).input(entityId.extend({ name: z.string() }))
+    .mutation(async ({ ctx, input }) => {
       return await ctx.prisma.competition.create({
         data: {
           name: input.name,
-          teamId: input.teamId
+          teamId: input.entityId
         }
       })
-    }
-  })
-  .mutation("delete-comp", {
-    input: z.object({
-      id: z.string()
     }),
-    async resolve({ input, ctx }) {
+
+  deleteComp: assertAdmin(LEVEL.TEAM).input(entityId.extend({ name: z.string() }))
+    .mutation(async ({ ctx, input }) => {
       return await ctx.prisma.competition.delete({
-        where: { id: input.id }
+        where: { id: input.entityId }
       })
-    }
-  }).query("get-by-team-id", {
-    input: z.object({
-      teamId: z.string()
     }),
-    async resolve({ input, ctx }) {
-      return await ctx.prisma.competition.findMany({
-        where: { teamId: input.teamId },
-        include: {
-          entries: true,
-        }
-      });
-    }
-  });
+
+  getComp: authProcedure.input(entityId)
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.prisma.competition.findUnique({
+        where: { id: input.entityId }
+      })
+    })
+})
+

@@ -31,7 +31,7 @@ export const zebraRouter = createRouter()
         {
           method: 'GET',
           headers: {
-            'X-TBA-Auth-Key':'CImPe9Of5uiA6w9f7LlmC9EFBXwKj9J1HDHTSmVuQvUk4zidQBdlZRuOe2VAKkCE',
+            'X-TBA-Auth-Key':'',
             'Content-Type': 'application/json'
           }
         }

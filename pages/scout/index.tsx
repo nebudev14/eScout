@@ -1,15 +1,16 @@
 import type { NextPage } from "next";
 import React, { useEffect } from "react";
-import Protected from "../../components/auth/protected";
-import { MatchInfo } from "../../components/ui/form/match-info";
+import Protected from "@components/auth/protected";
+import { MatchInfo } from "@components/ui/form/match-info";
 import { useState, useRef } from "react";
 import { useSession } from "next-auth/react";
 import { useMutation, useQuery } from "../../hooks/trpc";
 import { useRouter } from "next/router";
 import { useAtom } from "jotai";
-import { setPreScoutAtom, setSelectedCompAtom } from "../../server/atoms";
-import EntryForm from "../../components/ui/form/entry-form";
-import { Answer } from "../../types/form-types";
+import { setPreScoutAtom, setSelectedCompAtom } from "@server/atoms";
+import EntryForm from "@components/ui/form/entry-form";
+import { Answer } from "types/form-types";
+import { trpc } from "@util/trpc/trpc";
 
 const Scout: NextPage = () => {
   const { data: session } = useSession();
@@ -18,10 +19,7 @@ const Scout: NextPage = () => {
   const [selectedTeam, setSelectedTeam] = useState<string>("");
   const [form, setForm] = useState<string>();
 
-  const { data: user } = useQuery([
-    "user.get-forms-by-id",
-    { userId: session?.user.id as string },
-  ]);
+  const { data: user } = trpc.user.getForms.useQuery();
 
   useEffect(() => {
     if (user?.teams.length !== 0) {
@@ -33,10 +31,9 @@ const Scout: NextPage = () => {
     }
   }, [user?.teams, setSelectedTeam]);
 
-  const { data: matchForms, isLoading } = useQuery([
-    "match.get-by-team-id",
-    { teamId: selectedTeam },
-  ]);
+  const { data: matchForms, isLoading } = trpc.match.getByTeam.useQuery({
+    teamId: selectedTeam,
+  });
 
   const submitResponse = useMutation("match.add-response");
 

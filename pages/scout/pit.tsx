@@ -1,32 +1,28 @@
-import { PitForm, PitQuestionType } from "@prisma/client";
+import { PitQuestionType } from "@prisma/client";
 import { NextPage } from "next";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
-import Protected from "../../components/auth/protected";
-import { Container } from "../../components/ui/container";
-import { Input } from "../../components/ui/input";
-import NoTeams from "../../components/ui/no-teams";
-import { useMutation, useQuery } from "../../hooks/trpc";
+import Protected from "@components/auth/protected";
+import { Container } from "@components/ui/container";
+import { Input } from "@components/ui/input";
+import NoTeams from "@components/ui/no-teams";
 import { Team } from "@prisma/client";
+import { trpc } from "@util/trpc/trpc";
 
 const PitScout: NextPage = () => {
   const router = useRouter();
   const [selectedTeam, setSelectedTeam] = useState<Team | undefined>();
   const { data: session } = useSession();
-  const { data: userData } = useQuery([
-    "user.get-by-id",
-    { userId: session?.user.id as string },
-  ]);
+  const { data: userData } = trpc.user.getUser.useQuery();
 
   useEffect(() => {
     if (userData?.teams.length !== 0) setSelectedTeam(userData?.teams[0].team);
   }, [setSelectedTeam, userData?.teams]);
 
-  const { data, isLoading } = useQuery([
-    "pit.get-by-team-id",
-    { teamId: selectedTeam?.id as string },
-  ]);
+  const { data, isLoading } = trpc.pit.getByTeamId.useQuery({
+    entityId: selectedTeam?.id as string,
+  });
 
   const [pitScout, setSelectedPitScout] = useState<string>("");
   useEffect(() => {
@@ -34,7 +30,7 @@ const PitScout: NextPage = () => {
     setSelectedPitScout(data === undefined ? "" : data![0]!?.id);
   }, [setSelectedPitScout, data]);
 
-  const submitEntry = useMutation("pit.submit-scout");
+  const submitEntry = trpc.pit.submitPitScout.useMutation();
 
   if (userData?.teams.length === 0) return <NoTeams />;
 
@@ -55,7 +51,10 @@ const PitScout: NextPage = () => {
         });
       });
 
-    await submitEntry.mutateAsync({ data: results });
+    await submitEntry.mutateAsync({
+      entityId: router.query.pit_id as string,
+      data: results,
+    });
     router.push("/teams");
   };
 

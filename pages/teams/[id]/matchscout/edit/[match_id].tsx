@@ -1,22 +1,22 @@
 import { useRouter } from "next/router";
 import { BiArrowBack } from "react-icons/bi";
-import { trpc, useMutation, useQuery } from "../../../../../hooks/trpc";
-import { CreateMatchCategoryModal } from "../../../../../components/modals/create-match-category";
+import { CreateMatchCategoryModal } from "@components/modals/create-match-category";
 import { BsFillTrashFill, BsPencilFill } from "react-icons/bs";
 import { useState } from "react";
-import { ConfirmationModal } from "../../../../../components/modals/confirmation-modal";
-import EditMatchModal from "../../../../../components/modals/edit-match-modal";
+import { ConfirmationModal } from "@components/modals/confirmation-modal";
+import EditMatchModal from "@components/modals/edit-match-modal";
 import { MatchFormCategory } from "@prisma/client";
-import { renderDesiredQuestionDisplay } from "../../../../../util/render-question-model";
+import { renderDesiredQuestionDisplay } from "@util/render-question-model";
+import { trpc } from "@util/trpc/trpc";
 
 const EditMatchScout: React.FC = () => {
   const router = useRouter();
-  const { data, isLoading } = useQuery([
-    "match.get-by-id",
-    { id: router.query.match_id as string },
-  ]);
 
-  const { invalidateQueries } = trpc.useContext();
+  const { data, isLoading } = trpc.match.getById.useQuery({
+    id: router.query.match_id as string,
+  });
+
+  const utils = trpc.useContext();
   const [currentCategory, setCurrentCategory] =
     useState<MatchFormCategory | null>(null); // Category selected for action
 
@@ -25,9 +25,9 @@ const EditMatchScout: React.FC = () => {
   const [isEditOpen, setIsEditOpen] = useState(false); // Editing categories
   const [isDeleteOpen, setIsDeleteOpen] = useState(false); // Delete confirmation modal
 
-  const deleteCategoryQuery = useMutation("match.delete-category", {
+  const deleteCategoryMutation = trpc.match.deleteCategory.useMutation({
     onSuccess() {
-      invalidateQueries("match.get-by-id");
+      utils.match.getById.invalidate();
     },
   });
 
@@ -76,7 +76,11 @@ const EditMatchScout: React.FC = () => {
             <div>
               {category.questions.map((question, j) => (
                 <div key={j} className="my-8">
-                  {renderDesiredQuestionDisplay(question.questionType, question.prompt as string, question.options)}
+                  {renderDesiredQuestionDisplay(
+                    question.questionType,
+                    question.prompt as string,
+                    question.options
+                  )}
                 </div>
               ))}
             </div>
@@ -99,7 +103,7 @@ const EditMatchScout: React.FC = () => {
         isOpen={isDeleteOpen}
         setIsOpen={setIsDeleteOpen}
         func={() => {
-          deleteCategoryQuery.mutateAsync({ id: currentCategory!.id });
+          deleteCategoryMutation.mutateAsync({ entityId: currentCategory!.id });
           setIsDeleteOpen(false);
         }}
       />

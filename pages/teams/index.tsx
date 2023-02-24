@@ -1,19 +1,15 @@
 import type { NextPage } from "next";
 import { useSession } from "next-auth/react";
-import Protected from "../../components/auth/protected";
-import { useQuery } from "../../hooks/trpc";
+import Protected from "@components/auth/protected";
 import { FaUserFriends } from "react-icons/fa";
 import { CgNotes } from "react-icons/cg";
-import { CreateTeamModal } from "../../components/modals/create-team";
+import { CreateTeamModal } from "@components/modals/create-team";
 import { useState } from "react";
+import { trpc } from "@util/trpc/trpc";
 
 const ManageTeams: NextPage = () => {
-  const { data: session } = useSession();
 
-  const { data: userData, isLoading } = useQuery([
-    "user.get-by-id",
-    { userId: session?.user?.id as string },
-  ]);
+  const { data: userData, isLoading } = trpc.user.getUser.useQuery();
 
   const [isOpen, setIsOpen] = useState(false);
 

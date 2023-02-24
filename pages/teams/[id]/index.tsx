@@ -1,22 +1,20 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import Protected from "../../../components/auth/protected";
-import { Filter } from "../../../components/scouting/filter/filter";
-import { ManageCompetitions } from "../../../components/ui/misc/competitions";
-import { useQuery } from "../../../hooks/trpc";
+import Protected from "@components/auth/protected";
+import { Filter } from "@components/scouting/filter/filter";
+import { ManageCompetitions } from "@components/ui/misc/competitions";
 import { Tab } from "@headlessui/react";
-import { ManageScoutForm } from "../../../components/ui/misc/scout-forms";
-import Members from "../../../components/ui/misc/members";
+import { ManageScoutForm } from "@components/ui/misc/scout-forms";
+import Members from "@components/ui/misc/members";
 import { useSession } from "next-auth/react";
 import { MemberStatus } from "@prisma/client";
+import { trpc } from "@util/trpc/trpc";
 
 const TeamContent: NextPage = () => {
   const router = useRouter();
   const { data: session } = useSession();
-  const { data, isLoading } = useQuery([
-    "team.get-by-id",
-    { teamId: router.query.id as string },
-  ]);
+
+  const { data, isLoading } = trpc.team.getById.useQuery({ entityId: router.query.id as string });
 
   const memberIndex = data?.members
     .map((e) => e.userId)

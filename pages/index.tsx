@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import { BsGoogle } from "react-icons/bs";
-import { UnAuthed } from "../components/auth/unauthed";
+import { UnAuthed } from "@components/auth/unauthed";
 import { signIn } from "next-auth/react";
 
 const SignIn: NextPage = () => {
@@ -18,7 +18,7 @@ const SignIn: NextPage = () => {
             <BsGoogle className="text-3xl" />
           </div>
         </button>
-        <h1 className="text-lg">Made with ❤️ from the Sciborgs</h1>
+        <h1 className="text-lg">Made with ❤️ from  FRC Team 1155, the Sciborgs</h1>
       </div>
       )
     </UnAuthed>

@@ -2,7 +2,7 @@ import { Container } from "../container";
 import { Input } from "../input";
 import { Competition, MatchType } from "@prisma/client";
 import { useQuery, trpc } from "../../../hooks/trpc";
-import { useState, useEffect } from "react";
+import { useState, useEffect, SetStateAction } from "react";
 import { useSession } from "next-auth/react";
 import { Combobox } from "@headlessui/react";
 import { HiSelector } from "react-icons/hi";
@@ -10,6 +10,7 @@ import { useAtom } from "jotai";
 import { setPreScoutAtom, setSelectedCompAtom } from "../../../server/atoms";
 import { Team } from "@prisma/client";
 
+// export const MatchInfo: React.FC<{ setIsOpen: (update: SetStateAction<boolean>) => void; }> = ({ setIsOpen }) => {
 export const MatchInfo: React.FC = () => {
   const [selectedTeam, setSelectedTeam] = useState<Team | undefined>();
   const [selectedComp, setSelectedComp] = useAtom(setSelectedCompAtom);
@@ -19,7 +20,7 @@ export const MatchInfo: React.FC = () => {
     "user.get-by-id",
     { userId: session?.user.id as string },
   ]);
-
+//what the fuck is a jacobian.
   const { invalidateQueries } = trpc.useContext();
 
   useEffect(() => {

@@ -1,16 +1,13 @@
 import { useRouter } from "next/router";
-import { CreatePitQuestionModal } from "../../../../../components/modals/create-pit-question";
-import QuestionCard from "../../../../../components/ui/question-card";
-import { useQuery } from "../../../../../hooks/trpc";
+import { CreatePitQuestionModal } from "@components/modals/create-pit-question";
+import QuestionCard from "@components/ui/question-card";
 import { BiArrowBack } from "react-icons/bi";
 import { useState } from "react";
+import { trpc } from "@util/trpc/trpc";
 
 const EditPitScout: React.FC = () => {
   const router = useRouter();
-  const { data, isLoading } = useQuery([
-    "pit.get-by-id",
-    { id: router.query.pit_id as string },
-  ]);
+  const { data, isLoading } = trpc.pit.getById.useQuery({ entityId: router.query.pit_id as string });
 
   const [isOpen, setIsOpen] = useState(false);
 
