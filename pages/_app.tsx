@@ -4,7 +4,7 @@ import { SessionProvider } from "next-auth/react";
 import { Nav } from "../components/ui/nav";
 import "../styles/globals.css";
 import { withTRPC } from "@trpc/next";
-import type { AppRouter } from "../server/routers/app";
+import { appRouter } from "../server/routers/_app";
 import { useAtom } from "jotai";
 import { darkModeAtom } from "../server/atoms";
 import NextNProgress from 'nextjs-progressbar';
