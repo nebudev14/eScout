@@ -88,7 +88,7 @@ export default class EntryForm extends React.Component<Props, State> {
     return answers;
   }
 
-  async updateState(answer: Answer) {
+  updateState(answer: Answer) {
     const answers: Answer[] = this.setAnswer(this.state.answers, answer);
     this.setState({ answers: answers });
   }

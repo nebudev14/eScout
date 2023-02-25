@@ -11,7 +11,7 @@ export const ScoreBoard: React.FC<MatchFormInput> = ({
   const [shot, setShot] = useState(0);
   const [total, setTotal] = useState(0);
 
-  const updateFormState = async (shots: number, miss: number) => {
+  const updateFormState = (shots: number, miss: number) => {
     if (updateState){
       updateState({
         questionId: id,
@@ -40,7 +40,7 @@ export const ScoreBoard: React.FC<MatchFormInput> = ({
           <button
             className="p-2 text-lg font-semibold text-white bg-green-500 rounded-tl rounded-bl shadow dark:bg-green-500 focus:outline-none focus:shadow-outline"
             type="button"
-            onClick={async () => {
+            onClick={() => {
               setShot(prev => prev + 1);
               setTotal(prev => prev + 1);
               updateFormState(shot+1, total+1);
@@ -52,7 +52,7 @@ export const ScoreBoard: React.FC<MatchFormInput> = ({
           <button
             className="p-2 text-lg font-semibold text-white bg-red-500 shadow dark:bg-rose-500 focus:outline-none focus:shadow-outline"
             type="button"
-            onClick={async () => {
+            onClick={() => {
               setTotal(prev => prev + 1);
               updateFormState(shot, total+1);
             }}
