@@ -10,11 +10,11 @@ export const CounterInput: React.FC<MatchFormInput> = ({
 }) => {
   const [counter, setCounter] = useState(0);
 
-  const updateFormState = () => {
+  const updateFormState = (count: number) => {
     if (updateState) {
       updateState({
         questionId: id,
-        slot1: counter.toString(),
+        slot1: count.toString(),
       });
     }
   };
@@ -30,7 +30,7 @@ export const CounterInput: React.FC<MatchFormInput> = ({
             className="flex items-center justify-center w-full h-full px-4 text-center bg-red-400 hover:cursor-pointer border-slate-300 dark:border-zinc-600"
             onClick={() => {
               setCounter(counter - 1);
-              updateFormState();
+              updateFormState(counter-1);
             }}
           >
             -
@@ -42,7 +42,7 @@ export const CounterInput: React.FC<MatchFormInput> = ({
             className="flex items-center justify-center w-full h-full px-4 text-center bg-green-400 rounded-r-lg hover:cursor-pointer border-slate-600 dark:border-zinc-600"
             onClick={() => {
               setCounter(counter + 1);
-              updateFormState();
+              updateFormState(counter+1);
             }}
           >
             +
