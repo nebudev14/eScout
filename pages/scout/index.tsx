@@ -12,7 +12,6 @@ import { Answer } from "types/form-types";
 import { trpc } from "@util/trpc/trpc";
 
 const Scout: NextPage = () => {
-  const { data: session } = useSession();
   const router = useRouter();
 
   const [selectedTeam, setSelectedTeam] = useState<string>("");

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Answer } from "../../../types/form-types";
-import { MatchFormInput } from "../../../types/misc-types";
+import { Answer } from "types/form-types";
+import { MatchFormInput } from "types/misc-types";
 import { Container } from "../container";
 
 export const ScoreBoard: React.FC<MatchFormInput> = ({
@@ -40,8 +40,8 @@ export const ScoreBoard: React.FC<MatchFormInput> = ({
             className="p-2 text-lg font-semibold text-white bg-green-500 rounded-tl rounded-bl shadow dark:bg-green-500 focus:outline-none focus:shadow-outline"
             type="button"
             onClick={() => {
-              setShot(shot + 1);
-              setTotal(total + 1);
+              setShot(prevState => prevState + 1);
+              setTotal(prevState => prevState + 1);
               updateFormState();
             }}
           >
@@ -51,7 +51,7 @@ export const ScoreBoard: React.FC<MatchFormInput> = ({
             className="p-2 text-lg font-semibold text-white bg-red-500 shadow dark:bg-rose-500 focus:outline-none focus:shadow-outline"
             type="button"
             onClick={() => {
-              setTotal(total + 1);
+              setTotal(prevState => prevState + 1);
               updateFormState();
             }}
           >
@@ -63,7 +63,7 @@ export const ScoreBoard: React.FC<MatchFormInput> = ({
             className="p-2 text-lg font-semibold text-white bg-yellow-500 border-r-2 shadow focus:outline-none focus:shadow-outline"
             type="button"
             onClick={() => {
-              if (shot !== 0) setShot(shot - 1);
+              if (shot !== 0) setShot(prevState => prevState - 1);
             }}
           >
             -1
@@ -72,7 +72,7 @@ export const ScoreBoard: React.FC<MatchFormInput> = ({
             className="p-2 text-lg font-semibold text-white bg-yellow-500 rounded-tr rounded-br shadow focus:outline-none focus:shadow-outline"
             type="button"
             onClick={() => {
-              if (total !== 0) setTotal(total - 1);
+              if (total !== 0) setTotal(prevState => prevState - 1);
             }}
           >
             -1
