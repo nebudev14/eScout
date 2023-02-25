@@ -4,7 +4,6 @@ import Protected from "@components/auth/protected";
 import { MatchInfo } from "@components/ui/form/match-info";
 import { useState, useRef } from "react";
 import { useSession } from "next-auth/react";
-import { useMutation, useQuery } from "../../hooks/trpc";
 import { useRouter } from "next/router";
 import { useAtom } from "jotai";
 import { setPreScoutAtom, setSelectedCompAtom } from "@server/atoms";
@@ -35,7 +34,7 @@ const Scout: NextPage = () => {
     teamId: selectedTeam,
   });
 
-  const submitResponse = useMutation("match.add-response");
+  const submitResponse = trpc.match.addResponse.useMutation();
 
   // console.log(user?.teams.filter((t) => t.team.id === selectedTeam)?.[0]);
   // console.log(form)
@@ -52,9 +51,9 @@ const Scout: NextPage = () => {
   // make submit method and pass into entry form component
   const submitForm = async (answers: Answer[]) => {
     await submitResponse.mutateAsync({
-      userId: session?.user.id as string,
       teamId: selectedTeam,
       compId: selectedComp?.id as string,
+      formId: form as string,
       prescout: prescout,
       video: "yea",
       answers: answers,

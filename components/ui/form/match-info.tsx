@@ -1,7 +1,7 @@
 import { Container } from "../container";
 import { Input } from "../input";
 import { Competition, MatchType } from "@prisma/client";
-import { useQuery, trpc } from "../../../hooks/trpc";
+import { trpc } from "@util/trpc/trpc";
 import { useState, useEffect, SetStateAction } from "react";
 import { useSession } from "next-auth/react";
 import { Combobox } from "@headlessui/react";
@@ -15,13 +15,8 @@ export const MatchInfo: React.FC = () => {
   const [selectedTeam, setSelectedTeam] = useState<Team | undefined>();
   const [selectedComp, setSelectedComp] = useAtom(setSelectedCompAtom);
   const [prescout] = useAtom(setPreScoutAtom);
-  const { data: session } = useSession();
-  const { data: userData } = useQuery([
-    "user.get-by-id",
-    { userId: session?.user.id as string },
-  ]);
-//what the fuck is a jacobian.
-  const { invalidateQueries } = trpc.useContext();
+  const { data: userData } = trpc.user.getUser.useQuery();
+  //what the fuck is a jacobian.
 
   useEffect(() => {
     if (userData?.teams.length !== 0) {
@@ -30,10 +25,9 @@ export const MatchInfo: React.FC = () => {
     }
   }, [userData?.teams, setSelectedComp]);
 
-  const { data: compData, isLoading } = useQuery([
-    "comp.get-by-team-id",
-    { teamId: selectedTeam?.id as string },
-  ]);
+  const { data: compData, isLoading } = trpc.comp.getCompByTeam.useQuery({
+    entityId: selectedTeam?.id as string,
+  });
 
   const [compQuery, setCompQuery] = useState("");
   const filteredComps =
