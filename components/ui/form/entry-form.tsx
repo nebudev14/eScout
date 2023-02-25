@@ -71,7 +71,7 @@ export default class EntryForm extends React.Component<Props, State> {
 
     this.setState({ answers: answers });
 
-    console.log(answers);
+    // console.log(answers);
   }
 
   setAnswer(answers: Answer[], newAnswer: Answer): Answer[] {
@@ -83,12 +83,12 @@ export default class EntryForm extends React.Component<Props, State> {
     currentAnswer.slot2 = newAnswer.slot2;
     currentAnswer.slot3 = newAnswer.slot3;
 
-    console.log(this.state.answers);
+    // console.log(this.state.answers);
 
     return answers;
   }
-  
-  updateState(answer: Answer) {
+
+  async updateState(answer: Answer) {
     const answers: Answer[] = this.setAnswer(this.state.answers, answer);
     this.setState({ answers: answers });
   }
