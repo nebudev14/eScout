@@ -1,4 +1,3 @@
-import { createRouter } from "../create-router";
 import { MemberStatus } from "@prisma/client";
 import { nanoid } from "nanoid";
 import { z } from "zod";
@@ -8,7 +7,8 @@ import { assertAdmin } from "../middleware/is-admin";
 import { entityId, LEVEL } from "../../types/misc-types";
 
 export const teamRouter = router({
-  createTeam: authProcedure.input(z.object({ name: z.string(), number: z.number() }))
+  createTeam: authProcedure
+    .input(z.object({ name: z.string(), number: z.number() }))
     .mutation(async ({ ctx, input }) => {
       return await ctx.prisma.team.create({
         data: {
@@ -18,14 +18,15 @@ export const teamRouter = router({
           members: {
             create: {
               userId: ctx.session!.user.id,
-              status: MemberStatus.CREATOR
-            }
-          }
-        }
-      })
+              status: MemberStatus.CREATOR,
+            },
+          },
+        },
+      });
     }),
 
-  acceptInvite: authProcedure.input(z.object({ inviteId: z.string() }))
+  acceptInvite: authProcedure
+    .input(z.object({ inviteId: z.string() }))
     .mutation(async ({ ctx, input }) => {
       return await ctx.prisma.team.update({
         where: { inviteId: input.inviteId },
@@ -37,10 +38,11 @@ export const teamRouter = router({
             },
           },
         },
-      })
+      });
     }),
 
-  removeMember: assertAdmin(LEVEL.TEAM).input(entityId.extend({ userId: z.string() }))
+  removeMember: assertAdmin(LEVEL.TEAM)
+    .input(entityId.extend({ userId: z.string() }))
     .mutation(async ({ ctx, input }) => {
       return await ctx.prisma.team.update({
         where: { id: input.entityId },
@@ -49,15 +51,16 @@ export const teamRouter = router({
             delete: {
               userId_teamId: {
                 userId: input.userId,
-                teamId: input.entityId
-              }
+                teamId: input.entityId,
+              },
             },
           },
         },
-      })
+      });
     }),
 
-  promoteMember: assertAdmin(LEVEL.TEAM).input(entityId.extend({ userId: z.string() }))
+  promoteMember: assertAdmin(LEVEL.TEAM)
+    .input(entityId.extend({ userId: z.string() }))
     .mutation(async ({ ctx, input }) => {
       return await ctx.prisma.team.update({
         where: { id: input.entityId },
@@ -67,8 +70,8 @@ export const teamRouter = router({
               where: {
                 userId_teamId: {
                   userId: input.userId,
-                  teamId: input.entityId
-                }
+                  teamId: input.entityId,
+                },
               },
               data: {
                 status: MemberStatus.CREATOR,
@@ -76,40 +79,65 @@ export const teamRouter = router({
             },
           },
         },
-      })
+      });
     }),
 
-  regenId: assertAdmin(LEVEL.TEAM).input(entityId)
+  regenId: assertAdmin(LEVEL.TEAM)
+    .input(entityId)
     .mutation(async ({ ctx, input }) => {
       return await ctx.prisma.team.update({
         where: { id: input.entityId },
         data: {
-          inviteId: nanoid(6)
-        }
-      })
+          inviteId: nanoid(6),
+        },
+      });
     }),
 
-  getById: authProcedure.input(entityId)
-    .query(async ({ ctx, input }) => {
-      return await ctx.prisma.team.findUnique({
-        where: { id: input.entityId },
-        include: {
-          members: {
-            include: {
-              user: true,
+  getById: authProcedure.input(entityId).query(async ({ ctx, input }) => {
+    return await ctx.prisma.team.findUnique({
+      where: { id: input.entityId },
+      include: {
+        members: {
+          include: {
+            user: true,
+          },
+        },
+        matchScouts: {
+          include: {
+            categories: {
+              include: {
+                questions: true,
+              },
             },
           },
-          matchScouts: {
-            include: {
-              categories: {
-                include: {
-                  questions: true
-                }
-              }
-            }
-          }
         },
-      })
-    })
+      },
+    });
+  }),
 
-})
+  getByUser: authProcedure.query(async ({ ctx, input }) => {
+    return await ctx.prisma.teamUser.findMany({
+      where: { userId: ctx.session.user.id },
+      include: {
+        team: {
+          include: {
+            members: {
+              include: {
+                user: true,
+              },
+            },
+            matchScouts: {
+              include: {
+                categories: {
+                  include: {
+                    questions: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    });
+  }),
+});

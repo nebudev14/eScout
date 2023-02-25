@@ -3,21 +3,33 @@ import React, { useEffect } from "react";
 import Protected from "@components/auth/protected";
 import { MatchInfo } from "@components/ui/form/match-info";
 import { useState, useRef } from "react";
-import { useSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useAtom } from "jotai";
 import { setPreScoutAtom, setSelectedCompAtom } from "@server/atoms";
 import EntryForm from "@components/ui/form/entry-form";
 import { Answer } from "types/form-types";
 import { trpc } from "@util/trpc/trpc";
+import { createProxySSGHelpers } from "@trpc/react-query/ssg";
+import {
+  GetStaticPropsContext,
+  InferGetStaticPropsType,
+  GetServerSidePropsContext,
+} from "next";
+import { appRouter } from "@server/routers/_app";
+import { createContext, createContextInner } from "@server/context";
 
-const Scout: NextPage = () => {
+export default function Scout(
+  props: InferGetStaticPropsType<typeof getServerSideProps>
+) {
   const router = useRouter();
 
   const [selectedTeam, setSelectedTeam] = useState<string>("");
   const [form, setForm] = useState<string>();
 
   const { data: user } = trpc.user.getForms.useQuery();
+
+  // console.log(props)
 
   useEffect(() => {
     if (user?.teams.length !== 0) {
@@ -97,6 +109,28 @@ const Scout: NextPage = () => {
       </div>
     </Protected>
   );
-};
+}
 
-export default Scout;
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const ssg = createProxySSGHelpers({
+    router: appRouter,
+    ctx: await createContextInner({
+      session: await getSession(context),
+    }),
+  });
+
+  let teams = await ssg.team.getByUser.fetch();
+
+  // Temporary 
+  teams.forEach(e => e.team.members.forEach(m => {
+    m.user.created = null;
+    m.user.emailVerified = null;
+  }));
+
+
+  return {
+    props: {
+      teams: teams
+    },
+  };
+}
