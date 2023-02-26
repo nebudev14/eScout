@@ -7,7 +7,6 @@ import { ManageScoutForm } from "@components/ui/misc/scout-forms";
 import Members from "@components/ui/misc/members";
 import { useSession, getSession } from "next-auth/react";
 import { MemberStatus } from "@prisma/client";
-import { trpc } from "@util/trpc/trpc";
 import { createProxySSGHelpers } from "@trpc/react-query/ssg";
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
 import { appRouter } from "@server/routers/_app";
@@ -58,7 +57,11 @@ export default function TeamContent(
               </div>
               <Tab.Panels className="mt-4">
                 <Tab.Panel>
-                  {/* <Filter teamId={data?.id as string} isAdmin={isAdmin} /> */}
+                  <div>
+                    <select className="h-full p-2 mb-4 border-r-4 rounded-lg shadow-md outline-none dark:text-white dark:bg-zinc-900 dark:border-zinc-700">
+                      
+                    </select>
+                  </div>
                 </Tab.Panel>
                 <Tab.Panel>
                   <Tab.Group>
