@@ -18,7 +18,7 @@ import {
   TeamUser,
   Competition,
 } from "@prisma/client";
-import { Combobox } from "@headlessui/react";
+import { Combobox, Switch } from "@headlessui/react";
 import { HiSelector } from "react-icons/hi";
 import { Input } from "@components/ui/input";
 import { Container } from "@components/ui/container";
@@ -38,6 +38,7 @@ export default function Scout(
   const [selectedTeam, setSelectedTeam] = useState<FetchedTeam | undefined>();
   const [selectedComp, setSelectedComp] = useState<Competition | undefined>();
   const [prescout, setPrescout] = useState<boolean>(false);
+  const [videoLink, setVideoLink] = useState<string>("");
   const [form, setForm] = useState<string>();
 
   /** Rendered */
@@ -80,7 +81,7 @@ export default function Scout(
       compId: selectedComp?.id as string,
       formId: form as string,
       prescout: prescout,
-      video: "yea",
+      video: videoLink,
       answers: answers,
     });
   };
@@ -162,6 +163,9 @@ export default function Scout(
                 placeholder="Video Link"
                 type="text"
                 autoComplete="off"
+                onChange={(link) =>
+                  setVideoLink((link.target as HTMLInputElement).value)
+                }
                 required
               />
             ) : null}
@@ -193,6 +197,22 @@ export default function Scout(
                 </Combobox.Options>
               </div>
             </Combobox>
+          </div>
+          <div className="flex items-center mb-6">
+            <h1 className="mr-4 text-2xl font-semibold">Prescout</h1>
+            <Switch
+              checked={prescout}
+              onChange={setPrescout}
+              className={`${
+                prescout ? "bg-pink-600" : "bg-zinc-600"
+              } relative  inline-flex h-6 w-11 items-center rounded-full`}
+            >
+              <span
+                className={`${
+                  prescout ? "translate-x-6" : "translate-x-1"
+                } inline-block h-4 w-4 transform rounded-full duration-300 ease-in-out bg-white transition`}
+              />
+            </Switch>
           </div>
           <div className="flex flex-col">
             {/* For some reason, list of teams is rendered as undefined initially. This is a disgusting workaround  */}
