@@ -21,5 +21,6 @@ export const statRouter = router({
       });
     }),
 
-  
+  addStatistic: assertAdmin()
+
 });
