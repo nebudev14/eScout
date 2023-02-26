@@ -55,14 +55,17 @@ export default function Scout(
   const [defended, setDefended] = useState<number[]>([]);
   const [defendedBy, setDefendedBy] = useState<number[]>([]);
 
+  // TODO: THIS IS NOT SAFE LMAOOO
+  const updateElements = (team: FetchedTeam) => {
+    setSelectedTeam(team);
+    if (team.comps.length !== 0) setSelectedComp(team.comps[0]);
+    if (team.matchScouts.length !== 0) setForm(team.matchScouts[0].id);
+  };
+
   useEffect(() => {
     if (props.teams.length !== 0) {
       const initTeam = props.teams[0];
-      setSelectedTeam(initTeam.team as FetchedTeam);
-      if (initTeam.team.comps.length !== 0)
-        setSelectedComp(initTeam?.team.comps[0]);
-      if (initTeam.team.matchScouts.length !== 0)
-        setForm(initTeam?.team.matchScouts[0].id);
+      updateElements(initTeam.team as FetchedTeam);
     }
   }, [setSelectedTeam, setSelectedComp, setForm]);
 
@@ -118,7 +121,7 @@ export default function Scout(
                     (e) =>
                       e.team.id === (event.target as HTMLSelectElement).value
                   )[0]?.team;
-                  setSelectedTeam(team);
+                  updateElements(team);
                 }}
               >
                 {props?.teams.map((team, i) => (
