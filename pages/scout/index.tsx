@@ -91,7 +91,7 @@ export default function Scout(
   return (
     <Protected>
       <div className="min-h-screen py-16 md:px-4 xl:px-36 2xl:px-52 dark:text-white">
-        <h1 className="2xl:text-red-600 xl:text-cyan-400">weee</h1>
+        {/* <h1 className="2xl:text-red-600 xl:text-cyan-400">weee</h1> */}
         <div className="flex items-center justify-start xl:px-4 2xl:px-12">
           {matchForms?.length !== 0 || selectedTeam !== undefined ? (
             <select

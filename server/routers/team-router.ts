@@ -5,6 +5,7 @@ import { router } from "../trpc";
 import { authProcedure } from "../middleware/auth";
 import { assertAdmin } from "../middleware/is-admin";
 import { entityId, LEVEL } from "../../types/misc-types";
+import { assertMember } from "@server/middleware/is-member";
 
 export const teamRouter = router({
   createTeam: authProcedure
@@ -93,7 +94,7 @@ export const teamRouter = router({
       });
     }),
 
-  getById: authProcedure.input(entityId).query(async ({ ctx, input }) => {
+  getById: assertMember(LEVEL.TEAM).input(entityId).query(async ({ ctx, input }) => {
     return await ctx.prisma.team.findUnique({
       where: { id: input.entityId },
       include: {
