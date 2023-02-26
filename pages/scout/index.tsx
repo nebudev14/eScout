@@ -26,8 +26,6 @@ export default function Scout(
   const [selectedTeam, setSelectedTeam] = useState<FetchedTeam | undefined>();
   const [form, setForm] = useState<string>();
 
-  const { data: user } = trpc.user.getForms.useQuery();
-
   useEffect(() => {
     if (props.teams.length !== 0) {
       const initTeam = props.teams[0];
@@ -36,20 +34,15 @@ export default function Scout(
         setForm(initTeam?.team.matchScouts[0].id);
       }
     }
-  }, [user?.teams, setSelectedTeam]);
+  }, [setSelectedTeam]);
 
-  console.log(selectedTeam);
+  // const { data: matchForms, isLoading } = trpc.match.getByTeam.useQuery({
+  //   teamId: selectedTeam?.id as string,
+  // });
 
-  const { data: matchForms, isLoading } = trpc.match.getByTeam.useQuery({
-    teamId: selectedTeam?.id as string,
-  });
-
-  selectedTeam;
+  let matchForms = selectedTeam?.matchScouts;
 
   const submitResponse = trpc.match.addResponse.useMutation();
-
-  // console.log(user?.teams.filter((t) => t.team.id === selectedTeam)?.[0]);
-  // console.log(form)
 
   const [selectedComp] = useAtom(setSelectedCompAtom);
 
@@ -71,6 +64,7 @@ export default function Scout(
       answers: answers,
     });
   };
+
 
   return (
     <Protected>
@@ -95,13 +89,16 @@ export default function Scout(
         <div className="xl:px-4 2xl:px-12">
           <MatchInfo />
           <div className="flex flex-col">
-            {!isLoading ? (
+            {/* For some reason, list of teams is rendered as undefined initially. This is a disgusting workaround  */}
+            {props?.teams.filter(
+              (t) => t.team.id === (selectedTeam?.id as string)
+            )[0] !== undefined ? (
               <EntryForm
                 form={
-                  user?.teams
+                  props?.teams
                     .filter(
                       (t) => t.team.id === (selectedTeam?.id as string)
-                    )?.[0]
+                    )[0]
                     .team.matchScouts?.filter((f) => f?.id === form)?.[0]
                 }
                 submitResponse={submitForm}
