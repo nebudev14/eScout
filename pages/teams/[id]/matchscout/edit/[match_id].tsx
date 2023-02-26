@@ -135,12 +135,19 @@ const EditMatchScout: React.FC = () => {
             />
           </Tab.Panel>
           <Tab.Panel>
-          <button
+            <button
               className="duration-150 px-4 py-2 text-white bg-cyan-400 rounded-lg hover:bg-cyan-500"
               onClick={() => setIsStatProfileOpen(true)}
             >
               Add
             </button>
+            <div>
+              {data?.profiles.map((profile, i) => (
+                <div key={i}>
+                  {profile.name}
+                </div>
+              ))}
+            </div>
             <CreateStatProfileModal
               isOpen={isStatProfileOpen}
               setIsOpen={setIsStatProfileOpen}

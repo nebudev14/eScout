@@ -5,6 +5,7 @@ import { authProcedure } from "@server/middleware/auth";
 import { entityId } from "types/misc-types";
 import { router } from "../trpc";
 import { ProfileType, Operation } from "@prisma/client";
+import { assertMember } from "@server/middleware/is-member";
 
 export const statRouter = router({
   createProfile: assertAdmin(LEVEL.MATCH_FORM)
@@ -45,6 +46,14 @@ export const statRouter = router({
     .mutation(async ({ ctx, input }) => {
       return await ctx.prisma.statistic.delete({
         where: { id: input.entityId },
+      });
+    }),
+
+  getProfilesByTeam: assertMember(LEVEL.MATCH_FORM)
+    .input(entityId)
+    .query(async ({ ctx, input }) => {
+      return await ctx.prisma.statProfile.findMany({
+        where: { matchFormId: input.entityId },
       });
     }),
 });

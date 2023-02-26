@@ -15,28 +15,29 @@ export const CreateStatProfileModal: React.FC<Modal> = ({
     ProfileType.MATCH
   );
 
+  const util = trpc.useContext();
+
   const profileMutation = trpc.stat.createProfile.useMutation({
     onSuccess() {
-      // TODO: INVALIDATE
+      util.match.getById.invalidate();
     },
   });
 
   const createProfile = async (event: React.SyntheticEvent) => {
     event.preventDefault();
     const target = event.target as typeof event.target & {
-      name: { value: string };
-      profileType: { value: ProfileType };
+      profileName: { value: string };
     };
 
     await profileMutation.mutateAsync({
       entityId: router.query.match_id as string,
-      name: target.name.value,
-      type: target.profileType.value,
+      name: target.profileName.value,
+      type: desiredType,
     });
   };
 
   return (
-    <ModalWrapper isOpen={isOpen} setIsOpen={setIsOpen}>
+    <ModalWrapper isOpen={isOpen} setIsOpen={setIsOpen} >
       <Dialog.Title
         as="h3"
         className="text-lg font-medium leading-6 text-center text-gray-900 flex flex-col"
@@ -48,7 +49,7 @@ export const CreateStatProfileModal: React.FC<Modal> = ({
           <div className="my-2">
             <h1 className="mr-2 font-semibold">Name</h1>
             <input
-              id="categoryName"
+              id="profileName"
               className="w-full p-2 border-2 rounded-lg outline-none"
               required
               autoComplete="off"
@@ -67,12 +68,13 @@ export const CreateStatProfileModal: React.FC<Modal> = ({
               }
             >
               <option value={ProfileType.MATCH}>Match</option>
-              <option value={ProfileType.TEAM}>TEAM</option>
+              <option value={ProfileType.TEAM}>Team</option>
             </select>
           </div>
           <button
             type="submit"
-            className="inline-flex justify-center px-4 py-2 mt-2\ text-sm font-medium text-white bg-pink-600 border border-transparent rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+            className="inline-flex justify-center px-4 py-2 mt-2 text-sm font-medium text-white bg-pink-600 border border-transparent rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+            onClick={() => setIsOpen(false)}
           >
             Create
           </button>

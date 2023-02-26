@@ -183,6 +183,11 @@ export const matchRouter = router({
               questions: true,
             },
           },
+          profiles: {
+            include: {
+              stats: true
+            }
+          }
         },
       });
     }),
