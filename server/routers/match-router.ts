@@ -1,13 +1,12 @@
 import { z } from "zod";
 import { MatchQuestionType } from "@prisma/client";
 import { MatchPromptType } from "@prisma/client";
-import { inputs } from "../../components/scouting/filter/dynamic-input";
-import { Answer } from "../../types/form-types";
 import { assertAdmin } from "../middleware/is-admin";
 import { router } from "../trpc";
 import { LEVEL } from "../../types/misc-types";
 import { authProcedure } from "../middleware/auth";
 import { entityId } from "../../types/misc-types";
+import { assertMember } from "@server/middleware/is-member";
 
 export const matchRouter = router({
   /**
@@ -68,6 +67,11 @@ export const matchRouter = router({
       });
     }),
 
+  /**
+   * Creates a new Match Form Question, given the the user is a Team Admin.
+   *
+   * Takes in a Match Category ID.
+   */
   addQuestion: assertAdmin(LEVEL.MATCH_CATEGORY)
     .input(
       entityId.extend({
@@ -89,6 +93,11 @@ export const matchRouter = router({
       });
     }),
 
+  /**
+   * Deletes a Match Form Question, given the the user is a Team Admin.
+   *
+   * Takes in a Match Form Question ID.
+   */
   deleteQuestion: assertAdmin(LEVEL.MATCH_QUESTION)
     .input(entityId)
     .mutation(async ({ ctx, input }) => {
@@ -97,10 +106,14 @@ export const matchRouter = router({
       });
     }),
 
-  addResponse: authProcedure
+  /**
+   * Adds a match response, given the the user is a team member.
+   *
+   * Takes in a Team ID
+   */
+  addResponse: assertMember(LEVEL.TEAM)
     .input(
-      z.object({
-        teamId: z.string(),
+      entityId.extend({
         compId: z.string(),
         formId: z.string(),
         prescout: z.boolean(),
@@ -119,7 +132,7 @@ export const matchRouter = router({
       return await ctx.prisma.matchFormResponse.create({
         data: {
           userId: ctx.session.user.id,
-          teamId: input.teamId,
+          teamId: input.entityId,
           compId: input.compId,
           formId: input.formId,
           prescout: input.prescout,
@@ -131,6 +144,11 @@ export const matchRouter = router({
       });
     }),
 
+  /**
+   * Deletes a match form response, given the the user is a team admin.
+   *
+   * Takes in a Match Response ID
+   */
   deleteResponse: assertAdmin(LEVEL.MATCH_RESPONSE)
     .input(entityId)
     .mutation(async ({ ctx, input }) => {
@@ -169,4 +187,3 @@ export const matchRouter = router({
       });
     }),
 });
-

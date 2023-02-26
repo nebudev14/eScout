@@ -77,7 +77,7 @@ export default function Scout(
   // make submit method and pass into entry form component
   const submitForm = async (answers: Answer[]) => {
     await submitResponse.mutateAsync({
-      teamId: selectedTeam?.id as string,
+      entityId: selectedTeam?.id as string,
       compId: selectedComp?.id as string,
       formId: form as string,
       prescout: prescout,
