@@ -9,6 +9,7 @@ import { MatchFormCategory } from "@prisma/client";
 import { renderDesiredQuestionDisplay } from "@util/render-question-model";
 import { trpc } from "@util/trpc/trpc";
 import { Tab } from "@headlessui/react";
+import { CreateStatProfileModal } from "@components/modals/create-stat-profile-modal";
 
 const EditMatchScout: React.FC = () => {
   const router = useRouter();
@@ -23,8 +24,9 @@ const EditMatchScout: React.FC = () => {
 
   // Modals
   const [isCategoryOpen, setIsCategoryOpen] = useState(false); // Creating category modal
-  const [isEditOpen, setIsEditOpen] = useState(false); // Editing categories
-  const [isDeleteOpen, setIsDeleteOpen] = useState(false); // Delete confirmation modal
+  const [isCategoryEditOpen, setIsCategoryEditOpen] = useState(false); // Editing categories
+  const [isCategoryDeleteOpen, setIsCategoryDeleteOpen] = useState(false); // Delete confirmation modal
+  const [isStatProfileOpen, setIsStatProfileOpen] = useState(false);
 
   const deleteCategoryMutation = trpc.match.deleteCategory.useMutation({
     onSuccess() {
@@ -69,7 +71,7 @@ const EditMatchScout: React.FC = () => {
               className="px-4 py-2 text-white bg-pink-600 rounded-lg hover:bg-pink-700"
               onClick={() => setIsCategoryOpen(true)}
             >
-              +
+              Add
             </button>
             <div className="mx-12 mt-8 2xl:px-24 xl:px-12">
               {data?.categories.map((category, i) => (
@@ -83,7 +85,7 @@ const EditMatchScout: React.FC = () => {
                       className="hover:cursor-pointer"
                       onClick={() => {
                         setCurrentCategory(category);
-                        setIsEditOpen(true);
+                        setIsCategoryEditOpen(true);
                       }}
                     />
                     <BsFillTrashFill
@@ -91,7 +93,7 @@ const EditMatchScout: React.FC = () => {
                       className="ml-4 text-red-400 duration-200 hover:text-red-500 hover:cursor-pointer"
                       onClick={() => {
                         setCurrentCategory(category);
-                        setIsDeleteOpen(true);
+                        setIsCategoryDeleteOpen(true);
                       }}
                     />
                   </div>
@@ -114,26 +116,35 @@ const EditMatchScout: React.FC = () => {
               setIsOpen={setIsCategoryOpen}
             />
             <EditMatchModal
-              isOpen={isEditOpen}
-              setIsOpen={setIsEditOpen}
+              isOpen={isCategoryEditOpen}
+              setIsOpen={setIsCategoryEditOpen}
               category={currentCategory!}
             />
 
             <ConfirmationModal
               action="Are you sure you want to delete this category?"
               description="All other questions under this category will also be wiped!"
-              isOpen={isDeleteOpen}
-              setIsOpen={setIsDeleteOpen}
+              isOpen={isCategoryDeleteOpen}
+              setIsOpen={setIsCategoryDeleteOpen}
               func={() => {
                 deleteCategoryMutation.mutateAsync({
                   entityId: currentCategory!.id,
                 });
-                setIsDeleteOpen(false);
+                setIsCategoryDeleteOpen(false);
               }}
             />
           </Tab.Panel>
           <Tab.Panel>
-            
+          <button
+              className="duration-150 px-4 py-2 text-white bg-cyan-400 rounded-lg hover:bg-cyan-500"
+              onClick={() => setIsStatProfileOpen(true)}
+            >
+              Add
+            </button>
+            <CreateStatProfileModal
+              isOpen={isStatProfileOpen}
+              setIsOpen={setIsStatProfileOpen}
+            />
           </Tab.Panel>
         </Tab.Panels>
       </Tab.Group>

@@ -3,7 +3,7 @@ import { Dialog } from "@headlessui/react";
 import { trpc } from "@util/trpc/trpc";
 import { useRouter } from "next/router";
 import { MatchQuestionType } from "@prisma/client";
-import { Modal } from "../../types/misc-types";
+import { Modal } from "types/misc-types";
 import ModalWrapper from "../ui/modal-wrapper";
 
 export const CreateMatchCategoryModal: React.FC<Modal> = ({
