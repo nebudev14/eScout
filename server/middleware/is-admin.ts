@@ -11,6 +11,8 @@ export const assertAdmin = (level: LEVEL) => {
 
     let fetchedResult;
 
+    // This makes me sad
+    // TODO: eradicate this from existence
     switch (level) {
       case LEVEL.TEAM:
         fetchedResult = await ctx.prisma.team.findUnique({
@@ -90,6 +92,20 @@ export const assertAdmin = (level: LEVEL) => {
         });
 
         fetchedResult = fetchedResult?.form.team;
+        break;
+
+      case LEVEL.STATISTIC:
+        fetchedResult = await ctx.prisma.statistic.findUnique({
+          where: { id: result.data.entityId },
+          include: {
+            StatProfile: {
+              include: {
+                form: { include: { team: { include: { members: true } } } },
+              },
+            },
+          },
+        });
+        fetchedResult = fetchedResult?.StatProfile?.form.team;
         break;
     }
 

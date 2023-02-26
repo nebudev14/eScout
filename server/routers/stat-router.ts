@@ -39,4 +39,12 @@ export const statRouter = router({
         },
       });
     }),
+
+  deleteStatistic: assertAdmin(LEVEL.STATISTIC)
+    .input(entityId)
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.prisma.statistic.delete({
+        where: { id: input.entityId },
+      });
+    }),
 });

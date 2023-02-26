@@ -28,7 +28,8 @@ export enum LEVEL {
   PIT_FORM,
   PIT_QUESTION,
   PIT_RESPONSE,
-  STATISTIC_PROFILE
+  STATISTIC_PROFILE,
+  STATISTIC
 }
 
 export const entityId = z.object({
