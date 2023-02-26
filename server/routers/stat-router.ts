@@ -4,7 +4,7 @@ import { LEVEL } from "types/misc-types";
 import { authProcedure } from "@server/middleware/auth";
 import { entityId } from "types/misc-types";
 import { router } from "../trpc";
-import { ProfileType } from "@prisma/client";
+import { ProfileType, Operation } from "@prisma/client";
 
 export const statRouter = router({
   createProfile: assertAdmin(LEVEL.MATCH_FORM)
@@ -21,6 +21,22 @@ export const statRouter = router({
       });
     }),
 
-  addStatistic: assertAdmin()
-
+  addStatistic: assertAdmin(LEVEL.STATISTIC_PROFILE)
+    .input(
+      entityId.extend({
+        name: z.string(),
+        operation: z.nativeEnum(Operation),
+        categoryId: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.prisma.statistic.create({
+        data: {
+          statProfileId: input.entityId,
+          name: input.name,
+          operation: input.operation,
+          categoryId: input.categoryId,
+        },
+      });
+    }),
 });
