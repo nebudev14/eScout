@@ -135,6 +135,7 @@ export const teamRouter = router({
                 },
               },
             },
+            comps: true
           },
         },
       },

@@ -1,12 +1,9 @@
 import type { InferGetServerSidePropsType, NextPage } from "next";
 import React, { useEffect } from "react";
 import Protected from "@components/auth/protected";
-import { MatchInfo } from "@components/ui/form/match-info";
 import { useState, useRef } from "react";
 import { getSession, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { useAtom } from "jotai";
-import { setPreScoutAtom, setSelectedCompAtom } from "@server/atoms";
 import EntryForm from "@components/ui/form/entry-form";
 import { Answer } from "types/form-types";
 import { trpc } from "@util/trpc/trpc";
@@ -14,44 +11,64 @@ import { createProxySSGHelpers } from "@trpc/react-query/ssg";
 import { GetServerSidePropsContext } from "next";
 import { appRouter } from "@server/routers/_app";
 import { createContextInner } from "@server/context";
-import type { Team, User, MatchForm, TeamUser } from "@prisma/client";
+import {
+  Team,
+  MatchType,
+  MatchForm,
+  TeamUser,
+  Competition,
+} from "@prisma/client";
+import { Combobox } from "@headlessui/react";
+import { HiSelector } from "react-icons/hi";
+import { Input } from "@components/ui/input";
+import { Container } from "@components/ui/container";
 
-type FetchedTeam = Team & { members: TeamUser[]; matchScouts: MatchForm[] };
+type FetchedTeam = Team & {
+  members: TeamUser[];
+  matchScouts: MatchForm[];
+  comps: Competition[];
+};
 
 export default function Scout(
   props: InferGetServerSidePropsType<typeof getServerSideProps>
 ) {
   const router = useRouter();
 
+  /** Data */
   const [selectedTeam, setSelectedTeam] = useState<FetchedTeam | undefined>();
+  const [selectedComp, setSelectedComp] = useState<Competition | undefined>();
+  const [prescout, setPrescout] = useState<boolean>(false);
   const [form, setForm] = useState<string>();
 
-  useEffect(() => {
-    if (props.teams.length !== 0) {
-      const initTeam = props.teams[0];
-      setSelectedTeam(initTeam.team as FetchedTeam);
-      if (initTeam.team.matchScouts.length !== 0) {
-        setForm(initTeam?.team.matchScouts[0].id);
-      }
-    }
-  }, [setSelectedTeam]);
-
-  // const { data: matchForms, isLoading } = trpc.match.getByTeam.useQuery({
-  //   teamId: selectedTeam?.id as string,
-  // });
-
-  let matchForms = selectedTeam?.matchScouts;
-
-  const submitResponse = trpc.match.addResponse.useMutation();
-
-  const [selectedComp] = useAtom(setSelectedCompAtom);
+  /** Rendered */
+  const [compQuery, setCompQuery] = useState("");
+  const filteredComps =
+    compQuery === ""
+      ? selectedTeam?.comps
+      : selectedTeam?.comps?.filter((compData: Competition) => {
+          return compData.name.toLowerCase().includes(compQuery.toLowerCase());
+        });
 
   const defendedRef = useRef<HTMLInputElement>(null);
   const defendedByRef = useRef<HTMLInputElement>(null);
 
   const [defended, setDefended] = useState<number[]>([]);
   const [defendedBy, setDefendedBy] = useState<number[]>([]);
-  const [prescout, setPrescout] = useAtom(setPreScoutAtom);
+
+  useEffect(() => {
+    if (props.teams.length !== 0) {
+      const initTeam = props.teams[0];
+      setSelectedTeam(initTeam.team as FetchedTeam);
+      if (initTeam.team.comps.length !== 0)
+        setSelectedComp(initTeam?.team.comps[0]);
+      if (initTeam.team.matchScouts.length !== 0)
+        setForm(initTeam?.team.matchScouts[0].id);
+    }
+  }, [setSelectedTeam, setSelectedComp, setForm]);
+
+  let matchForms = selectedTeam?.matchScouts;
+
+  const submitResponse = trpc.match.addResponse.useMutation();
 
   // make submit method and pass into entry form component
   const submitForm = async (answers: Answer[]) => {
@@ -64,7 +81,6 @@ export default function Scout(
       answers: answers,
     });
   };
-
 
   return (
     <Protected>
@@ -87,7 +103,94 @@ export default function Scout(
           ) : null}
         </div>
         <div className="xl:px-4 2xl:px-12">
-          <MatchInfo />
+          {/* Match Info */}
+          <div className="grid grid-cols-1 mb-8">
+            <Container>
+              <label className="p-3 py-2 text-lg leading-tight border rounded shadow dark:bg-zinc-900 dark:border-zinc-700 bg-slate-200 text-cetner focus:outline-none focus:shadow-outline">
+                Submit data to
+              </label>
+              <select
+                id="teamId"
+                className="p-2 text-lg leading-tight border rounded shadow focus:outline-none focus:shadow-outline dark:bg-zinc-900 dark:text-white dark:border-zinc-700"
+                value={selectedTeam?.id}
+                onChange={(event: React.SyntheticEvent) => {
+                  const team = props?.teams.filter(
+                    (e) =>
+                      e.team.id === (event.target as HTMLSelectElement).value
+                  )[0]?.team;
+                  setSelectedTeam(team);
+                }}
+              >
+                {props?.teams.map((team, i) => (
+                  <option key={i} value={team.team.id}>
+                    {team.team.number}
+                  </option>
+                ))}
+              </select>
+            </Container>
+            <Container>
+              <select
+                id="matchType"
+                className="p-2 text-lg leading-tight border rounded shadow focus:outline-none focus:shadow-outline dark:border-zinc-700 dark:text-white dark:bg-zinc-900"
+              >
+                <option value={MatchType.QUALIFICATION}>Qualification</option>
+                <option value={MatchType.QUARTERFINAL}>Quarterfinal</option>
+                <option value={MatchType.SEMIFINAL}>Semifinal</option>
+                <option value={MatchType.FINAL}>Final</option>
+              </select>
+              <Input
+                id="matchNumber"
+                placeholder="Match number"
+                type="number"
+                autoComplete="off"
+                required
+              />
+            </Container>
+            <Input
+              id="entryTeamNumber"
+              placeholder="Team number"
+              type="number"
+              autoComplete="off"
+              required
+            />
+            {prescout ? (
+              <Input
+                id="videoLink"
+                placeholder="Video Link"
+                type="text"
+                autoComplete="off"
+                required
+              />
+            ) : null}
+            <Combobox value={selectedComp} onChange={setSelectedComp}>
+              <div className="relative z-50 border rounded-b dark:border-zinc-700">
+                <div className="relative w-full overflow-hidden text-left bg-white rounded shadow-md cursor-default dark:border-zinc-700 dark:text-white dark:bg-zinc-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
+                  <Combobox.Input
+                    className="p-2 text-lg leading-tight rounded focus:outline-none focus:shadow-outline dark:border-zinc-700 dark:text-white dark:bg-zinc-900"
+                    displayValue={(comp: Competition) => comp?.name}
+                    onChange={(event) => setCompQuery(event.target.value)}
+                  />
+                  <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
+                    <HiSelector
+                      className="w-5 h-5 text-gray-400"
+                      aria-hidden="true"
+                    />
+                  </Combobox.Button>
+                </div>
+                <Combobox.Options className="absolute w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg dark:border-zinc-700 dark:text-white dark:bg-zinc-900 max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                  {filteredComps?.map((comp: Competition) => (
+                    <Combobox.Option
+                      key={comp.name}
+                      value={comp}
+                      className="relative px-3 py-2 cursor-default select-none"
+                    >
+                      {comp.name}
+                    </Combobox.Option>
+                  ))}
+                </Combobox.Options>
+              </div>
+            </Combobox>
+          </div>
           <div className="flex flex-col">
             {/* For some reason, list of teams is rendered as undefined initially. This is a disgusting workaround  */}
             {props?.teams.filter(
