@@ -4,23 +4,20 @@ import { Filter } from "@components/scouting/filter/filter";
 import { ManageCompetitions } from "@components/ui/misc/competitions";
 import { Tab } from "@headlessui/react";
 import { ManageScoutForm } from "@components/ui/misc/scout-forms";
-import Members from "@components/ui/misc/members";
+import { Members } from "@components/ui/misc/members";
 import { useSession, getSession } from "next-auth/react";
 import { MemberStatus } from "@prisma/client";
 import { createProxySSGHelpers } from "@trpc/react-query/ssg";
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
 import { appRouter } from "@server/routers/_app";
 import { createContextInner } from "@server/context";
+import { MdSettings } from "react-icons/md";
 
 export default function TeamContent(
   props: InferGetServerSidePropsType<typeof getServerSideProps>
 ) {
   const router = useRouter();
   const { data: session } = useSession();
-
-  // const { data, isLoading } = trpc.team.getById.useQuery({
-  //   entityId: router.query.id as string,
-  // });
 
   const memberIndex = props.team?.members
     .map((e) => e.userId)

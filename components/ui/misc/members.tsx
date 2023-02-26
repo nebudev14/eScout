@@ -152,4 +152,3 @@ export const Members: React.FC<{ teamId: string; isAdmin: boolean }> = ({
   );
 };
 
-export default Members;

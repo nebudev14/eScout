@@ -3,14 +3,94 @@ import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
 import { appRouter } from "@server/routers/_app";
 import { createContextInner } from "@server/context";
 import { getSession } from "next-auth/react";
+import { MemberStatus } from "@prisma/client";
+import { Tab } from "@headlessui/react";
+import { ManageCompetitions } from "@components/ui/misc/competitions";
+import { ManageScoutForm } from "@components/ui/misc/scout-forms";
+import { Members } from "@components/ui/misc/members";
+import { BiArrowBack } from "react-icons/bi";
+import { useRouter } from "next/router";
 
-export default function TeamSettings() {}
+export default function TeamSettings(
+  props: InferGetServerSidePropsType<typeof getServerSideProps>
+) {
+  const memberIndex = props.team?.members
+    .map((e) => e.userId)
+    .indexOf(props.session?.user.id as string);
+  const isMember = memberIndex !== -1;
+  const isAdmin =
+    props.team?.members[Number(memberIndex)]?.status === MemberStatus.CREATOR;
+  const router = useRouter();
+
+  return (
+    <div className="min-h-screen px-16 py-8 md:px-8 dark:text-white md:h-full 2xl:h-full">
+      <BiArrowBack
+        size={30}
+        className="mb-4 duration-150 hover:text-pink-600 hover:cursor-pointer"
+        onClick={() => router.back()}
+      />
+      <h1 className="mb-2 text-4xl">{props.team?.name}</h1>
+      <h1 className="mb-4 text-xl">Team {props.team?.number}</h1>
+      <Tab.Group>
+        <div className="flex flex-col items-center justify-center text-xl md:text-lg md:items-center">
+          <Tab.List className="grid grid-cols-3">
+            <Tab
+              className={({ selected }) =>
+                selected
+                  ? "px-6 py-2 md:px-2 md:text-sm outline-none border-b-2 border-cyan-400"
+                  : "px-6 py-2 md:px-2 md:text-sm"
+              }
+            >
+              Competitions
+            </Tab>
+            <Tab
+              className={({ selected }) =>
+                selected
+                  ? "px-6 py-2 md:px-2 md:text-sm outline-none border-b-2 border-cyan-400"
+                  : "px-6 py-2 md:px-2 md:text-sm"
+              }
+            >
+              Scout Forms
+            </Tab>
+            <Tab
+              className={({ selected }) =>
+                selected
+                  ? "px-6 py-2 md:px-2 md:text-sm outline-none border-b-2 border-cyan-400"
+                  : "px-6 py-2 md:px-2 md:text-sm"
+              }
+            >
+              Members
+            </Tab>
+          </Tab.List>
+        </div>
+        <Tab.Panels className="mt-4">
+          <Tab.Panel>
+            <ManageCompetitions
+              teamId={props.team?.id as string}
+              isAdmin={isAdmin}
+            />
+          </Tab.Panel>
+          <Tab.Panel>
+            <ManageScoutForm
+              teamId={props.team?.id as string}
+              isAdmin={isAdmin}
+            />
+          </Tab.Panel>
+          <Tab.Panel>
+            <Members teamId={props.team?.id as string} isAdmin={isAdmin} />
+          </Tab.Panel>
+        </Tab.Panels>
+      </Tab.Group>
+    </div>
+  );
+}
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const session = await getSession(context);
   const ssg = createProxySSGHelpers({
     router: appRouter,
     ctx: await createContextInner({
-      session: await getSession(context),
+      session: session,
     }),
   });
 
@@ -25,6 +105,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   return {
     props: {
       team: team,
+      session: session,
     },
   };
 }
