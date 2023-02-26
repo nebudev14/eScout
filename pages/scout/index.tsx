@@ -1,4 +1,4 @@
-import type { NextPage } from "next";
+import type { InferGetServerSidePropsType, NextPage } from "next";
 import React, { useEffect } from "react";
 import Protected from "@components/auth/protected";
 import { MatchInfo } from "@components/ui/form/match-info";
@@ -11,39 +11,40 @@ import EntryForm from "@components/ui/form/entry-form";
 import { Answer } from "types/form-types";
 import { trpc } from "@util/trpc/trpc";
 import { createProxySSGHelpers } from "@trpc/react-query/ssg";
-import {
-  GetStaticPropsContext,
-  InferGetStaticPropsType,
-  GetServerSidePropsContext,
-} from "next";
+import { GetServerSidePropsContext } from "next";
 import { appRouter } from "@server/routers/_app";
-import { createContext, createContextInner } from "@server/context";
+import { createContextInner } from "@server/context";
+import type { Team, User, MatchForm, TeamUser } from "@prisma/client";
+
+type FetchedTeam = Team & { members: TeamUser[]; matchScouts: MatchForm[] };
 
 export default function Scout(
-  props: InferGetStaticPropsType<typeof getServerSideProps>
+  props: InferGetServerSidePropsType<typeof getServerSideProps>
 ) {
   const router = useRouter();
 
-  const [selectedTeam, setSelectedTeam] = useState<string>("");
+  const [selectedTeam, setSelectedTeam] = useState<FetchedTeam | undefined>();
   const [form, setForm] = useState<string>();
 
   const { data: user } = trpc.user.getForms.useQuery();
 
-  // console.log(props)
-
   useEffect(() => {
-    if (user?.teams.length !== 0) {
-      const initTeam = user?.teams[0];
-      setSelectedTeam(initTeam?.teamId as string);
-      if (initTeam?.team.matchScouts.length !== 0) {
+    if (props.teams.length !== 0) {
+      const initTeam = props.teams[0];
+      setSelectedTeam(initTeam.team as FetchedTeam);
+      if (initTeam.team.matchScouts.length !== 0) {
         setForm(initTeam?.team.matchScouts[0].id);
       }
     }
   }, [user?.teams, setSelectedTeam]);
 
+  console.log(selectedTeam);
+
   const { data: matchForms, isLoading } = trpc.match.getByTeam.useQuery({
-    teamId: selectedTeam,
+    teamId: selectedTeam?.id as string,
   });
+
+  selectedTeam;
 
   const submitResponse = trpc.match.addResponse.useMutation();
 
@@ -62,7 +63,7 @@ export default function Scout(
   // make submit method and pass into entry form component
   const submitForm = async (answers: Answer[]) => {
     await submitResponse.mutateAsync({
-      teamId: selectedTeam,
+      teamId: selectedTeam?.id as string,
       compId: selectedComp?.id as string,
       formId: form as string,
       prescout: prescout,
@@ -98,7 +99,9 @@ export default function Scout(
               <EntryForm
                 form={
                   user?.teams
-                    .filter((t) => t.team.id === selectedTeam)?.[0]
+                    .filter(
+                      (t) => t.team.id === (selectedTeam?.id as string)
+                    )?.[0]
                     .team.matchScouts?.filter((f) => f?.id === form)?.[0]
                 }
                 submitResponse={submitForm}
@@ -121,16 +124,16 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   let teams = await ssg.team.getByUser.fetch();
 
-  // Temporary 
-  teams.forEach(e => e.team.members.forEach(m => {
-    m.user.created = null;
-    m.user.emailVerified = null;
-  }));
-
+  teams.forEach((e) =>
+    e.team.members.forEach((m) => {
+      m.user.created = String(m.user.created);
+      m.user.emailVerified = String(m.user.emailVerified);
+    })
+  );
 
   return {
     props: {
-      teams: teams
+      teams: teams,
     },
   };
 }
