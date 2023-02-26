@@ -21,9 +21,10 @@ export default class EntryForm extends React.Component<Props, State> {
     this.setAnswer = this.setAnswer.bind(this);
     this.updateState = this.updateState.bind(this);
     this.submit = this.submit.bind(this);
+    this.updateForm = this.updateForm.bind(this);
   }
 
-  componentDidMount() {
+  updateForm() {
     let answers: Answer[] = [];
 
     this.props.form?.categories.forEach((c) =>
@@ -70,8 +71,14 @@ export default class EntryForm extends React.Component<Props, State> {
     );
 
     this.setState({ answers: answers });
+  }
 
-    // console.log(answers);
+  componentDidMount() {
+    this.updateForm();
+  }
+
+  componentDidUpdate(prevProps: Props) {
+    if (prevProps !== this.props) this.updateForm();
   }
 
   setAnswer(answers: Answer[], newAnswer: Answer): Answer[] {
@@ -82,8 +89,6 @@ export default class EntryForm extends React.Component<Props, State> {
     currentAnswer.slot1 = newAnswer.slot1;
     currentAnswer.slot2 = newAnswer.slot2;
     currentAnswer.slot3 = newAnswer.slot3;
-
-    // console.log(this.state.answers);
 
     return answers;
   }
@@ -122,7 +127,9 @@ export default class EntryForm extends React.Component<Props, State> {
             </div>
           </div>
         ))}
-        <button type="submit" onClick={() => this.submit()}>Submit</button>
+        <button type="submit" onClick={() => this.submit()}>
+          Submit
+        </button>
       </div>
     );
   }

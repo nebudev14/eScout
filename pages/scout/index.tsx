@@ -84,6 +84,8 @@ export default function Scout(
       video: videoLink,
       answers: answers,
     });
+
+    await router.push("/teams")
   };
 
   return (
@@ -247,6 +249,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   let teams = await ssg.team.getByUser.fetch();
 
+  // Dates aren't valid types to be passed into props :rofl:
   teams.forEach((e) =>
     e.team.members.forEach((m) => {
       m.user.created = String(m.user.created);
