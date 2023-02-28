@@ -26,7 +26,7 @@ export const statRouter = router({
     .input(
       entityId.extend({
         name: z.string(),
-        operation: z.nativeEnum(Operation),
+        operationType: z.nativeEnum(Operation),
         categoryId: z.string(),
       })
     )
@@ -35,7 +35,7 @@ export const statRouter = router({
         data: {
           statProfileId: input.entityId,
           name: input.name,
-          operation: input.operation,
+          operationType: input.operationType,
           categoryId: input.categoryId,
         },
       });

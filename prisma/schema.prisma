@@ -149,13 +149,13 @@ enum RungLevel {
 // Match scout
 
 model MatchForm {
-  id          String              @id @default(cuid())
-  name        String
-  teamId      String
-  team        Team                @relation(fields: [teamId], references: [id])
-  categories  MatchFormCategory[]
-  responses   MatchFormResponse[]
-  profiles StatProfile[]
+  id         String              @id @default(cuid())
+  name       String
+  teamId     String
+  team       Team                @relation(fields: [teamId], references: [id])
+  categories MatchFormCategory[]
+  responses  MatchFormResponse[]
+  profiles   StatProfile[]
 }
 
 model MatchFormCategory {
@@ -266,7 +266,8 @@ model StatProfile {
 model Statistic {
   id            String            @id @default(cuid())
   name          String
-  operation     Operation
+  operationType Operation
+  operation     String?
   categoryId    String
   category      MatchFormCategory @relation(fields: [categoryId], references: [id])
   StatProfile   StatProfile?      @relation(fields: [statProfileId], references: [id])
@@ -285,4 +286,5 @@ enum Operation {
   MIN
   TOTAL
   FRACTION // Example: scored shots // total shots
+  CUSTOM
 }
