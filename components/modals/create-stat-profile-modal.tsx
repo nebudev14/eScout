@@ -2,7 +2,7 @@ import ModalWrapper from "@components/ui/modal-wrapper";
 import { Modal } from "types/misc-types";
 import { Dialog } from "@headlessui/react";
 import { trpc } from "@util/trpc/trpc";
-import Router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { ProfileType } from "@prisma/client";
 
@@ -40,7 +40,7 @@ export const CreateStatProfileModal: React.FC<Modal> = ({
     <ModalWrapper isOpen={isOpen} setIsOpen={setIsOpen} >
       <Dialog.Title
         as="h3"
-        className="text-lg font-medium leading-6 text-center text-gray-900 flex flex-col"
+        className="flex flex-col text-lg font-medium leading-6 text-center text-gray-900"
       >
         Create Stat Profile
       </Dialog.Title>
@@ -57,7 +57,7 @@ export const CreateStatProfileModal: React.FC<Modal> = ({
           </div>
           <div>
             {" "}
-            <Dialog.Title>Question Type</Dialog.Title>
+            <Dialog.Title>View Type</Dialog.Title>
             <select
               id="questionType"
               className="p-2 mb-3 text-lg leading-tight border rounded shadow focus:outline-none focus:shadow-outline dark:bg-zinc-900 dark:text-white dark:border-zinc-700"

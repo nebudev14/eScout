@@ -2,10 +2,15 @@ import { useRouter } from "next/router";
 import { BiArrowBack } from "react-icons/bi";
 import { CreateMatchCategoryModal } from "@components/modals/create-match-category";
 import { BsFillTrashFill, BsPencilFill } from "react-icons/bs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ConfirmationModal } from "@components/modals/confirmation-modal";
 import EditMatchModal from "@components/modals/edit-match-modal";
-import { MatchFormCategory } from "@prisma/client";
+import {
+  MatchFormCategory,
+  ProfileType,
+  Statistic,
+  StatProfile,
+} from "@prisma/client";
 import { renderDesiredQuestionDisplay } from "@util/render-question-model";
 import { trpc } from "@util/trpc/trpc";
 import { Tab } from "@headlessui/react";
@@ -27,6 +32,19 @@ const EditMatchScout: React.FC = () => {
   const [isCategoryEditOpen, setIsCategoryEditOpen] = useState(false); // Editing categories
   const [isCategoryDeleteOpen, setIsCategoryDeleteOpen] = useState(false); // Delete confirmation modal
   const [isStatProfileOpen, setIsStatProfileOpen] = useState(false);
+
+  // Page State
+  const [selectedStat, setSelectedStat] = useState<
+    StatProfile & {
+      stats: Statistic[];
+    }
+  >();
+
+  useEffect(() => {
+    if (data?.profiles.length !== 0) {
+      setSelectedStat(data?.profiles[0]);
+    }
+  }, [setSelectedStat]);
 
   const deleteCategoryMutation = trpc.match.deleteCategory.useMutation({
     onSuccess() {
@@ -136,17 +154,57 @@ const EditMatchScout: React.FC = () => {
           </Tab.Panel>
           <Tab.Panel>
             <button
-              className="duration-150 px-4 py-2 text-white bg-cyan-400 rounded-lg hover:bg-cyan-500"
+              className="px-4 py-2 text-white duration-150 rounded-lg bg-cyan-400 hover:bg-cyan-500"
               onClick={() => setIsStatProfileOpen(true)}
             >
-              Add
+              Create
             </button>
-            <div>
-              {data?.profiles.map((profile, i) => (
-                <div key={i}>
-                  {profile.name}
+            <div className="my-6">
+              <select
+                className="h-full p-2 mb-4 border-r-4 rounded-lg shadow-md outline-none dark:text-white dark:bg-zinc-900 dark:border-zinc-700"
+                onChange={(e: React.SyntheticEvent) => {
+                  const profile = data?.profiles.filter(
+                    (p) => p.id === (e.target as HTMLSelectElement).value
+                  )[0];
+                  setSelectedStat(profile);
+                }}
+              >
+                {data?.profiles.map((profile, i) => (
+                  <option key={i} value={profile.id}>
+                    {profile.name}
+                  </option>
+                ))}
+              </select>
+
+              {selectedStat?.type === ProfileType.TEAM ? (
+                <div className="px-4 py-4 dark:bg-zinc-900 rounded-xl">
+                  <h1 className="text-3xl font-bold">{selectedStat?.name}</h1>
                 </div>
-              ))}
+              ) : (
+                <div className="px-4 py-4 dark:bg-zinc-900 rounded-xl">
+                  <h1 className="mb-4 text-3xl font-bold">{selectedStat?.name}</h1>
+                  <div>
+                    {selectedStat?.stats.map((stat, j) => (
+                      <div key={j}>
+                        <h1>{stat.name}</h1>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* {data?.profiles.filter((f) => f.id === selectedStat)} */}
+              {/* {data?.profiles.map((profile, i) => (
+                <div
+                  className="px-4 py-2 mx-4 dark:bg-zinc-900 rounded-xl"
+                  key={i}
+                >
+                  <div className="flex items-center">
+                    <h1 className="mr-auto text-xl">{profile.name}</h1>
+                    <BsPencilFill size={18} />
+                  </div>
+                </div>
+              ))} */}
             </div>
             <CreateStatProfileModal
               isOpen={isStatProfileOpen}
