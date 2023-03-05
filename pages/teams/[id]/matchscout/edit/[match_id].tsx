@@ -15,12 +15,22 @@ import { renderDesiredQuestionDisplay } from "@util/render-question-model";
 import { trpc } from "@util/trpc/trpc";
 import { Tab } from "@headlessui/react";
 import { CreateStatProfileModal } from "@components/modals/create-stat-profile-modal";
+import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
+import { appRouter } from "@server/routers/_app";
+import { createContextInner } from "@server/context";
+import { createProxySSGHelpers } from "@trpc/react-query/ssg";
+import { getSession } from "next-auth/react";
 
-const EditMatchScout: React.FC = () => {
+export default function EditMatchScout(
+  props: InferGetServerSidePropsType<typeof getServerSideProps>
+) {
   const router = useRouter();
+  
+  const { matchId } = props;
+  // console.log(props)
 
   const { data, isLoading } = trpc.match.getById.useQuery({
-    id: router.query.match_id as string,
+    id: matchId as string,
   });
 
   const utils = trpc.useContext();
@@ -182,7 +192,9 @@ const EditMatchScout: React.FC = () => {
                 </div>
               ) : (
                 <div className="px-4 py-4 dark:bg-zinc-900 rounded-xl">
-                  <h1 className="mb-4 text-3xl font-bold">{selectedStat?.name}</h1>
+                  <h1 className="mb-4 text-3xl font-bold">
+                    {selectedStat?.name}
+                  </h1>
                   <div>
                     {selectedStat?.stats.map((stat, j) => (
                       <div key={j}>
@@ -193,8 +205,8 @@ const EditMatchScout: React.FC = () => {
                 </div>
               )}
 
-              {/* {data?.profiles.filter((f) => f.id === selectedStat)} */}
-              {/* {data?.profiles.map((profile, i) => (
+              {/* {data??.profiles.filter((f) => f.id === selectedStat)} */}
+              {/* {data??.profiles.map((profile, i) => (
                 <div
                   className="px-4 py-2 mx-4 dark:bg-zinc-900 rounded-xl"
                   key={i}
@@ -215,6 +227,25 @@ const EditMatchScout: React.FC = () => {
       </Tab.Group>
     </div>
   );
-};
+}
 
-export default EditMatchScout;
+export async function getServerSideProps(context: GetServerSidePropsContext<{ match_id: string }>) {
+  const ssg = createProxySSGHelpers({
+    router: appRouter,
+    ctx: await createContextInner({
+      session: await getSession(context),
+    }),
+  });
+
+  const matchId = context.params?.match_id;
+
+  await ssg.match.getById.prefetch({ id: matchId as string });
+  
+  return {
+    props: {
+      trpcState: ssg.dehydrate(),
+      matchId
+    }
+  }
+
+}
