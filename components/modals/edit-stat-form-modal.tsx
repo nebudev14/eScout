@@ -16,9 +16,15 @@ export const EditStatProfileModal: React.FC<Modal> = ({
     }
   })
 
+  const submit = async (e: React.SyntheticEvent) => {
+
+  }
+
   return ( 
     <ModalWrapper isOpen={isOpen} setIsOpen={setIsOpen}>
-      
+      <form onSubmit={submit}>
+
+      </form>
     </ModalWrapper>
    );
 }

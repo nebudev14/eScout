@@ -42,6 +42,7 @@ export default function EditMatchScout(
   const [isCategoryEditOpen, setIsCategoryEditOpen] = useState(false); // Editing categories
   const [isCategoryDeleteOpen, setIsCategoryDeleteOpen] = useState(false); // Delete confirmation modal
   const [isStatProfileOpen, setIsStatProfileOpen] = useState(false);
+  const [isEditStatOpen, setIsEditStatOpen] = useState(false);
 
   // Page State
   const [selectedStat, setSelectedStat] = useState<
