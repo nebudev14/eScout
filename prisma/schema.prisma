@@ -155,6 +155,7 @@ model MatchForm {
   team       Team                @relation(fields: [teamId], references: [id])
   categories MatchFormCategory[]
   responses  MatchFormResponse[]
+  profiles   StatProfile[]
 }
 
 model MatchFormCategory {
@@ -163,6 +164,7 @@ model MatchFormCategory {
   matchFormId String
   matchForm   MatchForm           @relation(fields: [matchFormId], references: [id], onDelete: Cascade)
   questions   MatchFormQuestion[]
+  Statistic   Statistic[]
 }
 
 model MatchFormQuestion {
@@ -249,4 +251,40 @@ model PitResponse {
 enum PitQuestionType {
   TEXT
   SELECT
+}
+
+// Stat Profile
+model StatProfile {
+  id          String      @id @default(cuid())
+  name        String
+  type        ProfileType
+  stats       Statistic[]
+  form        MatchForm   @relation(fields: [matchFormId], references: [id])
+  matchFormId String
+}
+
+model Statistic {
+  id            String            @id @default(cuid())
+  name          String
+  operationType Operation
+  operation     String?
+  categoryId    String
+  category      MatchFormCategory @relation(fields: [categoryId], references: [id])
+  StatProfile   StatProfile?      @relation(fields: [statProfileId], references: [id])
+  statProfileId String?
+}
+
+// For displaying match stats and general team stats
+enum ProfileType {
+  MATCH
+  TEAM
+}
+
+enum Operation {
+  AVERAGE
+  MAX
+  MIN
+  TOTAL
+  FRACTION // Example: scored shots // total shots
+  CUSTOM
 }

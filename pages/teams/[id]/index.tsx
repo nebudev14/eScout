@@ -38,7 +38,9 @@ export default function TeamContent(
             </Link>
           </div>
           <h1 className="mb-4 text-xl">Team {props.team?.number}</h1>
-          <div className=""></div>
+          <div className="">
+
+          </div>
         </div>
       ) : (
         <div className="flex items-center justify-center min-h-screen text-3xl dark:text-white">

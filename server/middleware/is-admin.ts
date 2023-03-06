@@ -4,7 +4,6 @@ import { entityId } from "../../types/misc-types";
 import { authProcedure } from "./auth";
 import { LEVEL } from "../../types/misc-types";
 
-
 export const assertAdmin = (level: LEVEL) => {
   return authProcedure.use(async ({ ctx, rawInput, next }) => {
     const result = entityId.safeParse(rawInput);
@@ -12,6 +11,8 @@ export const assertAdmin = (level: LEVEL) => {
 
     let fetchedResult;
 
+    // This makes me sad
+    // TODO: eradicate this from existence
     switch (level) {
       case LEVEL.TEAM:
         fetchedResult = await ctx.prisma.team.findUnique({
@@ -57,8 +58,10 @@ export const assertAdmin = (level: LEVEL) => {
       case LEVEL.MATCH_RESPONSE:
         fetchedResult = await ctx.prisma.matchFormResponse.findUnique({
           where: { id: result.data.entityId },
-          include: { form: { include: { team: { include: { members: true } } } } }
-        })
+          include: {
+            form: { include: { team: { include: { members: true } } } },
+          },
+        });
         fetchedResult = fetchedResult?.form.team;
         break;
 
@@ -78,6 +81,31 @@ export const assertAdmin = (level: LEVEL) => {
           },
         });
         fetchedResult = fetchedResult?.pitForm.team;
+        break;
+
+      case LEVEL.STATISTIC_PROFILE:
+        fetchedResult = await ctx.prisma.statProfile.findUnique({
+          where: { id: result.data.entityId },
+          include: {
+            form: { include: { team: { include: { members: true } } } },
+          },
+        });
+
+        fetchedResult = fetchedResult?.form.team;
+        break;
+
+      case LEVEL.STATISTIC:
+        fetchedResult = await ctx.prisma.statistic.findUnique({
+          where: { id: result.data.entityId },
+          include: {
+            StatProfile: {
+              include: {
+                form: { include: { team: { include: { members: true } } } },
+              },
+            },
+          },
+        });
+        fetchedResult = fetchedResult?.StatProfile?.form.team;
         break;
     }
 
