@@ -90,6 +90,7 @@ export default class EntryForm extends React.Component<Props, State> {
     currentAnswer.slot1 = newAnswer.slot1;
     currentAnswer.slot2 = newAnswer.slot2;
     currentAnswer.slot3 = newAnswer.slot3;
+    currentAnswer.slot4 = newAnswer.slot4;
 
     return answers;
   }
