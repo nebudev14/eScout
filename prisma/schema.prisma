@@ -224,6 +224,31 @@ enum MatchPromptType {
   NUMBER
 }
 
+// Charged up
+model Gamepiece {
+  id       String          @id @default(cuid())
+  height   GamepieceHeight
+  type     PieceType
+  location Location
+}
+
+enum Location {
+  HPS
+  FIELD
+}
+
+enum PieceType {
+  CONE
+  CUBE
+}
+
+enum GamepieceHeight {
+  LOW
+  MID
+  HIGH
+  DROPPED
+}
+
 // Pit Scout
 
 model PitForm {
