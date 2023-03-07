@@ -211,6 +211,11 @@ enum MatchQuestionType {
   INPUT
   SELECT
   BOOL
+  DEFENSE
+
+  // 2023
+  GAMEPIECE_HEIGHT
+  CHARGE
 }
 
 enum MatchPromptType {
