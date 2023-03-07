@@ -36,34 +36,35 @@ export default class EntryForm extends React.Component<Props, State> {
               questionId: q.id,
               slot1: "0",
               slot2: "0",
-              slot3: [],
+              slot3: "0",
+              slot4: []
             });
             break;
           case "COUNTER":
             answers.push({
               questionId: q.id,
               slot1: "0",
-              slot2: "",
-              slot3: [],
+              slot3: "0",
+              slot4: []
             });
             break;
           case "INPUT":
-            answers.push({ questionId: q.id, slot1: "", slot2: "", slot3: [] });
+            answers.push({ questionId: q.id, slot1: "", slot2: "", slot3: "", slot4: [] });
             break;
           case "BOOL":
             answers.push({
               questionId: q.id,
               slot1: "No",
-              slot2: "",
-              slot3: [],
+              slot3: "0",
+              slot4: []
             });
             break;
           case "SELECT":
             answers.push({
               questionId: q.id,
               slot1: q.options[0],
-              slot2: "",
-              slot3: [],
+              slot3: "0",
+              slot4: []
             });
             break;
         }

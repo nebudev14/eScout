@@ -202,7 +202,8 @@ model MatchFormAnswers {
   // Data Fields
   slot1 String?
   slot2 String?
-  slot3 String[]
+  slot3 String?
+  slot4 String[]
 }
 
 enum MatchQuestionType {

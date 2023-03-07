@@ -7,6 +7,7 @@ import { ScoreBoard } from "../components/ui/form/score-board";
 import { MatchFormQuestion } from "@prisma/client";
 import { parseOperation } from "@util/parser";
 import { FieldInput } from "@components/ui/form/field-input";
+import { GamepieceInput } from "@components/ui/form/charged-up/gamepiece";
 
 const Test: NextPage = () => {
   const result = parseOperation("AVERAGE(CATEGORY(id, slot#))");
@@ -19,7 +20,7 @@ const Test: NextPage = () => {
         console.log(e.clientY)
       }}> */}
 
-      <FieldInput />
+      <GamepieceInput />
       
     </div>
   );

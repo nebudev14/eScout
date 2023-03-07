@@ -123,7 +123,8 @@ export const matchRouter = router({
             questionId: z.string(),
             slot1: z.string().optional(),
             slot2: z.string().optional(),
-            slot3: z.string().array().optional(),
+            slot3: z.string().optional(),
+            slot4: z.string().array().optional()
           })
           .array(),
       })
