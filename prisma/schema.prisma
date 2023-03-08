@@ -176,6 +176,7 @@ model MatchFormQuestion {
   matchCategoryId String
   matchCategory   MatchFormCategory  @relation(fields: [matchCategoryId], references: [id], onDelete: Cascade)
   answers         MatchFormAnswers[]
+  multiple        Boolean
 }
 
 model MatchFormResponse {
@@ -200,10 +201,20 @@ model MatchFormAnswers {
   matchQuestion MatchFormQuestion @relation(fields: [questionId], references: [id])
 
   // Data Fields
-  slot1 String?
-  slot2 String?
-  slot3 String?
-  slot4 String[]
+  singularSlot MatchSlot?  @relation(name: "singular", fields: [matchSlotId], references: [id])
+  matchSlotId  String
+  multiSlot    MatchSlot[] @relation(name: "multi")
+}
+
+model MatchSlot {
+  id                 String             @id @default(cuid())
+  slot1              String?
+  slot2              String?
+  slot3              String?
+  slot4              String[]
+  matchFormSingular  MatchFormAnswers[] @relation(name: "singular")
+  matchFormMultiple  MatchFormAnswers?  @relation(name: "multi", fields: [matchFormAnswersId], references: [id])
+  matchFormAnswersId String?
 }
 
 enum MatchQuestionType {

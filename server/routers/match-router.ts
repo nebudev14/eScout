@@ -121,10 +121,23 @@ export const matchRouter = router({
         answers: z
           .object({
             questionId: z.string(),
-            slot1: z.string().optional(),
-            slot2: z.string().optional(),
-            slot3: z.string().optional(),
-            slot4: z.string().array().optional()
+            singularSlot: z
+              .object({
+                slot1: z.string().optional(),
+                slot2: z.string().optional(),
+                slot3: z.string().optional(),
+                slot4: z.string().array().optional(),
+              })
+              .optional(),
+            multiSlot: z
+              .object({
+                slot1: z.string().optional(),
+                slot2: z.string().optional(),
+                slot3: z.string().optional(),
+                slot4: z.string().array().optional(),
+              })
+              .optional()
+              .array(),
           })
           .array(),
       })
@@ -139,7 +152,23 @@ export const matchRouter = router({
           prescout: input.prescout,
           video: input.video,
           answers: {
-            create: input.answers,
+            create: input.answers.map((m) => {
+              return {
+                questionId: m.questionId,
+                singularSlot: {
+                  create: {
+                    slot1: m.singularSlot?.slot1,
+                    slot2: m.singularSlot?.slot2,
+                    slot3: m.singularSlot?.slot3,
+                    slot4: m.singularSlot?.slot4,
+                  },
+                },
+                multiSlot: {
+                  create: m.multiSlot,
+                },
+ 
+              };
+            }),
           },
         },
       });
@@ -186,9 +215,9 @@ export const matchRouter = router({
           },
           profiles: {
             include: {
-              stats: true
-            }
-          }
+              stats: true,
+            },
+          },
         },
       });
     }),
