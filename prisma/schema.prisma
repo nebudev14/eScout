@@ -201,9 +201,11 @@ model MatchFormAnswers {
   matchQuestion MatchFormQuestion @relation(fields: [questionId], references: [id])
 
   // Data Fields
-  singularSlot MatchSlot?  @relation(name: "singular", fields: [matchSlotId], references: [id])
-  matchSlotId  String
-  multiSlot    MatchSlot[] @relation(name: "multi")
+  slot1        String?
+  slot2        String?
+  slot3        String?
+  slot4        String[]
+  multiSlot    MatchSlot[] 
 }
 
 model MatchSlot {
@@ -212,9 +214,8 @@ model MatchSlot {
   slot2              String?
   slot3              String?
   slot4              String[]
-  matchFormSingular  MatchFormAnswers[] @relation(name: "singular")
-  matchFormMultiple  MatchFormAnswers?  @relation(name: "multi", fields: [matchFormAnswersId], references: [id])
-  matchFormAnswersId String?
+  matchFormMultiple  MatchFormAnswers?  @relation(fields: [matchFormAnswersId], references: [id])
+  matchFormAnswersId String
 }
 
 enum MatchQuestionType {
