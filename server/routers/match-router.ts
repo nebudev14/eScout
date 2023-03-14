@@ -7,6 +7,7 @@ import { LEVEL } from "../../types/misc-types";
 import { authProcedure } from "../middleware/auth";
 import { entityId } from "../../types/misc-types";
 import { assertMember } from "@server/middleware/is-member";
+import { chargedFieldNodeSchema, gamepieceSchema } from "@server/schemas/charged-up-schema";
 
 export const matchRouter = router({
   /**
@@ -89,8 +90,7 @@ export const matchRouter = router({
           prompt: input.prompt,
           questionType: input.questionType,
           promptType: input.promptType,
-          options: input.options,
-          multiple: input.multiple
+          options: input.options
         },
       });
     }),
@@ -122,23 +122,12 @@ export const matchRouter = router({
         video: z.string(),
         answer: z.object({
           questionId: z.string(),
-          singularSlot: z
-            .object({
-              slot1: z.string().optional(),
-              slot2: z.string().optional(),
-              slot3: z.string().optional(),
-              slot4: z.string().array().optional(),
-            })
-            .optional(),
-          multiSlot: z
-            .object({
-              slot1: z.string().optional(),
-              slot2: z.string().optional(),
-              slot3: z.string().optional(),
-              slot4: z.string().array().optional(),
-            })
-            .optional()
-            .array(),
+          slot1: z.string().optional(),
+          slot2: z.string().optional(),
+          slot3: z.string().optional(),
+          slot4: z.string().array().optional(),
+          gamepiece: gamepieceSchema,
+          chargeField: chargedFieldNodeSchema,
         })
       })
     )
@@ -152,16 +141,7 @@ export const matchRouter = router({
           prescout: input.prescout,
           video: input.video,
           answers: {
-            create: {
-              questionId: input.answer.questionId,
-              slot1: input.answer.singularSlot?.slot1,
-              slot2: input.answer.singularSlot?.slot2,
-              slot3: input.answer.singularSlot?.slot3,
-              slot4: input.answer.singularSlot?.slot4,
-              multiSlot: {
-                create: input.answer.multiSlot
-              }
-            }
+            create: input.answer
           },
         },
       });

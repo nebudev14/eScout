@@ -12,5 +12,5 @@ export const chargedFieldNodeSchema = z.object({
   yCoord: z.number(),
   pieceType: z.nativeEnum(PieceType),
   action: z.nativeEnum(FieldNodeAction)
-})
+}).array()
 
