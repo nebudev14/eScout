@@ -4,11 +4,10 @@ import { BsCone } from "react-icons/bs";
 import { GiCube } from "react-icons/gi";
 import { MatchFormInput, Modal } from "types/misc-types";
 import { motion } from "framer-motion";
-import { Gamepiece } from "@prisma/client";
 
 const variants = {
-  open: { opacity: 1, y: 0 },
-  closed: { opacity: 0, y: "100%" },
+  open: { opacity: 1, x: 0 },
+  closed: { opacity: 0, x: "-100%" },
 };
 
 const levels = [
@@ -41,9 +40,13 @@ export const GamepieceInput: React.FC<MatchFormInput> = ({
   id,
   updateState,
 }) => {
-
   // Scoring states
-  const [inputScore, setInputScore] = useState<Gamepiece | undefined>();
+  const [inputScore, setInputScore] = useState<GamepieceInput | undefined>({
+    level: "DROPPED",
+    gamepiece: "CUBE",
+    location: "HPS",
+  });
+  const [globalScore, setGlobalScore] = useState<GamepieceInput[]>([]);
 
   // UI States
   const [isScoringOpen, setIsScoringOpen] = useState<boolean>(false);
@@ -98,4 +101,3 @@ export const GamepieceInput: React.FC<MatchFormInput> = ({
     </div>
   );
 };
-

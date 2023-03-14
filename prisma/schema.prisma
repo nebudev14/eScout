@@ -201,21 +201,10 @@ model MatchFormAnswers {
   matchQuestion MatchFormQuestion @relation(fields: [questionId], references: [id])
 
   // Data Fields
-  slot1        String?
-  slot2        String?
-  slot3        String?
-  slot4        String[]
-  multiSlot    MatchSlot[] 
-}
-
-model MatchSlot {
-  id                 String             @id @default(cuid())
-  slot1              String?
-  slot2              String?
-  slot3              String?
-  slot4              String[]
-  matchFormMultiple  MatchFormAnswers?  @relation(fields: [matchFormAnswersId], references: [id])
-  matchFormAnswersId String
+  slot1 String?
+  slot2 String?
+  slot3 String?
+  slot4 String[]
 }
 
 enum MatchQuestionType {
@@ -227,8 +216,8 @@ enum MatchQuestionType {
   DEFENSE
 
   // 2023
-  GAMEPIECE_HEIGHT
-  CHARGE
+  GAMEPIECE_INFO
+  FIELD
 }
 
 enum MatchPromptType {
@@ -259,6 +248,27 @@ enum GamepieceHeight {
   MID
   HIGH
   DROPPED
+}
+
+model ChargedField {
+  id    String             @id
+  nodes ChargedFieldNode[]
+}
+
+model ChargedFieldNode {
+  id             String          @id
+  xCoord         Float
+  yCoord         Float
+  piece          PieceType
+  action         FieldNodeAction
+  ChargedField   ChargedField?   @relation(fields: [chargedFieldId], references: [id])
+  chargedFieldId String?
+}
+
+enum FieldNodeAction {
+  PICKED
+  PLACED
+  DROPPED // accidental! bad!
 }
 
 // Pit Scout
