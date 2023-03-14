@@ -20,6 +20,7 @@
     "@trpc/server": "^10.12.0",
     "chart.js": "^3.9.1",
     "dotenv": "^16.0.1",
+    "framer-motion": "^10.2.5",
     "jotai": "^1.7.7",
     "nanoid": "^4.0.0",
     "next": "12.2.0",

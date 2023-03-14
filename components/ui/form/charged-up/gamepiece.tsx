@@ -3,7 +3,12 @@ import React, { useState } from "react";
 import { BsCone } from "react-icons/bs";
 import { GiCube } from "react-icons/gi";
 import { MatchFormInput, Modal } from "types/misc-types";
+import { motion } from "framer-motion";
 
+const variants = {
+  open: { opacity: 1, y: 0 },
+  closed: { opacity: 0, y: "100%" },
+};
 
 const levels = [
   {
@@ -64,37 +69,22 @@ export const GamepieceInput: React.FC<MatchFormInput> = ({
           Field
         </div>
       </div>
-      <div
-        className={`px-8 py-6 mt-4 duration-200 ${
-          !isScoringOpen ? "hidden" : null
-        }`}
+      <motion.nav
+        animate={isScoringOpen ? "open" : "closed"}
+        variants={variants}
       >
-        {levels.map((l, i) => (
-          <div
-            className={`${l.color} text-center my-2 py-4 text-white rounded-2xl `}
-            key={i}
-          >
-            <h1 className="text-xl font-bold">{l.level}</h1>
-          </div>
-        ))}
-      </div>
+        <div className={`px-8 py-6 mt-4 duration-200`}>
+          {levels.map((l, i) => (
+            <div
+              className={`${l.color} text-center my-2 py-4 text-white rounded-2xl `}
+              key={i}
+            >
+              <h1 className="text-xl font-bold">{l.level}</h1>
+            </div>
+          ))}
+        </div>
+      </motion.nav>
     </div>
   );
 };
 
-const ScoreLevelModal: React.FC<Modal> = ({ isOpen, setIsOpen }) => {
-  return (
-    <ModalWrapper isOpen={isOpen} setIsOpen={setIsOpen}>
-      <div>
-        {levels.map((l, i) => (
-          <div
-            className={`${l.color} text-center my-2 py-4 text-white rounded-2xl `}
-            key={i}
-          >
-            <h1 className="text-xl font-bold">{l.level}</h1>
-          </div>
-        ))}
-      </div>
-    </ModalWrapper>
-  );
-};
