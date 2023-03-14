@@ -176,7 +176,6 @@ model MatchFormQuestion {
   matchCategoryId String
   matchCategory   MatchFormCategory  @relation(fields: [matchCategoryId], references: [id], onDelete: Cascade)
   answers         MatchFormAnswers[]
-  multiple        Boolean
 }
 
 model MatchFormResponse {
@@ -201,10 +200,12 @@ model MatchFormAnswers {
   matchQuestion MatchFormQuestion @relation(fields: [questionId], references: [id])
 
   // Data Fields
-  slot1 String?
-  slot2 String?
-  slot3 String?
-  slot4 String[]
+  slot1       String?
+  slot2       String?
+  slot3       String?
+  slot4       String[]
+  gamepiece   Gamepiece[]
+  chargeField ChargedFieldNode[]
 }
 
 enum MatchQuestionType {
@@ -227,10 +228,12 @@ enum MatchPromptType {
 
 // Charged up
 model Gamepiece {
-  id       String          @id @default(cuid())
-  height   GamepieceHeight
-  type     PieceType
-  location Location
+  id                 String            @id @default(cuid())
+  height             GamepieceHeight
+  type               PieceType
+  location           Location
+  MatchFormAnswers   MatchFormAnswers? @relation(fields: [matchFormAnswersId], references: [id])
+  matchFormAnswersId String?
 }
 
 enum Location {
@@ -250,19 +253,15 @@ enum GamepieceHeight {
   DROPPED
 }
 
-model ChargedField {
-  id    String             @id
-  nodes ChargedFieldNode[]
-}
-
 model ChargedFieldNode {
-  id             String          @id
-  xCoord         Float
-  yCoord         Float
-  piece          PieceType
-  action         FieldNodeAction
-  ChargedField   ChargedField?   @relation(fields: [chargedFieldId], references: [id])
-  chargedFieldId String?
+  id     String          @id  @default(cuid())
+  xCoord Float
+  yCoord Float
+  piece  PieceType
+  action FieldNodeAction
+
+  MatchFormAnswers   MatchFormAnswers? @relation(fields: [matchFormAnswersId], references: [id])
+  matchFormAnswersId String?
 }
 
 enum FieldNodeAction {
