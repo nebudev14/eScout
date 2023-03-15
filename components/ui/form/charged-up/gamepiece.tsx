@@ -63,7 +63,7 @@ export const GamepieceInput: React.FC<MatchFormInput> = ({
     }
   };
 
-  return (
+  return ( 
     <div className="mt-4">
       <div className="flex justify-center">
         {isCone ? (
@@ -119,8 +119,7 @@ export const GamepieceInput: React.FC<MatchFormInput> = ({
                 onClick={() => {
                   const current = globalScore;
                   current[i].type = score.type === "CONE" ? "CUBE" : "CONE";
-                  setGlobalScore(current);
-                  console.log(current);
+                  setGlobalScore([...current]);
                 }}
               >
                 {score.type === "CONE" ? (
@@ -137,7 +136,10 @@ export const GamepieceInput: React.FC<MatchFormInput> = ({
               </div>
               <h1 className="text-lg text-center">{score.location}</h1>
               <h1 className="text-lg text-center">{score.height}</h1>
-              <BsTrashFill size={30} className="text-red-600" />
+              <BsTrashFill onClick={() => {
+                const current = globalScore.splice(i, 1);
+                setGlobalScore([...current])
+              }} size={30} className="text-red-600" />
             </div>
           ))}
         </div>
