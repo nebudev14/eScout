@@ -105,6 +105,14 @@ export const GamepieceInput: React.FC<MatchFormInput> = ({
         </div>
       </div>
       <motion.nav
+        animate={isScoringOpen ? "closed" : "open"}
+        variants={variants}
+      >
+        <div className={`px-8 py-6 mt-4 duration-200 absolute`}>
+        <h1>BOO</h1><h1>BOO</h1><h1>BOO</h1><h1>BOO</h1><h1>BOO</h1>
+        </div>
+      </motion.nav>
+      <motion.nav
         animate={isScoringOpen ? "open" : "closed"}
         variants={variants}
       >
@@ -135,6 +143,7 @@ export const GamepieceInput: React.FC<MatchFormInput> = ({
           ))}
         </div>
       </motion.nav>
+
     </div>
   );
 };

@@ -90,7 +90,6 @@ export const matchRouter = router({
         questionType: z.nativeEnum(MatchQuestionType),
         promptType: z.nativeEnum(MatchPromptType),
         options: z.array(z.string()),
-        multiple: z.boolean(),
       })
     )
     .mutation(async ({ ctx, input }) => {
