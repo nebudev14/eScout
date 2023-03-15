@@ -1,5 +1,12 @@
 import { z } from "zod";
-import { MatchQuestionType } from "@prisma/client";
+import {
+  FieldNodeAction,
+  GamepieceHeight,
+  Location,
+  MatchQuestionType,
+  PieceType,
+} from "@prisma/client";
+
 import { MatchPromptType } from "@prisma/client";
 import { assertAdmin } from "../middleware/is-admin";
 import { router } from "../trpc";
@@ -7,7 +14,10 @@ import { LEVEL } from "../../types/misc-types";
 import { authProcedure } from "../middleware/auth";
 import { entityId } from "../../types/misc-types";
 import { assertMember } from "@server/middleware/is-member";
-import { chargedFieldNodeSchema, gamepieceSchema } from "@server/schemas/charged-up-schema";
+import {
+  chargedFieldNodeSchema,
+  gamepieceSchema,
+} from "@server/schemas/charged-up-schema";
 
 export const matchRouter = router({
   /**
@@ -80,7 +90,7 @@ export const matchRouter = router({
         questionType: z.nativeEnum(MatchQuestionType),
         promptType: z.nativeEnum(MatchPromptType),
         options: z.array(z.string()),
-        multiple: z.boolean()
+        multiple: z.boolean(),
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -90,7 +100,7 @@ export const matchRouter = router({
           prompt: input.prompt,
           questionType: input.questionType,
           promptType: input.promptType,
-          options: input.options
+          options: input.options,
         },
       });
     }),
@@ -120,15 +130,17 @@ export const matchRouter = router({
         formId: z.string(),
         prescout: z.boolean(),
         video: z.string(),
-        answer: z.object({
-          questionId: z.string(),
-          slot1: z.string().optional(),
-          slot2: z.string().optional(),
-          slot3: z.string().optional(),
-          slot4: z.string().array().optional(),
-          gamepiece: gamepieceSchema,
-          chargeField: chargedFieldNodeSchema,
-        })
+        answer: z
+          .object({
+            questionId: z.string(),
+            slot1: z.string().optional(),
+            slot2: z.string().optional(),
+            slot3: z.string().optional(),
+            slot4: z.string().array().optional(),
+            gamepiece: gamepieceSchema,
+            chargeField: chargedFieldNodeSchema,
+          })
+          .array(),
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -141,7 +153,21 @@ export const matchRouter = router({
           prescout: input.prescout,
           video: input.video,
           answers: {
-            create: input.answer
+            create: input.answer.map((answer) => {
+              return {
+                questionId: answer.questionId,
+                slot1: answer.slot1,
+                slot2: answer.slot2,
+                slot3: answer.slot3,
+                slot4: answer.slot4,
+                gamepiece: {
+                  create: answer.gamepiece,
+                },
+                chargeField: {
+                  create: answer.chargeField,
+                },
+              };
+            }),
           },
         },
       });
