@@ -155,7 +155,7 @@ export const matchRouter = router({
             create: input.answer.map((answer) => {
               return {
                 questionId: answer.questionId,
-                slot1: answer.slot1,
+                slot1: answer.slot1, 
                 slot2: answer.slot2,
                 slot3: answer.slot3,
                 slot4: answer.slot4,

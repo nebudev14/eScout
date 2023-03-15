@@ -1,6 +1,6 @@
 import ModalWrapper from "@components/ui/modal-wrapper";
 import React, { useState } from "react";
-import { BsCone } from "react-icons/bs";
+import { BsCone, BsTrash2Fill, BsTrashFill } from "react-icons/bs";
 import { GiCube } from "react-icons/gi";
 import { MatchFormInput, Modal } from "types/misc-types";
 import { motion } from "framer-motion";
@@ -87,6 +87,7 @@ export const GamepieceInput: React.FC<MatchFormInput> = ({
             current!.location = "HPS";
             setInputScore(current);
             setIsScoringOpen(!isScoringOpen);
+
           }}
           className="py-6 text-center bg-pink-600 border-r-4 border-black rounded-l-xl "
         >
@@ -108,8 +109,37 @@ export const GamepieceInput: React.FC<MatchFormInput> = ({
         animate={isScoringOpen ? "closed" : "open"}
         variants={variants}
       >
-        <div className={`px-8 py-6 mt-4 duration-200 absolute`}>
-        <h1>BOO</h1><h1>BOO</h1><h1>BOO</h1><h1>BOO</h1><h1>BOO</h1>
+        <div
+          className={`px-6 py-6 mt-4 duration-200 w-full absolute flex items-center justify-center flex-col`}
+        >
+          {globalScore.map((score, i) => (
+            <div key={i} className="grid grid-cols-4 gap-16 my-2">
+              <div
+                className="mr-12"
+                onClick={() => {
+                  const current = globalScore;
+                  current[i].type = score.type === "CONE" ? "CUBE" : "CONE";
+                  setGlobalScore(current);
+                  console.log(current);
+                }}
+              >
+                {score.type === "CONE" ? (
+                  <BsCone
+                    size={40}
+                    className="text-yellow-500 hover:cursor-pointer"
+                  />
+                ) : (
+                  <GiCube
+                    size={40}
+                    className="text-purple-600 hover:cursor-pointer"
+                  />
+                )}
+              </div>
+              <h1 className="text-lg text-center">{score.location}</h1>
+              <h1 className="text-lg text-center">{score.height}</h1>
+              <BsTrashFill size={30} className="text-red-600" />
+            </div>
+          ))}
         </div>
       </motion.nav>
       <motion.nav
@@ -119,7 +149,7 @@ export const GamepieceInput: React.FC<MatchFormInput> = ({
         <div className={`px-8 py-6 mt-4 duration-200`}>
           {levels.map((l, i) => (
             <div
-              className={`${l.color} hover: cursor-pointer text-center my-2 py-4 text-white rounded-2xl `}
+              className={`${l.color} hover:cursor-pointer text-center my-2 py-4 text-white rounded-2xl `}
               key={i}
               onClick={() => {
                 let current = inputScore;
@@ -143,7 +173,6 @@ export const GamepieceInput: React.FC<MatchFormInput> = ({
           ))}
         </div>
       </motion.nav>
-
     </div>
   );
 };
