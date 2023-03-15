@@ -5,6 +5,7 @@ import { CounterInput } from "../components/ui/form/counter-input";
 import { FormInput } from "../components/ui/form/form-input";
 import { SelectInput } from "../components/ui/form/select-input";
 import { Answer } from "../types/form-types";
+import { GamepieceInput } from "@components/ui/form/charged-up/gamepiece";
 
 export function renderDesiredQuestionDisplay(
   questionType: MatchQuestionType,
@@ -50,5 +51,7 @@ export function renderFormQuestion(
           updateState={updateState}
         />
       );
+    case "GAMEPIECE_INFO":
+      return <GamepieceInput label={label} id={id} updateState={updateState} />
   }
 }

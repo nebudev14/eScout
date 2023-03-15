@@ -79,6 +79,11 @@ export default class EntryForm extends React.Component<Props, State> {
               slot4: [],
             });
             break;
+          case "GAMEPIECE_INFO":
+            answers.push({
+              questionId: q.id,
+              gamepieces: []
+            })
         }
       })
     );
@@ -103,6 +108,8 @@ export default class EntryForm extends React.Component<Props, State> {
     currentAnswer.slot2 = newAnswer.slot2;
     currentAnswer.slot3 = newAnswer.slot3;
     currentAnswer.slot4 = newAnswer.slot4;
+    currentAnswer.gamepieces = newAnswer.gamepieces;
+    currentAnswer.chargeFieldNodes = newAnswer.chargeFieldNodes;
 
     return answers;
   }
