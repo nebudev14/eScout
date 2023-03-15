@@ -265,8 +265,9 @@ model ChargedFieldNode {
 }
 
 enum FieldNodeAction {
+  MOVEMENT
   PICKED
-  PLACED
+  SCORE 
   DROPPED // accidental! bad!
 }
 

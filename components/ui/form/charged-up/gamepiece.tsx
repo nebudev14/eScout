@@ -63,7 +63,7 @@ export const GamepieceInput: React.FC<MatchFormInput> = ({
     }
   };
 
-  return ( 
+  return (
     <div className="mt-4">
       <div className="flex justify-center">
         {isCone ? (
@@ -87,7 +87,6 @@ export const GamepieceInput: React.FC<MatchFormInput> = ({
             current!.location = "HPS";
             setInputScore(current);
             setIsScoringOpen(!isScoringOpen);
-
           }}
           className="py-6 text-center bg-pink-600 border-r-4 border-black rounded-l-xl "
         >
@@ -136,10 +135,14 @@ export const GamepieceInput: React.FC<MatchFormInput> = ({
               </div>
               <h1 className="text-lg text-center">{score.location}</h1>
               <h1 className="text-lg text-center">{score.height}</h1>
-              <BsTrashFill onClick={() => {
-                const current = globalScore.splice(i, 1);
-                setGlobalScore([...current])
-              }} size={30} className="text-red-600" />
+              <BsTrashFill
+                onClick={() => {
+                  const current = globalScore.splice(i, 1);
+                  setGlobalScore([...current]);
+                }}
+                size={30}
+                className="text-red-600"
+              />
             </div>
           ))}
         </div>
@@ -168,6 +171,7 @@ export const GamepieceInput: React.FC<MatchFormInput> = ({
                     height: inputScore?.height as string,
                   },
                 ]);
+                updateFormState();
               }}
             >
               <h1 className="text-xl font-bold">{l.level}</h1>
