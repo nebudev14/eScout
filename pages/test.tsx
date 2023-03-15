@@ -6,7 +6,7 @@ import { FormInput } from "../components/ui/form/form-input";
 import { ScoreBoard } from "../components/ui/form/score-board";
 import { MatchFormQuestion } from "@prisma/client";
 import { parseOperation } from "@util/parser";
-import { FieldInput } from "@components/ui/form/field-input";
+import { FieldInput } from "@components/ui/form/charged-up/field-input";
 import { GamepieceInput } from "@components/ui/form/charged-up/gamepiece";
 
 const Test: NextPage = () => {
@@ -20,7 +20,8 @@ const Test: NextPage = () => {
         console.log(e.clientY)
       }}> */}
 
-      <GamepieceInput />
+      {/* <GamepieceInput /> */}
+      <FieldInput />
       
     </div>
   );
