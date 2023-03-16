@@ -1,4 +1,4 @@
-import { ChargedFieldNode, FieldNodeAction, PieceType } from "@prisma/client";
+import { ChargedFieldNode, FieldNodeAction, GamepieceHeight, Location, PieceType } from "@prisma/client";
 export interface Answer {
   questionId: string;
   slot1?: string;
@@ -6,18 +6,18 @@ export interface Answer {
   slot3?: string;
   slot4?: string[];
   gamepiece?: GamepieceFormType[];
-  chargeFieldNodes?: ChargedFieldNode[];
+  chargeField?: ChargedFieldNodeType[];
 }
 
 export interface GamepieceFormType {
-  height: string;
-  type: string;
-  location: string;
+  height: GamepieceHeight;
+  type: PieceType;
+  location: Location;
 }
 
 export interface ChargedFieldNodeType {
   xCoord: number
   yCoord: number
-  // piece: PieceType
-  // action: FieldNodeAction
+  piece: PieceType
+  action: FieldNodeAction
 }

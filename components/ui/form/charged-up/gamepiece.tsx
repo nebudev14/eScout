@@ -158,17 +158,16 @@ export const GamepieceInput: React.FC<MatchFormInput> = ({
               key={i}
               onClick={() => {
                 let current = inputScore;
-                current!.height = l.level;
+                current!.height = l.level as GamepieceHeight;
                 setInputScore(current);
                 setIsScoringOpen(!isScoringOpen);
 
                 setGlobalScore((prevState) => [
                   ...prevState,
                   {
-                    matchFormAnswersId: id,
-                    location: inputScore?.location as string,
+                    location: inputScore?.location as Location,
                     type: isCone ? "CONE" : "CUBE",
-                    height: inputScore?.height as string,
+                    height: inputScore?.height as GamepieceHeight,
                   },
                 ]);
                 updateFormState();
