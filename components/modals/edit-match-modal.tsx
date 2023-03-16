@@ -102,7 +102,8 @@ const EditMatchModal: React.FC<{
           <option value={MatchQuestionType.COUNTER}>Counter</option>
           <option value={MatchQuestionType.SELECT}>Select</option>
           <option value={MatchQuestionType.INPUT}>Text Input</option>
-          <option value={MatchQuestionType.GAMEPIECE_INFO}>Gamepiece Info</option>
+          <option value={MatchQuestionType.GAMEPIECE_INFO}>Gamepiece</option>
+          <option value={MatchQuestionType.FIELD}>Field</option>
         </select>
 
         {desiredType === MatchQuestionType.SELECT ? (

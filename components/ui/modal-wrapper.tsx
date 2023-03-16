@@ -12,7 +12,7 @@ const ModalWrapper: React.FC<React.PropsWithChildren<Modal>> = ({
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
         as="div"
-        className="relative z-10"
+        className="relative z-50"
         onClose={() => {
           setIsOpen(false);
           {

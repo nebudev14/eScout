@@ -38,8 +38,8 @@ export const FieldCanvas: React.FC<{
           const context = canvasRef?.current?.getContext("2d");
           console.log(currPiece)
           loadCanvasImage(
-            xCoord * 300,
-            yCoord * 150,
+            (xCoord * 300) - 5,
+            (yCoord * 150) - 5,
             canvasRef.current as HTMLCanvasElement,
             currPiece === "CONE" ? "/cone.svg" : "/cube.svg"
           );

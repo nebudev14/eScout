@@ -4,6 +4,6 @@ export function loadCanvasImage(x: number, y: number, canvas: HTMLCanvasElement 
 
   const context = canvas.getContext("2d");
   image.onload = () => {
-    context!.drawImage(image, x, y, 12, 12);
+    context!.drawImage(image, x, y, 10, 10);
   }
 }
