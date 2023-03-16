@@ -5,7 +5,7 @@ export interface Answer {
   slot2?: string;
   slot3?: string;
   slot4?: string[];
-  gamepieces?: GamepieceFormType[];
+  gamepiece?: GamepieceFormType[];
   chargeFieldNodes?: ChargedFieldNode[];
 }
 
@@ -13,7 +13,6 @@ export interface GamepieceFormType {
   height: string;
   type: string;
   location: string;
-  matchFormAnswersId: string
 }
 
 export interface ChargedFieldNodeType {

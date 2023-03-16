@@ -82,8 +82,13 @@ export default class EntryForm extends React.Component<Props, State> {
           case "GAMEPIECE_INFO":
             answers.push({
               questionId: q.id,
-              gamepieces: []
-            })
+              slot1: "0",
+              slot2: "0",
+              slot3: "0",
+              slot4: [],
+              gamepiece: []
+            });
+          break;
         }
       })
     );
@@ -104,13 +109,11 @@ export default class EntryForm extends React.Component<Props, State> {
       (e) => e.questionId === newAnswer.questionId
     )?.[0];
 
-
-
     currentAnswer.slot1 = newAnswer.slot1;
     currentAnswer.slot2 = newAnswer.slot2;
     currentAnswer.slot3 = newAnswer.slot3;
     currentAnswer.slot4 = newAnswer.slot4;
-    currentAnswer.gamepieces = newAnswer.gamepieces;
+    currentAnswer.gamepiece = newAnswer.gamepiece;
     currentAnswer.chargeFieldNodes = newAnswer.chargeFieldNodes;
 
     return answers;

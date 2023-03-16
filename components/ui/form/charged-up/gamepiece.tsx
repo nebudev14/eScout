@@ -43,7 +43,6 @@ export const GamepieceInput: React.FC<MatchFormInput> = ({
 }) => {
   // Scoring states
   const [inputScore, setInputScore] = useState<GamepieceFormType | undefined>({
-    matchFormAnswersId: id,
     location: "FIELD",
     height: "DROPPED",
     type: "CONE",
@@ -58,7 +57,7 @@ export const GamepieceInput: React.FC<MatchFormInput> = ({
     if (updateState) {
       updateState({
         questionId: id,
-        gamepieces: globalScore,
+        gamepiece: globalScore,
       });
     }
   };

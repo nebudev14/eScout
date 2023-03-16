@@ -85,23 +85,23 @@ export default function Scout(
       formId: form as string,
       prescout: prescout,
       video: videoLink,
-      answer: [
-        {
-          questionId: "asdfdsaf",
-          gamepiece: [
-            {
-              location: Location.FIELD,
-              type: PieceType.CONE,
-              height: "DROPPED",
-              matchFormAnswersId: "asdfdsaf"
-            }
-          ]
-        }
-      ],
+      answer: answers
     });
 
     /**
      *
+     * answer: [
+        {
+          questionId: "clfaljnse00016yotbao42cah",
+          gamepiece: [
+            {
+              location: Location.FIELD,
+              type: PieceType.CONE,
+              height: "DROPPED"
+            }
+          ]
+        }
+      ],
      */
 
     await router.push("/teams")
