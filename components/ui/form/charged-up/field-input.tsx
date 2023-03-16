@@ -28,7 +28,9 @@ export const FieldInput: React.FC<MatchFormInput> = ({
 
   return (
     <>
-      <h1 className="px-1 pb-4 text-lg font-semibold dark:text-zinc-300 ">{label}</h1>
+      <h1 className="px-1 pb-4 text-lg font-semibold dark:text-zinc-300 ">
+        {label}
+      </h1>
       <div className="py-8 border-t-2 border-zinc-600">
         <div className="inline-flex py-3 mb-4 border-2 rounded-xl border-zinc-700">
           <BsCone
@@ -48,28 +50,40 @@ export const FieldInput: React.FC<MatchFormInput> = ({
         </div>
         <FieldCanvas currPiece={selectedPiece} currNode={action} />
         <div className="flex items-center justify-center">
-          <div className="inline-flex py-3 mt-4 border-2 rounded-xl border-zinc-700 ">
-            <BsCheckSquare
-              size={45}
-              onClick={() => setSelectedAction("SCORE")}
-              className={`mx-3 hover:cursor-pointer py-1 text-green-500 ${
-                action === "SCORE" ? "border-b-4 border-green-400" : ""
-              }`}
-            />
-            <FaRunning
-              size={45}
-              onClick={() => setSelectedAction("MOVEMENT")}
-              className={`mx-3 hover:cursor-pointer py-1 text-pink-600 ${
-                action === "MOVEMENT" ? "border-b-4 border-green-400" : ""
-              }`}
-            />
-            <GiCardPickup
-              size={45}
-              onClick={() => setSelectedAction("PICKED")}
-              className={`mx-3 py-1 hover:cursor-pointer text-cyan-500 ${
-                action === "PICKED" ? "border-b-4 border-green-400" : ""
-              }`}
-            />
+          <div className="inline-flex mt-4 border-2 rounded-xl border-zinc-700 ">
+            <div className="flex items-center justify-center"> 
+              {" "}
+              <h1
+                onClick={() => setSelectedAction("SCORE")}
+                className={`font-semibold hover:cursor-pointer py-3 px-4 rounded-l-xl duration-150 ${
+                  action === "SCORE" ? "bg-green-400 text-white" : "text-green-500"
+                }`}
+              >
+                Score
+              </h1>
+            </div>
+            <div className="flex items-center justify-center"> 
+              {" "}
+              <h1
+                onClick={() => setSelectedAction("MOVEMENT")}
+                className={`px-4 py-3 font-semibold hover:cursor-pointer duration-150  ${
+                  action === "MOVEMENT" ? "bg-pink-600 text-white" : "text-pink-600"
+                }`}
+              >
+                Move
+              </h1>
+            </div>
+            <div className="flex items-center justify-center"> 
+              {" "}
+              <h1
+                onClick={() => setSelectedAction("PICKED")}
+                className={`py-3 px-4 font-semibold hover:cursor-pointer duration-150 rounded-r-xl ${
+                  action === "PICKED" ? "bg-cyan-500 text-white" : "text-cyan-500"
+                }`}
+              >
+                Pick Up
+              </h1>
+            </div>
           </div>
         </div>
       </div>
