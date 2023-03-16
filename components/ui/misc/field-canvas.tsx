@@ -12,17 +12,9 @@ export const FieldCanvas: React.FC<{
 
   useEffect(() => {
     const canvas = canvasRef?.current;
-    const context = canvas?.getContext("2d");
-    if (context) {
-      // loadCanvasImage(canvas as HTMLCanvasElement, "/cone.svg")
-      // loadCanvasImage(canvas as HTMLCanvasElement, "/cube.svg")
-      // context!.arc(xCoord*300, yCoord*150, 3, 0, 2 * Math.PI);
-      // context!.moveTo(xCoord*300, yCoord*150)
-      // context!.strokeStyle = '#359900';
-      // // context!.fill();
-      // context!.stroke();
-    }
-  });
+    canvas!.height = 1500;
+    canvas!.width = 3000;
+  }, [canvasRef]);
 
   // 300 x
   // 150 y
@@ -32,14 +24,16 @@ export const FieldCanvas: React.FC<{
       <canvas
         className="absolute z-50 w-full h-full "
         onClick={(e: React.MouseEvent) => {
+          // canvasRef!.current!.height = 1500
+          // canvasRef!.current!.width = 3000
           const { offsetX, offsetY } = e.nativeEvent;
           const xCoord = offsetX / (e.target as HTMLElement).offsetWidth;
           const yCoord = offsetY / (e.target as HTMLElement).offsetHeight;
           const context = canvasRef?.current?.getContext("2d");
-          console.log(currPiece)
+ 
           loadCanvasImage(
-            (xCoord * 300) - 5,
-            (yCoord * 150) - 5,
+            (xCoord * 3000) - 50,
+            (yCoord * 1500) - 50,
             canvasRef.current as HTMLCanvasElement,
             currPiece === "CONE" ? "/cone.svg" : "/cube.svg"
           );
