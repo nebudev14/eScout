@@ -53,11 +53,11 @@ export const GamepieceInput: React.FC<MatchFormInput> = ({
   const [isScoringOpen, setIsScoringOpen] = useState<boolean>(false);
   const [isCone, setIsCone] = useState<boolean>(true);
 
-  const updateFormState = () => {
+  const updateFormState = (nextState: GamepieceFormType[]) => {
     if (updateState) {
       updateState({
         questionId: id,
-        gamepiece: globalScore,
+        gamepiece: nextState,
       });
     }
   };
@@ -161,16 +161,19 @@ export const GamepieceInput: React.FC<MatchFormInput> = ({
                 current!.height = l.level as GamepieceHeight;
                 setInputScore(current);
                 setIsScoringOpen(!isScoringOpen);
-
-                setGlobalScore((prevState) => [
-                  ...prevState,
+                
+                
+                let nextState: GamepieceFormType[] = [
+                  ...globalScore,
                   {
                     location: inputScore?.location as Location,
                     type: isCone ? "CONE" : "CUBE",
                     height: inputScore?.height as GamepieceHeight,
-                  },
-                ]);
-                updateFormState();
+                  } 
+                ]
+                
+                setGlobalScore(nextState);
+                updateFormState(nextState);
               }}
             >
               <h1 className="text-xl font-bold">{l.level}</h1>
