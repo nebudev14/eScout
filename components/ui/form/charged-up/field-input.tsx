@@ -12,27 +12,10 @@ export const FieldInput: React.FC<MatchFormInput> = ({
 }) => {
   const [nodes, setNodes] = useState<ChargedFieldNodeType[]>([]);
 
-  
-    
   return (
-    <div>
-      <div className="relative">
-        <div className="absolute -inset-1">
-          <FieldCanvas width={100} height={100} />
-          {/* <Image
-            src={Field}
-            className="relative"
-            onClick={(e: React.MouseEvent) => {
-              const { offsetX, offsetY } = e.nativeEvent;
-              const xCoord = (e.target as HTMLElement).offsetWidth / offsetX;
-              const yCoord = (e.target as HTMLElement).offsetHeight / offsetY;
-              if (isFinite(xCoord) && isFinite(yCoord)) {
-                setNodes([...nodes, { xCoord, yCoord }]);
-              }
-            }}
-          /> */}
-        </div>
-      </div>
+    <div className="">
+      <FieldCanvas width={100} height={100} />
+      
     </div>
   );
 };

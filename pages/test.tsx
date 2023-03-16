@@ -11,8 +11,8 @@ import { GamepieceInput } from "@components/ui/form/charged-up/gamepiece";
 
 const Test: NextPage = () => {
   const result = parseOperation("AVERAGE(CATEGORY(id, slot#))");
-  
-  
+
+
   return (
     <div className="flex flex-col min-h-screen py-4 dark:text-white px-96 lg:px-4">
       {/* <div className="min-h-screen bg-white" onClick={(e: React.MouseEvent<HTMLDivElement>) => {
@@ -20,9 +20,9 @@ const Test: NextPage = () => {
         console.log(e.clientY)
       }}> */}
 
-      {/* <GamepieceInput /> */}
+      <GamepieceInput />
       <FieldInput />
-      
+
     </div>
   );
 };

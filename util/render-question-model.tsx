@@ -23,6 +23,8 @@ export function renderDesiredQuestionDisplay(
       return <FormInput label={label} id="" />;
     case "SELECT":
       return <SelectInput label={label} id="" options={options} />;
+      case "GAMEPIECE_INFO":
+        return <GamepieceInput label={label} id="" />
   }
 }
 

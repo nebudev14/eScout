@@ -64,21 +64,22 @@ export const GamepieceInput: React.FC<MatchFormInput> = ({
   };
 
   return (
-    <div className="mt-4">
-      <div className="flex justify-center">
-        {isCone ? (
-          <BsCone
-            onClick={() => setIsCone(!isCone)}
-            size={75}
-            className="text-yellow-500 hover:cursor-pointer"
-          />
-        ) : (
-          <GiCube
-            onClick={() => setIsCone(!isCone)}
-            size={75}
-            className="text-purple-500 hover:cursor-pointer"
-          />
-        )}
+    <div className="py-8 mt-4 select-none border-y-2 border-zinc-600">
+      <div className="flex justify-start px-12">
+        <BsCone
+          onClick={() => setIsCone(true)}
+          size={80}
+          className={`py-2 mr-auto text-yellow-500 hover:cursor-pointer ${
+            isCone ? "border-b-4 border-green-400" : ""
+          }`}
+        />
+        <GiCube
+          onClick={() => setIsCone(false)}
+          size={80}
+          className={`py-2 text-purple-500 hover:cursor-pointer ${
+            !isCone ? "border-b-4 border-green-400" : ""
+          }`}
+        />
       </div>
       <div className="grid grid-cols-2 mt-10 text-xl font-semibold text-white hover:cursor-pointer">
         <div
@@ -109,7 +110,7 @@ export const GamepieceInput: React.FC<MatchFormInput> = ({
         variants={variants}
       >
         <div
-          className={`px-6 py-6 mt-4 duration-200 w-full absolute flex items-center justify-center flex-col`}
+          className={`px-6 py-6 mt-4 duration-200 w-full absolute flex items-center justify-center flex-col grid-flow-row`}
         >
           {globalScore.map((score, i) => (
             <div key={i} className="grid grid-cols-4 gap-16 my-2">

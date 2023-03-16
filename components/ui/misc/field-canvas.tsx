@@ -24,7 +24,7 @@ export const FieldCanvas: React.FC<{ height: number; width: number }> = ({
   // 150 y
 
   return (
-    <div className="relative">
+    <div className="relative select-none">
       <canvas
         className="absolute z-50 w-full h-full "
         onClick={(e: React.MouseEvent) => {
