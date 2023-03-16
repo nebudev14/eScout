@@ -6,7 +6,16 @@ import { ChargedFieldNodeType } from "types/form-types";
 import { FieldCanvas } from "@components/ui/misc/field-canvas";
 import { BsCone, BsCheckSquare } from "react-icons/bs";
 import { GiCube, GiCardPickup } from "react-icons/gi";
+import { FaRunning } from "react-icons/fa";
+import { ImCross } from "react-icons/im";
 import { FieldNodeAction, PieceType } from "@prisma/client";
+
+// const icons = [
+//   {
+//     action: FieldNodeAction.DROPPED,
+//     icon: <ImCross size={40} />
+//   }
+// ]
 
 export const FieldInput: React.FC<MatchFormInput> = ({
   label,
@@ -15,34 +24,41 @@ export const FieldInput: React.FC<MatchFormInput> = ({
 }) => {
   const [nodes, setNodes] = useState<ChargedFieldNodeType[]>([]);
   const [selectedPiece, setSelectedPiece] = useState<PieceType>("CONE");
-  const [action, setSelectedAction] = useState<FieldNodeAction>("PICKED");
+  const [action, setSelectedAction] = useState<FieldNodeAction>("SCORE");
 
   return (
-    <div className="">
+    <div className="py-8 border-y-2 border-zinc-600">
+      <div className="inline-flex py-3 mb-4 border-2 rounded-xl border-zinc-700">
+        <BsCone
+          size={45}
+          onClick={() => setSelectedPiece("CONE")}
+          className={`mx-3 py-1 text-yellow-500 hover:cursor-pointer ${
+            selectedPiece === "CONE" ? "border-b-4 border-green-400" : ""
+          }`}
+        />
+        <GiCube
+          size={45}
+          onClick={() => setSelectedPiece("CUBE")}
+          className={`mx-3 py-1 text-purple-500 hover:cursor-pointer ${
+            selectedPiece !== "CONE" ? "border-b-4 border-green-400" : ""
+          }`}
+        />
+      </div>
       <FieldCanvas width={100} height={100} />
       <div className="flex items-center justify-center">
-        <div className="inline-flex py-4 mt-4 mr-8 border-2 rounded-xl border-zinc-700">
-          <BsCone
-            size={45}
-            onClick={() => setSelectedPiece("CONE")}
-            className={`mx-3 py-1 text-yellow-500 hover:cursor-pointer ${
-              selectedPiece === "CONE" ? "border-b-4 border-green-400" : ""
-            }`}
-          />
-          <GiCube
-            size={45}
-            onClick={() => setSelectedPiece("CUBE")}
-            className={`mx-3 py-1 text-purple-500 hover:cursor-pointer ${
-              selectedPiece !== "CONE" ? "border-b-4 border-green-400" : ""
-            }`}
-          />
-        </div>
-        <div className="inline-flex py-4 mt-4 border-2 rounded-xl border-zinc-700 ">
+        <div className="inline-flex py-3 mt-4 border-2 rounded-xl border-zinc-700 ">
           <BsCheckSquare
             size={45}
-            onClick={() => setSelectedAction("PLACED")}
+            onClick={() => setSelectedAction("SCORE")}
+            className={`mx-3 hover:cursor-pointer py-1 text-green-500 ${
+              action === "SCORE" ? "border-b-4 border-green-400" : ""
+            }`}
+          />
+          <FaRunning
+            size={45}
+            onClick={() => setSelectedAction("MOVEMENT")}
             className={`mx-3 hover:cursor-pointer py-1 text-pink-600 ${
-              action === "PLACED" ? "border-b-4 border-green-400" : ""
+              action === "MOVEMENT" ? "border-b-4 border-green-400" : ""
             }`}
           />
           <GiCardPickup

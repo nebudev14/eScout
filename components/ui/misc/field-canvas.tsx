@@ -1,8 +1,10 @@
 import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import Field from "../../../public/field23.png";
+import { loadCanvasImage } from "@util/load-canvas-image";
+import { PieceType } from "@prisma/client";
 
-export const FieldCanvas: React.FC<{ height: number; width: number }> = ({
+export const FieldCanvas: React.FC<{ currPiece: PieceType, currNode: height: number; width: number }> = ({
   height,
   width,
 }) => {
@@ -12,11 +14,13 @@ export const FieldCanvas: React.FC<{ height: number; width: number }> = ({
     const canvas = canvasRef?.current;
     const context = canvas?.getContext("2d");
     if (context) {
-      // context.beginPath();
-      // context.arc(300, 150, 5, 0, 2 * Math.PI);
-      // context.fillStyle = "rgba(255, 0, 0, 1)";
-      // // context.moveTo(20, 200)
-      // context.fill();
+      // loadCanvasImage(canvas as HTMLCanvasElement, "/cone.svg")
+      // loadCanvasImage(canvas as HTMLCanvasElement, "/cube.svg")
+      // context!.arc(xCoord*300, yCoord*150, 3, 0, 2 * Math.PI);
+      // context!.moveTo(xCoord*300, yCoord*150)
+      // context!.strokeStyle = '#359900';
+      // // context!.fill();
+      // context!.stroke();
     }
   });
 
@@ -34,10 +38,13 @@ export const FieldCanvas: React.FC<{ height: number; width: number }> = ({
           const context = canvasRef?.current?.getContext("2d");
           context!.beginPath();
 
+          // let path = new Path2D("M 100,100 h 50 v 50 h 50");
+
           context!.arc(xCoord*300, yCoord*150, 3, 0, 2 * Math.PI);
+          // context!.moveTo(xCoord*300, yCoord*150)
           context!.fillStyle = "rgba(255, 0, 0, 1)";
-          // context.moveTo(20, 200)
           context!.fill();
+          // context!.stroke();
           // if (isFinite(xCoord) && isFinite(yCoord)) {
           //   setNodes([...nodes, { xCoord, yCoord }]);
           // }
