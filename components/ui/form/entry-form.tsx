@@ -104,6 +104,8 @@ export default class EntryForm extends React.Component<Props, State> {
       (e) => e.questionId === newAnswer.questionId
     )?.[0];
 
+
+
     currentAnswer.slot1 = newAnswer.slot1;
     currentAnswer.slot2 = newAnswer.slot2;
     currentAnswer.slot3 = newAnswer.slot3;
@@ -116,6 +118,7 @@ export default class EntryForm extends React.Component<Props, State> {
 
   updateState(answer: Answer) {
     const answers: Answer[] = this.setAnswer(this.state.answers, answer);
+    console.log(this.state)
     this.setState({ answers: answers });
   }
 

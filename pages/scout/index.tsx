@@ -17,6 +17,8 @@ import {
   MatchForm,
   TeamUser,
   Competition,
+  Location,
+  PieceType,
 } from "@prisma/client";
 import { Combobox, Switch } from "@headlessui/react";
 import { HiSelector } from "react-icons/hi";
@@ -76,14 +78,31 @@ export default function Scout(
 
   // make submit method and pass into entry form component
   const submitForm = async (answers: Answer[]) => {
+    console.log(answers)
     await submitResponse.mutateAsync({
       entityId: selectedTeam?.id as string,
       compId: selectedComp?.id as string,
       formId: form as string,
       prescout: prescout,
       video: videoLink,
-      answer: answers,
+      answer: [
+        {
+          questionId: "asdfdsaf",
+          gamepiece: [
+            {
+              location: Location.FIELD,
+              type: PieceType.CONE,
+              height: "DROPPED",
+              matchFormAnswersId: "asdfdsaf"
+            }
+          ]
+        }
+      ],
     });
+
+    /**
+     *
+     */
 
     await router.push("/teams")
   };

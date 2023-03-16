@@ -233,7 +233,7 @@ model Gamepiece {
   type               PieceType
   location           Location
   MatchFormAnswers   MatchFormAnswers? @relation(fields: [matchFormAnswersId], references: [id])
-  matchFormAnswersId String?
+  matchFormAnswersId String
 }
 
 enum Location {
@@ -267,7 +267,7 @@ model ChargedFieldNode {
 enum FieldNodeAction {
   MOVEMENT
   PICKED
-  SCORE 
+  SCORE
   DROPPED // accidental! bad!
 }
 
