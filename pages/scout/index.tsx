@@ -88,22 +88,6 @@ export default function Scout(
       answer: answers
     });
 
-    /**
-     *
-     * answer: [
-        {
-          questionId: "clfaljnse00016yotbao42cah",
-          gamepiece: [
-            {
-              location: Location.FIELD,
-              type: PieceType.CONE,
-              height: "DROPPED"
-            }
-          ]
-        }
-      ],
-     */
-
     await router.push("/teams")
   };
 

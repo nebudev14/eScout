@@ -20,7 +20,7 @@ const Test: NextPage = () => {
         console.log(e.clientY)
       }}> */}
 
-      <GamepieceInput />
+      {/* <GamepieceInput /> */}
       <FieldInput />
 
     </div>
