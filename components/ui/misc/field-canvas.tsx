@@ -2,12 +2,12 @@ import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import Field from "../../../public/field23.png";
 import { loadCanvasImage } from "@util/load-canvas-image";
-import { PieceType } from "@prisma/client";
+import { FieldNodeAction, PieceType } from "@prisma/client";
 
-export const FieldCanvas: React.FC<{ currPiece: PieceType, currNode: height: number; width: number }> = ({
-  height,
-  width,
-}) => {
+export const FieldCanvas: React.FC<{
+  currPiece: PieceType;
+  currNode: FieldNodeAction;
+}> = ({ currPiece, currNode }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -36,14 +36,17 @@ export const FieldCanvas: React.FC<{ currPiece: PieceType, currNode: height: num
           const xCoord = offsetX / (e.target as HTMLElement).offsetWidth;
           const yCoord = offsetY / (e.target as HTMLElement).offsetHeight;
           const context = canvasRef?.current?.getContext("2d");
-          context!.beginPath();
-
+          console.log(currPiece)
+          loadCanvasImage(
+            xCoord * 300,
+            yCoord * 150,
+            canvasRef.current as HTMLCanvasElement,
+            currPiece === "CONE" ? "/cone.svg" : "/cube.svg"
+          );
           // let path = new Path2D("M 100,100 h 50 v 50 h 50");
 
-          context!.arc(xCoord*300, yCoord*150, 3, 0, 2 * Math.PI);
+          // context!.arc(xCoord * 300, yCoord * 150, 3, 0, 2 * Math.PI);
           // context!.moveTo(xCoord*300, yCoord*150)
-          context!.fillStyle = "rgba(255, 0, 0, 1)";
-          context!.fill();
           // context!.stroke();
           // if (isFinite(xCoord) && isFinite(yCoord)) {
           //   setNodes([...nodes, { xCoord, yCoord }]);

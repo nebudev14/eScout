@@ -44,7 +44,7 @@ export const FieldInput: React.FC<MatchFormInput> = ({
           }`}
         />
       </div>
-      <FieldCanvas width={100} height={100} />
+      <FieldCanvas currPiece={selectedPiece} currNode={action} />
       <div className="flex items-center justify-center">
         <div className="inline-flex py-3 mt-4 border-2 rounded-xl border-zinc-700 ">
           <BsCheckSquare
