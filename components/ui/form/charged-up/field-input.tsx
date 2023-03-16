@@ -27,49 +27,52 @@ export const FieldInput: React.FC<MatchFormInput> = ({
   const [action, setSelectedAction] = useState<FieldNodeAction>("SCORE");
 
   return (
-    <div className="py-8 border-y-2 border-zinc-600">
-      <div className="inline-flex py-3 mb-4 border-2 rounded-xl border-zinc-700">
-        <BsCone
-          size={45}
-          onClick={() => setSelectedPiece("CONE")}
-          className={`mx-3 py-1 text-yellow-500 hover:cursor-pointer ${
-            selectedPiece === "CONE" ? "border-b-4 border-green-400" : ""
-          }`}
-        />
-        <GiCube
-          size={45}
-          onClick={() => setSelectedPiece("CUBE")}
-          className={`mx-3 py-1 text-purple-500 hover:cursor-pointer ${
-            selectedPiece !== "CONE" ? "border-b-4 border-green-400" : ""
-          }`}
-        />
-      </div>
-      <FieldCanvas currPiece={selectedPiece} currNode={action} />
-      <div className="flex items-center justify-center">
-        <div className="inline-flex py-3 mt-4 border-2 rounded-xl border-zinc-700 ">
-          <BsCheckSquare
+    <>
+      <h1 className="px-1 pb-4 text-lg font-semibold dark:text-zinc-300 ">{label}</h1>
+      <div className="py-8 border-t-2 border-zinc-600">
+        <div className="inline-flex py-3 mb-4 border-2 rounded-xl border-zinc-700">
+          <BsCone
             size={45}
-            onClick={() => setSelectedAction("SCORE")}
-            className={`mx-3 hover:cursor-pointer py-1 text-green-500 ${
-              action === "SCORE" ? "border-b-4 border-green-400" : ""
+            onClick={() => setSelectedPiece("CONE")}
+            className={`mx-3 py-1 text-yellow-500 hover:cursor-pointer ${
+              selectedPiece === "CONE" ? "border-b-4 border-green-400" : ""
             }`}
           />
-          <FaRunning
+          <GiCube
             size={45}
-            onClick={() => setSelectedAction("MOVEMENT")}
-            className={`mx-3 hover:cursor-pointer py-1 text-pink-600 ${
-              action === "MOVEMENT" ? "border-b-4 border-green-400" : ""
-            }`}
-          />
-          <GiCardPickup
-            size={45}
-            onClick={() => setSelectedAction("PICKED")}
-            className={`mx-3 py-1 hover:cursor-pointer text-cyan-500 ${
-              action === "PICKED" ? "border-b-4 border-green-400" : ""
+            onClick={() => setSelectedPiece("CUBE")}
+            className={`mx-3 py-1 text-purple-500 hover:cursor-pointer ${
+              selectedPiece !== "CONE" ? "border-b-4 border-green-400" : ""
             }`}
           />
         </div>
+        <FieldCanvas currPiece={selectedPiece} currNode={action} />
+        <div className="flex items-center justify-center">
+          <div className="inline-flex py-3 mt-4 border-2 rounded-xl border-zinc-700 ">
+            <BsCheckSquare
+              size={45}
+              onClick={() => setSelectedAction("SCORE")}
+              className={`mx-3 hover:cursor-pointer py-1 text-green-500 ${
+                action === "SCORE" ? "border-b-4 border-green-400" : ""
+              }`}
+            />
+            <FaRunning
+              size={45}
+              onClick={() => setSelectedAction("MOVEMENT")}
+              className={`mx-3 hover:cursor-pointer py-1 text-pink-600 ${
+                action === "MOVEMENT" ? "border-b-4 border-green-400" : ""
+              }`}
+            />
+            <GiCardPickup
+              size={45}
+              onClick={() => setSelectedAction("PICKED")}
+              className={`mx-3 py-1 hover:cursor-pointer text-cyan-500 ${
+                action === "PICKED" ? "border-b-4 border-green-400" : ""
+              }`}
+            />
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 };

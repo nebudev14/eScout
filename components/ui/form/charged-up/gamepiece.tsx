@@ -63,124 +63,128 @@ export const GamepieceInput: React.FC<MatchFormInput> = ({
   };
 
   return (
-    <div className="py-8 mt-4 select-none border-y-2 border-zinc-600">
-      <div className="flex justify-start px-12">
-        <BsCone
-          onClick={() => setIsCone(true)}
-          size={80}
-          className={`py-2 mr-auto text-yellow-500 hover:cursor-pointer ${
-            isCone ? "border-b-4 border-green-400" : ""
-          }`}
-        />
-        <GiCube
-          onClick={() => setIsCone(false)}
-          size={80}
-          className={`py-2 text-purple-500 hover:cursor-pointer ${
-            !isCone ? "border-b-4 border-green-400" : ""
-          }`}
-        />
-      </div>
-      <div className="grid grid-cols-2 mt-10 text-xl font-semibold text-white hover:cursor-pointer">
-        <div
-          onClick={() => {
-            let current = inputScore;
-            current!.location = "HPS";
-            setInputScore(current);
-            setIsScoringOpen(!isScoringOpen);
-          }}
-          className="py-6 text-center bg-pink-600 border-r-4 border-black rounded-l-xl "
-        >
-          Human Player
+    <>
+      <h1 className="px-1 text-lg font-semibold dark:text-zinc-300 ">
+        {label}
+      </h1>
+      <div className="py-8 mt-4 border-t-2 select-none border-zinc-600">
+        <div className="flex justify-start px-12">
+          <BsCone
+            onClick={() => setIsCone(true)}
+            size={80}
+            className={`py-2 mr-auto text-yellow-500 hover:cursor-pointer ${
+              isCone ? "border-b-4 border-green-400" : ""
+            }`}
+          />
+          <GiCube
+            onClick={() => setIsCone(false)}
+            size={80}
+            className={`py-2 text-purple-500 hover:cursor-pointer ${
+              !isCone ? "border-b-4 border-green-400" : ""
+            }`}
+          />
         </div>
-        <div
-          onClick={() => {
-            let current = inputScore;
-            current!.location = "FIELD";
-            setInputScore(current);
-            setIsScoringOpen(!isScoringOpen);
-          }}
-          className="py-6 text-center border-l-4 border-black rounded-r-xl bg-cyan-500"
-        >
-          Field
+        <div className="grid grid-cols-2 mt-10 text-xl font-semibold text-white hover:cursor-pointer">
+          <div
+            onClick={() => {
+              let current = inputScore;
+              current!.location = "HPS";
+              setInputScore(current);
+              setIsScoringOpen(!isScoringOpen);
+            }}
+            className="py-6 text-center bg-pink-600 border-r-4 border-black rounded-l-xl "
+          >
+            Human Player
+          </div>
+          <div
+            onClick={() => {
+              let current = inputScore;
+              current!.location = "FIELD";
+              setInputScore(current);
+              setIsScoringOpen(!isScoringOpen);
+            }}
+            className="py-6 text-center border-l-4 border-black rounded-r-xl bg-cyan-500"
+          >
+            Field
+          </div>
         </div>
-      </div>
-      <motion.nav
-        animate={isScoringOpen ? "closed" : "open"}
-        variants={variants}
-      >
-        <div
-          className={`px-6 py-6 mt-4 duration-200 w-full absolute flex items-center justify-center flex-col grid-flow-row`}
+        <motion.nav
+          animate={isScoringOpen ? "closed" : "open"}
+          variants={variants}
         >
-          {globalScore.map((score, i) => (
-            <div key={i} className="grid grid-cols-4 gap-16 my-2">
+          <div
+            className={`px-6 py-6 mt-4 duration-200 w-full absolute flex items-center justify-center flex-col grid-flow-row`}
+          >
+            {globalScore.map((score, i) => (
+              <div key={i} className="grid grid-cols-4 gap-16 my-2">
+                <div
+                  className="mr-12"
+                  onClick={() => {
+                    const current = globalScore;
+                    current[i].type = score.type === "CONE" ? "CUBE" : "CONE";
+                    setGlobalScore([...current]);
+                  }}
+                >
+                  {score.type === "CONE" ? (
+                    <BsCone
+                      size={40}
+                      className="text-yellow-500 hover:cursor-pointer"
+                    />
+                  ) : (
+                    <GiCube
+                      size={40}
+                      className="text-purple-600 hover:cursor-pointer"
+                    />
+                  )}
+                </div>
+                <h1 className="text-lg text-center">{score.location}</h1>
+                <h1 className="text-lg text-center">{score.height}</h1>
+                <BsTrashFill
+                  onClick={() => {
+                    const current = globalScore.splice(i, 1);
+                    setGlobalScore([...current]);
+                  }}
+                  size={30}
+                  className="text-red-600"
+                />
+              </div>
+            ))}
+          </div>
+        </motion.nav>
+        <motion.nav
+          animate={isScoringOpen ? "open" : "closed"}
+          variants={variants}
+        >
+          <div className={`px-8 py-6 mt-4 duration-200`}>
+            {levels.map((l, i) => (
               <div
-                className="mr-12"
+                className={`${l.color} hover:cursor-pointer text-center my-2 py-4 text-white rounded-2xl `}
+                key={i}
                 onClick={() => {
-                  const current = globalScore;
-                  current[i].type = score.type === "CONE" ? "CUBE" : "CONE";
-                  setGlobalScore([...current]);
+                  let current = inputScore;
+                  current!.height = l.level as GamepieceHeight;
+                  setInputScore(current);
+                  setIsScoringOpen(!isScoringOpen);
+
+                  let nextState: GamepieceFormType[] = [
+                    ...globalScore,
+                    {
+                      location: inputScore?.location as Location,
+                      type: isCone ? "CONE" : "CUBE",
+                      height: inputScore?.height as GamepieceHeight,
+                    },
+                  ];
+
+                  setGlobalScore(nextState);
+                  updateFormState(nextState);
                 }}
               >
-                {score.type === "CONE" ? (
-                  <BsCone
-                    size={40}
-                    className="text-yellow-500 hover:cursor-pointer"
-                  />
-                ) : (
-                  <GiCube
-                    size={40}
-                    className="text-purple-600 hover:cursor-pointer"
-                  />
-                )}
+                <h1 className="text-xl font-bold">{l.level}</h1>
               </div>
-              <h1 className="text-lg text-center">{score.location}</h1>
-              <h1 className="text-lg text-center">{score.height}</h1>
-              <BsTrashFill
-                onClick={() => {
-                  const current = globalScore.splice(i, 1);
-                  setGlobalScore([...current]);
-                }}
-                size={30}
-                className="text-red-600"
-              />
-            </div>
-          ))}
-        </div>
-      </motion.nav>
-      <motion.nav
-        animate={isScoringOpen ? "open" : "closed"}
-        variants={variants}
-      >
-        <div className={`px-8 py-6 mt-4 duration-200`}>
-          {levels.map((l, i) => (
-            <div
-              className={`${l.color} hover:cursor-pointer text-center my-2 py-4 text-white rounded-2xl `}
-              key={i}
-              onClick={() => {
-                let current = inputScore;
-                current!.height = l.level as GamepieceHeight;
-                setInputScore(current);
-                setIsScoringOpen(!isScoringOpen);
-                
-                
-                let nextState: GamepieceFormType[] = [
-                  ...globalScore,
-                  {
-                    location: inputScore?.location as Location,
-                    type: isCone ? "CONE" : "CUBE",
-                    height: inputScore?.height as GamepieceHeight,
-                  } 
-                ]
-                
-                setGlobalScore(nextState);
-                updateFormState(nextState);
-              }}
-            >
-              <h1 className="text-xl font-bold">{l.level}</h1>
-            </div>
-          ))}
-        </div>
-      </motion.nav>
-    </div>
+            ))}
+          </div>
+        </motion.nav>
+      </div>
+    </>
   );
 };

@@ -134,7 +134,7 @@ export default class EntryForm extends React.Component<Props, State> {
       <div className="min-h-screen dark:text-white">
         {this.props.form?.categories.map((category, i) => (
           <div key={i}>
-            <div className="flex flex-col mb-4 border-b-2 dark:border-zinc-700">
+            <div className="flex flex-col mb-4 border-b-8 dark:border-zinc-700">
               <h1 className="py-2 mb-2 mr-4 text-3xl font-semibold">
                 {category?.name}
               </h1>
