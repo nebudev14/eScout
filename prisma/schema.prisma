@@ -206,6 +206,7 @@ model MatchFormAnswers {
   slot4       String[]
   gamepiece   Gamepiece[]
   chargeField ChargedFieldNode[]
+  comments    String
 }
 
 enum MatchQuestionType {
@@ -254,7 +255,7 @@ enum GamepieceHeight {
 }
 
 model ChargedFieldNode {
-  id     String          @id  @default(cuid())
+  id     String          @id @default(cuid())
   xCoord Float
   yCoord Float
   piece  PieceType
@@ -316,7 +317,7 @@ model StatProfile {
   matchFormId String
 }
 
-model Statistic { 
+model Statistic {
   id            String            @id @default(cuid())
   name          String
   operationType Operation

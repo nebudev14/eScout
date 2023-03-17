@@ -161,9 +161,22 @@ export default class EntryForm extends React.Component<Props, State> {
             </div>
           </div>
         ))}
-        <button type="submit" onClick={() => this.submit()}>
-          Submit
-        </button>
+        <div className="flex flex-col">
+          <textarea
+            id="comments"
+            className="p-4 mb-4 border rounded-xl dark:bg-zinc-900 dark:border-zinc-700 border-slate-300 focus:outline-none"
+            autoComplete="off"
+            rows={10}
+            placeholder="Team 1155 and 2265 popped off this round!"
+          />
+          <button
+            type="submit"
+            className="p-2 mt-4 text-lg font-semibold text-white duration-150 bg-teal-500 rounded shadow focus:outline-none focus:shadow-outline"
+            onClick={() => this.submit()}
+          >
+            Submit
+          </button>
+        </div>
       </div>
     );
   }

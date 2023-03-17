@@ -7,8 +7,17 @@ export const DefenseInput: React.FC<MatchFormInput> = ({
   label,
   updateState,
 }) => {
-  const [teams, updateTeams] = useState<number[]>([]);
+  const [teams, updateTeams] = useState<string[]>([]);
 
+  const updateFormState = (nextState: string[]) => {
+    if(updateState) {
+      updateState({
+        questionId: id,
+        slot4: nextState
+      })
+    }
+  }
+  
   return (
     <div>
       <Container>

@@ -65,7 +65,7 @@ export const GamepieceInput: React.FC<MatchFormInput> = ({
       <h1 className="px-1 text-lg font-semibold dark:text-zinc-300 ">
         {label}
       </h1>
-      <div className="py-8 mt-4 border-t-2 select-none border-zinc-600">
+      <div className="py-8 mt-4 overflow-x-hidden border-t-2 select-none border-zinc-600">
         <div className="flex justify-start px-12">
           <BsCone
             onClick={() => setIsCone(true)}
