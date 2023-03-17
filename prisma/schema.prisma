@@ -316,7 +316,7 @@ model StatProfile {
   matchFormId String
 }
 
-model Statistic {
+model Statistic { 
   id            String            @id @default(cuid())
   name          String
   operationType Operation

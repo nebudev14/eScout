@@ -8,6 +8,7 @@ import { MatchFormQuestion } from "@prisma/client";
 import { parseOperation } from "@util/parser";
 import { FieldInput } from "@components/ui/form/charged-up/field-input";
 import { GamepieceInput } from "@components/ui/form/charged-up/gamepiece";
+import { DefenseInput } from "@components/ui/form/defense-input";
 
 const Test: NextPage = () => {
   const result = parseOperation("AVERAGE(CATEGORY(id, slot#))");
@@ -21,7 +22,8 @@ const Test: NextPage = () => {
       }}> */}
 
       {/* <GamepieceInput /> */}
-      <FieldInput />
+      {/* <FieldInput /> */}
+      <DefenseInput />
 
     </div>
   );
