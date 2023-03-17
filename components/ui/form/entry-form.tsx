@@ -96,6 +96,14 @@ export default class EntryForm extends React.Component<Props, State> {
               chargeField: [],
             });
             break;
+          case "DEFENSE":
+            answers.push({
+              questionId: q.id,
+              slot1: "0",
+              slot2: "0",
+              slot3: "0",
+              slot4: [],
+            });
         }
       })
     );
@@ -167,7 +175,7 @@ export default class EntryForm extends React.Component<Props, State> {
             className="p-4 mb-4 border rounded-xl dark:bg-zinc-900 dark:border-zinc-700 border-slate-300 focus:outline-none"
             autoComplete="off"
             rows={10}
-            placeholder="Team 1155 and 2265 popped off this round!"
+            placeholder="Team 1155 popped off this round!"
           />
           <button
             type="submit"

@@ -24,7 +24,7 @@ const EditMatchModal: React.FC<{
   const createQuestionQuery = trpc.match.addQuestion.useMutation({
     onSuccess() {
       util.match.invalidate();
-    }
+    },
   });
 
   const createQuestion = async (event: React.SyntheticEvent) => {
@@ -104,6 +104,7 @@ const EditMatchModal: React.FC<{
           <option value={MatchQuestionType.INPUT}>Text Input</option>
           <option value={MatchQuestionType.GAMEPIECE_INFO}>Gamepiece</option>
           <option value={MatchQuestionType.FIELD}>Field</option>
+          <option value={MatchQuestionType.DEFENSE}>Defense</option>
         </select>
 
         {desiredType === MatchQuestionType.SELECT ? (
@@ -128,7 +129,7 @@ const EditMatchModal: React.FC<{
               +
             </button>
             {selectOptions.map((option, i) => (
-              <div className="flex items-center my-2">
+              <div className="flex items-center my-2" key={i}>
                 <input type="radio" key={i} name={option} />
                 <label className="ml-2">{option}</label>
               </div>

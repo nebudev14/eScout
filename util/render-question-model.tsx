@@ -7,6 +7,7 @@ import { SelectInput } from "../components/ui/form/select-input";
 import { Answer } from "../types/form-types";
 import { GamepieceInput } from "@components/ui/form/charged-up/gamepiece";
 import { FieldInput } from "@components/ui/form/charged-up/field-input";
+import { DefenseInput } from "@components/ui/form/defense-input";
 
 export function renderDesiredQuestionDisplay(
   questionType: MatchQuestionType,
@@ -28,6 +29,8 @@ export function renderDesiredQuestionDisplay(
       return <GamepieceInput label={label} id="" />;
     case "FIELD":
       return <FieldInput label={label} id="" />;
+    case "DEFENSE":
+      return <DefenseInput label={label} id="" />;
   }
 }
 
@@ -60,5 +63,7 @@ export function renderFormQuestion(
       return <GamepieceInput label={label} id={id} updateState={updateState} />;
     case "FIELD":
       return <FieldInput label={label} id={id} updateState={updateState} />;
+    case "DEFENSE":
+      return <DefenseInput label={label} id={id} updateState={updateState} />;
   }
 }

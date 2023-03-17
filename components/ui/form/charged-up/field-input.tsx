@@ -6,6 +6,7 @@ import { FieldCanvas } from "@components/ui/misc/field-canvas";
 import { BsCone, BsCheckSquare } from "react-icons/bs";
 import { GiCube, GiCardPickup } from "react-icons/gi";
 import { FieldNodeAction, PieceType } from "@prisma/client";
+import { BiUndo } from "react-icons/bi";
 
 export const FieldInput: React.FC<MatchFormInput> = ({
   label,
@@ -31,21 +32,33 @@ export const FieldInput: React.FC<MatchFormInput> = ({
         {label}
       </h1>
       <div className="py-8 border-t-2 border-zinc-600">
-        <div className="inline-flex py-3 mb-4 border-2 rounded-xl border-zinc-700">
-          <BsCone
-            size={45}
-            onClick={() => setSelectedPiece("CONE")}
-            className={`mx-3 py-1 text-yellow-500 hover:cursor-pointer ${
-              selectedPiece === "CONE" ? "border-b-4 border-green-400" : ""
-            }`}
-          />
-          <GiCube
-            size={45}
-            onClick={() => setSelectedPiece("CUBE")}
-            className={`mx-3 py-1 text-purple-500 hover:cursor-pointer ${
-              selectedPiece !== "CONE" ? "border-b-4 border-green-400" : ""
-            }`}
-          />
+        <div className="flex items-center">
+          <div className="inline-flex py-3 mb-4 mr-auto border-2 rounded-xl border-zinc-700">
+            <BsCone
+              size={45}
+              onClick={() => setSelectedPiece("CONE")}
+              className={`mx-3 py-1 text-yellow-500 hover:cursor-pointer ${
+                selectedPiece === "CONE" ? "border-b-4 border-green-400" : ""
+              }`}
+            />
+            <GiCube
+              size={45}
+              onClick={() => setSelectedPiece("CUBE")}
+              className={`mx-3 py-1 text-purple-500 hover:cursor-pointer ${
+                selectedPiece !== "CONE" ? "border-b-4 border-green-400" : ""
+              }`}
+            />
+          </div>
+          <BiUndo
+              size={45}
+              onClick={() => {
+                let curr = nodes;
+                curr.splice(curr.length-1, 1);
+                setNodes(curr);
+                console.log(curr)
+              }}
+              className="hover:cursor-pointer dark:text-white hover:text-yellow-500"
+            />
         </div>
         <FieldCanvas
           currPiece={selectedPiece}

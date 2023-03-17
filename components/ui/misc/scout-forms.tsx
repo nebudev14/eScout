@@ -11,14 +11,18 @@ export const ManageScoutForm: React.FC<{
   const [isOpen, setIsOpen] = useState(false);
   const util = trpc.useContext();
 
-  const { data: allMatchScouts } = trpc.match.getByTeam.useQuery({ teamId: teamId });
-  const { data: allPitScouts } = trpc.pit.getByTeamId.useQuery({ entityId: teamId })
+  const { data: allMatchScouts } = trpc.match.getByTeam.useQuery({
+    teamId: teamId,
+  });
+  const { data: allPitScouts } = trpc.pit.getByTeamId.useQuery({
+    entityId: teamId,
+  });
 
   const deleteForm = trpc.match.deleteForm.useMutation({
     onSuccess() {
       util.match.getByTeam.invalidate();
-    }
-  })
+    },
+  });
 
   return (
     <div className="min-h-screen">
@@ -36,7 +40,10 @@ export const ManageScoutForm: React.FC<{
         </h1>
         <div className="grid w-full grid-cols-3 gap-6 md:grid-cols-1 md:gap-2">
           {allMatchScouts?.map((matchScout, i) => (
-            <div className="py-2 mb-6 border shadow-lg rounded-xl bg-slate-50 dark:bg-zinc-900 dark:border-zinc-700">
+            <div
+              className="py-2 mb-6 border shadow-lg rounded-xl bg-slate-50 dark:bg-zinc-900 dark:border-zinc-700"
+              key={i}
+            >
               <div className="px-5 py-4">
                 <div className="flex items-center justify-start mb-2">
                   <h1 className="mr-auto text-xl">
@@ -66,7 +73,7 @@ export const ManageScoutForm: React.FC<{
                     <BsFillTrashFill
                       size={20}
                       onClick={async () => {
-                        deleteForm.mutateAsync({ entityId: matchScout.id })
+                        deleteForm.mutateAsync({ entityId: matchScout.id });
                       }}
                       className="ml-2 text-red-500 duration-150 hover:cursor-pointer hover:text-red-600"
                     />
