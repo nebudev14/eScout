@@ -152,21 +152,21 @@ export const matchRouter = router({
           prescout: input.prescout,
           video: input.video,
           answers: {
-            create: input.answer.map((answer) => {
-              return {
-                questionId: answer.questionId,
-                slot1: answer.slot1,
-                slot2: answer.slot2,
-                slot3: answer.slot3,
-                slot4: answer.slot4,
-                gamepiece: {
-                  create: answer.gamepiece,
-                },
-                chargeField: {
-                  create: answer.chargeField,
-                },
-              };
-            }),
+            // create: input.answer.map((answer) => {
+            //   return {
+            //     questionId: answer.questionId,
+            //     slot1: answer.slot1,
+            //     slot2: answer.slot2,
+            //     slot3: answer.slot3,
+            //     slot4: answer.slot4,
+            //     gamepiece: {
+            //       create: answer.gamepiece,
+            //     },
+            //     chargeField: {
+            //       create: answer.chargeField,
+            //     },
+            //   };
+            // }),
           },
         },
       });
