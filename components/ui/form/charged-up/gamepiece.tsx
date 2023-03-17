@@ -5,10 +5,8 @@ import { GiCube } from "react-icons/gi";
 import { MatchFormInput, Modal } from "types/misc-types";
 import { motion } from "framer-motion";
 import {
-  Gamepiece,
   GamepieceHeight,
   Location,
-  PieceType,
 } from "@prisma/client";
 import { GamepieceFormType } from "types/form-types";
 

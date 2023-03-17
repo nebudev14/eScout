@@ -1,21 +1,11 @@
 import React, { useState } from "react";
 import { MatchFormInput } from "types/misc-types";
 import Image from "next/image";
-import Field from "../../../../public/field23.png";
 import { ChargedFieldNodeType } from "types/form-types";
 import { FieldCanvas } from "@components/ui/misc/field-canvas";
 import { BsCone, BsCheckSquare } from "react-icons/bs";
 import { GiCube, GiCardPickup } from "react-icons/gi";
-import { FaRunning } from "react-icons/fa";
-import { ImCross } from "react-icons/im";
 import { FieldNodeAction, PieceType } from "@prisma/client";
-
-// const icons = [
-//   {
-//     action: FieldNodeAction.DROPPED,
-//     icon: <ImCross size={40} />
-//   }
-// ]
 
 export const FieldInput: React.FC<MatchFormInput> = ({
   label,
@@ -25,6 +15,15 @@ export const FieldInput: React.FC<MatchFormInput> = ({
   const [nodes, setNodes] = useState<ChargedFieldNodeType[]>([]);
   const [selectedPiece, setSelectedPiece] = useState<PieceType>("CONE");
   const [action, setSelectedAction] = useState<FieldNodeAction>("SCORE");
+
+  const updateFormState = (nextState: ChargedFieldNodeType[]) => {
+    if (updateState) {
+      updateState({
+        questionId: id,
+        chargeField: nextState,
+      });
+    }
+  };
 
   return (
     <>
@@ -48,37 +47,49 @@ export const FieldInput: React.FC<MatchFormInput> = ({
             }`}
           />
         </div>
-        <FieldCanvas currPiece={selectedPiece} currNode={action} />
+        <FieldCanvas
+          currPiece={selectedPiece}
+          currNode={action}
+          currentNodes={nodes}
+          updateNodes={setNodes}
+          updateFormState={updateFormState}
+        />
         <div className="flex items-center justify-center">
           <div className="inline-flex mt-4 border-2 rounded-xl border-zinc-700 ">
-            <div className="flex items-center justify-center"> 
+            <div className="flex items-center justify-center">
               {" "}
               <h1
                 onClick={() => setSelectedAction("SCORE")}
                 className={`font-semibold hover:cursor-pointer py-3 px-4 rounded-l-xl duration-150 ${
-                  action === "SCORE" ? "bg-green-400 text-white" : "text-green-500"
+                  action === "SCORE"
+                    ? "bg-green-400 text-white"
+                    : "text-green-500"
                 }`}
               >
                 Score
               </h1>
             </div>
-            <div className="flex items-center justify-center"> 
+            <div className="flex items-center justify-center">
               {" "}
               <h1
                 onClick={() => setSelectedAction("MOVEMENT")}
                 className={`px-4 py-3 font-semibold hover:cursor-pointer duration-150  ${
-                  action === "MOVEMENT" ? "bg-pink-600 text-white" : "text-pink-600"
+                  action === "MOVEMENT"
+                    ? "bg-pink-600 text-white"
+                    : "text-pink-600"
                 }`}
               >
                 Move
               </h1>
             </div>
-            <div className="flex items-center justify-center"> 
+            <div className="flex items-center justify-center">
               {" "}
               <h1
                 onClick={() => setSelectedAction("PICKED")}
                 className={`py-3 px-4 font-semibold hover:cursor-pointer duration-150 rounded-r-xl ${
-                  action === "PICKED" ? "bg-cyan-500 text-white" : "text-cyan-500"
+                  action === "PICKED"
+                    ? "bg-cyan-500 text-white"
+                    : "text-cyan-500"
                 }`}
               >
                 Pick Up

@@ -47,7 +47,6 @@ export default class EntryForm extends React.Component<Props, State> {
               slot2: "0",
               slot3: "0",
               slot4: [],
-
             });
             break;
           case "INPUT":
@@ -57,7 +56,6 @@ export default class EntryForm extends React.Component<Props, State> {
               slot2: "",
               slot3: "",
               slot4: [],
-
             });
             break;
           case "BOOL":
@@ -67,7 +65,6 @@ export default class EntryForm extends React.Component<Props, State> {
               slot2: "0",
               slot3: "0",
               slot4: [],
-
             });
             break;
           case "SELECT":
@@ -86,9 +83,19 @@ export default class EntryForm extends React.Component<Props, State> {
               slot2: "0",
               slot3: "0",
               slot4: [],
-              gamepiece: []
+              gamepiece: [],
             });
-          break;
+            break;
+          case "FIELD":
+            answers.push({
+              questionId: q.id,
+              slot1: "0",
+              slot2: "0",
+              slot3: "0",
+              slot4: [],
+              chargeField: [],
+            });
+            break;
         }
       })
     );
@@ -121,7 +128,7 @@ export default class EntryForm extends React.Component<Props, State> {
 
   updateState(answer: Answer) {
     const answers: Answer[] = this.setAnswer(this.state.answers, answer);
-    console.log(this.state)
+    console.log(this.state);
     this.setState({ answers: answers });
   }
 
