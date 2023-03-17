@@ -1,15 +1,3 @@
-import { trpc, useQuery } from "../../../hooks/trpc";
-import React, { useRef, useState } from "react";
-import type { Query } from "../../../types/filter-types";
-import { DynamicInput, inputs } from "./dynamic-input";
-import { useAtom } from "jotai";
-import { selectEntryAtom, setSearchQueryAtom } from "../../../server/atoms";
-import { FilterCard } from "../../ui/filter-card";
-import { FilterStats } from "../stats/filter-stats";
-import { calculateStats } from "../../../util/calculate-stats";
-import { Switch } from "@headlessui/react";
-import { Entry } from "@prisma/client";
-import { SingleStats } from "../stats/single-stats";
 
 /** DEPRECATED */
 export const Filter: React.FC<{ teamId: string; isAdmin: boolean }> = ({
