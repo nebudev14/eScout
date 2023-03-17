@@ -30,12 +30,13 @@ export const FieldCanvas: React.FC<{
           const xCoord = offsetX / (e.target as HTMLElement).offsetWidth;
           const yCoord = offsetY / (e.target as HTMLElement).offsetHeight;
           const context = canvasRef?.current?.getContext("2d");
- 
+
           loadCanvasImage(
-            (xCoord * 3000) - 50,
-            (yCoord * 1500) - 50,
+            xCoord * 3000 - 50,
+            yCoord * 1500 - 50,
             canvasRef.current as HTMLCanvasElement,
-            currPiece === "CONE" ? "/cone.svg" : "/cube.svg"
+            currPiece,
+            currNode
           );
           // let path = new Path2D("M 100,100 h 50 v 50 h 50");
 
