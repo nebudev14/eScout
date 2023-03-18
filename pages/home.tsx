@@ -5,8 +5,6 @@ import { trpc } from "@util/trpc/trpc";
 import { useSession } from "next-auth/react";
 
 const Home: NextPage = () => {
-  const { data: session } = useSession();
-  console.log(session)
   const { data, isLoading } = trpc.user.getUser.useQuery();
 
 
