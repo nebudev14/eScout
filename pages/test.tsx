@@ -23,7 +23,7 @@ const Test: NextPage = () => {
 
       {/* <GamepieceInput /> */}
       {/* <FieldInput /> */}
-      <DefenseInput />
+      {/* <DefenseInput /> */}
 
     </div>
   );
