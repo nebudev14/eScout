@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { MatchFormInput } from "types/misc-types";
 import Image from "next/image";
 import { ChargedFieldNodeType } from "types/form-types";
@@ -7,6 +7,7 @@ import { BsCone, BsCheckSquare } from "react-icons/bs";
 import { GiCube, GiCardPickup } from "react-icons/gi";
 import { FieldNodeAction, PieceType } from "@prisma/client";
 import { BiUndo } from "react-icons/bi";
+import { loadCanvasImage } from "@util/load-canvas-image";
 
 export const FieldInput: React.FC<MatchFormInput> = ({
   label,
@@ -16,6 +17,7 @@ export const FieldInput: React.FC<MatchFormInput> = ({
   const [nodes, setNodes] = useState<ChargedFieldNodeType[]>([]);
   const [selectedPiece, setSelectedPiece] = useState<PieceType>("CONE");
   const [action, setSelectedAction] = useState<FieldNodeAction>("SCORE");
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const updateFormState = (nextState: ChargedFieldNodeType[]) => {
     if (updateState) {
@@ -25,6 +27,13 @@ export const FieldInput: React.FC<MatchFormInput> = ({
       });
     }
   };
+
+  const refreshCanvas = (canvas: HTMLCanvasElement, nodes: ChargedFieldNodeType[]) => {
+    const context = canvas.getContext("2d");
+    context?.clearRect(0, 0, 3000, 1500);
+    nodes.forEach((node) => loadCanvasImage(node.xCoord * 3000 - 50, node.yCoord * 1500 - 50, canvas, node.piece, node.action))
+  }
+
 
   return (
     <>
@@ -52,10 +61,9 @@ export const FieldInput: React.FC<MatchFormInput> = ({
           <BiUndo
               size={45}
               onClick={() => {
-                let curr = nodes;
-                curr.splice(curr.length-1, 1);
-                setNodes(curr);
-                console.log(curr)
+                let curr = [...nodes].slice(0, -1);
+                setNodes([...curr]);
+                refreshCanvas(canvasRef.current as HTMLCanvasElement, curr)
               }}
               className="hover:cursor-pointer dark:text-white hover:text-yellow-500"
             />
@@ -66,6 +74,7 @@ export const FieldInput: React.FC<MatchFormInput> = ({
           currentNodes={nodes}
           updateNodes={setNodes}
           updateFormState={updateFormState}
+          canvasRef={canvasRef}
         />
         <div className="flex items-center justify-center">
           <div className="inline-flex mt-4 border-2 rounded-xl border-zinc-700 ">

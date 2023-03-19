@@ -11,8 +11,9 @@ export const FieldCanvas: React.FC<{
   currentNodes: ChargedFieldNodeType[];
   updateNodes: Dispatch<SetStateAction<ChargedFieldNodeType[]>>;
   updateFormState: (nextState: ChargedFieldNodeType[]) => void;
-}> = ({ currPiece, currNode, updateNodes, currentNodes, updateFormState }) => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  canvasRef: React.RefObject<HTMLCanvasElement>
+}> = ({ currPiece, currNode, updateNodes, currentNodes, updateFormState, canvasRef }) => {
+
 
   useEffect(() => {
     const canvas = canvasRef?.current;
@@ -44,7 +45,6 @@ export const FieldCanvas: React.FC<{
           updateNodes(nextState);
           updateFormState(nextState);
 
-          console.log(currentNodes)
 
           loadCanvasImage(
             xCoord * 3000 - 50,

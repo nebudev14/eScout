@@ -39,13 +39,13 @@ export default function TeamContent(
           </div>
           <h1 className="mb-4 text-xl">Team {props.team?.number}</h1>
           <div className="grid grid-cols-2 gap-12 py-2">
-            <div>
+            {/* <div>
               {props.team?.matchScouts?.[0].responses.map((response, i) => (
                 <div>
                   {response.comments}
                 </div>
               ))}
-            </div>
+            </div> */}
           </div>
         </div>
       ) : (
