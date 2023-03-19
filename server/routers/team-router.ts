@@ -105,6 +105,7 @@ export const teamRouter = router({
         },
         matchScouts: {
           include: {
+            responses: true,
             categories: {
               include: {
                 questions: true,

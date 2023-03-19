@@ -105,6 +105,7 @@ export default class EntryForm extends React.Component<Props, State> {
               slot3: "0",
               slot4: [],
             });
+          break;
         }
       })
     );
@@ -137,6 +138,7 @@ export default class EntryForm extends React.Component<Props, State> {
 
   updateState(answer: Answer) {
     const answers: Answer[] = this.setAnswer(this.state.answers, answer);
+    console.log(answer)
     this.setState({ answers: answers });
   }
 
