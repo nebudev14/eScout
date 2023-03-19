@@ -143,6 +143,7 @@ export const matchRouter = router({
             chargeField: chargedFieldNodeSchema,
           })
           .array(),
+        comments: z.string()
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -154,6 +155,7 @@ export const matchRouter = router({
           formId: input.formId,
           prescout: input.prescout,
           video: input.video,
+          comments: input.comments,
           answers: {
             create: input.answer.map(
               (answer) => {

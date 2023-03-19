@@ -190,6 +190,7 @@ model MatchFormResponse {
   competition Competition        @relation(fields: [compId], references: [id])
   form        MatchForm          @relation(fields: [formId], references: [id])
   answers     MatchFormAnswers[]
+    comments    String
 }
 
 model MatchFormAnswers {
@@ -206,7 +207,6 @@ model MatchFormAnswers {
   slot4       String[]
   gamepiece   Gamepiece[]
   chargeField ChargedFieldNode[]
-  comments    String
 }
 
 enum MatchQuestionType {

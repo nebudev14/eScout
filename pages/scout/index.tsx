@@ -41,6 +41,7 @@ export default function Scout(
   const [selectedComp, setSelectedComp] = useState<Competition | undefined>();
   const [prescout, setPrescout] = useState<boolean>(false);
   const [videoLink, setVideoLink] = useState<string>("");
+  const [comments, setComments] = useState<string>("");
   const [form, setForm] = useState<string>();
 
   /** Rendered */
@@ -52,11 +53,6 @@ export default function Scout(
           return compData.name.toLowerCase().includes(compQuery.toLowerCase());
         });
 
-  const defendedRef = useRef<HTMLInputElement>(null);
-  const defendedByRef = useRef<HTMLInputElement>(null);
-
-  const [defended, setDefended] = useState<number[]>([]);
-  const [defendedBy, setDefendedBy] = useState<number[]>([]);
 
   // TODO: THIS IS NOT SAFE LMAOOO
   const updateElements = (team: FetchedTeam) => {
@@ -85,6 +81,7 @@ export default function Scout(
       formId: form as string,
       prescout: prescout,
       video: videoLink,
+      comments:
       answer: answers
     });
 
