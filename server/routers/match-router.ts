@@ -1,8 +1,11 @@
 import { z } from "zod";
 import {
+  ChargedFieldNode,
   FieldNodeAction,
+  Gamepiece,
   GamepieceHeight,
   Location,
+  MatchFormAnswers,
   MatchQuestionType,
   PieceType,
 } from "@prisma/client";
@@ -129,17 +132,17 @@ export const matchRouter = router({
         formId: z.string(),
         prescout: z.boolean(),
         video: z.string(),
-        // answer: z
-        //   .object({
-        //     questionId: z.string(),
-        //     slot1: z.string().optional(),
-        //     slot2: z.string().optional(),
-        //     slot3: z.string().optional(),
-        //     slot4: z.string().array().optional(),
-        //     gamepiece: gamepieceSchema,
-        //     chargeField: chargedFieldNodeSchema,
-        //   })
-        //   .array(),
+        answer: z
+          .object({
+            questionId: z.string(),
+            slot1: z.string().optional(),
+            slot2: z.string().optional(),
+            slot3: z.string().optional(),
+            slot4: z.string().array().optional(),
+            gamepiece: gamepieceSchema,
+            chargeField: chargedFieldNodeSchema,
+          })
+          .array(),
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -151,23 +154,25 @@ export const matchRouter = router({
           formId: input.formId,
           prescout: input.prescout,
           video: input.video,
-          // answers: {
-          //   create: input.answer.map((answer) => {
-          //     return {
-          //       questionId: answer.questionId,
-          //       slot1: answer.slot1,
-          //       slot2: answer.slot2,
-          //       slot3: answer.slot3,
-          //       slot4: answer.slot4,
-          //       gamepiece: {
-          //         create: answer.gamepiece,
-          //       },
-          //       chargeField: {
-          //         create: answer.chargeField,
-          //       },
-          //     };
-          //   }),
-          // },
+          answers: {
+            create: input.answer.map(
+              (answer) => {
+                return {
+                  questionId: answer.questionId,
+                  slot1: answer.slot1,
+                  slot2: answer.slot2,
+                  slot3: answer.slot3,
+                  slot4: answer.slot4,
+                  gamepiece: {
+                    create: answer.gamepiece,
+                  },
+                  chargeField: {
+                    create: answer.chargeField,
+                  },
+                };
+              }
+            ),
+          },
         },
       });
     }),
