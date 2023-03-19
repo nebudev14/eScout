@@ -148,7 +148,7 @@ export default class EntryForm extends React.Component<Props, State> {
 
   render(): React.ReactNode {
     return (
-      <div className="min-h-screen dark:text-white">
+      <div className="w-full min-h-screen overflow-hidden dark:text-white">
         {this.props.form?.categories.map((category, i) => (
           <div key={i}>
             <div className="flex flex-col mb-4 border-b-8 dark:border-zinc-700">

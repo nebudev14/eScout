@@ -4,10 +4,7 @@ import { BsCone, BsTrash2Fill, BsTrashFill } from "react-icons/bs";
 import { GiCube } from "react-icons/gi";
 import { MatchFormInput, Modal } from "types/misc-types";
 import { motion } from "framer-motion";
-import {
-  GamepieceHeight,
-  Location,
-} from "@prisma/client";
+import { GamepieceHeight, Location } from "@prisma/client";
 import { GamepieceFormType } from "types/form-types";
 
 const variants = {
@@ -62,7 +59,7 @@ export const GamepieceInput: React.FC<MatchFormInput> = ({
 
   return (
     <>
-      <h1 className="px-1 text-lg font-semibold dark:text-zinc-300 ">
+      <h1 className="px-1 overflow-hidden text-lg font-semibold dark:text-zinc-300">
         {label}
       </h1>
       <div className="py-8 mt-4 overflow-x-hidden border-t-2 select-none border-zinc-600">
@@ -111,40 +108,46 @@ export const GamepieceInput: React.FC<MatchFormInput> = ({
           variants={variants}
         >
           <div
-            className={`px-6 py-6 mt-4 duration-200 w-full absolute flex items-center justify-center flex-col grid-flow-row`}
+            className={`px-6 md:px-2 py-6 mt-4 duration-200 text-center absolute flex items-center justify-center flex-col `}
           >
             {globalScore.map((score, i) => (
-              <div key={i} className="grid grid-cols-4 gap-16 my-2">
-                <div
-                  className="mr-12"
-                  onClick={() => {
-                    const current = globalScore;
-                    current[i].type = score.type === "CONE" ? "CUBE" : "CONE";
-                    setGlobalScore([...current]);
-                  }}
-                >
-                  {score.type === "CONE" ? (
-                    <BsCone
-                      size={40}
-                      className="text-yellow-500 hover:cursor-pointer"
+              <div key={i} className="flex items-center justify-center">
+                <div className="grid grid-flow-row grid-cols-4 gap-16 my-2">
+                  <div
+                    className="mr-12 "
+                    onClick={() => {
+                      const current = globalScore;
+                      current[i].type = score.type === "CONE" ? "CUBE" : "CONE";
+                      setGlobalScore([...current]);
+                    }}
+                  >
+                    {score.type === "CONE" ? (
+                      <BsCone
+                        size={40}
+                        className="text-yellow-500 hover:cursor-pointer"
+                      />
+                    ) : (
+                      <GiCube
+                        size={40}
+                        className="text-purple-600 hover:cursor-pointer"
+                      />
+                    )}
+                  </div>
+                  <h1 className="text-lg text-center">{score.location}</h1>
+                  <h1 className="text-lg text-center">{score.height}</h1>
+                  <div className="flex items-center justify-center text-center">
+                    <BsTrashFill
+                      // onClick={() => {
+                      //   const newArr = [];
+                      //   for (let j = 0; j < i; j++) newArr.push({  });
+                      //   for (let j = i + 1; j < globalScore.length; j++) newArr.push(globalScore[i]);
+                      //   setGlobalScore([...newArr]);
+                      // }}
+                      size={30}
+                      className="text-center text-red-600"
                     />
-                  ) : (
-                    <GiCube
-                      size={40}
-                      className="text-purple-600 hover:cursor-pointer"
-                    />
-                  )}
+                  </div>
                 </div>
-                <h1 className="text-lg text-center">{score.location}</h1>
-                <h1 className="text-lg text-center">{score.height}</h1>
-                <BsTrashFill
-                  onClick={() => {
-                    const current = globalScore.splice(i, 1);
-                    setGlobalScore([...current]);
-                  }}
-                  size={30}
-                  className="text-red-600"
-                />
               </div>
             ))}
           </div>
