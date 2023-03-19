@@ -85,7 +85,7 @@ export default function Scout(
       formId: form as string,
       prescout: prescout,
       video: videoLink,
-      answer: answers
+      // answer: answers
     });
 
     await router.push("/teams")
