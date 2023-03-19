@@ -6,6 +6,7 @@ import { EntryFormType } from "../../../types/misc-types";
 interface Props {
   form: EntryFormType | undefined;
   submitResponse: (answer: Answer[]) => void;
+  setComment: React.Dispatch<React.SetStateAction<string>>;
 }
 
 interface State {
@@ -136,7 +137,6 @@ export default class EntryForm extends React.Component<Props, State> {
 
   updateState(answer: Answer) {
     const answers: Answer[] = this.setAnswer(this.state.answers, answer);
-    console.log(this.state);
     this.setState({ answers: answers });
   }
 
@@ -176,6 +176,9 @@ export default class EntryForm extends React.Component<Props, State> {
             autoComplete="off"
             rows={10}
             placeholder="Team 1155 popped off this round!"
+            onInput={(e) =>
+              this.props.setComment((e.target as HTMLTextAreaElement).value)
+            }
           />
           <button
             type="submit"

@@ -53,7 +53,6 @@ export default function Scout(
           return compData.name.toLowerCase().includes(compQuery.toLowerCase());
         });
 
-
   // TODO: THIS IS NOT SAFE LMAOOO
   const updateElements = (team: FetchedTeam) => {
     setSelectedTeam(team);
@@ -74,18 +73,18 @@ export default function Scout(
 
   // make submit method and pass into entry form component
   const submitForm = async (answers: Answer[]) => {
-    console.log(answers)
+    console.log(answers);
     await submitResponse.mutateAsync({
       entityId: selectedTeam?.id as string,
       compId: selectedComp?.id as string,
       formId: form as string,
       prescout: prescout,
       video: videoLink,
-      comments:
-      answer: answers
+      comments: comments,
+      answer: answers,
     });
 
-    await router.push("/teams")
+    await router.push("/teams");
   };
 
   return (
@@ -230,6 +229,7 @@ export default function Scout(
                     .team.matchScouts?.filter((f) => f?.id === form)?.[0]
                 }
                 submitResponse={submitForm}
+                setComment={setComments}
               />
             ) : null}
           </div>

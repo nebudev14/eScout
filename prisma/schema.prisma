@@ -190,7 +190,7 @@ model MatchFormResponse {
   competition Competition        @relation(fields: [compId], references: [id])
   form        MatchForm          @relation(fields: [formId], references: [id])
   answers     MatchFormAnswers[]
-    comments    String
+  comments    String
 }
 
 model MatchFormAnswers {
