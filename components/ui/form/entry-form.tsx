@@ -2,6 +2,7 @@ import { renderFormQuestion } from "../../../util/render-question-model";
 import { Answer } from "../../../types/form-types";
 import React from "react";
 import { EntryFormType } from "../../../types/misc-types";
+import { compress, decompress } from "lzutf8";
 
 interface Props {
   form: EntryFormType | undefined;
@@ -194,6 +195,19 @@ export default class EntryForm extends React.Component<Props, State> {
           >
             Submit
           </button>
+          <button
+            className="p-2 mt-2 text-lg font-semibold text-white duration-150 rounded shadow bg-cyan-500 focus:outline-none focus:shadow-outline"
+            onClick={(e: React.SyntheticEvent) => {
+              e.preventDefault();
+              const compressedData = compress(JSON.stringify(this.state.answers));
+              console.log(compressedData)
+            }}
+          >
+            Submit Offline
+          </button>
+          <div>
+            
+          </div>
         </form>
       </div>
     );
