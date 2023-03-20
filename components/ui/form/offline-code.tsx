@@ -6,10 +6,10 @@ import { Answer } from "types/form-types";
 export const OfflineCode: React.FC<{ answers: Answer[] }> = ({ answers }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   return (
-    <div>
+    <div className="items-center justify-center">
       <div className="grid grid-cols-1">
         <button
-          className="p-2 mt-2 mb-4 text-lg font-semibold text-white duration-150 rounded shadow bg-cyan-500 focus:outline-none focus:shadow-outline"
+          className="flex items-center justify-center p-2 mt-2 mb-4 text-lg font-semibold text-white duration-150 rounded shadow bg-cyan-500 focus:outline-none focus:shadow-outline"
           onClick={(e: React.SyntheticEvent) => {
             e.preventDefault();
             const compressedData: Uint8Array = compress(
@@ -17,7 +17,7 @@ export const OfflineCode: React.FC<{ answers: Answer[] }> = ({ answers }) => {
             );
 
             const code = new QRCode();
-            console.log(compressedData.toString().length)
+            console.log(compressedData.toString().length);
             code.setTypeNumber(40);
             code.addData(new QR8BitByte(compressedData.toString()));
             code.make();
@@ -31,8 +31,8 @@ export const OfflineCode: React.FC<{ answers: Answer[] }> = ({ answers }) => {
             for (var row = 0; row < code.getModuleCount(); row += 1) {
               for (var col = 0; col < code.getModuleCount(); col += 1) {
                 if (code.isDark(row, col)) {
-                  console.log("dark")
-                  context!.fillRect(col*3.05, row*3.05, 3.05, 3.05);
+                  console.log("dark");
+                  context!.fillRect(col * 3.05, row * 3.05, 3.05, 3.05);
                 }
               }
             }
