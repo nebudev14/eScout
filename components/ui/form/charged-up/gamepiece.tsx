@@ -135,14 +135,12 @@ export const GamepieceInput: React.FC<MatchFormInput> = ({
                   </div>
                   <h1 className="text-lg text-center">{score.location}</h1>
                   <h1 className="text-lg text-center">{score.height}</h1>
-                  <div className="flex items-center justify-center text-center">
+                  <div className="flex items-center justify-center text-center hover:cursor-pointer">
                     <BsTrashFill
-                      // onClick={() => {
-                      //   const newArr = [];
-                      //   for (let j = 0; j < i; j++) newArr.push({  });
-                      //   for (let j = i + 1; j < globalScore.length; j++) newArr.push(globalScore[i]);
-                      //   setGlobalScore([...newArr]);
-                      // }}
+                      onClick={() => {
+                        const curr = globalScore.filter((score, j) => j !== i);
+                        setGlobalScore([...curr]);
+                      }}
                       size={30}
                       className="text-center text-red-600"
                     />
