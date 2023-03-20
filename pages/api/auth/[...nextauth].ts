@@ -19,3 +19,5 @@ export default NextAuth({
     }
   },
 });
+
+// export default async function(auth)
