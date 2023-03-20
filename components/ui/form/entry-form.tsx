@@ -2,7 +2,9 @@ import { renderFormQuestion } from "../../../util/render-question-model";
 import { Answer } from "../../../types/form-types";
 import React from "react";
 import { EntryFormType } from "../../../types/misc-types";
-import { compress, decompress } from "lzutf8";
+import { compress } from "lzutf8";
+import { QRCode } from "qrcode-generator-ts";
+import { OfflineCode } from "./offline-code";
 
 interface Props {
   form: EntryFormType | undefined;
@@ -11,7 +13,7 @@ interface Props {
 
 interface State {
   answers: Answer[];
-  // selectedTeam: string;
+  qrcodeData: string;
 }
 
 export default class EntryForm extends React.Component<Props, State> {
@@ -118,7 +120,10 @@ export default class EntryForm extends React.Component<Props, State> {
   }
 
   componentDidUpdate(prevProps: Props) {
-    if (prevProps !== this.props) this.updateForm();
+    if (prevProps !== this.props) {
+      console.log("updated!")
+      this.updateForm();
+    }
   }
 
   setAnswer(answers: Answer[], newAnswer: Answer): Answer[] {
@@ -195,19 +200,8 @@ export default class EntryForm extends React.Component<Props, State> {
           >
             Submit
           </button>
-          <button
-            className="p-2 mt-2 text-lg font-semibold text-white duration-150 rounded shadow bg-cyan-500 focus:outline-none focus:shadow-outline"
-            onClick={(e: React.SyntheticEvent) => {
-              e.preventDefault();
-              const compressedData = compress(JSON.stringify(this.state.answers));
-              console.log(compressedData)
-            }}
-          >
-            Submit Offline
-          </button>
-          <div>
-            
-          </div>
+          
+          {this.state ? <OfflineCode answers={this.state.answers} /> : null}
         </form>
       </div>
     );
