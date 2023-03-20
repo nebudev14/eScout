@@ -3,7 +3,7 @@ import type { AppProps } from "next/app";
 import { SessionProvider } from "next-auth/react";
 import { Nav } from "@components/ui/nav";
 import "../styles/globals.css";
-import { withTRPC } from "@trpc/next";
+
 import { useAtom } from "jotai";
 import { darkModeAtom } from "@server/atoms";
 import NextNProgress from 'nextjs-progressbar';
@@ -19,6 +19,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           <NextNProgress color="#e11d48" />
           <Nav />
           <Component {...pageProps} />
+          
         </div>
       </div>
     </SessionProvider>

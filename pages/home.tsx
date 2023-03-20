@@ -2,7 +2,6 @@ import type { NextPage } from "next";
 import Protected from "@components/auth/protected";
 import NoTeams from "@components/ui/no-teams";
 import { trpc } from "@util/trpc/trpc";
-import { useSession } from "next-auth/react";
 
 const Home: NextPage = () => {
   const { data, isLoading } = trpc.user.getUser.useQuery();

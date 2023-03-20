@@ -52,7 +52,7 @@ export const DefenseInput: React.FC<MatchFormInput> = ({
           </button>
         </div>
         <div className="flex items-center justify-center">{teamList.map((team, i) => (
-          <div className="mx-3 my-3 text-xl">
+          <div key={i} className="mx-3 my-3 text-xl">
             {team}
           </div>
         ))}</div>
