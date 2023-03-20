@@ -49,14 +49,17 @@ const PitScout: NextPage = () => {
           userId: session?.user?.id as string,
           entryTeamNumber: Number(target.entryTeamNumber.value),
         });
+
       });
 
     await submitEntry.mutateAsync({
-      entityId: router.query.pit_id as string,
+      entityId: pitScout as string,
       data: results,
     });
     router.push("/teams");
   };
+
+
 
   return (
     <Protected>

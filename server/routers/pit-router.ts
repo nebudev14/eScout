@@ -42,7 +42,7 @@ export const pitRouter = router({
       })
     }),
 
-  submitPitScout: assertMember(LEVEL.PIT_FORM).input(entityId.extend({
+  submitPitScout: authProcedure.input(entityId.extend({
     data: z.object({
       pitQuestionId: z.string(),
       response: z.string(),
