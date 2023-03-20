@@ -41,7 +41,6 @@ export default function Scout(
   const [selectedComp, setSelectedComp] = useState<Competition | undefined>();
   const [prescout, setPrescout] = useState<boolean>(false);
   const [videoLink, setVideoLink] = useState<string>("");
-  const [comments, setComments] = useState<string>("");
   const [form, setForm] = useState<string>();
 
   /** Rendered */
@@ -72,8 +71,8 @@ export default function Scout(
   const submitResponse = trpc.match.addResponse.useMutation();
 
   // make submit method and pass into entry form component
-  const submitForm = async (answers: Answer[]) => {
-    console.log(answers);
+  const submitForm = async (answers: Answer[], comments: string) => {
+    console.log(JSON.stringify(answers))
     await submitResponse.mutateAsync({
       entityId: selectedTeam?.id as string,
       compId: selectedComp?.id as string,
@@ -89,7 +88,7 @@ export default function Scout(
 
   return (
     <Protected>
-      <div className=" min-h-screen py-16 md:px-4 xl:px-36 2xl:px-52 dark:text-white">
+      <div className="min-h-screen py-16 md:px-4 xl:px-36 2xl:px-52 dark:text-white">
         {/* <h1 className="2xl:text-red-600 xl:text-cyan-400">weee</h1> */}
         <div className="flex items-center justify-start xl:px-4 2xl:px-12">
           {matchForms?.length !== 0 || selectedTeam !== undefined ? (
@@ -215,7 +214,7 @@ export default function Scout(
               />
             </Switch>
           </div>
-          <div className="flex flex-col">
+            <div className="flex flex-col">
             {/* For some reason, list of teams is rendered as undefined initially. This is a disgusting workaround  */}
             {props?.teams.filter(
               (t) => t.team.id === (selectedTeam?.id as string)
@@ -229,10 +228,9 @@ export default function Scout(
                     .team.matchScouts?.filter((f) => f?.id === form)?.[0]
                 }
                 submitResponse={submitForm}
-                setComment={setComments}
               />
             ) : null}
-          </div>
+  </div>
         </div>
       </div>
     </Protected>

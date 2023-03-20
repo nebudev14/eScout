@@ -22,6 +22,7 @@
     "dotenv": "^16.0.1",
     "framer-motion": "^10.2.5",
     "jotai": "^1.7.7",
+    "lzutf8": "^0.6.3",
     "nanoid": "^4.0.0",
     "next": "12.2.0",
     "next-auth": "4.19.2",

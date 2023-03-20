@@ -5,8 +5,7 @@ import { EntryFormType } from "../../../types/misc-types";
 
 interface Props {
   form: EntryFormType | undefined;
-  submitResponse: (answer: Answer[]) => void;
-  setComment: React.Dispatch<React.SetStateAction<string>>;
+  submitResponse: (answer: Answer[], comments: string) => void;
 }
 
 interface State {
@@ -105,7 +104,7 @@ export default class EntryForm extends React.Component<Props, State> {
               slot3: "0",
               slot4: [],
             });
-          break;
+            break;
         }
       })
     );
@@ -138,12 +137,12 @@ export default class EntryForm extends React.Component<Props, State> {
 
   updateState(answer: Answer) {
     const answers: Answer[] = this.setAnswer(this.state.answers, answer);
-    console.log(answer)
+    console.log(answers);
     this.setState({ answers: answers });
   }
 
-  submit() {
-    this.props.submitResponse(this.state.answers);
+  submit(comments: string) {
+    this.props.submitResponse(this.state.answers, comments);
   }
 
   render(): React.ReactNode {
@@ -171,25 +170,31 @@ export default class EntryForm extends React.Component<Props, State> {
             </div>
           </div>
         ))}
-        <div className="flex flex-col">
+        <form
+          className="flex flex-col"
+          onSubmit={(e: React.SyntheticEvent) => {
+            e.preventDefault();
+            const target = e.target as typeof e.target & {
+              comments: { value: string };
+            };
+
+            this.submit(target.comments.value);
+          }}
+        >
           <textarea
             id="comments"
             className="p-4 mb-4 border rounded-xl dark:bg-zinc-900 dark:border-zinc-700 border-slate-300 focus:outline-none"
             autoComplete="off"
             rows={10}
             placeholder="Team 1155 popped off this round!"
-            onInput={(e) =>
-              this.props.setComment((e.target as HTMLTextAreaElement).value)
-            }
           />
           <button
             type="submit"
             className="p-2 mt-4 text-lg font-semibold text-white duration-150 bg-teal-500 rounded shadow focus:outline-none focus:shadow-outline"
-            onClick={() => this.submit()}
           >
             Submit
           </button>
-        </div>
+        </form>
       </div>
     );
   }
