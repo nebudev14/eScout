@@ -48,11 +48,11 @@ const ManageTeams: NextPage = () => {
                     <h1 className="mb-1 text-2xl">{data.team.name}</h1>
                     <h1>Team {data.team.number}</h1>
                   </div>
-                  <h1 className="flex items-center mb-2 text-xl">
+                  {/* <h1 className="flex items-center mb-2 text-xl">
                     <CgNotes className="mr-2 text-pink-500" />{" "}
-                    {data.team.entries.filter((e) => !e.prescout).length} scout
+                    {data.team.matchScouts.forEach((e) => e.)} scout
                     entries
-                  </h1>
+                  </h1> */}
                   <h1 className="flex items-center mb-2 text-xl ">
                     <FaUserFriends className="mr-2 text-cyan-500" />{" "}
                     {data.team.members.length} members

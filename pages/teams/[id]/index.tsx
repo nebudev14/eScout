@@ -13,6 +13,7 @@ import { appRouter } from "@server/routers/_app";
 import { createContextInner } from "@server/context";
 import { MdSettings } from "react-icons/md";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function TeamContent(
   props: InferGetServerSidePropsType<typeof getServerSideProps>
@@ -24,8 +25,15 @@ export default function TeamContent(
     .indexOf(props.session?.user.id as string);
   const isMember = memberIndex !== -1;
 
+  const [selectedTeam, setSelectedTeam] = useState<string>("");
+  useEffect(() => {
+    if (props.team?.matchScouts.length !== 0) {
+      setSelectedTeam(props.team?.matchScouts?.[0].id as string);
+    }
+  }, [setSelectedTeam]);
+
   return (
-    <Protected>
+    <Protected>l
       {isMember ? (
         <div className="min-h-screen px-16 py-8 md:px-8 dark:text-white md:h-full 2xl:h-full">
           <div className="flex justify-start">
@@ -34,7 +42,7 @@ export default function TeamContent(
               <MdSettings
                 size={30}
                 className="duration-150 hover:cursor-pointer hover:text-pink-600"
-              />
+              />j
             </Link>
           </div>
           <h1 className="mb-4 text-xl">Team {props.team?.number}</h1>
