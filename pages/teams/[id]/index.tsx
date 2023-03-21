@@ -25,15 +25,16 @@ export default function TeamContent(
     .indexOf(props.session?.user.id as string);
   const isMember = memberIndex !== -1;
 
-  const [selectedTeam, setSelectedTeam] = useState<string>("");
+  const [selectedForm, setSelectedForm] = useState<string>("");
   useEffect(() => {
     if (props.team?.matchScouts.length !== 0) {
-      setSelectedTeam(props.team?.matchScouts?.[0].id as string);
+      setSelectedForm(props.team?.matchScouts?.[0].id as string);
     }
-  }, [setSelectedTeam]);
+  }, [setSelectedForm]);
 
   return (
-    <Protected>l
+    <Protected>
+      l
       {isMember ? (
         <div className="min-h-screen px-16 py-8 md:px-8 dark:text-white md:h-full 2xl:h-full">
           <div className="flex justify-start">
@@ -42,11 +43,33 @@ export default function TeamContent(
               <MdSettings
                 size={30}
                 className="duration-150 hover:cursor-pointer hover:text-pink-600"
-              />j
+              />
             </Link>
           </div>
           <h1 className="mb-4 text-xl">Team {props.team?.number}</h1>
+          <div className="mb-1">
+            {props.team?.matchScouts.filter((e) => e.id === selectedForm)
+              ?.length !== 0 ||
+            props.team?.matchScouts.filter((e) => e.id === selectedForm)
+              ?.length !== undefined ? (
+              <select
+                className="h-full p-2 mb-4 border-r-4 rounded-lg shadow-md outline-none dark:text-white dark:bg-zinc-900 dark:border-zinc-700"
+                onChange={(e: React.SyntheticEvent) =>
+                  setSelectedForm((e.target as HTMLSelectElement).value)
+                }
+              >
+                {props.team?.matchScouts
+                  .filter((e) => e.id === selectedForm)
+                  ?.map((team, i) => (
+                    <option value={team.id} key={i}>
+                      {team.name}
+                    </option>
+                  ))}
+              </select>
+            ) : null}
+          </div>
           <div className="grid grid-cols-2 gap-12 py-2">
+            <div className="mx-2"></div>
             {/* <div>
               {props.team?.matchScouts?.[0].responses.map((response, i) => (
                 <div>

@@ -99,8 +99,8 @@ model Entry {
   userId      String
   user        User        @relation(fields: [userId], references: [id])
 
-  matchNumber     Int
-  matchType       MatchType
+  matchNumber Int
+
   entryTeamNumber Int
   compName        String
 
@@ -186,7 +186,8 @@ model MatchFormResponse {
   formId    String
   prescout  Boolean
   video     String?
-  matchType MatchType
+  teamNum   Int       @default(0)
+  matchType MatchType @default(QUALIFICATION)
 
   user        TeamUser           @relation(fields: [userId, teamId], references: [userId, teamId])
   competition Competition        @relation(fields: [compId], references: [id])

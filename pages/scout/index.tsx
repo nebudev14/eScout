@@ -42,6 +42,9 @@ export default function Scout(
   const [prescout, setPrescout] = useState<boolean>(false);
   const [videoLink, setVideoLink] = useState<string>("");
   const [form, setForm] = useState<string>();
+  const [matchType, setMatchType] = useState<MatchType>(
+    MatchType.QUALIFICATION
+  );
 
   /** Rendered */
   const [compQuery, setCompQuery] = useState("");
@@ -72,7 +75,7 @@ export default function Scout(
 
   // make submit method and pass into entry form component
   const submitForm = async (answers: Answer[], comments: string) => {
-    console.log(JSON.stringify(answers))
+    console.log(JSON.stringify(answers));
     await submitResponse.mutateAsync({
       entityId: selectedTeam?.id as string,
       compId: selectedComp?.id as string,
@@ -84,6 +87,8 @@ export default function Scout(
     });
 
     await router.push("/teams");
+
+    //pev wuz here i am no traitor
   };
 
   return (
@@ -136,6 +141,11 @@ export default function Scout(
               <select
                 id="matchType"
                 className="p-2 text-lg leading-tight border rounded shadow focus:outline-none focus:shadow-outline dark:border-zinc-700 dark:text-white dark:bg-zinc-900"
+                onChange={(e: React.SyntheticEvent) =>
+                  setMatchType(
+                    (e.target as HTMLSelectElement).value as MatchType
+                  )
+                }
               >
                 <option value={MatchType.QUALIFICATION}>Qualification</option>
                 <option value={MatchType.QUARTERFINAL}>Quarterfinal</option>
@@ -214,7 +224,7 @@ export default function Scout(
               />
             </Switch>
           </div>
-            <div className="flex flex-col">
+          <div className="flex flex-col">
             {/* For some reason, list of teams is rendered as undefined initially. This is a disgusting workaround  */}
             {props?.teams.filter(
               (t) => t.team.id === (selectedTeam?.id as string)
@@ -230,7 +240,7 @@ export default function Scout(
                 submitResponse={submitForm}
               />
             ) : null}
-  </div>
+          </div>
         </div>
       </div>
     </Protected>
