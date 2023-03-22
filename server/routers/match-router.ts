@@ -7,6 +7,7 @@ import {
   Location,
   MatchFormAnswers,
   MatchQuestionType,
+  MatchType,
   PieceType,
 } from "@prisma/client";
 
@@ -133,6 +134,8 @@ export const matchRouter = router({
         prescout: z.boolean(),
         video: z.string(),
         comments: z.string(),
+        matchType: z.nativeEnum(MatchType),
+        teamNum: z.number(),
         answer: z
           .object({
             questionId: z.string(),
@@ -156,6 +159,8 @@ export const matchRouter = router({
           prescout: input.prescout,
           video: input.video,
           comments: input.comments,
+          matchType: input.matchType,
+          teamNum: input.teamNum,
           answers: {
             create: input.answer.map(
               (answer) => {

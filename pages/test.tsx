@@ -9,22 +9,13 @@ import { parseOperation } from "@util/parser";
 import { FieldInput } from "@components/ui/form/charged-up/field-input";
 import { GamepieceInput } from "@components/ui/form/charged-up/gamepiece";
 import { DefenseInput } from "@components/ui/form/defense-input";
+import { trpc } from "@util/trpc/trpc";
+import { useRef } from "react";
 
 const Test: NextPage = () => {
-  const result = parseOperation("AVERAGE(CATEGORY(id, slot#))");
-
-
   return (
-    <div className="flex flex-col min-h-screen py-4 dark:text-white px-96 lg:px-4">
-      {/* <div className="min-h-screen bg-white" onClick={(e: React.MouseEvent<HTMLDivElement>) => {
-        console.log(e.clientX)
-        console.log(e.clientY)
-      }}> */}
-
-      {/* <GamepieceInput /> */}
-      {/* <FieldInput /> */}
-      {/* <DefenseInput /> */}
-
+    <div>
+      
     </div>
   );
 };

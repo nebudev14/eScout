@@ -42,9 +42,9 @@ export default function Scout(
   const [prescout, setPrescout] = useState<boolean>(false);
   const [videoLink, setVideoLink] = useState<string>("");
   const [form, setForm] = useState<string>();
-  const [matchType, setMatchType] = useState<MatchType>(
-    MatchType.QUALIFICATION
-  );
+  
+  const [teamEntry, setTeamEntry] = useState<string>();
+  const [matchType, setMatchType] = useState<MatchType>(MatchType.QUALIFICATION);
 
   /** Rendered */
   const [compQuery, setCompQuery] = useState("");
@@ -161,10 +161,10 @@ export default function Scout(
               />
             </Container>
             <Input
-              id="entryTeamNumber"
               placeholder="Team number"
               type="number"
               autoComplete="off"
+              onChange={(e: React.SyntheticEvent) => setTeamEntry((e.target as HTMLInputElement).value)}
               required
             />
             {prescout ? (

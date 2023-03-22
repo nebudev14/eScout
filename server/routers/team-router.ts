@@ -105,7 +105,20 @@ export const teamRouter = router({
         },
         matchScouts: {
           include: {
-            responses: true,
+            responses: {
+              include: {
+                user: {
+                  include: {
+                    user: {
+                      select: {
+                        name: true,
+                        image: true
+                      }
+                    }
+                  }
+                },
+              }
+            },
             categories: {
               include: {
                 questions: true,

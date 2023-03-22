@@ -6,7 +6,7 @@ import { Tab } from "@headlessui/react";
 import { ManageScoutForm } from "@components/ui/misc/scout-forms";
 import { Members } from "@components/ui/misc/members";
 import { useSession, getSession } from "next-auth/react";
-import { MemberStatus } from "@prisma/client";
+import { MatchFormResponse, MemberStatus } from "@prisma/client";
 import { createProxySSGHelpers } from "@trpc/react-query/ssg";
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
 import { appRouter } from "@server/routers/_app";
@@ -14,6 +14,7 @@ import { createContextInner } from "@server/context";
 import { MdSettings } from "react-icons/md";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 export default function TeamContent(
   props: InferGetServerSidePropsType<typeof getServerSideProps>
@@ -26,6 +27,7 @@ export default function TeamContent(
   const isMember = memberIndex !== -1;
 
   const [selectedForm, setSelectedForm] = useState<string>("");
+  const [selectedMatch, setSelectedMatch] = useState<MatchFormResponse>();
   useEffect(() => {
     if (props.team?.matchScouts.length !== 0) {
       setSelectedForm(props.team?.matchScouts?.[0].id as string);
@@ -60,16 +62,38 @@ export default function TeamContent(
               >
                 {props.team?.matchScouts
                   .filter((e) => e.id === selectedForm)
-                  ?.map((team, i) => (
-                    <option value={team.id} key={i}>
-                      {team.name}
+                  ?.map((form, i) => (
+                    <option value={form.id} key={i}>
+                      {form.name}
                     </option>
                   ))}
               </select>
             ) : null}
           </div>
-          <div className="grid grid-cols-2 gap-12 py-2">
-            <div className="mx-2"></div>
+          <div className="grid grid-cols-2 gap-24 py-2">
+            <div className="mx-2">
+              {props.team?.matchScouts
+                .filter((e) => e.id === selectedForm)?.[0]
+                ?.responses.map((response, i) => (
+                  <div
+                    className="px-3 py-2 my-2 mr-2 duration-200 border hover:shadow-lg hover:cursor-pointer rounded-xl bg-slate-50 dark:bg-zinc-900 dark:border-zinc-600 dark:text-white"
+                    onClick={() => setSelectedMatch(response)}
+                  >
+                    <h1 className="mb-2 text-xl">
+                      <span className="font-semibold">Team</span>{" "}
+                      {response.teamNum}
+                    </h1>
+                    <div className="flex items-center">
+                      <Image
+                        className="rounded-full"
+                        height={30}
+                        width={30}
+                        src={response.user?.user?.image as string}
+                      />
+                    </div>
+                  </div>
+                ))}
+            </div>
             {/* <div>
               {props.team?.matchScouts?.[0].responses.map((response, i) => (
                 <div>
@@ -103,6 +127,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   team?.members.forEach((m) => {
     m.user.created = String(m.user.created);
     m.user.emailVerified = String(m.user.emailVerified);
+    m.user;
   });
 
   return {
