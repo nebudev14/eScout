@@ -42,9 +42,11 @@ export default function Scout(
   const [prescout, setPrescout] = useState<boolean>(false);
   const [videoLink, setVideoLink] = useState<string>("");
   const [form, setForm] = useState<string>();
-  
+
   const [teamEntry, setTeamEntry] = useState<string>();
-  const [matchType, setMatchType] = useState<MatchType>(MatchType.QUALIFICATION);
+  const [matchType, setMatchType] = useState<MatchType>(
+    MatchType.QUALIFICATION
+  );
 
   /** Rendered */
   const [compQuery, setCompQuery] = useState("");
@@ -82,6 +84,8 @@ export default function Scout(
       formId: form as string,
       prescout: prescout,
       video: videoLink,
+      teamNum: Number(teamEntry),
+      matchType: matchType,
       comments: comments,
       answer: answers,
     });
@@ -164,7 +168,9 @@ export default function Scout(
               placeholder="Team number"
               type="number"
               autoComplete="off"
-              onChange={(e: React.SyntheticEvent) => setTeamEntry((e.target as HTMLInputElement).value)}
+              onChange={(e: React.SyntheticEvent) =>
+                setTeamEntry((e.target as HTMLInputElement).value)
+              }
               required
             />
             {prescout ? (
